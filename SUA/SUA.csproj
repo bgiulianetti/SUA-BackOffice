@@ -179,7 +179,9 @@
     <Content Include="assets\css\main.min.css" />
     <Content Include="assets\css\pikaday.css" />
     <Content Include="assets\css\vendor\icon-sets.css" />
-    <Content Include="assets\img\logo-dark.png" />
+    <Content Include="assets\img\delete_icon.png" />
+    <Content Include="assets\img\edit_icon.png" />
+    <Content Include="assets\img\sua-logo.jpeg" />
     <Content Include="assets\js\bootstrap\bootstrap-colorpicker.js" />
     <Content Include="assets\js\bootstrap\bootstrap.min.js" />
     <Content Include="assets\js\jquery\jquery-2.1.0.min.js" />
@@ -187,7 +189,6 @@
     <Content Include="assets\js\klorofil.min.js" />
     <Content Include="assets\js\main.js" />
     <Content Include="assets\js\microsite.js" />
-    <Content Include="assets\js\pages\dashboard.js" />
     <Content Include="assets\js\plugins\chartist\chartist.min.js" />
     <Content Include="assets\js\plugins\jquery-easypiechart\jquery.easypiechart.min.js" />
     <Content Include="assets\js\plugins\jquery-slimscroll\jquery.slimscroll.min.js" />

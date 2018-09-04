@@ -15,7 +15,6 @@ namespace SUA.Models
         public string Apellido { get; set; }
         public string Dni { get; set; }
         public Ubicacion Direccion { get; set; }
-        public string Nacionalidad { get; set; }
         public string TransportePropio { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public DateTime FechaAlta { get; set; }

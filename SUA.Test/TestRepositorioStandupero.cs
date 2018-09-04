@@ -155,7 +155,6 @@ namespace SUA.Test
                 Apellido = apellido,
                 Direccion = new Ubicacion { Direccion = "Migueletes 680", Localidad = "CABA", Ciudad = "CABA", CodigoPostal = "1426", Provincia = "Buenos Aires", Pais = pais },
                 Dni = dni,
-                Nacionalidad = "Argentina",
                 FechaAlta = DateTime.Now,
                 FechaNacimiento = new DateTime(1986, 10, 10),
                 TransportePropio = "bicicleta",

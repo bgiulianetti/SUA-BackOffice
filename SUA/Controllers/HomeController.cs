@@ -22,6 +22,7 @@ namespace SUA.Controllers
             return View();
         }
 
+
         [HttpPost]
         public ActionResult Standupero(Standupero standupero,
                                        string Direccion, string Localidad, string Ciudad, string CodigoPostal, string Pais, string Provincia,
@@ -54,7 +55,7 @@ namespace SUA.Controllers
             var service = new StanduperoService();
             try
             {
-                service.AddStandupero(standupero);
+                //service.AddStandupero(standupero);
                 ViewBag.mensaje = "ok";
             }
             catch (Exception ex)
@@ -65,6 +66,7 @@ namespace SUA.Controllers
         }
 
 
+        [HttpGet]
         public ActionResult Standuperos()
         {
             var service = new StanduperoService();

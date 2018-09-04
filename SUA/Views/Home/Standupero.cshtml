@@ -1,15 +1,9 @@
-﻿<style>
-    table {
-        border-spacing: 20px;
-        /*background: #E91E63;*/
-    }
-
-    td {
-        /*background: #F00;*/
-        padding: 10px;
-        /* background: #FCE4EC;*/
-    }
+﻿@model SUA.Models.Standupero
+<style>
+    table { border-spacing: 20px; }
+    td {  padding: 10px; }
 </style>
+
 <div class="main-content">
     @using (Html.BeginForm("Standupero", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
@@ -31,7 +25,7 @@
         }
         else if (ViewBag.mensaje == "")
         {
-            <h2>&nbsp;Standupero</h2>
+            <h2>&nbsp;Crear Standupero</h2>
             <div class="panel">
                 <div class="panel-body">
                     <form data-id="" id="pdf-create-form" to-action="/pdfs/create">
@@ -69,7 +63,7 @@
                                 </td>
                                 <td>
                                     <label>Email</label>
-                                    <input name="Email" id="videoUrl" type="text" value="" class="form-control" style="width:300px" required>
+                                    <input name="Email" id="videoUrl" type="email" value="" class="form-control" style="width:300px" required>
                                 </td>
                             </tr>
                             <tr>
@@ -189,6 +183,9 @@
                                     <label>Observaciones</label>
                                     <input name="Observaciones" id="Observaciones" type="text" placeholder="Observaciones" value="" class="form-control" style="width:100%" required>
                                 </td>
+                                <td>
+
+                                </td>
                             </tr>
                         </table>
  
@@ -202,4 +199,8 @@
     }
 
 </div>
+
+<script>
+
+</script>
 

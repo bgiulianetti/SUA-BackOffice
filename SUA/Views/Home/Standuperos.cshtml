@@ -1,51 +1,50 @@
-﻿
-<div class="main-content">
-    <h2 style=" margin-left:25px">Videos</h2>
+﻿<div id="container" class="main-content" style="padding:50px;  width: 100%;">
+    <h2>Stanaduperos</h2>
+    <hr style="color: #8dd9f7">
+    <div style="width: 100%; overflow-x: auto;  white-space: nowrap;">
+        <table id="table_standuperos" class="display compact hover nowrap">
 
-    <table id="table_standuperos" style="border-spacing: 20px; margin-left:25px" cellspacing=12>
-
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Dni</th>
-                <th>Transporte Propio</th>
-                <th>Ciudad</th>
-                <th>Banco</th>
-                <th>Celular</th>
-                <th>Email</th>
-                <th>Instram user</th>
-            </tr>
-        </thead>
-
-        <tfoot>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Dni</th>
-                <th>Transporte Propio</th>
-                <th>Ciudad</th>
-                <th>Banco</th>
-                <th>Celular</th>
-                <th>Email</th>
-                <th>Instram user</th>
-            </tr>
-        </tfoot>
-        <tbody>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Nombre</th>
+                    <th>Dni</th>
+                    <th>Transporte Propio</th>
+                    <th>Celular</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th></th>
+                    <th>Nombre</th>
+                    <th>Dni</th>
+                    <th>Transporte Propio</th>
+                    <th>Celular</th>
+                    <th>Email</th>
+                </tr>
+            </tfoot>
+            <tbody>
             @foreach (var item in ViewBag.standuperos)
             {
                 <tr>
-                    <td>@item.Nombre</td>
-                    <td>@item.Apellido</td>
+                    <td>
+                        <a href='@Html.ActionLink("Ver", "Standupero", "Home")'>
+                            <img src="~/assets/img/delete_icon.png" style="height:20px" alt="Borrar" />
+                        </a>
+                        <a href='@Html.ActionLink("Ver", "Standupero", "Home")'>
+                            <img src="~/assets/img/edit_icon.png"  style="height:20px" alt="Editar" />
+                        </a>
+                    </td>
+                    <td>@item.Nombre @item.Apellido</td>
                     <td>@item.Dni</td>
                     <td>@item.TransportePropio</td>
-                    <td>@item.Ubicacion.Ciudad</td>
-                    <td>@item.DatosBancarios.Banco</td>
                     <td>@item.Celular</td>
                     <td>@item.Email</td>
-                    <td>@item.InstagramUser</td>
                 </tr>
-            }
-        </tbody>
-    </table>
+             }
+            </tbody>
+        </table>
+    </div>
+
 </div>
