@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>SUA - Back Office</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="randomVersion" content="5022">
+
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/bootstrap-colorpicker.css">
+    <link rel="stylesheet" href="./assets/css/vendor/icon-sets.css">
+    <link rel="stylesheet" href="./assets/css/main.min.css?v=5022">
+    <link rel="stylesheet" href="./assets/css/educatina.css?v=5022">
+    <link rel="stylesheet" href="./assets/css/pikaday.css?v=5022">
+    <link rel="stylesheet" href="./assets/css/demo.css?v=5022">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png?v=5022">
+    <link rel="icon" type="image/png" sizes="96x96" href="./assets/img/favicon.png?v=5022">
+    
+
+
+    <!-- DataTables reference -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#table_standuperos').DataTable();
+        });
+    </script>
+
+    
+
+</head>
+
+<body>
+
+    <!-- WRAPPER -->
+    <div id="wrapper">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div style=" align-items:center; background-color:white; padding: 15px; padding-left:45px">
+                <a href="@Url.RouteUrl("Index")">
+                    <img src="~/assets/img/sua-logo.jpeg" alt="SUA Logo" class="img-responsive logo">
+                </a>
+            </div>
+            <div class="sidebar-scroll">
+                <nav>
+
+
+                    <ul class="nav">
+                        <li><a href="@Url.RouteUrl("Index")" data-to="dashboard" class="active"><i class="lnr lnr-home"></i> <span>Back Office</span></a></li>
+                        <li><a href="#" class=""><i class="lnr lnr-cog"></i> <span>Configurar Sitio</span></a></li>
+                        <li>
+                            <a href="#subStanduperos" data-to="standuperos" data-toggle="collapse" class="collapsed"> <span>Standuperos</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subStanduperos" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="#" class="">Listar</a></li>
+                                    <li><a href="@Url.RouteUrl("Standupero")" class="">Crear</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#subShows" data-to="shows" data-toggle="collapse" class="collapsed"> <span>Shows</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subShows" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="#" class="">Listar</a></li>
+                                    <li><a href="#" class="">Crear</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#subSalas" data-to="salas" data-toggle="collapse" class="collapsed"> <span>Salas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subSalas" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="#" class="">Listar</a></li>
+                                    <li><a href="#" class="">Crear</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#subProductores" data-to="users" data-toggle="collapse" class="collapsed"> <span>Productores</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subProductores" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="#" class="">Listar</a></li>
+                                    <li><a href="#" class="">Crear</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#subFechas" data-to="fechas" data-toggle="collapse" class="collapsed"> <span>Fechas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subFechas" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="#" class="">Listar</a></li>
+                                    <li><a href="#" class="">Crear</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a href="#"><i class="lnr lnr-exit"></i> <span>Cerrar sesión</span></a></li>
+                    </ul>
+
+                </nav>
+            </div>
+
+        </div>
+        <!-- END SIDEBAR -->
+        <!-- MAIN -->
+        <div class="main">
+            <!-- NAVBAR -->
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-btn">
+                        <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
+                    </div>
+                    <div class="">
+                        <h2>Back Office</h2>
+                    </div>
+
+                </div>
+            </nav>
+            <!-- END NAVBAR -->
+            <!-- MAIN CONTENT -->
+
+
+            @RenderBody()
+
+            <!-- END MAIN CONTENT -->
+
+            <footer>
+                <div class="container-fluid">
+                </div>
+            </footer>
+        </div>
+        <!-- END MAIN -->
+    </div>
+    <!-- END WRAPPER -->
+
+    <script type="text/javascript" src="./assets/js/jquery/jquery-2.1.0.min.js?v=5022"></script>
+    <script type="text/javascript" src="./assets/js/bootstrap/bootstrap.min.js?v=5022"></script>
+    <script type="text/javascript" src="./assets/js/bootstrap/bootstrap-colorpicker.js?v=5022"></script>
+    <script type="text/javascript" src="./assets/js/klorofil.min.js?v=5022"></script>
+    <script type="text/javascript" src="./assets/js/plugins/jquery-slimscroll/jquery.slimscroll.min.js?v=5022"></script>
+    <script type="text/javascript" src="./assets/js/plugins/jquery-easypiechart/jquery.easypiechart.min.js?v=5022"></script>
+    <script type="text/javascript" src="./assets/js/plugins/chartist/chartist.min.js?v=5022"></script>
+    <script type="text/javascript" src="./assets/js/main.js?v=5022"></script>
+    <script type="text/javascript" src="./assets/js/plugins/moment/moment.js?v=5022"></script>
+    <script type="text/javascript" src="./assets/js/plugins/pikaday/pikaday.js?v=5022"></script>
+    <script type="text/javascript" src="./assets/js/microsite.js?v=5022"></script>
+    <script type="text/javascript" src="./assets/js/pages/dashboard.js?v=5022"></script>
+    <script type="text/javascript" src="./assets/js/jscolor.js"></script>
+
+</body>
+
+</html>

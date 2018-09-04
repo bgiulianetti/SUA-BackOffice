@@ -1,0 +1,51 @@
+﻿
+<div class="main-content">
+    <h2 style=" margin-left:25px">Videos</h2>
+
+    <table id="table_standuperos" style="border-spacing: 20px; margin-left:25px" cellspacing=12>
+
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Dni</th>
+                <th>Transporte Propio</th>
+                <th>Ciudad</th>
+                <th>Banco</th>
+                <th>Celular</th>
+                <th>Email</th>
+                <th>Instram user</th>
+            </tr>
+        </thead>
+
+        <tfoot>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Dni</th>
+                <th>Transporte Propio</th>
+                <th>Ciudad</th>
+                <th>Banco</th>
+                <th>Celular</th>
+                <th>Email</th>
+                <th>Instram user</th>
+            </tr>
+        </tfoot>
+        <tbody>
+            @foreach (var item in ViewBag.standuperos)
+            {
+                <tr>
+                    <td>@item.Nombre</td>
+                    <td>@item.Apellido</td>
+                    <td>@item.Dni</td>
+                    <td>@item.TransportePropio</td>
+                    <td>@item.Ubicacion.Ciudad</td>
+                    <td>@item.DatosBancarios.Banco</td>
+                    <td>@item.Celular</td>
+                    <td>@item.Email</td>
+                    <td>@item.InstagramUser</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

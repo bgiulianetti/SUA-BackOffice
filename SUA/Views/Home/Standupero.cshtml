@@ -1,0 +1,205 @@
+﻿<style>
+    table {
+        border-spacing: 20px;
+        /*background: #E91E63;*/
+    }
+
+    td {
+        /*background: #F00;*/
+        padding: 10px;
+        /* background: #FCE4EC;*/
+    }
+</style>
+<div class="main-content">
+    @using (Html.BeginForm("Standupero", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        if (ViewBag.mensaje == "ok")
+        {
+            <label>El Standupero ha sido cargado con éxito. Puede verlo cargado en el listado de Standuperos</label>
+        }
+        else if (ViewBag.mensaje == "fail")
+        {
+            <label>Algo ha fallado. Por favor intentalo en unos minutos</label>
+        }
+        else if (ViewBag.mensaje == "standupero ya existente")
+        {
+            <label>El standupero que ha intentado cargar ya existe.</label>
+        }
+        else if (ViewBag.mensaje == "standupero inválido")
+        {
+            <label>El standupero que ha intentado cargar posee campos inválidos.</label>
+        }
+        else if (ViewBag.mensaje == "")
+        {
+            <h2>&nbsp;Standupero</h2>
+            <div class="panel">
+                <div class="panel-body">
+                    <form data-id="" id="pdf-create-form" to-action="/pdfs/create">
+
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <label>Nombre </label>
+                                    <input name="Nombre" type="text" value="" class="form-control" style="width:300px" required>
+                                </td>
+                                <td>
+                                    <label>Apellido </label>
+                                    <input name="Apellido" type="text" value="" class="form-control" style="width:300px" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>DNI </label>
+                                    <input name="Dni" id="videoUrl" type="text" value="" class="form-control" required>
+                                </td>
+                                <td>
+                                    <label>Fecha de nacimineto </label>
+                                    <input type="date" name="FechaNacimiento" id="videoUrl" value="" class="form-control" required>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <hr style="color: #8dd9f7">
+ 
+                        <table>
+                            <tr>
+                                <td>
+                                    <label>Celular </label>
+                                    <input name="Celular" id="videoUrl" type="text" value="" class="form-control" style="width:300px" required>
+                                </td>
+                                <td>
+                                    <label>Email</label>
+                                    <input name="Email" id="videoUrl" type="text" value="" class="form-control" style="width:300px" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Instagram User</label>
+                                    <input name="InstagramUser" id="videoUrl" type="text" value="" class="form-control" style="width:300px" required>
+                                </td>
+                                <td>
+                                    <label>Foto</label>
+                                    <input name="Foto" id="videoUrl" type="text" value="" class="form-control" style="width:300px">
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="color: #8dd9f7">
+                        <table>
+                            <tr>
+                                <td>
+                                    <label>Dirección </label>
+                                    <input name="Direccion" id="videoUrl" type="text" value="" class="form-control" style="width:300px" required>
+                                </td>
+                                <td>
+                                    <label>Ciudad </label>
+                                    <input name="Ciudad" id="videoUrl" type="text" value="" class="form-control" style="width:300px" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Localidad </label>
+                                    <input name="Localidad" id="videoUrl" type="text" value="" class="form-control" style="width:300px" required>
+                                </td>
+                                <td>
+                                    <label title="Para averiguar el código postal podes hacerlo ingresando la dirección en: https://www.correoargentino.com.ar/formularios/cpa">Código Postal </label>
+                                    <input name="CodigoPostal" id="videoUrl" type="text" value="" class="form-control" style="width:300px" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Provincia </label>
+                                    <select name="Provincia" class="form-control" data-list="order" style="width:300px">
+                                        <option value="BuenosAires">Buenos Aires</option>
+                                        <option value="Catamarca">Catamarca</option>
+                                        <option value="Chaco">Chaco</option>
+                                        <option value="Chubut">Chubut</option>
+                                        <option value="Córdoba">Córdoba</option>
+                                        <option value="Corrientes">Corrientes</option>
+                                        <option value="EntreRíos">Entre Ríos</option>
+                                        <option value="Formosa">Formosa </option>
+                                        <option value="Jujuy">Jujuy</option>
+                                        <option value="LaPampa">La Pampa</option>
+                                        <option value="LaRioja">La Rioja</option>
+                                        <option value="Mendoza">Mendoza </option>
+                                        <option value="Misiones">Misiones</option>
+                                        <option value="Neuquén">Neuquén</option>
+                                        <option value="RíoNegro">Río Negro</option>
+                                        <option value="Salta">Salta</option>
+                                        <option value="SanJuan">San Juan</option>
+                                        <option value="SantaCruz">Santa Cruz</option>
+                                        <option value="SantaFe">Santa Fe</option>
+                                        <option value="SantiagodelEstero">Santiago del Estero</option>
+                                        <option value="TierradelFuego">Tierra del Fuego</option>
+                                        <option value="Tucumán">Tucumán</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label>País </label>
+                                    <input name="Pais" id="videoUrl" type="text" value="" class="form-control" style="width:300px" required>
+                                </td>
+                            </tr>
+                        </table>
+ 
+                        <hr style="color: #8dd9f7">
+
+                        <table>
+                            <tr>
+                                <td>
+                                    <label>Nombre Completo </label>
+                                    <input name="NombreCompleto" id="videoUrl" type="text" value="" class="form-control" style="width:300px">
+                                </td>
+                                <td>
+                                    <label>Cuit/Cuil</label>
+                                    <input name="CuitCuil" id="videoUrl" type="text" value="" class="form-control" style="width:300px">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>CBU</label>
+                                    <input name="Cbu" id="videoUrl" type="text" value="" class="form-control" style="width:300px">
+                                </td>
+                                <td>
+                                    <label>Alias</label>
+                                    <input name="Alias" id="videoUrl" type="text" value="" class="form-control" style="width:300px">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Tipo de Cuenta</label>
+                                    <input name="TipoCuenta" id="videoUrl" type="text" value="" class="form-control" style="width:300px">
+                                </td>
+                                <td>
+                                    <label>Banco</label>
+                                    <input name="Banco" id="videoUrl" type="text" value="" class="form-control" style="width:300px">
+                                </td>
+                            </tr>
+                        </table>
+ 
+                        <hr style="color: #8dd9f7">
+
+                        <table>
+                            <tr>
+                                <td>
+                                    <label>Transporte Propio </label>
+                                    <input name="TransportePropio" id="videoUrl" type="text" value="" class="form-control" style="width:300px">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <label>Observaciones</label>
+                                    <input name="Observaciones" id="Observaciones" type="text" placeholder="Observaciones" value="" class="form-control" style="width:100%" required>
+                                </td>
+                            </tr>
+                        </table>
+ 
+                        <hr style="color: #8dd9f7">
+                        <div class="hidden" data-form="error-box"></div>
+                        <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        }
+    }
+
+</div>
+
