@@ -1,4 +1,5 @@
-﻿using SUA.Utilities;
+﻿using SUA.Servicios;
+using SUA.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,15 +20,15 @@ namespace SUA.Controllers
             if (string.IsNullOrEmpty(dni))
             {
                 ViewBag.accion = "Post";
-                ViewBag.titulo = "Crear Standupero";
+                ViewBag.titulo = "Crear Productor";
             }
             else
             {
                 ViewBag.accion = "Put";
-                ViewBag.titulo = "Editar Standupero";
-                var service = new StanduperoService();
-                var standupero = service.GetStanduperoByDni(dni);
-                return View(standupero);
+                ViewBag.titulo = "Editar Productor";
+                var service = new ProductorService();
+                var productor = service.GetProductorByDni(dni);
+                return View(productor);
             }
             return View();
         }

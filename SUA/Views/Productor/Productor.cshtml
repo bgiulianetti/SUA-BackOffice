@@ -1,0 +1,188 @@
+﻿@model SUA.Models.Productor
+<style>
+    table {
+        border-spacing: 20px;
+    }
+
+    td {
+        padding: 10px;
+    }
+</style>
+
+<div class="main-content">
+    @using (Html.BeginForm("Productor", "Productor", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        if (ViewBag.mensaje == "creado")
+        {
+            <label>El productor ha sido cargado con éxito. Puede verlo cargado en el <a href="@Url.RouteUrl("Standuperos")">Listado de productores</a></label>
+        }
+        if (ViewBag.mensaje == "actualizado")
+        {
+            <label>El productor ha sido actualizado con éxito. Puede ver los cambios en el <a href="@Url.RouteUrl("Standuperos")">Listado de productor</a></label>
+        }
+        else if (ViewBag.mensaje == "fail")
+        {
+            <label>Algo ha fallado. Por favor intentalo en unos minutos</label>
+        }
+        else if (ViewBag.mensaje == "productor ya existente")
+        {
+            <label>El productor que ha intentado cargar ya existe.</label>
+        }
+        else if (ViewBag.mensaje == "productor inválido")
+        {
+            <label>El productor que ha intentado cargar posee campos inválidos.</label>
+        }
+        else if (ViewBag.mensaje == "")
+        {
+            <div class="panel">
+                <div class="panel-body">
+                    <form data-id="" id="pdf-create-form" to-action="/pdfs/create">
+
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <label>Nombre </label>
+                                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                                <td>
+                                    <label>Apellido </label>
+                                    @Html.TextBoxFor(model => model.Apellido, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>DNI </label>
+                                    @Html.TextBoxFor(model => model.Dni, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                                <td>
+                                    <label>Fecha de nacimineto </label>
+                                    @if (ViewBag.accion == "Post")
+                                    {
+                                        @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", Style = "width:300px", required = "required", @type = "date" })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", Style = "width:300px", required = "required", @type = "date", @Value = Model.FechaNacimiento.ToString("yyyy-MM-dd") })
+                                    }
+
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="color: #8dd9f7">
+
+                        <table>
+                            <tr>
+                                <td>
+                                    <label>Celular </label>
+                                    @Html.TextBoxFor(model => model.Celular, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                                <td>
+                                    <label>Email</label>
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", Style = "width:300px", required = "required", @type = "email" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Foto</label>
+                                    @Html.TextBoxFor(model => model.Foto, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="color: #8dd9f7">
+                        <table>
+                            <tr>
+                                <td>
+                                    <label>Dirección </label>
+                                    @Html.TextBoxFor(model => model.Direccion.Direccion, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                                <td>
+                                    <label>Ciudad </label>
+                                    @Html.TextBoxFor(model => model.Direccion.Ciudad, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Localidad </label>
+                                    @Html.TextBoxFor(model => model.Direccion.Localidad, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                                <td>
+                                    <label title="Para averiguar el código postal podes hacerlo ingresando la dirección en: https://www.correoargentino.com.ar/formularios/cpa">Código Postal </label>
+                                    @Html.TextBoxFor(model => model.Direccion.CodigoPostal, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Provincia </label>
+                                    @Html.DropDownListFor(model => model.Direccion.Provincia, new SelectList(ViewBag.provincias, "Text", "Value"), new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                                <td>
+                                    <label>País </label>
+                                    @Html.DropDownListFor(model => model.Direccion.Pais, new SelectList(ViewBag.paises, "Text", "Value"), new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                            </tr>
+                        </table>
+
+                        <hr style="color: #8dd9f7">
+
+                        <table>
+                            <tr>
+                                <td>
+                                    <label>Nombre Completo </label>
+                                    @Html.TextBoxFor(model => model.DatosBancarios.NombreCompleto, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                                <td>
+                                    <label>Cuit/Cuil</label>
+                                    @Html.TextBoxFor(model => model.DatosBancarios.CuilCuit, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>CBU</label>
+                                    @Html.TextBoxFor(model => model.DatosBancarios.Cbu, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                                <td>
+                                    <label>Alias</label>
+                                    @Html.TextBoxFor(model => model.DatosBancarios.Alias, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Tipo de Cuenta</label>
+                                    @Html.TextBoxFor(model => model.DatosBancarios.TipoCuenta, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                                <td>
+                                    <label>Banco</label>
+                                    @Html.DropDownListFor(model => model.DatosBancarios.Banco, new SelectList(ViewBag.bancos, "Text", "Value"), new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                            </tr>
+                        </table>
+
+                        <hr style="color: #8dd9f7">
+
+                        <table>
+                            <tr>
+                                <td>
+                                    <label>Transporte Propio </label>
+                                    @Html.TextBoxFor(model => model.TransportePropio, new { @class = "form-control", Style = "width:300px", value = "" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <label>Observaciones</label>
+                                    @Html.TextBoxFor(model => model.Observaciones, new { @class = "form-control", Style = "width:300px", value = "" })
+                                </td>
+                                <td></td>
+                            </tr>
+                        </table>
+
+                        <hr style="color: #8dd9f7">
+                        <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
+                        <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        }
+    }
+
+</div>
+

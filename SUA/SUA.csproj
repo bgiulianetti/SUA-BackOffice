@@ -242,10 +242,10 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Standupero\Standupero.cshtml" />
     <Content Include="Views\Standupero\Standuperos.cshtml" />
+    <Content Include="Views\Productor\Productor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Productor\" />
     <Folder Include="Views\Show\" />
   </ItemGroup>
   <ItemGroup>

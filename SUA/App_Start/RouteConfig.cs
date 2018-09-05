@@ -31,6 +31,18 @@ namespace SUA
                 defaults: new { controller = "Standupero", action = "Standuperos" }
             );
 
+            routes.MapRoute(
+                name: "Productor",
+                url: "productor",
+                defaults: new { controller = "Productor", action = "Productor" }
+            );
+
+            routes.MapRoute(
+                name: "Productores",
+                url: "productores",
+                defaults: new { controller = "Productor", action = "Productores" }
+            );
+
 
 
             routes.MapRoute(
