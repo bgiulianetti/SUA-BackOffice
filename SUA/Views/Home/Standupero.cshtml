@@ -7,9 +7,13 @@
 <div class="main-content">
     @using (Html.BeginForm("Standupero", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        if (ViewBag.mensaje == "ok")
+        if (ViewBag.mensaje == "creado")
         {
-            <label>El Standupero ha sido cargado con éxito. Puede verlo cargado en el listado de Standuperos</label>
+            <label>El Standupero ha sido cargado con éxito. Puede verlo cargado en el <a href="@Url.RouteUrl("Standuperos")">Listado de Standuperos</a></label>
+        }
+        if (ViewBag.mensaje == "actualizado")
+        {
+            <label>El Standupero ha sido actualizado con éxito. Puede ver los cambios en el <a href="@Url.RouteUrl("Standuperos")">Listado de Standuperos</a></label>
         }
         else if (ViewBag.mensaje == "fail")
         {
@@ -25,7 +29,6 @@
         }
         else if (ViewBag.mensaje == "")
         {
-            <h2>&nbsp;Crear Standupero</h2>
             <div class="panel">
                 <div class="panel-body">
                     <form data-id="" id="pdf-create-form" to-action="/pdfs/create">
@@ -48,11 +51,18 @@
                                 </td>
                                 <td>
                                     <label>Fecha de nacimineto </label>
-                                    @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", Style = "width:300px", required = "required", @type = "date" })
+                                    @if (ViewBag.accion == "Post")
+                                    {
+                                        @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", Style = "width:300px", required = "required", @type = "date" })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", Style = "width:300px", required = "required", @type = "date", @Value = Model.FechaNacimiento.ToString("yyyy-MM-dd") })
+                                    }
+
                                 </td>
                             </tr>
                         </table>
-
                         <hr style="color: #8dd9f7">
  
                         <table>
@@ -63,7 +73,7 @@
                                 </td>
                                 <td>
                                     <label>Email</label>
-                                    @Html.TextBoxFor(model => model.Dni, new { @class = "form-control", Style = "width:300px", required = "required", @type = "email" })
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", Style = "width:300px", required = "required", @type = "email" })
                                 </td>
                             </tr>
                             <tr>
@@ -167,7 +177,7 @@
                         </table>
  
                         <hr style="color: #8dd9f7">
-                        <div class="hidden" data-form="error-box"></div>
+                        <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box"/>
                         <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
                     </form>
                 </div>

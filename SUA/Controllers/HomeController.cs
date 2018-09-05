@@ -13,6 +13,7 @@ namespace SUA.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.titulo = "Inicio";
             return View();
         }
 
@@ -23,10 +24,15 @@ namespace SUA.Controllers
             ViewBag.bancos = new Banco().GetBancos();
             ViewBag.provincias = UtilitiesAndStuff.GetProvincias();
             if (string.IsNullOrEmpty(dni))
+            {
                 ViewBag.accion = "Post";
+                ViewBag.titulo = "Crear Standupero";
+            }
+
             else
             {
                 ViewBag.accion = "Put";
+                ViewBag.titulo = "Editar Standupero";
                 var service = new StanduperoService();
                 var standupero = service.GetStanduperoByDni(dni);
                 return View(standupero);
@@ -36,13 +42,22 @@ namespace SUA.Controllers
 
 
         [HttpPost]
-        public ActionResult Standupero(Standupero standupero)
+        public ActionResult Standupero(Standupero standupero, string accion)
         {
             var service = new StanduperoService();
             try
             {
-                service.AddStandupero(standupero);
-                ViewBag.mensaje = "ok";
+                if (string.Equals(accion, "Post"))
+                {
+                    service.AddStandupero(standupero);
+                    ViewBag.mensaje = "creado";
+                }
+
+                else if (string.Equals(accion, "Put"))
+                {
+                    service.UpdateStandupero(standupero);
+                    ViewBag.mensaje = "actualizado";
+                }
             }
             catch (Exception ex)
             {
@@ -55,17 +70,34 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult Standuperos()
         {
+            ViewBag.titulo = "Standuperos";
             var service = new StanduperoService();
-            var standuperos = service.GetStanduperos();
-            ViewBag.standuperos = standuperos;
+            try
+            {
+                var standuperos = service.GetStanduperos();
+                ViewBag.standuperos = standuperos;
+                ViewBag.mensaje = "ok";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.mensaje = ex.Message;
+                //redirigir a pagina 4XX mostrando el error
+            }
             return View();
         }
 
-        public ActionResult DeleteStandupero()
+        public ActionResult DeleteStandupero(string dni)
         {
-            int a = 0;
-            a++;
-            return null;
+            var service = new StanduperoService();
+            try
+            {
+                service.DeleteStandupero(dni);
+            }
+            catch(Exception ex)
+            {
+                //loguear mensaje o mandar pagina de error
+            }
+            return RedirectToAction("Standuperos", "Home");
         }
 
     }

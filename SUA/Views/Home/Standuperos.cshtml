@@ -1,9 +1,10 @@
 ﻿<div id="container" class="main-content" style="padding:50px;  width: 100%;">
-    <h2>Stanaduperos</h2>
-    <hr style="color: #8dd9f7">
     <div style="width: 100%; overflow-x: auto;  white-space: nowrap;">
-        <table id="table_standuperos" class="display compact hover nowrap">
 
+
+
+
+        <table id="table_standuperos" class="display compact hover nowrap">
             <thead>
                 <tr>
                     <th></th>
@@ -25,23 +26,24 @@
                 </tr>
             </tfoot>
             <tbody>
-            @foreach (var item in ViewBag.standuperos)
-            {
-                <tr>
-                    <td>
-                        @Html.ActionImage("Standupero", "Home", new { dni = item.Dni }, "~/assets/img/delete_icon.png", "Delete")
-                        @Html.ActionImage("Standupero", "Home", new { dni = item.Dni }, "~/assets/img/edit_icon.png", "Edit")
-  
-                    </td>
-                    <td>@item.Nombre @item.Apellido</td>
-                    <td>@item.Dni</td>
-                    <td>@item.TransportePropio</td>
-                    <td>@item.Celular</td>
-                    <td>@item.Email</td>
-                </tr>
-             }
+                @foreach (var item in ViewBag.standuperos)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionImage("DeleteStandupero", "Home", new { dni = item.Dni }, "~/assets/img/delete_icon.png")
+                            @Html.ActionImage("Standupero", "Home", new { dni = item.Dni }, "~/assets/img/edit_icon.png")
+                        </td>
+                        <td>@item.Nombre @item.Apellido</td>
+                        <td>@item.Dni
+                        <td>@item.TransportePropio</td>
+                        <td>@item.Celular</td>
+                        <td>@item.Email</td>
+                    </tr>
+                }
             </tbody>
         </table>
+
+
     </div>
 
 </div>

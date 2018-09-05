@@ -11,6 +11,7 @@ namespace SUA.Repositorios
     public class ESRepositorio
     {
         public const string INVALID_SETTINGS_EXCEPTION = "Configuración de ES inválida";
+        public const string INVALID_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch";
         public const string STANDUPERO_INVALID_EXCEPTION = "standupero inválido";
         public const string STANDUPERO_ALREADY_EXISTS_EXCEPTION = "standupero ya existente";
         public const string STANDUPERO_NOT_EXISTS_EXCEPTION = "standupero no existente";
@@ -38,7 +39,10 @@ namespace SUA.Repositorios
                   );
 
             if (response == null)
-                return null;
+                throw new Exception(INVALID_ES_CONNECTION_EXCEPTION);
+            if (response.OriginalException != null)
+                throw new Exception(response.OriginalException.Message);
+
             var standuperos = new List<Standupero>();
             if (response.Total > 0)
             {
