@@ -153,7 +153,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Banco.cs" />
     <Compile Include="Models\Boleteria.cs" />
     <Compile Include="Models\Borderaux.cs" />
     <Compile Include="Models\Camarin.cs" />
@@ -237,12 +236,11 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Standupero.cshtml" />
-    <Content Include="Views\Home\Standuperos.cshtml" />
+    <Content Include="Views\Standupero\Standupero.cshtml" />
+    <Content Include="Views\Standupero\Standuperos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Standupero\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

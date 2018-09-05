@@ -146,7 +146,6 @@ namespace SUA.Test
             Assert.AreEqual(standuperoObtenido, null);
         }
 
-
         private Standupero CrearStandupero(string dni, string apellido, string nombre, string pais)
         {
             return new Standupero

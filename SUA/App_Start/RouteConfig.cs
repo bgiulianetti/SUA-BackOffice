@@ -22,13 +22,13 @@ namespace SUA
             routes.MapRoute(
                 name: "Standupero",
                 url: "standupero",
-                defaults: new { controller = "Home", action = "Standupero" }
+                defaults: new { controller = "Standupero", action = "Standupero" }
             );
 
             routes.MapRoute(
                 name: "Standuperos",
                 url: "standuperos",
-                defaults: new { controller = "Home", action = "Standuperos" }
+                defaults: new { controller = "Standupero", action = "Standuperos" }
             );
 
 
