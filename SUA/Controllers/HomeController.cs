@@ -21,14 +21,13 @@ namespace SUA.Controllers
         public ActionResult Standupero(string dni)
         {
             ViewBag.mensaje = "";
-            ViewBag.bancos = new Banco().GetBancos();
+            ViewBag.bancos = UtilitiesAndStuff.GetBancos();
             ViewBag.provincias = UtilitiesAndStuff.GetProvincias();
             if (string.IsNullOrEmpty(dni))
             {
                 ViewBag.accion = "Post";
                 ViewBag.titulo = "Crear Standupero";
             }
-
             else
             {
                 ViewBag.accion = "Put";
