@@ -34,21 +34,22 @@
                             <tr>
                                 <td>
                                     <label>Nombre </label>
-                                    <input name="Nombre" type="text" value="" class="form-control" style="width:300px" required>
+                                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", Style = "width:300px" })
+                                    
                                 </td>
                                 <td>
                                     <label>Apellido </label>
-                                    <input name="Apellido" type="text" value="" class="form-control" style="width:300px" required>
+                                    <input name="Apellido" id="Apellido" type="text" class="form-control" style="width:300px" required>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label>DNI </label>
-                                    <input name="Dni" id="videoUrl" type="text" value="" class="form-control" required>
+                                    <input name="Dni" id="videoUrl" type="text" class="form-control" required>
                                 </td>
                                 <td>
                                     <label>Fecha de nacimineto </label>
-                                    <input type="date" name="FechaNacimiento" id="videoUrl" value="" class="form-control" required>
+                                    <input type="date" name="FechaNacimiento" id="videoUrl" class="form-control" required>
                                 </td>
                             </tr>
                         </table>

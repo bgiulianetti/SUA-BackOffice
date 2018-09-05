@@ -29,12 +29,8 @@
             {
                 <tr>
                     <td>
-                        <a href='@Html.ActionLink("Ver", "Standupero", "Home")'>
-                            <img src="~/assets/img/delete_icon.png" style="height:20px" alt="Borrar" />
-                        </a>
-                        <a href='@Html.ActionLink("Ver", "Standupero", "Home")'>
-                            <img src="~/assets/img/edit_icon.png"  style="height:20px" alt="Editar" />
-                        </a>
+                        @Html.ActionImage("DeleteStandupero", "Home", new { dni = item.Dni }, "~/assets/img/delete_icon.png", "Delete")&nbsp;
+                        @Html.ActionImage("Standupero", "Home", new { dni = item.Dni }, "~/assets/img/edit_icon.png", "Edit")
                     </td>
                     <td>@item.Nombre @item.Apellido</td>
                     <td>@item.Dni</td>

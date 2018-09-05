@@ -16,9 +16,18 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
-        public ActionResult Standupero()
+        public ActionResult Standupero(string dni)
         {
             ViewBag.mensaje = "";
+            if (string.IsNullOrEmpty(dni))
+                ViewBag.accion = "Post";
+            else
+            {
+                ViewBag.accion = "Put";
+                var service = new StanduperoService();
+                var standupero = service.GetStanduperoByDni(dni);
+                return View(standupero);
+            }
             return View();
         }
 
