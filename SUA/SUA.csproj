@@ -148,6 +148,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ShowController.cs" />
     <Compile Include="Controllers\StanduperoController.cs" />
     <Compile Include="Extension\HtmlHelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -160,6 +161,7 @@
     <Compile Include="Models\Contacto.cs" />
     <Compile Include="Models\DatosBancarios.cs" />
     <Compile Include="Models\Fecha.cs" />
+    <Compile Include="Models\Persona.cs" />
     <Compile Include="Models\Productor.cs" />
     <Compile Include="Models\PruebaSonidoEnsayo.cs" />
     <Compile Include="Models\Ubicacion.cs" />
@@ -241,6 +243,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Show\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

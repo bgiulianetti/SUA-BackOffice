@@ -12,11 +12,17 @@ namespace SUA.Repositorios
     {
         public const string INVALID_SETTINGS_EXCEPTION = "Configuración de ES inválida";
         public const string INVALID_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch";
+        public const string INDEX = "sua";
+
         public const string STANDUPERO_INVALID_EXCEPTION = "standupero inválido";
         public const string STANDUPERO_ALREADY_EXISTS_EXCEPTION = "standupero ya existente";
         public const string STANDUPERO_NOT_EXISTS_EXCEPTION = "standupero no existente";
         public const string STANDUPERO_NOT_UPDATED_EXCEPTION = "standupero no actualizado";
-        public const string INDEX = "sua";
+
+ 
+        public const string PRODUCTOR_INVALID_EXCEPTION = "productor inválido";
+        public const string PRODUCTOR_ALREADY_EXISTS_EXCEPTION = "productor ya existente";
+        public const string PRODUCTOR_NOT_EXISTS_EXCEPTION = "productor no existente";
 
         protected ElasticClient Client { get; set; }
 
@@ -31,6 +37,7 @@ namespace SUA.Repositorios
 
 
         /*-------------------Standupero-------------------*/
+
         public List<Standupero> GetStanduperos()
         {
             var response = Client.Search<Standupero>(s => s
@@ -159,7 +166,139 @@ namespace SUA.Repositorios
         }
 
 
+
+        /*--------------------Productor-----------------------*/
+        public List<Productor> GetProductores()
+        {
+            var response = Client.Search<Productor>(p => p
+                   .Index(INDEX)
+                   .Type(ContentType.productor.ToString())
+                  );
+
+            if (response == null)
+                throw new Exception(INVALID_ES_CONNECTION_EXCEPTION);
+            if (response.OriginalException != null)
+                throw new Exception(response.OriginalException.Message);
+
+            var productores = new List<Productor>();
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    productores.Add(item);
+            }
+            return productores;
+        }
+        public Productor GetProductorByApellido(string apellido)
+        {
+            var response = Client.Search<Productor>(s => s
+                .Index(INDEX)
+                .Type(ContentType.productor.ToString())
+                .Query(q => q
+                    .Match(m => m.Field(f => f.Apellido).Query(apellido)))
+                    );
+
+            if (response == null)
+                return null;
+            Productor productor = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    productor = item;
+            }
+            return productor;
+        }
+        public Productor GetProductorByDni(string dni)
+        {
+            var response = Client.Search<Productor>(s => s
+                   .Index(INDEX)
+                   .Type(ContentType.productor.ToString())
+                   .Query(q => q.Term("dni", dni)));
+
+            if (response == null)
+                return null;
+            Productor productor = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    productor = item;
+            }
+            return productor;
+        }
+        public string GetProductorInnerIdByDni(string dni)
+        {
+            var response = Client.Search<Productor>(s => s
+                    .Index(INDEX)
+                    .Type(ContentType.productor.ToString())
+                    .Query(q => q.Term("dni", dni))
+                  );
+
+            string innerId = null;
+            if (response == null)
+                return innerId;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Hits)
+                    innerId = item.Id;
+            }
+            return innerId;
+        }
+        public void AddProductor(Productor productor)
+        {
+            if (productor == null)
+                throw new Exception(PRODUCTOR_INVALID_EXCEPTION);
+
+            var resultado = GetProductorByDni(productor.Dni);
+            if (resultado != null)
+                throw new Exception(PRODUCTOR_ALREADY_EXISTS_EXCEPTION);
+
+            var response = Client.IndexAsync(productor, i => i
+              .Index(INDEX)
+              .Type(ContentType.productor.ToString())
+              .Refresh(Refresh.True)
+              ).Result;
+        }
+        public void UpdateProductor(Productor productor)
+        {
+            if (productor == null)
+                throw new Exception(PRODUCTOR_INVALID_EXCEPTION);
+
+            var innerId = GetProductorInnerIdByDni(productor.Dni);
+            if (innerId == null)
+                throw new Exception(PRODUCTOR_NOT_EXISTS_EXCEPTION);
+
+            var result = Client.Index(productor, i => i
+                            .Index(INDEX)
+                            .Type(ContentType.productor.ToString())
+                            .Id(innerId)
+                            .Refresh(Refresh.True));
+
+            if (!result.IsValid)
+                throw new Exception(PRODUCTOR_NOT_EXISTS_EXCEPTION);
+        }
+        public void DeleteProductor(string dni)
+        {
+            if (string.IsNullOrEmpty(dni))
+                throw new Exception(PRODUCTOR_INVALID_EXCEPTION);
+
+            var innerId = GetProductorInnerIdByDni(dni);
+            if (innerId == null)
+                throw new Exception(PRODUCTOR_NOT_EXISTS_EXCEPTION);
+
+            var response = Client.Delete<Productor>(innerId, d => d
+                                                        .Index(INDEX)
+                                                        .Type(ContentType.productor.ToString())
+                                                        .Refresh(Refresh.True)
+                                                        );
+        }
+        public void DeleteAllProductores()
+        {
+            Client.DeleteByQuery<Productor>(q => q.Type(ContentType.productor.ToString()));
+        }
+
+
+
         /*--------------------Show-----------------------*/
+
         public List<Show> GetShows()
         {
             var response = Client.Search<Show>(s => s
@@ -200,8 +339,7 @@ namespace SUA.Repositorios
 
 
 
-
-
+        /*---------Metodos genericos------------------*/
 
         public void DeleteIndex()
         {
