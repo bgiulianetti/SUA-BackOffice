@@ -101,7 +101,6 @@ namespace SUA.Test
             {
                 Assert.AreEqual(ex.Message, ESRepositorio.STANDUPERO_NOT_EXISTS_EXCEPTION);
             }
-            
         }
 
         [TestMethod]

@@ -60,7 +60,83 @@ namespace SUA.Test
             var productorObtenido = repository.GetProductorByDni(dni);
             Assert.AreEqual(productor, productorObtenido);
         }
+        [TestMethod]
+        public void PuedoObtenerTodosLosProductoresCorrectamente()
+        {
+            var productor = CrearProductor("32576829", "Giulianetti", "Bruno", "Argentina");
+            var productor2 = CrearProductor("36621192", "Tuninetti", "Paula", "Cordoba");
+            repository.AddProductor(productor);
+            repository.AddProductor(productor2);
+            var productores = repository.GetProductores();
+            foreach (var item in productores)
+            {
+                if (item.Nombre == "Bruno")
+                    Assert.AreEqual(productor, item);
+                else if (item.Nombre == "Paula")
+                    Assert.AreEqual(productor2, item);
+            }
+        }
+        [TestMethod]
+        public void PuedoObtenerUnStanduperoPorApellidoCorrectamente()
+        {
+            var productor = CrearProductor("32576829", "Giulianetti", "Bruno", "Argentina");
+            repository.AddProductor(productor);
+            var productorObtenido = repository.GetProductorByApellido(productor.Apellido);
+            Assert.AreEqual(productor, productorObtenido);
+        }
+        [TestMethod]
+        public void SiModificoUnProductorInexistenteObtengoUnError()
+        {
+            var dni = "32576829";
+            var productor = CrearProductor(dni, "Giulianetti", "Bruno", "Argentina");
+            try
+            {
+                repository.UpdateProductor(productor);
+            }
+            catch (Exception ex)
+            {
+                Assert.AreEqual(ex.Message, ESRepositorio.PRODUCTOR_NOT_EXISTS_EXCEPTION);
+            }
+        }
+        [TestMethod]
+        public void PuedoModificarUnProductorCorrectamente()
+        {
+            var dni = "32576829";
+            var productor = CrearProductor(dni, "Giulianetti", "Bruno", "Argentina");
+            repository.AddProductor(productor);
+            productor.Nombre = "Nombre cambiado";
+            repository.UpdateProductor(productor);
 
+            var productorObtenido = repository.GetProductorByDni(productor.Dni);
+            Assert.AreEqual(productorObtenido, productor);
+        }
+        [TestMethod]
+        public void SiEliminoUnProductorInexistenteObtengoUnError()
+        {
+            var dni = "32576829";
+            var productor = CrearProductor(dni, "Giulianetti", "Bruno", "Argentina");
+            repository.CreateIndex();
+            try
+            {
+                repository.GetProductorByDni(productor.Dni);
+            }
+            catch (Exception ex)
+            {
+                Assert.AreEqual(ex.Message, ESRepositorio.PRODUCTOR_NOT_EXISTS_EXCEPTION);
+            }
+        }
+        [TestMethod]
+        public void PuedoEliminarUnProductorCorrectamente()
+        {
+            var dni = "32576829";
+            var productor = CrearProductor(dni, "Giulianetti", "Bruno", "Argentina");
+            repository.AddProductor(productor);
+
+            repository.DeleteProductor(productor.Dni);
+
+            var producorObtenido = repository.GetProductorByDni(productor.Dni);
+            Assert.AreEqual(producorObtenido, null);
+        }
 
 
 
