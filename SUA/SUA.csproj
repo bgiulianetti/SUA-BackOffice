@@ -171,6 +171,7 @@
     <Compile Include="Repositorios\ESSettings.cs" />
     <Compile Include="Repositorios\ESRepositorio.cs" />
     <Compile Include="Servicios\StanduperoService.cs" />
+    <Compile Include="Utilities\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\bootstrap-colorpicker.css" />
@@ -186,6 +187,7 @@
     <Content Include="assets\js\bootstrap\bootstrap-colorpicker.js" />
     <Content Include="assets\js\bootstrap\bootstrap.min.js" />
     <Content Include="assets\js\jquery\jquery-2.1.0.min.js" />
+    <Content Include="assets\js\jquery\jquery.confirm.min.js" />
     <Content Include="assets\js\jscolor.js" />
     <Content Include="assets\js\klorofil.min.js" />
     <Content Include="assets\js\main.js" />

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SUA.Utilities;
 
 namespace SUA.Controllers
 {
@@ -19,6 +20,8 @@ namespace SUA.Controllers
         public ActionResult Standupero(string dni)
         {
             ViewBag.mensaje = "";
+            ViewBag.bancos = new Banco().GetBancos();
+            ViewBag.provincias = UtilitiesAndStuff.GetProvincias();
             if (string.IsNullOrEmpty(dni))
                 ViewBag.accion = "Post";
             else
@@ -33,38 +36,12 @@ namespace SUA.Controllers
 
 
         [HttpPost]
-        public ActionResult Standupero(Standupero standupero,
-                                       string Direccion, string Localidad, string Ciudad, string CodigoPostal, string Pais, string Provincia,
-                                       string NombreCompleto, string CuitCuil, string Cbu, string Alias, string Banco, string TipoCuenta)
+        public ActionResult Standupero(Standupero standupero)
         {
-            var datosBancarios = new DatosBancarios
-            {
-                Alias = Alias,
-                Banco = Banco,
-                Cbu = Cbu,
-                CuilCuit = CuitCuil,
-                NombreCompleto = NombreCompleto,
-                TipoCuenta = TipoCuenta
-            };
-
-            standupero.DatosBancarios = datosBancarios;
-
-            var ubicacion = new Ubicacion
-            {
-                Ciudad = Ciudad,
-                CodigoPostal = CodigoPostal,
-                Direccion = Direccion,
-                Localidad = Localidad,
-                Pais = Pais,
-                Provincia = Provincia
-            };
-
-            standupero.Direccion = ubicacion;
-
             var service = new StanduperoService();
             try
             {
-                //service.AddStandupero(standupero);
+                service.AddStandupero(standupero);
                 ViewBag.mensaje = "ok";
             }
             catch (Exception ex)
@@ -82,6 +59,13 @@ namespace SUA.Controllers
             var standuperos = service.GetStanduperos();
             ViewBag.standuperos = standuperos;
             return View();
+        }
+
+        public ActionResult DeleteStandupero()
+        {
+            int a = 0;
+            a++;
+            return null;
         }
 
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace SUA.Models
 {
@@ -87,9 +88,15 @@ namespace SUA.Models
                 "CAJA DE CREDITO \"CUENCA\" COOPERATIVA",
             };
         }
-        public List<string> BancosDisponibles()
+        public List<SelectListItem> GetBancos()
         {
-            return Bancos;
+            var list = new List<SelectListItem>();
+            //_list.Add(new SelectListItem { Text = "Dia", Value = Creapolis.Resources.Resource.Form_Common_Date_Day, Selected = true });
+
+            foreach (var item in Bancos)
+                list.Add(new SelectListItem { Text = item.Replace(" ", ""), Value = item });
+
+            return list;
         }
     }
 }

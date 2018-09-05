@@ -34,22 +34,21 @@
                             <tr>
                                 <td>
                                     <label>Nombre </label>
-                                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", Style = "width:300px" })
-                                    
+                                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                                 <td>
                                     <label>Apellido </label>
-                                    <input name="Apellido" id="Apellido" type="text" class="form-control" style="width:300px" required>
+                                    @Html.TextBoxFor(model => model.Apellido, new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label>DNI </label>
-                                    <input name="Dni" id="videoUrl" type="text" class="form-control" required>
+                                    @Html.TextBoxFor(model => model.Dni, new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                                 <td>
                                     <label>Fecha de nacimineto </label>
-                                    <input type="date" name="FechaNacimiento" id="videoUrl" class="form-control" required>
+                                    @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", Style = "width:300px", required = "required", @type = "date" })
                                 </td>
                             </tr>
                         </table>
@@ -60,21 +59,21 @@
                             <tr>
                                 <td>
                                     <label>Celular </label>
-                                    <input name="Celular" id="videoUrl" type="text" value="" class="form-control" style="width:300px" required>
+                                    @Html.TextBoxFor(model => model.Celular, new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                                 <td>
                                     <label>Email</label>
-                                    <input name="Email" id="videoUrl" type="email" value="" class="form-control" style="width:300px" required>
+                                    @Html.TextBoxFor(model => model.Dni, new { @class = "form-control", Style = "width:300px", required = "required", @type = "email" })
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label>Instagram User</label>
-                                    <input name="InstagramUser" id="videoUrl" type="text" value="" class="form-control" style="width:300px" required>
+                                    @Html.TextBoxFor(model => model.InstagramUser, new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                                 <td>
                                     <label>Foto</label>
-                                    <input name="Foto" id="videoUrl" type="text" value="" class="form-control" style="width:300px">
+                                    @Html.TextBoxFor(model => model.Foto, new { @class = "form-control", Style = "width:300px" })
                                 </td>
                             </tr>
                         </table>
@@ -83,54 +82,31 @@
                             <tr>
                                 <td>
                                     <label>Dirección </label>
-                                    <input name="Direccion" id="videoUrl" type="text" value="" class="form-control" style="width:300px" required>
+                                    @Html.TextBoxFor(model => model.Direccion.Direccion, new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                                 <td>
                                     <label>Ciudad </label>
-                                    <input name="Ciudad" id="videoUrl" type="text" value="" class="form-control" style="width:300px" required>
+                                    @Html.TextBoxFor(model => model.Direccion.Ciudad, new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label>Localidad </label>
-                                    <input name="Localidad" id="videoUrl" type="text" value="" class="form-control" style="width:300px" required>
+                                    @Html.TextBoxFor(model => model.Direccion.Localidad, new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                                 <td>
                                     <label title="Para averiguar el código postal podes hacerlo ingresando la dirección en: https://www.correoargentino.com.ar/formularios/cpa">Código Postal </label>
-                                    <input name="CodigoPostal" id="videoUrl" type="text" value="" class="form-control" style="width:300px" required>
+                                    @Html.TextBoxFor(model => model.Direccion.CodigoPostal, new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label>Provincia </label>
-                                    <select name="Provincia" class="form-control" data-list="order" style="width:300px">
-                                        <option value="BuenosAires">Buenos Aires</option>
-                                        <option value="Catamarca">Catamarca</option>
-                                        <option value="Chaco">Chaco</option>
-                                        <option value="Chubut">Chubut</option>
-                                        <option value="Córdoba">Córdoba</option>
-                                        <option value="Corrientes">Corrientes</option>
-                                        <option value="EntreRíos">Entre Ríos</option>
-                                        <option value="Formosa">Formosa </option>
-                                        <option value="Jujuy">Jujuy</option>
-                                        <option value="LaPampa">La Pampa</option>
-                                        <option value="LaRioja">La Rioja</option>
-                                        <option value="Mendoza">Mendoza </option>
-                                        <option value="Misiones">Misiones</option>
-                                        <option value="Neuquén">Neuquén</option>
-                                        <option value="RíoNegro">Río Negro</option>
-                                        <option value="Salta">Salta</option>
-                                        <option value="SanJuan">San Juan</option>
-                                        <option value="SantaCruz">Santa Cruz</option>
-                                        <option value="SantaFe">Santa Fe</option>
-                                        <option value="SantiagodelEstero">Santiago del Estero</option>
-                                        <option value="TierradelFuego">Tierra del Fuego</option>
-                                        <option value="Tucumán">Tucumán</option>
-                                    </select>
+                                    @Html.DropDownListFor(model => model.Direccion.Provincia, new SelectList(ViewBag.provincias, "Text", "Value"), new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                                 <td>
                                     <label>País </label>
-                                    <input name="Pais" id="videoUrl" type="text" value="" class="form-control" style="width:300px" required>
+                                    @Html.TextBoxFor(model => model.Direccion.Pais, new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                             </tr>
                         </table>
@@ -141,31 +117,31 @@
                             <tr>
                                 <td>
                                     <label>Nombre Completo </label>
-                                    <input name="NombreCompleto" id="videoUrl" type="text" value="" class="form-control" style="width:300px">
+                                    @Html.TextBoxFor(model => model.DatosBancarios.NombreCompleto, new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                                 <td>
                                     <label>Cuit/Cuil</label>
-                                    <input name="CuitCuil" id="videoUrl" type="text" value="" class="form-control" style="width:300px">
+                                    @Html.TextBoxFor(model => model.DatosBancarios.CuilCuit, new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label>CBU</label>
-                                    <input name="Cbu" id="videoUrl" type="text" value="" class="form-control" style="width:300px">
+                                    @Html.TextBoxFor(model => model.DatosBancarios.Cbu, new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                                 <td>
                                     <label>Alias</label>
-                                    <input name="Alias" id="videoUrl" type="text" value="" class="form-control" style="width:300px">
+                                    @Html.TextBoxFor(model => model.DatosBancarios.Alias, new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label>Tipo de Cuenta</label>
-                                    <input name="TipoCuenta" id="videoUrl" type="text" value="" class="form-control" style="width:300px">
+                                    @Html.TextBoxFor(model => model.DatosBancarios.TipoCuenta, new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                                 <td>
                                     <label>Banco</label>
-                                    <input name="Banco" id="videoUrl" type="text" value="" class="form-control" style="width:300px">
+                                    @Html.DropDownListFor(model => model.DatosBancarios.Banco, new SelectList(ViewBag.bancos, "Text", "Value"), new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                             </tr>
                         </table>
@@ -176,13 +152,13 @@
                             <tr>
                                 <td>
                                     <label>Transporte Propio </label>
-                                    <input name="TransportePropio" id="videoUrl" type="text" value="" class="form-control" style="width:300px">
+                                    @Html.TextBoxFor(model => model.TransportePropio, new { @class = "form-control", Style = "width:300px", value = "" })
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2">
                                     <label>Observaciones</label>
-                                    <input name="Observaciones" id="Observaciones" type="text" placeholder="Observaciones" value="" class="form-control" style="width:100%" required>
+                                    @Html.TextBoxFor(model => model.Observaciones, new { @class = "form-control", Style = "width:300px", value = "" })
                                 </td>
                                 <td>
 

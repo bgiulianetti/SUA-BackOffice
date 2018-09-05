@@ -29,8 +29,9 @@
             {
                 <tr>
                     <td>
-                        @Html.ActionImage("DeleteStandupero", "Home", new { dni = item.Dni }, "~/assets/img/delete_icon.png", "Delete")&nbsp;
+                        @Html.ActionImage("Standupero", "Home", new { dni = item.Dni }, "~/assets/img/delete_icon.png", "Delete")
                         @Html.ActionImage("Standupero", "Home", new { dni = item.Dni }, "~/assets/img/edit_icon.png", "Edit")
+  
                     </td>
                     <td>@item.Nombre @item.Apellido</td>
                     <td>@item.Dni</td>

@@ -17,6 +17,7 @@ namespace SUA.Extension
             imgBuilder.MergeAttribute("src", url.Content(imagePath));
             imgBuilder.MergeAttribute("alt", alt);
             imgBuilder.MergeAttribute("style", "height:20px");
+            //imgBuilder.MergeAttribute("class", "confirm");
             string imgHtml = imgBuilder.ToString(TagRenderMode.SelfClosing);
 
             // build the <a> tag
