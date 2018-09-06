@@ -14,11 +14,11 @@
     {
         if (ViewBag.mensaje == "creado")
         {
-            <label>El productor ha sido cargado con éxito. Puede verlo cargado en el <a href="@Url.RouteUrl("Standuperos")">Listado de productores</a></label>
+            <label>El productor ha sido cargado con éxito. Puede verlo cargado en el <a href="@Url.RouteUrl("Productores")">Listado de productores</a></label>
         }
         if (ViewBag.mensaje == "actualizado")
         {
-            <label>El productor ha sido actualizado con éxito. Puede ver los cambios en el <a href="@Url.RouteUrl("Standuperos")">Listado de productor</a></label>
+            <label>El productor ha sido actualizado con éxito. Puede ver los cambios en el <a href="@Url.RouteUrl("Productores")">Listado de productor</a></label>
         }
         else if (ViewBag.mensaje == "fail")
         {
@@ -79,12 +79,6 @@
                                 <td>
                                     <label>Email</label>
                                     @Html.TextBoxFor(model => model.Email, new { @class = "form-control", Style = "width:300px", required = "required", @type = "email" })
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label>Foto</label>
-                                    @Html.TextBoxFor(model => model.Foto, new { @class = "form-control", Style = "width:300px" })
                                 </td>
                             </tr>
                         </table>

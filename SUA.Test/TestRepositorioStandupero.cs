@@ -11,6 +11,7 @@ namespace SUA.Test
     {
         ESRepositorio repository;
         ESSettings settings;
+        string index;
 
         [TestInitialize]
         public void Setup()
@@ -18,18 +19,19 @@ namespace SUA.Test
             var node = new UriBuilder("localhost");
             node.Port = 9200;
             settings = new ESSettings(node);
-            repository = new ESRepositorio(settings);
-            DeleteSUAIndex();
+            index = "test_" + ESRepositorio.ContentType.standupero.ToString();
+            repository = new ESRepositorio(settings, index);
+            DeleteIndex();
         }
 
         [TestCleanup]
         public void CleanUp()
         {
-            DeleteSUAIndex();
+            DeleteIndex();
             repository = null;
         }
 
-        private void DeleteSUAIndex()
+        private void DeleteIndex()
         {
             repository.DeleteIndex();
         }

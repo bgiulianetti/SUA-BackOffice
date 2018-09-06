@@ -12,6 +12,8 @@ namespace SUA.Test
     {
         ESRepositorio repository;
         ESSettings settings;
+        string index;
+
 
         [TestInitialize]
         public void Setup()
@@ -19,18 +21,19 @@ namespace SUA.Test
             var node = new UriBuilder("localhost");
             node.Port = 9200;
             settings = new ESSettings(node);
-            repository = new ESRepositorio(settings);
-            DeleteSUAIndex();
+            index = "test_" + ESRepositorio.ContentType.standupero.ToString();
+            repository = new ESRepositorio(settings, index);
+            DeleteIndex();
         }
 
         [TestCleanup]
         public void CleanUp()
         {
-            DeleteSUAIndex();
+            DeleteIndex();
             repository = null;
         }
 
-        private void DeleteSUAIndex()
+        private void DeleteIndex()
         {
             repository.DeleteIndex();
         }
@@ -151,7 +154,6 @@ namespace SUA.Test
                 FechaAlta = DateTime.Now,
                 FechaNacimiento = new DateTime(1986, 10, 10),
                 TransportePropio = "bicicleta",
-                Foto = "url de una foto",
                 DatosBancarios = new DatosBancarios { TipoCuenta = "Caja de Ahorro", Alias = "musica.caoba.jaula", Banco = "BANCO SANTANDER RIO", Cbu = "cbu", CuilCuit = "20-32576829-1", NombreCompleto = "Bruno Nicolas giulianetti" },
                 Observaciones = "Ninguna Observacion",
                 Celular = "1122526344",

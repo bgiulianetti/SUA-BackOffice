@@ -12,6 +12,7 @@ namespace SUA.Models
     public class Standupero : Persona
     {
         public string InstagramUser { get; set; }
+        public string Foto { get; set; }
 
         public override bool Equals(object obj)
         {

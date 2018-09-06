@@ -12,37 +12,43 @@ namespace SUA.Repositorios
     {
         public const string INVALID_SETTINGS_EXCEPTION = "Configuración de ES inválida";
         public const string INVALID_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch";
-        public const string INDEX = "sua";
 
-        public const string STANDUPERO_INVALID_EXCEPTION = "standupero inválido";
-        public const string STANDUPERO_ALREADY_EXISTS_EXCEPTION = "standupero ya existente";
-        public const string STANDUPERO_NOT_EXISTS_EXCEPTION = "standupero no existente";
-        public const string STANDUPERO_NOT_UPDATED_EXCEPTION = "standupero no actualizado";
+        public const string STANDUPERO_INVALID_EXCEPTION = "standupero_invalido";
+        public const string STANDUPERO_ALREADY_EXISTS_EXCEPTION = "standupero_ya_existente";
+        public const string STANDUPERO_NOT_EXISTS_EXCEPTION = "standupero_no_existente";
+        public const string STANDUPERO_NOT_UPDATED_EXCEPTION = "standupero_no_actualizado";
+        public const string STANDUPERO_NOT_CREATED_EXCEPTION = "standupero_no_creado";
+        public const string STANDUPERO_NOT_DELETED_EXCEPTION = "standupero_no_borrado";
 
- 
+
         public const string PRODUCTOR_INVALID_EXCEPTION = "productor inválido";
-        public const string PRODUCTOR_ALREADY_EXISTS_EXCEPTION = "productor ya existente";
-        public const string PRODUCTOR_NOT_EXISTS_EXCEPTION = "productor no existente";
+        public const string PRODUCTOR_ALREADY_EXISTS_EXCEPTION = "productor_ya_existente";
+        public const string PRODUCTOR_NOT_EXISTS_EXCEPTION = "productor_no_existente";
+        public const string PRODUCTOR_NOT_UPDATED_EXCEPTION = "productor_no_actualizado";
+        public const string PRODUCTOR_NOT_CREATED_EXCEPTION = "productor_no_creado";
+        public const string PRODUCTOR_NOT_DELETED_EXCEPTION = "productor_no_borrado";
 
         protected ElasticClient Client { get; set; }
+        protected string Index { get; set; }
 
-        public ESRepositorio(ESSettings settings)
+        public ESRepositorio(ESSettings settings, string index)
         {
             if (settings == null)
                 throw new Exception(INVALID_SETTINGS_EXCEPTION);
 
             var config = new ConnectionSettings(settings.Node.Uri);
             Client = new ElasticClient(config);
-        }
 
+            Index = index;
+        }
 
         /*-------------------Standupero-------------------*/
 
         public List<Standupero> GetStanduperos()
         {
             var response = Client.Search<Standupero>(s => s
-                   .Index(INDEX)
-                   .Type(ContentType.standupero.ToString())
+                   .Index(Index)
+                   .Type(Index)
                   );
 
             if (response == null)
@@ -61,8 +67,8 @@ namespace SUA.Repositorios
         public Standupero GetStanduperoByApellido(string apellido)
         {
             var response = Client.Search<Standupero>(s => s
-                .Index(INDEX)
-                .Type(ContentType.standupero.ToString())
+                .Index(Index)
+                .Type(Index)
                 .Query(q => q
                     .Match(m => m.Field(f => f.Apellido).Query(apellido)))
                     );
@@ -80,8 +86,8 @@ namespace SUA.Repositorios
         public Standupero GetStanduperoByDni(string dni)
         {
             var response = Client.Search<Standupero>(s => s
-                   .Index(INDEX)
-                   .Type(ContentType.standupero.ToString())
+                   .Index(Index)
+                   .Type(Index)
                    .Query(q => q.Term("dni", dni)));
 
             if (response == null)
@@ -97,8 +103,8 @@ namespace SUA.Repositorios
         public string GetStanduperoInnerIdByDni(string dni)
         {
             var response = Client.Search<Standupero>(s => s
-                    .Index(INDEX)
-                    .Type(ContentType.standupero.ToString())
+                    .Index(Index)
+                    .Type(Index)
                     .Query(q => q.Term("dni", dni))
                   );
 
@@ -122,10 +128,13 @@ namespace SUA.Repositorios
                 throw new Exception(STANDUPERO_ALREADY_EXISTS_EXCEPTION);
 
             var response = Client.IndexAsync(standupero, i => i
-              .Index(INDEX)
-              .Type(ContentType.standupero.ToString())
+              .Index(Index)
+              .Type(Index)
               .Refresh(Refresh.True)
               ).Result;
+
+            if (!response.IsValid)
+                throw new Exception(STANDUPERO_NOT_CREATED_EXCEPTION);
         }
         public void UpdateStandupero(Standupero standupero)
         {
@@ -137,13 +146,13 @@ namespace SUA.Repositorios
                 throw new Exception(STANDUPERO_NOT_EXISTS_EXCEPTION);
 
             var result = Client.Index(standupero, i => i
-                            .Index(INDEX)
-                            .Type(ContentType.standupero.ToString())
+                            .Index(Index)
+                            .Type(Index)
                             .Id(innerId)
                             .Refresh(Refresh.True));
 
             if (!result.IsValid)
-                throw new Exception(STANDUPERO_NOT_EXISTS_EXCEPTION);
+                throw new Exception(STANDUPERO_NOT_UPDATED_EXCEPTION);
         }
         public void DeleteStandupero(string dni)
         {
@@ -155,14 +164,16 @@ namespace SUA.Repositorios
                 throw new Exception(STANDUPERO_NOT_EXISTS_EXCEPTION);
 
             var response = Client.Delete<Standupero>(innerId, d => d
-                                                        .Index(INDEX)
-                                                        .Type(ContentType.standupero.ToString())
+                                                        .Index(Index)
+                                                        .Type(Index)
                                                         .Refresh(Refresh.True)
                                                         );
+            if (!response.IsValid)
+                throw new Exception(STANDUPERO_NOT_DELETED_EXCEPTION);
         }
         public void DeleteAllStanduperos()
         {
-            Client.DeleteByQuery<Standupero>(q => q.Type(ContentType.standupero.ToString()));
+            Client.DeleteByQuery<Standupero>(q => q.Type(Index));
         }
 
 
@@ -171,8 +182,8 @@ namespace SUA.Repositorios
         public List<Productor> GetProductores()
         {
             var response = Client.Search<Productor>(p => p
-                   .Index(INDEX)
-                   .Type(ContentType.productor.ToString())
+                   .Index(Index)
+                   .Type(Index)
                   );
 
             if (response == null)
@@ -191,8 +202,8 @@ namespace SUA.Repositorios
         public Productor GetProductorByApellido(string apellido)
         {
             var response = Client.Search<Productor>(s => s
-                .Index(INDEX)
-                .Type(ContentType.productor.ToString())
+                .Index(Index)
+                .Type(Index)
                 .Query(q => q
                     .Match(m => m.Field(f => f.Apellido).Query(apellido)))
                     );
@@ -210,8 +221,8 @@ namespace SUA.Repositorios
         public Productor GetProductorByDni(string dni)
         {
             var response = Client.Search<Productor>(s => s
-                   .Index(INDEX)
-                   .Type(ContentType.productor.ToString())
+                   .Index(Index)
+                   .Type(Index)
                    .Query(q => q.Term("dni", dni)));
 
             if (response == null)
@@ -227,8 +238,8 @@ namespace SUA.Repositorios
         public string GetProductorInnerIdByDni(string dni)
         {
             var response = Client.Search<Productor>(s => s
-                    .Index(INDEX)
-                    .Type(ContentType.productor.ToString())
+                    .Index(Index)
+                    .Type(Index)
                     .Query(q => q.Term("dni", dni))
                   );
 
@@ -252,10 +263,13 @@ namespace SUA.Repositorios
                 throw new Exception(PRODUCTOR_ALREADY_EXISTS_EXCEPTION);
 
             var response = Client.IndexAsync(productor, i => i
-              .Index(INDEX)
-              .Type(ContentType.productor.ToString())
+              .Index(Index)
+              .Type(Index)
               .Refresh(Refresh.True)
               ).Result;
+
+            if (!response.IsValid)
+                throw new Exception(PRODUCTOR_NOT_CREATED_EXCEPTION);
         }
         public void UpdateProductor(Productor productor)
         {
@@ -267,13 +281,13 @@ namespace SUA.Repositorios
                 throw new Exception(PRODUCTOR_NOT_EXISTS_EXCEPTION);
 
             var result = Client.Index(productor, i => i
-                            .Index(INDEX)
-                            .Type(ContentType.productor.ToString())
+                            .Index(Index)
+                            .Type(Index)
                             .Id(innerId)
                             .Refresh(Refresh.True));
 
             if (!result.IsValid)
-                throw new Exception(PRODUCTOR_NOT_EXISTS_EXCEPTION);
+                throw new Exception(PRODUCTOR_NOT_UPDATED_EXCEPTION);
         }
         public void DeleteProductor(string dni)
         {
@@ -285,56 +299,21 @@ namespace SUA.Repositorios
                 throw new Exception(PRODUCTOR_NOT_EXISTS_EXCEPTION);
 
             var response = Client.Delete<Productor>(innerId, d => d
-                                                        .Index(INDEX)
-                                                        .Type(ContentType.productor.ToString())
+                                                        .Index(Index)
+                                                        .Type(Index)
                                                         .Refresh(Refresh.True)
                                                         );
+            if (!response.IsValid)
+                throw new Exception(PRODUCTOR_NOT_DELETED_EXCEPTION);
         }
         public void DeleteAllProductores()
         {
-            Client.DeleteByQuery<Productor>(q => q.Type(ContentType.productor.ToString()));
+            Client.DeleteByQuery<Productor>(q => q.Type(Index));
         }
 
 
 
         /*--------------------Show-----------------------*/
-
-        public List<Show> GetShows()
-        {
-            var response = Client.Search<Show>(s => s
-                   .Index(INDEX)
-                   .Type(ContentType.show.ToString())
-                  );
-
-            if (response == null)
-                return null;
-            var shows = new List<Show>();
-            if (response.Total > 0)
-            {
-                foreach (var item in response.Documents)
-                    shows.Add(item);
-            }
-            return shows;
-        }
-        public Show GetShowByNombre(string nombre)
-        {
-            var response = Client.Search<Show>(s => s
-                .Index(INDEX)
-                .Type(ContentType.show.ToString())
-                .Query(q => q
-                    .Match(m => m.Field(f => f.Nombre).Query(nombre)))
-                    );
-
-            if (response == null)
-                return null;
-            Show show = null;
-            if (response.Total > 0)
-            {
-                foreach (var item in response.Documents)
-                    show = item;
-            }
-            return show;
-        }
 
 
 
@@ -343,21 +322,25 @@ namespace SUA.Repositorios
 
         public void DeleteIndex()
         {
-            Client.DeleteIndex(INDEX);
+            if (IndexExists())
+            {
+                var response = Client.DeleteIndex(Index);
+                if (!response.IsValid)
+                    throw new Exception("delte_index_exception");
+            }
+        }    
+        public bool IndexExists()
+        {
+            var response = Client.IndexExists(Index);
+            return response.Exists;
         }
         public void CreateIndex()
         {
-            Client.CreateIndex(INDEX, c => c
-                     .Mappings(m => m.Map<Standupero>(ContentType.standupero.ToString(), md => md.AutoMap(3)))
-                     .Settings(s => s
+            Client.CreateIndex(Index, c => c
+                       .Settings(s => s
                          .NumberOfShards(5)
                          .NumberOfReplicas(5))
-                     );
-        }
-        public bool IndexExists()
-        {
-            var response = Client.IndexExists(INDEX);
-            return response.Exists;
+                   );
         }
 
         public enum ContentType

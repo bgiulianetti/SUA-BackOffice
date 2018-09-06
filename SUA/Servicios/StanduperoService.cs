@@ -16,7 +16,7 @@ namespace SUA.Servicios
             var node = new UriBuilder("localhost");
             node.Port = 9200;
             var settings = new ESSettings(node);
-            Repository = new ESRepositorio(settings);
+            Repository = new ESRepositorio(settings, ESRepositorio.ContentType.standupero.ToString());
         }
 
         public List<Standupero> GetStanduperos()

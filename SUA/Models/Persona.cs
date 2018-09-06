@@ -18,6 +18,5 @@ namespace SUA.Models
         public string TransportePropio { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public DateTime FechaAlta { get; set; }
-        public string Foto { get; set; }
     }
 }

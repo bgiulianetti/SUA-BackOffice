@@ -20,17 +20,21 @@
         {
             <label>El Standupero ha sido actualizado con éxito. Puede ver los cambios en el <a href="@Url.RouteUrl("Standuperos")">Listado de Standuperos</a></label>
         }
-        else if (ViewBag.mensaje == "fail")
-        {
-            <label>Algo ha fallado. Por favor intentalo en unos minutos</label>
-        }
-        else if (ViewBag.mensaje == "standupero ya existente")
+        else if (ViewBag.mensaje == "standupero_ya_existente")
         {
             <label>El standupero que ha intentado cargar ya existe.</label>
         }
-        else if (ViewBag.mensaje == "standupero inválido")
+        else if (ViewBag.mensaje == "standupero_invalido")
         {
             <label>El standupero que ha intentado cargar posee campos inválidos.</label>
+        }
+        else if (ViewBag.mensaje == "standupero_no_creado")
+        {
+            <label>El standupero no ha podido crearse. Por favor intentelo nuevamente mas tarde.</label>
+        }
+        else if (ViewBag.mensaje == "standupero_no_actualizado")
+        {
+            <label>El standupero no ha podido editarse. Por favor intentelo nuevamente mas tarde.</label>
         }
         else if (ViewBag.mensaje == "")
         {
