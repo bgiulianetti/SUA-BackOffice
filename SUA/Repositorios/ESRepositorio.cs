@@ -13,6 +13,7 @@ namespace SUA.Repositorios
         public const string INVALID_SETTINGS_EXCEPTION = "Configuración de ES inválida";
         public const string INVALID_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch";
 
+        //Standupero
         public const string STANDUPERO_INVALID_EXCEPTION = "standupero_invalido";
         public const string STANDUPERO_ALREADY_EXISTS_EXCEPTION = "standupero_ya_existente";
         public const string STANDUPERO_NOT_EXISTS_EXCEPTION = "standupero_no_existente";
@@ -21,12 +22,24 @@ namespace SUA.Repositorios
         public const string STANDUPERO_NOT_DELETED_EXCEPTION = "standupero_no_borrado";
 
 
-        public const string PRODUCTOR_INVALID_EXCEPTION = "productor inválido";
+        //Productor
+        public const string PRODUCTOR_INVALID_EXCEPTION = "productor_inválido";
         public const string PRODUCTOR_ALREADY_EXISTS_EXCEPTION = "productor_ya_existente";
         public const string PRODUCTOR_NOT_EXISTS_EXCEPTION = "productor_no_existente";
         public const string PRODUCTOR_NOT_UPDATED_EXCEPTION = "productor_no_actualizado";
         public const string PRODUCTOR_NOT_CREATED_EXCEPTION = "productor_no_creado";
         public const string PRODUCTOR_NOT_DELETED_EXCEPTION = "productor_no_borrado";
+
+
+        //Show
+        public const string SHOW_INVALID_EXCEPTION = "show_inválido";
+        public const string SHOW_ALREADY_EXISTS_EXCEPTION = "show_ya_existente";
+        public const string SHOW_NOT_EXISTS_EXCEPTION = "show_no_existente";
+        public const string SHOW_NOT_UPDATED_EXCEPTION = "show_no_actualizado";
+        public const string SHOW_NOT_CREATED_EXCEPTION = "show_no_creado";
+        public const string SHOW_NOT_DELETED_EXCEPTION = "show_no_borrado";
+
+
 
         protected ElasticClient Client { get; set; }
         protected string Index { get; set; }
@@ -314,6 +327,140 @@ namespace SUA.Repositorios
 
 
         /*--------------------Show-----------------------*/
+        public List<Show> GetShows()
+        {
+            var response = Client.Search<Show>(p => p
+                   .Index(Index)
+                   .Type(Index)
+                  );
+
+            if (response == null)
+                throw new Exception(INVALID_ES_CONNECTION_EXCEPTION);
+            if (response.OriginalException != null)
+                throw new Exception(response.OriginalException.Message);
+
+            var shows = new List<Show>();
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    shows.Add(item);
+            }
+            return shows;
+        }
+        public Show GetProductorByNombre(string nombre)
+        {
+            var response = Client.Search<Show>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q
+                    .Match(m => m.Field(f => f.Nombre).Query(nombre)))
+                    );
+
+            if (response == null)
+                return null;
+            Show show = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    show = item;
+            }
+            return show;
+        }
+        public Show GetShowById(string id)
+        {
+            var response = Client.Search<Show>(s => s
+                   .Index(Index)
+                   .Type(Index)
+                    .Query(q => q.Term("uniqueId", id)));
+
+            if (response == null)
+                return null;
+            Show productor = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    productor = item;
+            }
+            return productor;
+        }
+        public void AddShow(Show show)
+        {
+            if (show == null)
+                throw new Exception(SHOW_INVALID_EXCEPTION);
+
+            var resultado = GetShowById(show.UniqueId.ToString());
+            if (resultado != null)
+                throw new Exception(SHOW_ALREADY_EXISTS_EXCEPTION);
+
+            var response = Client.IndexAsync(show, i => i
+              .Index(Index)
+              .Type(Index)
+              .Refresh(Refresh.True)
+              ).Result;
+
+            if (!response.IsValid)
+                throw new Exception(SHOW_NOT_CREATED_EXCEPTION);
+        }
+        public void UpdateShow(Show show)
+        {
+            if (show == null)
+                throw new Exception(SHOW_INVALID_EXCEPTION);
+
+            var innerId = GetShowInnerIdById(show.UniqueId.ToString());
+            if (innerId == null)
+                throw new Exception(SHOW_NOT_EXISTS_EXCEPTION);
+
+            var result = Client.Index(show, i => i
+                            .Index(Index)
+                            .Type(Index)
+                            .Id(innerId)
+                            .Refresh(Refresh.True));
+
+            if (!result.IsValid)
+                throw new Exception(SHOW_NOT_UPDATED_EXCEPTION);
+        }
+        public string GetShowInnerIdById(string id)
+        {
+            var response = Client.Search<Show>(s => s
+                    .Index(Index)
+                    .Type(Index)
+                    .Query(q => q.Term("id", id))
+                  );
+
+            string innerId = null;
+            if (response == null)
+                return innerId;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Hits)
+                    innerId = item.Id;
+            }
+            return innerId;
+        }
+        public void DeleteShow(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(SHOW_INVALID_EXCEPTION);
+
+            var innerId = GetShowInnerIdById(id);
+            if (innerId == null)
+                throw new Exception(SHOW_NOT_EXISTS_EXCEPTION);
+
+            var response = Client.Delete<Show>(innerId, d => d
+                                                        .Index(Index)
+                                                        .Type(Index)
+                                                        .Refresh(Refresh.True)
+                                                        );
+            if (!response.IsValid)
+                throw new Exception(PRODUCTOR_NOT_DELETED_EXCEPTION);
+        }
+        public void DeleteAllShows()
+        {
+            Client.DeleteByQuery<Show>(q => q.Type(Index));
+        }
+
+
+
 
 
 
