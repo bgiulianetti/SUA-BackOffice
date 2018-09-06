@@ -89,7 +89,7 @@ namespace SUA.Controllers
             {
                 //loguear mensaje o mandar pagina de error
             }
-            return RedirectToAction("Standuperos", "Home");
+            return RedirectToAction("Standuperos", "Standupero");
         }
 
     }
