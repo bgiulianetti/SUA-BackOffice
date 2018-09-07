@@ -66,7 +66,7 @@
                                 </td>
                                 <td>
                                     <label>Standuperos Seleccionados</label>
-                                    <select multiple="multiple" class="form-control" id="standuperosSeleccionados"></select>
+                                    <select multiple="multiple" class="form-control" id="standuperosSeleccionados"  name="standuperosSeleccionados"></select>
                                     <input type="button" value="Borarr" class="form-control"  id="borrar" />
                                 </td>
                             </tr>
@@ -94,18 +94,18 @@
                                     @Html.TextBoxFor(model => model.Observaciones, new { @class = "form-control", Style = "width:100%", required = "required" })
                                 </td>
                             </tr>
-
                         </table>
 
                         <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
+                        <input name="standuperoSeleccionadosHidden" class="hidden" data-form="error-box" />
                         <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
                     </form>
                 </div>
             </div>
         }
     }
-
 </div>
+
 <script>
     $("#agregar").click(function (event) {
         var seleccion = $("#standuperos option:selected");
@@ -115,6 +115,18 @@
         {
             $("#standuperosSeleccionados").append('<option value="' + seleccion.val() + '">' + seleccion.html() + '</option>');
             $("#standuperos option[value='" + seleccion.val() + "']").remove();
+
+            var list = $("#standuperosSeleccionados");
+            var i = 0;
+            var _standuperos = "";
+            while (list[0].children[i] != undefined)
+            {
+                if (_standuperos == "")
+                    _standuperos = list[i].children[i].value ;
+                else
+                    _standuperos = _standuperos + "-" + list[i].children[i].value ;
+                i++;
+            }
         }
 
     });
