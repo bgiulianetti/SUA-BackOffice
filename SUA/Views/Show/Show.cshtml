@@ -62,10 +62,12 @@
                                             <option value="@item.Dni">@item.Nombre @item.Apellido</option>
                                         }
                                     </select>
+                                    <input type="button" value="Agregar" class="form-control" id="agregar" />
                                 </td>
                                 <td>
                                     <label>Standuperos Seleccionados</label>
                                     <select multiple="multiple" class="form-control" id="standuperosSeleccionados"></select>
+                                    <input type="button" value="Borarr" class="form-control"  id="borrar" />
                                 </td>
                             </tr>
                             <tr>
@@ -105,13 +107,26 @@
 
 </div>
 <script>
-    $("#standuperos option").dblclick(function (event) {
-        $("#standuperosSeleccionados").append('<option value="' + $(this).val() + '">' + $(this).html() + '</option>');
-        $("#standuperos option[value='" + $(this).val() + "']").remove();
+    $("#agregar").click(function (event) {
+        var seleccion = $("#standuperos option:selected");
+        if(seleccion.val() == undefined)
+            alert("Debe seleccionar un standupero");
+        else
+        {
+            $("#standuperosSeleccionados").append('<option value="' + seleccion.val() + '">' + seleccion.html() + '</option>');
+            $("#standuperos option[value='" + seleccion.val() + "']").remove();
+        }
+
     });
 
-    $("#standuperosSeleccionados option").dblclick(function (event) {
-        $("#standuperos").append('<option value="' + $(this).val() + '">' + $(this).html() + '</option>');
-        $("#standuperosSeleccionados option[value='" + $(this).val() + "']").remove();
+    $("#borrar").click(function (event) {
+        var seleccion = $("#standuperosSeleccionados option:selected");
+        if (seleccion.val() == undefined)
+            alert("Debe seleccionar un standupero");
+        else
+        {
+            $("#standuperos").append('<option value="' + seleccion.val() + '">' + seleccion.html() + '</option>');
+            $("#standuperosSeleccionados option[value='" + seleccion.val() + "']").remove();
+        }
     });
 </script>
