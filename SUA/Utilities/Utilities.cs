@@ -134,7 +134,7 @@ namespace SUA.Utilities
             return ConverListToSelectListItem(bancos);
         }
 
-        private static List<SelectListItem> ConverListToSelectListItem(List<string> list)
+        public static List<SelectListItem> ConverListToSelectListItem(List<string> list)
         {
             var selectList = new List<SelectListItem>();
             foreach (var item in list)

@@ -56,7 +56,7 @@
                             <tr>
                                 <td>
                                     <label>Standuperos </label>
-                                    <select multiple="multiple" class="form-control">
+                                    <select multiple="multiple" class="form-control" id="standuperos">
                                         @foreach (var item in ViewBag.standuperos)
                                         {
                                             <option value="@item.Dni">@item.Nombre @item.Apellido</option>
@@ -65,16 +65,36 @@
                                 </td>
                                 <td>
                                     <label>Standuperos Seleccionados</label>
-                                    <select multiple="multiple" class="form-control"></select>
+                                    <select multiple="multiple" class="form-control" id="standuperosSeleccionados"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  colspan="2">
+                                    <label>Rider </label>
+                                    @Html.TextBoxFor(model => model.Rider, new { @class = "form-control", Style = "width:100%x", required = "required" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  colspan="2">
+                                    <label>Camarin </label>
+                                    @Html.TextBoxFor(model => model.Camarin, new { @class = "form-control", Style = "width:100%", required = "required" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Productor Default </label>
+                                    @Html.DropDownListFor(model => model.ProductorDefault, new SelectList(ViewBag.productores, "Text", "Value"), new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <label>Observaciones </label>
+                                    @Html.TextBoxFor(model => model.Observaciones, new { @class = "form-control", Style = "width:100%", required = "required" })
                                 </td>
                             </tr>
 
                         </table>
-                        <hr style="color: #8dd9f7">
 
-                        
-
-                        <hr style="color: #8dd9f7">
                         <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
                         <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
                     </form>
@@ -84,4 +104,14 @@
     }
 
 </div>
+<script>
+    $("#standuperos option").dblclick(function (event) {
+        $("#standuperosSeleccionados").append('<option value="' + $(this).val() + '">' + $(this).html() + '</option>');
+        $("#standuperos option[value='" + $(this).val() + "']").remove();
+    });
 
+    $("#standuperosSeleccionados option").dblclick(function (event) {
+        $("#standuperos").append('<option value="' + $(this).val() + '">' + $(this).html() + '</option>');
+        $("#standuperosSeleccionados option[value='" + $(this).val() + "']").remove();
+    });
+</script>

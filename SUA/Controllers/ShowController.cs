@@ -1,4 +1,5 @@
-﻿using SUA.Servicios;
+﻿using SUA.Models;
+using SUA.Servicios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +18,9 @@ namespace SUA.Controllers
             ViewBag.standuperos = standuperoService.GetStanduperos();
 
             var productoresService = new ProductorService();
-            ViewBag.productores = productoresService.GetProductores();
-            
+            var productores = productoresService.GetProductores();
+            ViewBag.productores = ConvertToSelectListItem(productores);
+
             if (string.IsNullOrEmpty(id))
             {
                 ViewBag.accion = "Post";
@@ -33,6 +35,40 @@ namespace SUA.Controllers
                 return View(show);
             }
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Show(Show show, string accion)
+        {
+            var service = new ShowService();
+            try
+            {
+                if (string.Equals(accion, "Post"))
+                {
+                    service.AddShow(show);
+                    ViewBag.mensaje = "creado";
+                }
+
+                else if (string.Equals(accion, "Put"))
+                {
+                    service.UpdateShow(show);
+                    ViewBag.mensaje = "actualizado";
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.mensaje = ex.Message;
+            }
+            return View();
+        }
+
+        private List<SelectListItem> ConvertToSelectListItem(List<Productor> productores)
+        {
+            var selectList = new List<SelectListItem>();
+            foreach (var item in productores)
+                selectList.Add(new SelectListItem { Text = item.Dni, Value = item.Nombre + " " + item.Apellido });
+
+            return selectList;
         }
     }
 }
