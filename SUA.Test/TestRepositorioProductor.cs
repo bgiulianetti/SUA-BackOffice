@@ -80,7 +80,7 @@ namespace SUA.Test
             }
         }
         [TestMethod]
-        public void PuedoObtenerUnStanduperoPorApellidoCorrectamente()
+        public void PuedoObtenerUnProductorPorApellidoCorrectamente()
         {
             var productor = CrearProductor("32576829", "Giulianetti", "Bruno", "Argentina");
             repository.AddProductor(productor);

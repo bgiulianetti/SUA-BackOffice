@@ -80,66 +80,72 @@ namespace SUA.Test
                     Assert.AreEqual(show2, item);
             }
         }
+
         [TestMethod]
-        public void PuedoObtenerUnStanduperoPorApellidoCorrectamente()
+        public void PuedoObtenerUnShowPorNombreCorrectamente()
         {
-            var productor = CrearProductor("32576829", "Giulianetti", "Bruno", "Argentina");
-            repository.AddProductor(productor);
-            var productorObtenido = repository.GetProductorByApellido(productor.Apellido);
-            Assert.AreEqual(productor, productorObtenido);
+            var id = 1;
+            var show = CrearShow(id);
+            repository.AddShow(show);
+            var showObtenido = repository.GetShowByNombre(show.Nombre);
+            Assert.AreEqual(show, showObtenido);
         }
+
         [TestMethod]
-        public void SiModificoUnProductorInexistenteObtengoUnError()
+        public void SiModificoUnShowInexistenteObtengoUnError()
         {
-            var dni = "32576829";
-            var productor = CrearProductor(dni, "Giulianetti", "Bruno", "Argentina");
+            var id = 1;
+            var show = CrearShow(id);
             try
             {
-                repository.UpdateProductor(productor);
+                repository.UpdateShow(show);
             }
             catch (Exception ex)
             {
-                Assert.AreEqual(ex.Message, ESRepositorio.PRODUCTOR_NOT_EXISTS_EXCEPTION);
+                Assert.AreEqual(ex.Message, ESRepositorio.SHOW_NOT_EXISTS_EXCEPTION);
             }
         }
-        [TestMethod]
-        public void PuedoModificarUnProductorCorrectamente()
-        {
-            var dni = "32576829";
-            var productor = CrearProductor(dni, "Giulianetti", "Bruno", "Argentina");
-            repository.AddProductor(productor);
-            productor.Nombre = "Nombre cambiado";
-            repository.UpdateProductor(productor);
 
-            var productorObtenido = repository.GetProductorByDni(productor.Dni);
-            Assert.AreEqual(productorObtenido, productor);
-        }
         [TestMethod]
-        public void SiEliminoUnProductorInexistenteObtengoUnError()
+        public void PuedoModificarUnShowCorrectamente()
         {
-            var dni = "32576829";
-            var productor = CrearProductor(dni, "Giulianetti", "Bruno", "Argentina");
+            var id = 1;
+            var show = CrearShow(id);
+            repository.AddShow(show);
+            show.Nombre = "Nombre cambiado";
+            repository.UpdateShow(show);
+
+            var showObtenido = repository.GetShowById(show.UniqueId.ToString());
+            Assert.AreEqual(showObtenido, show);
+        }
+
+        [TestMethod]
+        public void SiEliminoUnShowInexistenteObtengoUnError()
+        {
+            var id = 1;
+            var show = CrearShow(id);
             repository.CreateIndex();
             try
             {
-                repository.GetProductorByDni(productor.Dni);
+                repository.GetShowById(show.UniqueId.ToString());
             }
             catch (Exception ex)
             {
-                Assert.AreEqual(ex.Message, ESRepositorio.PRODUCTOR_NOT_EXISTS_EXCEPTION);
+                Assert.AreEqual(ex.Message, ESRepositorio.SHOW_NOT_EXISTS_EXCEPTION);
             }
         }
+
         [TestMethod]
-        public void PuedoEliminarUnProductorCorrectamente()
+        public void PuedoEliminarUnShowCorrectamente()
         {
-            var dni = "32576829";
-            var productor = CrearProductor(dni, "Giulianetti", "Bruno", "Argentina");
-            repository.AddProductor(productor);
+            var id = 1;
+            var show = CrearShow(id);
+            repository.AddShow(show);
 
-            repository.DeleteProductor(productor.Dni);
+            repository.DeleteShow(show.UniqueId.ToString());
 
-            var producorObtenido = repository.GetProductorByDni(productor.Dni);
-            Assert.AreEqual(producorObtenido, null);
+            var showObtenido = repository.GetShowById(show.UniqueId.ToString());
+            Assert.AreEqual(showObtenido, null);
         }
 
 
@@ -189,7 +195,7 @@ namespace SUA.Test
                                                      CrearStandupero("36621192", "Orsi", "Dario", "Argentina"), },
                 Nombre = "Sanata",
                 _Show = "Desubicado",
-                Rider = new List<string> { "5 microfonos" },
+                Rider = "5 microfonos",
                 ProductorDefault = CrearProductor("32576829", "Giulianeetti", "Federico", "Argentina"),
                 FechaAlta = DateTime.Now,
                 FechaCreacion = DateTime.Now,

@@ -173,6 +173,7 @@
     <Compile Include="Repositorios\ESSettings.cs" />
     <Compile Include="Repositorios\ESRepositorio.cs" />
     <Compile Include="Servicios\ProductorService.cs" />
+    <Compile Include="Servicios\ShowService.cs" />
     <Compile Include="Servicios\StanduperoService.cs" />
     <Compile Include="Utilities\Utilities.cs" />
   </ItemGroup>
@@ -244,10 +245,10 @@
     <Content Include="Views\Standupero\Standuperos.cshtml" />
     <Content Include="Views\Productor\Productor.cshtml" />
     <Content Include="Views\Productor\Productores.cshtml" />
+    <Content Include="Views\Show\Show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Show\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

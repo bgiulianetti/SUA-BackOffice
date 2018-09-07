@@ -1,0 +1,87 @@
+﻿@model SUA.Models.Show
+<style>
+    table {
+        border-spacing: 20px;
+    }
+
+    td {
+        padding: 10px;
+    }
+</style>
+
+<div class="main-content">
+    @using (Html.BeginForm("Show", "Show", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        if (ViewBag.mensaje == "creado")
+        {
+            <label>El show ha sido cargado con éxito. Puede verlo cargado en el <a href="@Url.RouteUrl("Standuperos")">Listado de shows</a></label>
+        }
+        if (ViewBag.mensaje == "actualizado")
+        {
+            <label>El show ha sido actualizado con éxito. Puede ver los cambios en el <a href="@Url.RouteUrl("Standuperos")">Listado de shows</a></label>
+        }
+        else if (ViewBag.mensaje == "show_ya_existente")
+        {
+            <label>El show que ha intentado cargar ya existe.</label>
+        }
+        else if (ViewBag.mensaje == "show_invalido")
+        {
+            <label>El show que ha intentado cargar posee campos inválidos.</label>
+        }
+        else if (ViewBag.mensaje == "show_no_creado")
+        {
+            <label>El show no ha podido crearse. Por favor intentelo nuevamente mas tarde.</label>
+        }
+        else if (ViewBag.mensaje == "show_no_actualizado")
+        {
+            <label>El show no ha podido editarse. Por favor intentelo nuevamente mas tarde.</label>
+        }
+        else if (ViewBag.mensaje == "")
+        {
+            <div class="panel">
+                <div class="panel-body">
+                    <form data-id="" id="pdf-create-form" to-action="/pdfs/create">
+
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <label>Show </label>
+                                    @Html.TextBoxFor(model => model._Show, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                                <td>
+                                    <label>Nombre </label>
+                                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Standuperos </label>
+                                    <select multiple="multiple" class="form-control">
+                                        @foreach (var item in ViewBag.standuperos)
+                                        {
+                                            <option value="@item.Dni">@item.Nombre @item.Apellido</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <label>Standuperos Seleccionados</label>
+                                    <select multiple="multiple" class="form-control"></select>
+                                </td>
+                            </tr>
+
+                        </table>
+                        <hr style="color: #8dd9f7">
+
+                        
+
+                        <hr style="color: #8dd9f7">
+                        <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
+                        <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        }
+    }
+
+</div>
+

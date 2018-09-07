@@ -19,6 +19,8 @@ namespace SUA
                 defaults: new { controller = "Home", action = "Index" }
             );
 
+
+            //============================standupero=================================
             routes.MapRoute(
                 name: "Standupero",
                 url: "standupero",
@@ -31,6 +33,9 @@ namespace SUA
                 defaults: new { controller = "Standupero", action = "Standuperos" }
             );
 
+
+
+            //============================produtor=======================================
             routes.MapRoute(
                 name: "Productor",
                 url: "productor",
@@ -42,6 +47,24 @@ namespace SUA
                 url: "productores",
                 defaults: new { controller = "Productor", action = "Productores" }
             );
+
+
+
+            //============================produtor=======================================
+            routes.MapRoute(
+                name: "Show",
+                url: "show",
+                defaults: new { controller = "Show", action = "Show" }
+            );
+
+            routes.MapRoute(
+                name: "Shows",
+                url: "shows",
+                defaults: new { controller = "Show", action = "Shows" }
+            );
+
+
+
 
 
 

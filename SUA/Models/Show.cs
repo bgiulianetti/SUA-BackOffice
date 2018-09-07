@@ -13,7 +13,7 @@ namespace SUA.Models
         public List<Standupero> Integrantes { get; set; }
         public DateTime FechaCreacion { get; set; }
         public DateTime FechaAlta { get; set; }
-        public List<string> Rider { get; set; }
+        public string Rider { get; set; }
         public string Camarin { get; set; }
         public string Observaciones { get; set; }
         public Productor ProductorDefault { get; set; }

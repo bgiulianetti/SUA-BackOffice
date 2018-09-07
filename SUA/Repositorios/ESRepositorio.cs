@@ -347,7 +347,7 @@ namespace SUA.Repositorios
             }
             return shows;
         }
-        public Show GetProductorByNombre(string nombre)
+        public Show GetShowByNombre(string nombre)
         {
             var response = Client.Search<Show>(s => s
                 .Index(Index)
@@ -424,7 +424,7 @@ namespace SUA.Repositorios
             var response = Client.Search<Show>(s => s
                     .Index(Index)
                     .Type(Index)
-                    .Query(q => q.Term("id", id))
+                    .Query(q => q.Term("uniqueId", id))
                   );
 
             string innerId = null;
