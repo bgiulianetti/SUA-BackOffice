@@ -40,7 +40,6 @@ namespace SUA.Controllers
         [HttpPost]
         public ActionResult Show(Show show, string accion, string _standuperos)
         {
-            //////////////////////////////
             var DNIs = _standuperos.Split('-').ToList();
             var standuperos = new List<Standupero>();
             var standuperoService = new StanduperoService();
@@ -50,7 +49,6 @@ namespace SUA.Controllers
             }
             show.Integrantes = standuperos;
 
-            ///////////////////////////////////////
             var service = new ShowService();
             try
             {

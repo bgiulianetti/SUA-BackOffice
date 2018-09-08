@@ -3,6 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SUA.Repositorios;
 using System.Collections.Generic;
 using SUA.Models;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace SUA.Test
 {
@@ -166,6 +168,22 @@ namespace SUA.Test
                 InstagramUser = "@bgiulianetti"
             };
         }
-  
+
+        [TestMethod]
+        public void GetStanduperoFollowers()
+        {
+            var Client = new HttpClient();
+            Client.BaseAddress = new Uri("https://www.instagram.com/");
+            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+            var request = "nicolasdetracy";
+            var response = Client.GetAsync(request).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var responseJson = response.Content.ReadAsStringAsync().Result;
+            }
+        }
+
     }
 }

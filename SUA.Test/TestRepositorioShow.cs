@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SUA.Repositorios;
 using SUA.Models;
 using System.Collections.Generic;
+using SUA.Utilities;
 
 namespace SUA.Test
 {
@@ -12,7 +13,6 @@ namespace SUA.Test
         ESRepositorio repository;
         ESSettings settings;
         string index;
-
 
         [TestInitialize]
         public void Setup()
@@ -40,7 +40,7 @@ namespace SUA.Test
         [TestMethod]
         public void SiAgregoUnShowExistenteObtengoUnError()
         {
-            var show = CrearShow(1);
+            var show = CrearShow("show");
             repository.AddShow(show);
             try
             {
@@ -56,27 +56,27 @@ namespace SUA.Test
         [TestMethod]
         public void PuedoAgregarUnShowCorrectamente()
         {
-            var id = 1;
-            var show = CrearShow(id);
+            var nombre = "innombrable";
+            var show = CrearShow(nombre);
             repository.AddShow(show);
-            var showObtenido = repository.GetShowById(id.ToString());
+            var showObtenido = repository.GetShowByNombre(nombre);
             Assert.AreEqual(show, showObtenido);
         }
 
         [TestMethod]
         public void PuedoObtenerTodosLosShowsCorrectamente()
         {
-            var show1 = CrearShow(1);
-            var show2 = CrearShow(2);
+            var show1 = CrearShow("desubicado");
             repository.AddShow(show1);
+            var show2 = CrearShow("innombrable");
             repository.AddShow(show2);
 
             var shows = repository.GetShows();
             foreach (var item in shows)
             {
-                if (item.UniqueId == 1)
+                if (item.Nombre == "desubicado")
                     Assert.AreEqual(show1, item);
-                else if (item.UniqueId == 2)
+                else if (item.Nombre == "innombrable")
                     Assert.AreEqual(show2, item);
             }
         }
@@ -84,8 +84,8 @@ namespace SUA.Test
         [TestMethod]
         public void PuedoObtenerUnShowPorNombreCorrectamente()
         {
-            var id = 1;
-            var show = CrearShow(id);
+            var nombre = "desubicado";
+            var show = CrearShow(nombre);
             repository.AddShow(show);
             var showObtenido = repository.GetShowByNombre(show.Nombre);
             Assert.AreEqual(show, showObtenido);
@@ -94,8 +94,8 @@ namespace SUA.Test
         [TestMethod]
         public void SiModificoUnShowInexistenteObtengoUnError()
         {
-            var id = 1;
-            var show = CrearShow(id);
+            var nombre = "show";
+            var show = CrearShow(nombre);
             try
             {
                 repository.UpdateShow(show);
@@ -109,25 +109,25 @@ namespace SUA.Test
         [TestMethod]
         public void PuedoModificarUnShowCorrectamente()
         {
-            var id = 1;
-            var show = CrearShow(id);
+            var nombre = "show";
+            var show = CrearShow(nombre);
             repository.AddShow(show);
             show.Nombre = "Nombre cambiado";
             repository.UpdateShow(show);
 
-            var showObtenido = repository.GetShowById(show.UniqueId.ToString());
+            var showObtenido = repository.GetShowByNombre(show.Nombre);
             Assert.AreEqual(showObtenido, show);
         }
 
         [TestMethod]
         public void SiEliminoUnShowInexistenteObtengoUnError()
         {
-            var id = 1;
-            var show = CrearShow(id);
+            var nombre = "show";
+            var show = CrearShow(nombre);
             repository.CreateIndex();
             try
             {
-                repository.GetShowById(show.UniqueId.ToString());
+                repository.GetShowByNombre(show.Nombre);
             }
             catch (Exception ex)
             {
@@ -138,16 +138,15 @@ namespace SUA.Test
         [TestMethod]
         public void PuedoEliminarUnShowCorrectamente()
         {
-            var id = 1;
-            var show = CrearShow(id);
+            var nombre = "show";
+            var show = CrearShow(nombre);
             repository.AddShow(show);
 
-            repository.DeleteShow(show.UniqueId.ToString());
+            repository.DeleteShow(show.UniqueId);
 
-            var showObtenido = repository.GetShowById(show.UniqueId.ToString());
+            var showObtenido = repository.GetShowByNombre(show.Nombre);
             Assert.AreEqual(showObtenido, null);
         }
-
 
         private Productor CrearProductor(string dni, string apellido, string nombre, string pais)
         {
@@ -185,21 +184,18 @@ namespace SUA.Test
                 InstagramUser = "@bgiulianetti"
             };
         }
-        private Show CrearShow(int id)
+        private Show CrearShow(string nombre)
         {
-            return new Show
-            {
-                Camarin = "Uno muy grande",
-                UniqueId = id,
-                Integrantes = new List<Standupero> { CrearStandupero("12345989", "Chouy", "Mike", "Argentina"),
-                                                     CrearStandupero("36621192", "Orsi", "Dario", "Argentina"), },
-                Nombre = "Sanata",
-                _Show = "Desubicado",
+            return new Show {
+                UniqueId = UtilitiesAndStuff.GenerateId(),
+                _Show = "Sanata",
+                Nombre = nombre,
+                Integrantes = new List<Standupero> { CrearStandupero("12345989", "Chouy", "Mike", "Argentina"), CrearStandupero("36621192", "Orsi", "Dario", "Argentina"), },
                 Rider = "5 microfonos",
-                ProductorDefault = CrearProductor("32576829", "Giulianeetti", "Federico", "Argentina"),
+                Camarin = "camarin muy grande",
+                Observaciones = "Son graciosos",
                 FechaAlta = DateTime.Now,
-                FechaCreacion = DateTime.Now,
-                Observaciones = "Son graciosos"
+                ProductorDefault = CrearProductor("32576829", "Giulianeetti", "Federico", "Argentina")
             };
         }
 

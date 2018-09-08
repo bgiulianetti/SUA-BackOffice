@@ -40,7 +40,6 @@ namespace SUA.Repositorios
         public const string SHOW_NOT_DELETED_EXCEPTION = "show_no_borrado";
 
 
-
         protected ElasticClient Client { get; set; }
         protected string Index { get; set; }
 
@@ -371,24 +370,28 @@ namespace SUA.Repositorios
             var response = Client.Search<Show>(s => s
                    .Index(Index)
                    .Type(Index)
-                    .Query(q => q.Term("uniqueId", id)));
+                   .Query(q => q.Term("uniqueId", id)));
 
             if (response == null)
                 return null;
-            Show productor = null;
+            Show show = null;
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    productor = item;
+                    show = item;
             }
-            return productor;
+            return show;
         }
         public void AddShow(Show show)
         {
             if (show == null)
                 throw new Exception(SHOW_INVALID_EXCEPTION);
 
-            var resultado = GetShowById(show.UniqueId.ToString());
+            var resultado = GetShowByNombre(show.Nombre);
+            if (resultado != null)
+                throw new Exception(SHOW_ALREADY_EXISTS_EXCEPTION);
+
+            resultado = GetShowById(show.UniqueId);
             if (resultado != null)
                 throw new Exception(SHOW_ALREADY_EXISTS_EXCEPTION);
 
@@ -406,7 +409,7 @@ namespace SUA.Repositorios
             if (show == null)
                 throw new Exception(SHOW_INVALID_EXCEPTION);
 
-            var innerId = GetShowInnerIdById(show.UniqueId.ToString());
+            var innerId = GetShowInnerIdById(show.UniqueId);
             if (innerId == null)
                 throw new Exception(SHOW_NOT_EXISTS_EXCEPTION);
 
@@ -430,6 +433,26 @@ namespace SUA.Repositorios
             string innerId = null;
             if (response == null)
                 return innerId;
+
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Hits)
+                    innerId = item.Id;
+            }
+            return innerId;
+        }
+        public string GetShowInnerIdByNombre(string nombre)
+        {
+            var response = Client.Search<Show>(s => s
+                    .Index(Index)
+                    .Type(Index)
+                    .Query(q => q.Term("nombre", nombre))
+                  );
+
+            string innerId = null;
+            if (response == null)
+                return innerId;
+
             if (response.Total > 0)
             {
                 foreach (var item in response.Hits)
@@ -447,10 +470,10 @@ namespace SUA.Repositorios
                 throw new Exception(SHOW_NOT_EXISTS_EXCEPTION);
 
             var response = Client.Delete<Show>(innerId, d => d
-                                                        .Index(Index)
-                                                        .Type(Index)
-                                                        .Refresh(Refresh.True)
-                                                        );
+                                                    .Index(Index)
+                                                    .Type(Index)
+                                                    .Refresh(Refresh.True)
+                                                    );
             if (!response.IsValid)
                 throw new Exception(PRODUCTOR_NOT_DELETED_EXCEPTION);
         }
@@ -458,11 +481,6 @@ namespace SUA.Repositorios
         {
             Client.DeleteByQuery<Show>(q => q.Type(Index));
         }
-
-
-
-
-
 
 
         /*---------Metodos genericos------------------*/

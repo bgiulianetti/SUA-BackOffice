@@ -1,8 +1,11 @@
-﻿using SUA.Models;
+﻿using Newtonsoft.Json;
+using SUA.Models;
 using SUA.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web;
 
 namespace SUA.Servicios
@@ -57,6 +60,24 @@ namespace SUA.Servicios
         public void DeleteAllStanduperos()
         {
             Repository.DeleteAllStanduperos();
+        }
+
+        public InstagramUserInfo GetInstagramUserInfo(string dni)
+        {
+            var Client = new HttpClient();
+            Client.BaseAddress = new Uri("https://www.instagram.com/");
+            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+            var request = "nicolasdetracy";
+            var response = Client.GetAsync(request).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var responseJson = response.Content.ReadAsStringAsync().Result;
+                var userResponse = JsonConvert.DeserializeObject(responseJson);
+                return null;
+            }
+            return null;
         }
 
     }

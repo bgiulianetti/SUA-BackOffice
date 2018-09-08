@@ -39,6 +39,11 @@ namespace SUA.Servicios
             return Repository.GetShowInnerIdById(id);
         }
 
+        public string GetShowInnerIdByNombre(string nombre)
+        {
+            return Repository.GetShowInnerIdByNombre(nombre);
+        }
+
         public void AddShow(Show show)
         {
             Repository.AddShow(show);
