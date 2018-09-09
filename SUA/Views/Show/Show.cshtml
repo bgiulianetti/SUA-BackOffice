@@ -14,11 +14,11 @@
     {
         if (ViewBag.mensaje == "creado")
         {
-            <label>El show ha sido cargado con éxito. Puede verlo cargado en el <a href="@Url.RouteUrl("Standuperos")">Listado de shows</a></label>
+            <label>El show ha sido cargado con éxito. Puede verlo cargado en el <a href="@Url.RouteUrl("Shows")">Listado de shows</a></label>
         }
         else if (ViewBag.mensaje == "actualizado")
         {
-            <label>El show ha sido actualizado con éxito. Puede ver los cambios en el <a href="@Url.RouteUrl("Standuperos")">Listado de shows</a></label>
+            <label>El show ha sido actualizado con éxito. Puede ver los cambios en el <a href="@Url.RouteUrl("Shows")">Listado de shows</a></label>
         }
         else if (ViewBag.mensaje == "Get")
         {
@@ -148,6 +148,5 @@
     $("#productorList").change(function () {
         $("#_productor").val($("#productorList option:selected").val());
     });
-
 
 </script>

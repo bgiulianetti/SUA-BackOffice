@@ -247,6 +247,7 @@
     <Content Include="Views\Productor\Productor.cshtml" />
     <Content Include="Views\Productor\Productores.cshtml" />
     <Content Include="Views\Show\Show.cshtml" />
+    <Content Include="Views\Show\Shows.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

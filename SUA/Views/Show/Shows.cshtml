@@ -1,0 +1,46 @@
+﻿<div id="container" class="main-content" style="padding:50px;  width: 100%;">
+    @if (ViewBag.mensaje == "listar")
+    {
+        <div style="width: 100%; overflow-x: auto;  white-space: nowrap;">
+
+            <table id="table_shows" class="display compact hover nowrap">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Show</th>
+                        <th>Nombre</th>
+                        <th>Productor</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th>Show</th>
+                        <th>Nombre</th>
+                        <th>Productor</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in ViewBag.shows)
+                    {
+                        <tr>
+                            <td>
+                                @Html.ActionImage("DeleteShow", "Productor", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
+                                @Html.ActionImage("Show", "Show", new { dni = item.UniqueId }, "~/assets/img/edit_icon.png")
+                            </td>
+                            <td>@item._Show</td>
+                            <td>@item.Nombre
+                            <td>@item.Productor.Nombre @item.Productor.Apellido</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    }
+    else
+    {
+        <label>@ViewBag.mensaje</label>
+    }
+
+</div>

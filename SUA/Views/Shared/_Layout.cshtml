@@ -53,10 +53,9 @@
                 contador++;
             });
 
-            // DataTable
-            var table = $('#table_standuperos').DataTable();
 
             // Apply the search
+            var table = $('#table_standuperos').DataTable();
             table.columns().every(function () {
                 var that = this;
                 $('input', this.footer()).on('keyup change', function () {
@@ -65,6 +64,9 @@
                 });
             });
             //$('#table_standuperos_filter').hide();
+
+
+
 
 
 
@@ -90,10 +92,44 @@
                 contador++;
             });
 
-            // DataTable
-            var table = $('#table_productores').DataTable();
 
             // Apply the search
+            var table = $('#table_productores').DataTable();
+            table.columns().every(function () {
+                var that = this;
+                $('input', this.footer()).on('keyup change', function () {
+                    if (that.search() !== this.value)
+                        that.search(this.value).draw();
+                });
+            });
+            //$('#table_standuperos_filter').hide();
+
+
+
+            //-----------------------------Datatables Shows------------------------------
+            var tableStanduperos = $('#table_shows').DataTable({
+                responsive: true,
+                dom: 'l<B>ftip',
+                buttons: [
+                    { extend: 'excelHtml5', title: "Shows", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/') },
+                    'csvHtml5',
+                    { extend: 'pdf', title: "Listado de Shows", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/') }
+                ],
+                'columnDefs': [{ "targets": 0, "className": "text-center" }]
+            });
+
+            var contador = 0;
+            $('#table_shows tfoot th').each(function () {
+                if (contador != 0) {
+                    var title = $(this).text();
+                    $(this).html('<input type="text" placeholder="' + title + '" />');
+                }
+                contador++;
+            });
+
+
+            // Apply the search
+            var table = $('#table_shows').DataTable();
             table.columns().every(function () {
                 var that = this;
                 $('input', this.footer()).on('keyup change', function () {
@@ -142,7 +178,7 @@
                             <a href="#subShows" data-to="shows" data-toggle="collapse" class="collapsed"> <span>Shows</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subShows" class="collapse ">
                                 <ul class="nav">
-                                    <li><a href="#" class="">Listar</a></li>
+                                    <li><a href="@Url.RouteUrl("Shows")" class="">Listar</a></li>
                                     <li><a href="@Url.RouteUrl("Show")" class="">Crear</a></li>
                                 </ul>
                             </div>
