@@ -27,10 +27,9 @@ namespace SUA.Repositorios
         public const string STANDUPERO_UPDATE_INVALID_PARAMETER_EXCEPTION = "Para editar un standupero debe pasar un standupero válido";
         public const string STANDUPERO_UPDATE_NOT_EXISTS_EXCEPTION = "Para editar un standupero debe pasar un standupero que exista previamente";
         public const string STANDUPERO_UPDATE_NOT_UPDATED_EXCEPTION = "Falla al querer editar un standupero";
-        public const string STANDUPERO_DELETE_BY_APELLIDO_INVALID_PARAMETER_EXCEPTION = "Para borrar un standupero por apellido debe pasar un apellido válido";
+        public const string STANDUPERO_DELETE_INVALID_PARAMETER_EXCEPTION = "Para borrar un standupero por dni debe pasar un dni válido";
         public const string STANDUPERO_DELETE_NOT_EXISTS_EXCEPTION = "Para borrar un standupero debe pasar un standupero que exista previamente";
         public const string STANDUPERO_DELETE_NOT_DELETED_EXCEPTION = "Falla al querer borrar un standupero";
-
 
 
         //Productor
@@ -48,18 +47,33 @@ namespace SUA.Repositorios
         public const string PRODUCTOR_UPDATE_INVALID_PARAMETER_EXCEPTION = "Para editar un productor debe pasar un productor válido";
         public const string PRODUCTOR_UPDATE_NOT_EXISTS_EXCEPTION = "Para editar un productor debe pasar un productor que exista previamente";
         public const string PRODUCTOR_UPDATE_NOT_UPDATED_EXCEPTION = "Falla al querer editar un productor";
-        public const string PRODUCTOR_DELETE_BY_APELLIDO_INVALID_PARAMETER_EXCEPTION = "Para borrar un productor por apellido debe pasar un apellido válido";
+        public const string PRODUCTOR_DELETE_INVALID_PARAMETER_EXCEPTION = "Para borrar un productor por dni debe pasar un dni válido";
         public const string PRODUCTOR_DELETE_NOT_EXISTS_EXCEPTION = "Para borrar un productor debe pasar un productor que exista previamente";
         public const string PRODUCTOR_DELETE_NOT_DELETED_EXCEPTION = "Falla al querer borrar un productor";
 
 
-        //Show
-        public const string SHOW_INVALID_EXCEPTION = "show_inválido";
-        public const string SHOW_ALREADY_EXISTS_EXCEPTION = "show_ya_existente";
-        public const string SHOW_NOT_EXISTS_EXCEPTION = "show_no_existente";
-        public const string SHOW_NOT_UPDATED_EXCEPTION = "show_no_actualizado";
-        public const string SHOW_NOT_CREATED_EXCEPTION = "show_no_creado";
-        public const string SHOW_NOT_DELETED_EXCEPTION = "show_no_borrado";
+
+        //show
+        public const string INVALID_SHOW_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch al querer obtener todos los shows";
+        public const string SHOW_GET_ALL_EXCEPTION = "Falla al querer obtener toos los shows";
+        public const string SHOW_GET_BY_NOMBRE_INVALID_PARAMETER_EXCEPTION = "Para obtener un show por nombre debe pasar un nombre válido";
+        public const string SHOW_GET_BY_NOMBRE_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un show por nombre";
+        public const string SHOW_GET_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para obtener un show por id debe pasar un id válido";
+        public const string SHOW_GET_BY_ID_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un show por id";
+        public const string SHOW_CREATE_INVALID_PARAMETER_EXCEPTION = "Para agregar un show debe pasar un show válido";
+        public const string SHOW_CREATE_ALREADY_EXISTS_EXCEPTION = "Para agregar un show debe pasar un show que no exista previamente";
+        public const string SHOW_CREATE_NOT_CREATED_EXCEPTION = "Falla al querer crear un show nuevo";
+        public const string SHOW_UPDATE_INVALID_PARAMETER_EXCEPTION = "Para editar un show debe pasar un show válido";
+        public const string SHOW_UPDATE_NOT_EXISTS_EXCEPTION = "Para editar un show debe pasar un show que exista previamente";
+        public const string SHOW_UPDATE_NOT_UPDATED_EXCEPTION = "Falla al querer editar un show";
+        public const string SHOW_GET_INNERID_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para obtener un show innerId por id debe pasar un id válido";
+        public const string SHOW_GET_INNERID_BY_ID_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un show innerId por id";
+        public const string SHOW_GET_INNERID_BY_NOMBRE_INVALID_PARAMETER_EXCEPTION = "Para obtener un show innerId por nombre debe pasar un nombre válido";
+        public const string SHOW_GET_INNERID_BY_NOMBRE_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un show innerId por nombre";
+        public const string SHOW_DELETE_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para borrar un show por id debe pasar un id válido";
+        public const string SHOW_DELETE_NOT_EXISTS_EXCEPTION = "Para borrar un show debe pasar un show que exista previamente";
+        public const string SHOW_DELETE_NOT_DELETED_EXCEPTION = "Falla al querer borrar un show";
+
 
 
         protected ElasticClient Client { get; set; }
@@ -213,7 +227,7 @@ namespace SUA.Repositorios
         public void DeleteStandupero(string dni)
         {
             if (string.IsNullOrEmpty(dni))
-                throw new Exception(STANDUPERO_DELETE_BY_APELLIDO_INVALID_PARAMETER_EXCEPTION);
+                throw new Exception(STANDUPERO_DELETE_INVALID_PARAMETER_EXCEPTION);
 
             var innerId = GetStanduperoInnerIdByDni(dni);
             if (innerId == null)
@@ -369,7 +383,7 @@ namespace SUA.Repositorios
         public void DeleteProductor(string dni)
         {
             if (string.IsNullOrEmpty(dni))
-                throw new Exception(PRODUCTOR_DELETE_BY_APELLIDO_INVALID_PARAMETER_EXCEPTION);
+                throw new Exception(PRODUCTOR_DELETE_INVALID_PARAMETER_EXCEPTION);
 
             var innerId = GetProductorInnerIdByDni(dni);
             if (innerId == null)
@@ -398,9 +412,10 @@ namespace SUA.Repositorios
                   );
 
             if (response == null)
-                throw new Exception(INVALID_ES_CONNECTION_EXCEPTION);
-            if (response.OriginalException != null)
-                throw new Exception(response.OriginalException.Message);
+                throw new Exception(INVALID_SHOW_ES_CONNECTION_EXCEPTION);
+
+            if (!response.IsValid)
+                throw new Exception(SHOW_GET_ALL_EXCEPTION);
 
             var shows = new List<Show>();
             if (response.Total > 0)
@@ -412,6 +427,9 @@ namespace SUA.Repositorios
         }
         public Show GetShowByNombre(string nombre)
         {
+            if (string.IsNullOrEmpty(nombre))
+                throw new Exception(SHOW_GET_BY_NOMBRE_INVALID_PARAMETER_EXCEPTION);
+
             var response = Client.Search<Show>(s => s
                 .Index(Index)
                 .Type(Index)
@@ -421,6 +439,10 @@ namespace SUA.Repositorios
 
             if (response == null)
                 return null;
+
+            if (!response.IsValid)
+                throw new Exception(SHOW_GET_BY_NOMBRE_INVALID_SEARCH_EXCEPTION);
+
             Show show = null;
             if (response.Total > 0)
             {
@@ -431,6 +453,9 @@ namespace SUA.Repositorios
         }
         public Show GetShowById(string id)
         {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(SHOW_GET_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
             var response = Client.Search<Show>(s => s
                    .Index(Index)
                    .Type(Index)
@@ -438,6 +463,10 @@ namespace SUA.Repositorios
 
             if (response == null)
                 return null;
+
+            if (!response.IsValid)
+                throw new Exception(SHOW_GET_BY_ID_INVALID_SEARCH_EXCEPTION);
+
             Show show = null;
             if (response.Total > 0)
             {
@@ -449,15 +478,11 @@ namespace SUA.Repositorios
         public void AddShow(Show show)
         {
             if (show == null)
-                throw new Exception(SHOW_INVALID_EXCEPTION);
+                throw new Exception(SHOW_CREATE_INVALID_PARAMETER_EXCEPTION);
 
             var resultado = GetShowByNombre(show.Nombre);
             if (resultado != null)
-                throw new Exception(SHOW_ALREADY_EXISTS_EXCEPTION);
-
-            resultado = GetShowById(show.UniqueId);
-            if (resultado != null)
-                throw new Exception(SHOW_ALREADY_EXISTS_EXCEPTION);
+                throw new Exception(SHOW_CREATE_ALREADY_EXISTS_EXCEPTION);
 
             var response = Client.IndexAsync(show, i => i
               .Index(Index)
@@ -466,16 +491,16 @@ namespace SUA.Repositorios
               ).Result;
 
             if (!response.IsValid)
-                throw new Exception(SHOW_NOT_CREATED_EXCEPTION);
+                throw new Exception(SHOW_CREATE_NOT_CREATED_EXCEPTION);
         }
         public void UpdateShow(Show show)
         {
             if (show == null)
-                throw new Exception(SHOW_INVALID_EXCEPTION);
+                throw new Exception(SHOW_UPDATE_INVALID_PARAMETER_EXCEPTION);
 
             var innerId = GetShowInnerIdById(show.UniqueId);
             if (innerId == null)
-                throw new Exception(SHOW_NOT_EXISTS_EXCEPTION);
+                throw new Exception(SHOW_UPDATE_NOT_EXISTS_EXCEPTION);
 
             var result = Client.Index(show, i => i
                             .Index(Index)
@@ -484,10 +509,13 @@ namespace SUA.Repositorios
                             .Refresh(Refresh.True));
 
             if (!result.IsValid)
-                throw new Exception(SHOW_NOT_UPDATED_EXCEPTION);
+                throw new Exception(SHOW_UPDATE_NOT_UPDATED_EXCEPTION);
         }
         public string GetShowInnerIdById(string id)
         {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(SHOW_GET_INNERID_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
             var response = Client.Search<Show>(s => s
                     .Index(Index)
                     .Type(Index)
@@ -498,6 +526,9 @@ namespace SUA.Repositorios
             if (response == null)
                 return innerId;
 
+            if (response.IsValid)
+                throw new Exception(SHOW_GET_INNERID_BY_ID_INVALID_SEARCH_EXCEPTION);
+
             if (response.Total > 0)
             {
                 foreach (var item in response.Hits)
@@ -507,6 +538,9 @@ namespace SUA.Repositorios
         }
         public string GetShowInnerIdByNombre(string nombre)
         {
+            if (string.IsNullOrEmpty(nombre))
+                throw new Exception(SHOW_GET_INNERID_BY_NOMBRE_INVALID_PARAMETER_EXCEPTION);
+
             var response = Client.Search<Show>(s => s
                     .Index(Index)
                     .Type(Index)
@@ -516,6 +550,9 @@ namespace SUA.Repositorios
             string innerId = null;
             if (response == null)
                 return innerId;
+
+            if (response.IsValid)
+                throw new Exception(SHOW_GET_INNERID_BY_NOMBRE_INVALID_SEARCH_EXCEPTION);
 
             if (response.Total > 0)
             {
@@ -527,11 +564,11 @@ namespace SUA.Repositorios
         public void DeleteShow(string id)
         {
             if (string.IsNullOrEmpty(id))
-                throw new Exception(SHOW_INVALID_EXCEPTION);
+                throw new Exception(SHOW_DELETE_BY_ID_INVALID_PARAMETER_EXCEPTION);
 
             var innerId = GetShowInnerIdById(id);
             if (innerId == null)
-                throw new Exception(SHOW_NOT_EXISTS_EXCEPTION);
+                throw new Exception(SHOW_DELETE_NOT_EXISTS_EXCEPTION);
 
             var response = Client.Delete<Show>(innerId, d => d
                                                     .Index(Index)
@@ -539,7 +576,7 @@ namespace SUA.Repositorios
                                                     .Refresh(Refresh.True)
                                                     );
             if (!response.IsValid)
-                throw new Exception(PRODUCTOR_NOT_DELETED_EXCEPTION);
+                throw new Exception(SHOW_DELETE_NOT_DELETED_EXCEPTION);
         }
         public void DeleteAllShows()
         {
