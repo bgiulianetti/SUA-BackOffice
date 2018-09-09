@@ -154,7 +154,8 @@
         $("#_standuperos").val(_standuperos);
     }
 
-    $("#_productor").val($("#productorList option:selected").val());
+    var productorId = $("#productorList option:selected").val();
+    $("#_productor").val(productorId);
 
     $("#productorList").change(function () {
         $("#_productor").val($("#productorList option:selected").val());

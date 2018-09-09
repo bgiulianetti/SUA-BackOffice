@@ -38,16 +38,10 @@ namespace SUA.Controllers
         }
 
         [HttpPost]
-        public ActionResult Show(Show show, string accion, string _standuperos, string productor)
+        public ActionResult Show(Show show, string accion, string _standuperos, string _productor)
         {
-            var DNIs = _standuperos.Split('-').ToList();
-            var standuperos = new List<Standupero>();
-            var standuperoService = new StanduperoService();
-            foreach (var item in DNIs)
-            {
-                standuperos.Add(standuperoService.GetStanduperoByDni(item));
-            }
-            show.Integrantes = standuperos;
+            show.Integrantes = GetStanduperosListByDnis(_standuperos);
+            show.Productor = new ProductorService().GetProductorByDni(_productor);
 
             var service = new ShowService();
             try
@@ -71,13 +65,16 @@ namespace SUA.Controllers
             return View();
         }
 
-        private List<SelectListItem> ConvertToSelectListItem(List<Productor> productores)
+        private List<Standupero> GetStanduperosListByDnis(string dnis)
         {
-            var selectList = new List<SelectListItem>();
-            foreach (var item in productores)
-                selectList.Add(new SelectListItem { Text = item.Dni, Value = item.Nombre + " " + item.Apellido });
-
-            return selectList;
+            var dniList = dnis.Split('-').ToList();
+            var standuperos = new List<Standupero>();
+            var standuperoService = new StanduperoService();
+            foreach (var item in dniList)
+            {
+                standuperos.Add(standuperoService.GetStanduperoByDni(item));
+            }
+            return standuperos;
         }
     }
 }

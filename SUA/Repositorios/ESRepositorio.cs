@@ -11,15 +11,26 @@ namespace SUA.Repositorios
     public class ESRepositorio
     {
         public const string INVALID_SETTINGS_EXCEPTION = "Configuración de ES inválida";
-        public const string INVALID_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch";
 
         //Standupero
-        public const string STANDUPERO_INVALID_EXCEPTION = "standupero_invalido";
-        public const string STANDUPERO_ALREADY_EXISTS_EXCEPTION = "standupero_ya_existente";
-        public const string STANDUPERO_NOT_EXISTS_EXCEPTION = "standupero_no_existente";
-        public const string STANDUPERO_NOT_UPDATED_EXCEPTION = "standupero_no_actualizado";
-        public const string STANDUPERO_NOT_CREATED_EXCEPTION = "standupero_no_creado";
-        public const string STANDUPERO_NOT_DELETED_EXCEPTION = "standupero_no_borrado";
+        public const string INVALID_STANDUPERO_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch al querer obtener todos los standuperos";
+        public const string STANDUPERO_GET_BY_APELLIDO_INVALID_PARAMETER_EXCEPTION = "Para obtener un standupero por apellido debe pasar un apellido válido";
+        public const string STANDUPERO_GET_BY_APELLIDO_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un standupero por apellido";
+        public const string STANDUPERO_GET_BY_DNI_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un standupero por dni";
+        public const string STANDUPERO_GET_BY_DNI_INVALID_PARAMETER_EXCEPTION = "Para obtener un standupero por dni debe pasar un dni válido";
+        public const string STANDUPERO_GET_INNERID_BY_DNI_INVALID_PARAMETER_EXCEPTION = "Para obtener un standupero innerId por dni debe pasar un dni válido";
+        public const string STANDUPERO_GET_INNERID_BY_DNI_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un standupero innerId por dni";
+        public const string STANDUPERO_CREATE_INVALID_PARAMETER_EXCEPTION = "Para agregar un standupero debe pasar un standupero válido";
+        public const string STANDUPERO_CREATE_ALREADY_EXISTS_EXCEPTION = "Para agregar un standupero debe pasar un standupero que no exista previamente";
+        public const string STANDUPERO_NOT_CREATED_EXCEPTION = "Falla al querer crear un standupero nuevo";
+        public const string STANDUPERO_UPDATE_INVALID_EXCEPTION = "Para agregar un standupero debe pasar un standupero válido";
+        public const string STANDUPERO_UPDATE_INVALID_PARAMETER_EXCEPTION = "Para editar un standupero debe pasar un standupero válido";
+        public const string STANDUPERO_UPDATE_NOT_EXISTS_EXCEPTION = "Para editar un standupero debe pasar un standupero que exista previamente";
+        public const string STANDUPERO_UPDATE_NOT_UPDATED_EXCEPTION = "Falla al querer editar un standupero";
+        public const string STANDUPERO_DELETE_BY_APELLIDO_INVALID_PARAMETER_EXCEPTION = "Para borrar un standupero por apellido debe pasar un apellido válido";
+        public const string STANDUPERO_DELETE_NOT_EXISTS_EXCEPTION = "Para borrar un standupero debe pasar un standupero que exista previamente";
+        public const string STANDUPERO_DELETE_NOT_DELETED_EXCEPTION = "Falla al querer borrar un standupero";
+        
 
 
         //Productor
@@ -64,7 +75,8 @@ namespace SUA.Repositorios
                   );
 
             if (response == null)
-                throw new Exception(INVALID_ES_CONNECTION_EXCEPTION);
+                throw new Exception(INVALID_STANDUPERO_ES_CONNECTION_EXCEPTION);
+
             if (response.OriginalException != null)
                 throw new Exception(response.OriginalException.Message);
 
@@ -78,6 +90,9 @@ namespace SUA.Repositorios
         }
         public Standupero GetStanduperoByApellido(string apellido)
         {
+            if (string.IsNullOrEmpty(apellido))
+                throw new Exception(STANDUPERO_GET_BY_APELLIDO_INVALID_PARAMETER_EXCEPTION);
+
             var response = Client.Search<Standupero>(s => s
                 .Index(Index)
                 .Type(Index)
@@ -87,6 +102,10 @@ namespace SUA.Repositorios
 
             if (response == null)
                 return null;
+
+            if (!response.IsValid)
+                throw new Exception(STANDUPERO_GET_BY_APELLIDO_INVALID_SEARCH_EXCEPTION);
+
             Standupero standupero = null;
             if (response.Total > 0)
             {
@@ -97,6 +116,9 @@ namespace SUA.Repositorios
         }
         public Standupero GetStanduperoByDni(string dni)
         {
+            if (string.IsNullOrEmpty(dni))
+                throw new Exception(STANDUPERO_GET_BY_DNI_INVALID_PARAMETER_EXCEPTION);
+
             var response = Client.Search<Standupero>(s => s
                    .Index(Index)
                    .Type(Index)
@@ -104,6 +126,10 @@ namespace SUA.Repositorios
 
             if (response == null)
                 return null;
+
+            if(!response.IsValid)
+                throw new Exception(STANDUPERO_GET_BY_DNI_INVALID_SEARCH_EXCEPTION);
+
             Standupero standupero = null;
             if (response.Total > 0)
             {
@@ -114,6 +140,9 @@ namespace SUA.Repositorios
         }
         public string GetStanduperoInnerIdByDni(string dni)
         {
+            if (string.IsNullOrEmpty(dni))
+                throw new Exception(STANDUPERO_GET_INNERID_BY_DNI_INVALID_PARAMETER_EXCEPTION);
+
             var response = Client.Search<Standupero>(s => s
                     .Index(Index)
                     .Type(Index)
@@ -123,6 +152,10 @@ namespace SUA.Repositorios
             string innerId = null;
             if (response == null)
                 return innerId;
+
+            if(response.IsValid)
+                throw new Exception(STANDUPERO_GET_INNERID_BY_DNI_INVALID_SEARCH_EXCEPTION);
+
             if (response.Total > 0)
             {
                 foreach (var item in response.Hits)
@@ -131,13 +164,14 @@ namespace SUA.Repositorios
             return innerId;
         }
         public void AddStandupero(Standupero standupero)
+
         {
             if (standupero == null)
-                throw new Exception(STANDUPERO_INVALID_EXCEPTION);
+                throw new Exception(STANDUPERO_CREATE_INVALID_PARAMETER_EXCEPTION);
 
             var resultado = GetStanduperoByDni(standupero.Dni);
             if (resultado != null)
-                throw new Exception(STANDUPERO_ALREADY_EXISTS_EXCEPTION);
+                throw new Exception(STANDUPERO_CREATE_ALREADY_EXISTS_EXCEPTION);
 
             var response = Client.IndexAsync(standupero, i => i
               .Index(Index)
@@ -151,11 +185,11 @@ namespace SUA.Repositorios
         public void UpdateStandupero(Standupero standupero)
         {
             if (standupero == null)
-                throw new Exception(STANDUPERO_INVALID_EXCEPTION);
+                throw new Exception(STANDUPERO_UPDATE_INVALID_PARAMETER_EXCEPTION);
 
             var innerId = GetStanduperoInnerIdByDni(standupero.Dni);
             if (innerId == null)
-                throw new Exception(STANDUPERO_NOT_EXISTS_EXCEPTION);
+                throw new Exception(STANDUPERO_UPDATE_NOT_EXISTS_EXCEPTION);
 
             var result = Client.Index(standupero, i => i
                             .Index(Index)
@@ -164,16 +198,16 @@ namespace SUA.Repositorios
                             .Refresh(Refresh.True));
 
             if (!result.IsValid)
-                throw new Exception(STANDUPERO_NOT_UPDATED_EXCEPTION);
+                throw new Exception(STANDUPERO_UPDATE_NOT_UPDATED_EXCEPTION);
         }
         public void DeleteStandupero(string dni)
         {
             if (string.IsNullOrEmpty(dni))
-                throw new Exception(STANDUPERO_INVALID_EXCEPTION);
+                throw new Exception(STANDUPERO_DELETE_BY_APELLIDO_INVALID_PARAMETER_EXCEPTION);
 
             var innerId = GetStanduperoInnerIdByDni(dni);
             if (innerId == null)
-                throw new Exception(STANDUPERO_NOT_EXISTS_EXCEPTION);
+                throw new Exception(STANDUPERO_DELETE_NOT_EXISTS_EXCEPTION);
 
             var response = Client.Delete<Standupero>(innerId, d => d
                                                         .Index(Index)
@@ -181,13 +215,12 @@ namespace SUA.Repositorios
                                                         .Refresh(Refresh.True)
                                                         );
             if (!response.IsValid)
-                throw new Exception(STANDUPERO_NOT_DELETED_EXCEPTION);
+                throw new Exception(STANDUPERO_DELETE_NOT_DELETED_EXCEPTION);
         }
         public void DeleteAllStanduperos()
         {
             Client.DeleteByQuery<Standupero>(q => q.Type(Index));
         }
-
 
 
         /*--------------------Productor-----------------------*/
