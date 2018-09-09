@@ -187,18 +187,18 @@ namespace SUA.TestProject
         }
         private Show CrearShow(string nombre)
         {
-            return new Show
+            var show = new Show
             {
-                UniqueId = UtilitiesAndStuff.GenerateId(),
                 _Show = "Sanata",
                 Nombre = nombre,
                 Integrantes = new List<Standupero> { CrearStandupero("12345989", "Chouy", "Mike", "Argentina"), CrearStandupero("36621192", "Orsi", "Dario", "Argentina"), },
                 Rider = "5 microfonos",
                 Camarin = "camarin muy grande",
                 Observaciones = "Son graciosos",
-                FechaAlta = DateTime.Now,
                 Productor = CrearProductor("32576829", "Giulianeetti", "Federico", "Argentina")
             };
+            show.SetIdAndFechaAlta();
+            return show;
         }
     }
 }

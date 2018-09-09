@@ -14,7 +14,7 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult Productor(string dni)
         {
-            ViewBag.mensaje = "";
+            ViewBag.mensaje = "Get";
             ViewBag.bancos = UtilitiesAndStuff.GetBancos();
             ViewBag.provincias = UtilitiesAndStuff.GetProvincias();
             ViewBag.paises = UtilitiesAndStuff.GetPaises();
@@ -37,6 +37,7 @@ namespace SUA.Controllers
         [HttpPost]
         public ActionResult Productor(Productor productor, string accion)
         {
+            ViewBag.titulo = "Crear Productor";
             var service = new ProductorService();
             try
             {
@@ -68,12 +69,11 @@ namespace SUA.Controllers
             {
                 var productores = service.GetProductores();
                 ViewBag.productores = productores;
-                ViewBag.mensaje = "ok";
+                ViewBag.mensaje = "listar";
             }
             catch (Exception ex)
             {
                 ViewBag.mensaje = ex.Message;
-                //redirigir a pagina 4XX mostrando el error
             }
             return View();
         }

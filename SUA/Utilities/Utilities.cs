@@ -143,9 +143,5 @@ namespace SUA.Utilities
             return selectList;
         }
 
-        public static string GenerateId()
-        {
-            return DateTime.Now.ToString("yyyyMMddHHssfff");;
-        }
     }
 }

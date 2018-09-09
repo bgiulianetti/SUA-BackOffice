@@ -14,7 +14,7 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult Standupero(string dni)
         {
-            ViewBag.mensaje = "";
+            ViewBag.mensaje = "Get";
             ViewBag.bancos = UtilitiesAndStuff.GetBancos();
             ViewBag.provincias = UtilitiesAndStuff.GetProvincias();
             ViewBag.paises = UtilitiesAndStuff.GetPaises();
@@ -68,12 +68,11 @@ namespace SUA.Controllers
             {
                 var standuperos = service.GetStanduperos();
                 ViewBag.standuperos = standuperos;
-                ViewBag.mensaje = "ok";
+                ViewBag.mensaje = "listar";
             }
             catch (Exception ex)
             {
                 ViewBag.mensaje = ex.Message;
-                //redirigir a pagina 4XX mostrando el error
             }
             return View();
         }

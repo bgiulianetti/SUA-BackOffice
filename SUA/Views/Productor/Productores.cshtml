@@ -1,46 +1,52 @@
 ﻿<div id="container" class="main-content" style="padding:50px;  width: 100%;">
-    <div style="width: 100%; overflow-x: auto;  white-space: nowrap;">
+    @if (ViewBag.mensaje == "listar")
+    {
+        <div style="width: 100%; overflow-x: auto;  white-space: nowrap;">
 
-        <table id="table_productores" class="display compact hover nowrap">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Nombre</th>
-                    <th>Dni</th>
-                    <th>Transporte Propio</th>
-                    <th>Celular</th>
-                    <th>Email</th>
-                </tr>
-            </thead>
-            <tfoot>
-                <tr>
-                    <th></th>
-                    <th>Nombre</th>
-                    <th>Dni</th>
-                    <th>Transporte Propio</th>
-                    <th>Celular</th>
-                    <th>Email</th>
-                </tr>
-            </tfoot>
-            <tbody>
-                @foreach (var item in ViewBag.productores)
-                {
+            <table id="table_productores" class="display compact hover nowrap">
+                <thead>
                     <tr>
-                        <td>
-                            @Html.ActionImage("DeleteProductor", "Productor", new { dni = item.Dni }, "~/assets/img/delete_icon.png")
-                            @Html.ActionImage("Productor", "Productor", new { dni = item.Dni }, "~/assets/img/edit_icon.png")
-                        </td>
-                        <td>@item.Nombre @item.Apellido</td>
-                        <td>@item.Dni
-                        <td>@item.TransportePropio</td>
-                        <td>@item.Celular</td>
-                        <td>@item.Email</td>
+                        <th></th>
+                        <th>Nombre</th>
+                        <th>Dni</th>
+                        <th>Transporte Propio</th>
+                        <th>Celular</th>
+                        <th>Email</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th>Nombre</th>
+                        <th>Dni</th>
+                        <th>Transporte Propio</th>
+                        <th>Celular</th>
+                        <th>Email</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in ViewBag.productores)
+                {
+                        <tr>
+                            <td>
+                                @Html.ActionImage("DeleteProductor", "Productor", new { dni = item.Dni }, "~/assets/img/delete_icon.png")
+                                @Html.ActionImage("Productor", "Productor", new { dni = item.Dni }, "~/assets/img/edit_icon.png")
+                            </td>
+                            <td>@item.Nombre @item.Apellido</td>
+                            <td>@item.Dni
+                            <td>@item.TransportePropio</td>
+                            <td>@item.Celular</td>
+                            <td>@item.Email</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
-    </div>
+        </div>
+    }
+    else
+    {
+        <label>@ViewBag.mensaje</label>
+    }
 
 </div>
-

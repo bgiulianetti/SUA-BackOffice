@@ -13,7 +13,7 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult Show(string id)
         {
-            ViewBag.mensaje = "";
+            ViewBag.mensaje = "Get";
 
             var standuperoService = new StanduperoService();
             ViewBag.standuperos = standuperoService.GetStanduperos();
@@ -40,8 +40,10 @@ namespace SUA.Controllers
         [HttpPost]
         public ActionResult Show(Show show, string accion, string _standuperos, string _productor)
         {
+            ViewBag.titulo = "Crear Show";
             show.Integrantes = GetStanduperosListByDnis(_standuperos);
             show.Productor = new ProductorService().GetProductorByDni(_productor);
+            show.SetIdAndFechaAlta();
 
             var service = new ShowService();
             try
@@ -57,6 +59,24 @@ namespace SUA.Controllers
                     service.UpdateShow(show);
                     ViewBag.mensaje = "actualizado";
                 }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.mensaje = ex.Message;
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Shows()
+        {
+            ViewBag.titulo = "Productores";
+            var service = new ShowService();
+            try
+            {
+                var shows = service.GetShows();
+                ViewBag.shows = shows;
+                ViewBag.mensaje = "listar";
             }
             catch (Exception ex)
             {

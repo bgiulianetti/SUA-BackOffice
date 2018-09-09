@@ -16,27 +16,11 @@
         {
             <label>El Standupero ha sido cargado con éxito. Puede verlo cargado en el <a href="@Url.RouteUrl("Standuperos")">Listado de Standuperos</a></label>
         }
-        if (ViewBag.mensaje == "actualizado")
+        else if (ViewBag.mensaje == "actualizado")
         {
             <label>El Standupero ha sido actualizado con éxito. Puede ver los cambios en el <a href="@Url.RouteUrl("Standuperos")">Listado de Standuperos</a></label>
         }
-        else if (ViewBag.mensaje == "standupero_ya_existente")
-        {
-            <label>El standupero que ha intentado cargar ya existe.</label>
-        }
-        else if (ViewBag.mensaje == "standupero_invalido")
-        {
-            <label>El standupero que ha intentado cargar posee campos inválidos.</label>
-        }
-        else if (ViewBag.mensaje == "standupero_no_creado")
-        {
-            <label>El standupero no ha podido crearse. Por favor intentelo nuevamente mas tarde.</label>
-        }
-        else if (ViewBag.mensaje == "standupero_no_actualizado")
-        {
-            <label>El standupero no ha podido editarse. Por favor intentelo nuevamente mas tarde.</label>
-        }
-        else if (ViewBag.mensaje == "")
+        else if (ViewBag.mensaje == "Get")
         {
             <div class="panel">
                 <div class="panel-body">
@@ -189,6 +173,10 @@
                     </form>
                 </div>
             </div>
+        }
+        else
+        {
+            <label>@ViewBag.mensaje</label>
         }
     }
 

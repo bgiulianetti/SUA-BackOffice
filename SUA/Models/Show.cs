@@ -17,6 +17,12 @@ namespace SUA.Models
         public string Observaciones { get; set; }
         public Productor Productor { get; set; }
 
+        public void SetIdAndFechaAlta()
+        {
+            UniqueId = DateTime.Now.ToString("yyyyMMddHHssfff");
+            FechaAlta = DateTime.Now;
+        }
+
         public override bool Equals(object obj)
         {
             return obj != null && obj is Show && (obj as Show).GetHashCode() == GetHashCode();
