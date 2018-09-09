@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Text;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SUA.Repositorios;
 using SUA.Models;
-using System.Collections.Generic;
 using SUA.Utilities;
 
-namespace SUA.Test
+namespace SUA.TestProject
 {
     [TestClass]
     public class TestRepositorioShow
@@ -17,12 +18,12 @@ namespace SUA.Test
         [TestInitialize]
         public void Setup()
         {
-            var node = new UriBuilder("localhost");
-            node.Port = 9200;
+            var node = new UriBuilder("localhost")
+            { Port = 9200 };
             settings = new ESSettings(node);
             index = "test_" + ESRepositorio.ContentType.show.ToString();
             repository = new ESRepositorio(settings, index);
-            DeleteIndex();
+            repository.CreateIndex();
         }
 
         [TestCleanup]
@@ -102,7 +103,7 @@ namespace SUA.Test
             }
             catch (Exception ex)
             {
-                Assert.AreEqual(ex.Message, ESRepositorio.SHOW_DELETE_NOT_EXISTS_EXCEPTION);
+                Assert.AreEqual(ex.Message, ESRepositorio.SHOW_UPDATE_NOT_EXISTS_EXCEPTION);
             }
         }
 
@@ -186,7 +187,8 @@ namespace SUA.Test
         }
         private Show CrearShow(string nombre)
         {
-            return new Show {
+            return new Show
+            {
                 UniqueId = UtilitiesAndStuff.GenerateId(),
                 _Show = "Sanata",
                 Nombre = nombre,
@@ -198,6 +200,5 @@ namespace SUA.Test
                 Productor = CrearProductor("32576829", "Giulianeetti", "Federico", "Argentina")
             };
         }
-
     }
 }

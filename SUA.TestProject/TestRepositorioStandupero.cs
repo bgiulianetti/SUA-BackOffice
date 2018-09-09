@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Text;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SUA.Repositorios;
-using System.Collections.Generic;
 using SUA.Models;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
-namespace SUA.Test
+namespace SUA.TestProject
 {
     [TestClass]
     public class TestRepositorioStandupero
@@ -18,12 +19,12 @@ namespace SUA.Test
         [TestInitialize]
         public void Setup()
         {
-            var node = new UriBuilder("localhost");
-            node.Port = 9200;
+            var node = new UriBuilder("localhost")
+            { Port = 9200};
             settings = new ESSettings(node);
             index = "test_" + ESRepositorio.ContentType.standupero.ToString();
             repository = new ESRepositorio(settings, index);
-            DeleteIndex();
+            repository.CreateIndex();
         }
 
         [TestCleanup]
@@ -48,11 +49,11 @@ namespace SUA.Test
             {
                 repository.AddStandupero(standupero);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Assert.AreEqual(ex.Message, ESRepositorio.STANDUPERO_CREATE_ALREADY_EXISTS_EXCEPTION);
             }
-            
+
         }
 
         [TestMethod]
@@ -75,11 +76,11 @@ namespace SUA.Test
             var standuperos = repository.GetStanduperos();
             foreach (var item in standuperos)
             {
-                if(item.Nombre == "Bruno")
+                if (item.Nombre == "Bruno")
                     Assert.AreEqual(standupero, item);
                 else if (item.Nombre == "Paula")
                     Assert.AreEqual(standupero2, item);
-            } 
+            }
         }
 
         [TestMethod]
@@ -100,7 +101,7 @@ namespace SUA.Test
             {
                 repository.UpdateStandupero(standupero);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Assert.AreEqual(ex.Message, ESRepositorio.STANDUPERO_UPDATE_NOT_EXISTS_EXCEPTION);
             }
@@ -171,8 +172,8 @@ namespace SUA.Test
         [TestMethod]
         public void GetStanduperoFollowers()
         {
-            var Client = new HttpClient();
-            Client.BaseAddress = new Uri("https://www.instagram.com/");
+            var Client = new HttpClient()
+            { BaseAddress = new Uri("https://www.instagram.com/")};
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
 
@@ -183,6 +184,5 @@ namespace SUA.Test
                 var responseJson = response.Content.ReadAsStringAsync().Result;
             }
         }
-
     }
 }

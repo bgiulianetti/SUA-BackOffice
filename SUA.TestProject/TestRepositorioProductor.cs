@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SUA.Repositorios;
 using SUA.Models;
 
-namespace SUA.Test
+namespace SUA.TestProject
 {
     [TestClass]
     public class TestRepositorioProductor
@@ -18,12 +16,14 @@ namespace SUA.Test
         [TestInitialize]
         public void Setup()
         {
-            var node = new UriBuilder("localhost");
-            node.Port = 9200;
+            var node = new UriBuilder("localhost")
+            {
+                Port = 9200
+            };
             settings = new ESSettings(node);
             index = "test_" + ESRepositorio.ContentType.standupero.ToString();
             repository = new ESRepositorio(settings, index);
-            DeleteIndex();
+            repository.CreateIndex();
         }
 
         [TestCleanup]
@@ -37,7 +37,7 @@ namespace SUA.Test
         {
             repository.DeleteIndex();
         }
-      
+
         [TestMethod]
         public void SiAgregoUnProductorExistenteObtengoUnError()
         {

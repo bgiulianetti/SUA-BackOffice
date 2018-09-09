@@ -85,7 +85,7 @@ namespace SUA.Controllers
             {
                 service.DeleteProductor(dni);
             }
-            catch (Exception ex)
+            catch/* (Exception ex)*/
             {
                 //loguear mensaje o mandar pagina de error
             }

@@ -178,7 +178,7 @@ namespace SUA.Repositorios
             if (response == null)
                 return innerId;
 
-            if(response.IsValid)
+            if(!response.IsValid)
                 throw new Exception(STANDUPERO_GET_INNERID_BY_DNI_INVALID_SEARCH_EXCEPTION);
 
             if (response.Total > 0)
@@ -334,7 +334,7 @@ namespace SUA.Repositorios
             if (response == null)
                 return innerId;
 
-            if (response.IsValid)
+            if (!response.IsValid)
                 throw new Exception(PRODUCTOR_GET_INNERID_BY_DNI_INVALID_SEARCH_EXCEPTION);
 
             if (response.Total > 0)
@@ -526,7 +526,7 @@ namespace SUA.Repositorios
             if (response == null)
                 return innerId;
 
-            if (response.IsValid)
+            if (!response.IsValid)
                 throw new Exception(SHOW_GET_INNERID_BY_ID_INVALID_SEARCH_EXCEPTION);
 
             if (response.Total > 0)
@@ -551,7 +551,7 @@ namespace SUA.Repositorios
             if (response == null)
                 return innerId;
 
-            if (response.IsValid)
+            if (!response.IsValid)
                 throw new Exception(SHOW_GET_INNERID_BY_NOMBRE_INVALID_SEARCH_EXCEPTION);
 
             if (response.Total > 0)
