@@ -14,12 +14,12 @@ namespace SUA.Controllers
         public ActionResult Show(string id)
         {
             ViewBag.mensaje = "";
+
             var standuperoService = new StanduperoService();
             ViewBag.standuperos = standuperoService.GetStanduperos();
 
             var productoresService = new ProductorService();
-            var productores = productoresService.GetProductores();
-            ViewBag.productores = ConvertToSelectListItem(productores);
+            ViewBag.productores = productoresService.GetProductores();
 
             if (string.IsNullOrEmpty(id))
             {
@@ -38,7 +38,7 @@ namespace SUA.Controllers
         }
 
         [HttpPost]
-        public ActionResult Show(Show show, string accion, string _standuperos)
+        public ActionResult Show(Show show, string accion, string _standuperos, string productor)
         {
             var DNIs = _standuperos.Split('-').ToList();
             var standuperos = new List<Standupero>();

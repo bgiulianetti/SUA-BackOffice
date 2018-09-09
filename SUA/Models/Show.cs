@@ -15,7 +15,7 @@ namespace SUA.Models
         public string Rider { get; set; }
         public string Camarin { get; set; }
         public string Observaciones { get; set; }
-        public Productor ProductorDefault { get; set; }
+        public Productor Productor { get; set; }
 
         public override bool Equals(object obj)
         {

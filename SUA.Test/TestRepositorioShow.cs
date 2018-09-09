@@ -195,7 +195,7 @@ namespace SUA.Test
                 Camarin = "camarin muy grande",
                 Observaciones = "Son graciosos",
                 FechaAlta = DateTime.Now,
-                ProductorDefault = CrearProductor("32576829", "Giulianeetti", "Federico", "Argentina")
+                Productor = CrearProductor("32576829", "Giulianeetti", "Federico", "Argentina")
             };
         }
 

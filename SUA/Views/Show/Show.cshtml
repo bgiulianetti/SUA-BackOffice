@@ -66,26 +66,31 @@
                                 </td>
                                 <td>
                                     <label>Standuperos Seleccionados</label>
-                                    <select multiple="multiple" class="form-control" id="standuperosSeleccionados"  name="standuperosSeleccionados" required></select>
-                                    <input type="button" value="Borarr" class="form-control"  id="borrar" />
+                                    <select multiple="multiple" class="form-control" id="standuperosSeleccionados" name="standuperosSeleccionados" required></select>
+                                    <input type="button" value="Borarr" class="form-control" id="borrar" />
                                 </td>
                             </tr>
                             <tr>
-                                <td  colspan="2">
+                                <td colspan="2">
                                     <label>Rider </label>
                                     @Html.TextBoxFor(model => model.Rider, new { @class = "form-control", Style = "width:100%x", required = "required" })
                                 </td>
                             </tr>
                             <tr>
-                                <td  colspan="2">
+                                <td colspan="2">
                                     <label>Camarin </label>
                                     @Html.TextBoxFor(model => model.Camarin, new { @class = "form-control", Style = "width:100%", required = "required" })
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <label>Productor Default </label>
-                                    @Html.DropDownListFor(model => model.ProductorDefault, new SelectList(ViewBag.productores, "Text", "Value"), new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    <label>Productor</label>
+                                    <select name="productorList" class="form-control" id="productorList" required>
+                                        @foreach (var item in ViewBag.productores)
+                                        {
+                                            <option value="@item.Dni">@item.Nombre @item.Apellido</option>
+                                        }
+                                    </select>
                                 </td>
                             </tr>
                             <tr>
@@ -96,8 +101,10 @@
                             </tr>
                         </table>
 
-                        <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
-                        <input id="_standuperos" name="_standuperos" class="hidden" data-form="error-box" />
+                        <input name="accion" class="hidden" value="@ViewBag.accion" />
+                        <input id="_standuperos" name="_standuperos" class="hidden" />
+                        <input id="_productor" name="_productor" class="hidden" />
+
                         <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
                     </form>
                 </div>
@@ -108,13 +115,11 @@
 
 <script>
 
-    $("#agregar").click(function (event)
-    {
+    $("#agregar").click(function (event) {
         var seleccion = $("#standuperos option:selected");
-        if(seleccion.val() == undefined)
+        if (seleccion.val() == undefined)
             alert("Debe seleccionar un standupero");
-        else
-        {
+        else {
             $("#standuperosSeleccionados").append('<option value="' + seleccion.val() + '">' + seleccion.html() + '</option>');
             $("#standuperos option[value='" + seleccion.val() + "']").remove();
 
@@ -125,20 +130,17 @@
 
     });
 
-    $("#borrar").click(function (event)
-    {
+    $("#borrar").click(function (event) {
         var seleccion = $("#standuperosSeleccionados option:selected");
         if (seleccion.val() == undefined)
             alert("Debe seleccionar un standupero");
-        else
-        {
+        else {
             $("#standuperos").append('<option value="' + seleccion.val() + '">' + seleccion.html() + '</option>');
             $("#standuperosSeleccionados option[value='" + seleccion.val() + "']").remove();
         }
     });
 
-    function generateStanduperosHiddenList()
-    {
+    function generateStanduperosHiddenList() {
         var list = $("#standuperosSeleccionados");
         var i = 0;
         var _standuperos = "";
@@ -151,5 +153,12 @@
         }
         $("#_standuperos").val(_standuperos);
     }
+
+    $("#_productor").val($("#productorList option:selected").val());
+
+    $("#productorList").change(function () {
+        $("#_productor").val($("#productorList option:selected").val());
+    });
+
 
 </script>
