@@ -14,6 +14,7 @@ namespace SUA.Repositorios
 
         //Standupero
         public const string INVALID_STANDUPERO_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch al querer obtener todos los standuperos";
+        public const string STANDUPERO_GET_ALL_EXCEPTION = "Falla al querer obtener toos los standuperos";
         public const string STANDUPERO_GET_BY_APELLIDO_INVALID_PARAMETER_EXCEPTION = "Para obtener un standupero por apellido debe pasar un apellido válido";
         public const string STANDUPERO_GET_BY_APELLIDO_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un standupero por apellido";
         public const string STANDUPERO_GET_BY_DNI_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un standupero por dni";
@@ -22,24 +23,34 @@ namespace SUA.Repositorios
         public const string STANDUPERO_GET_INNERID_BY_DNI_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un standupero innerId por dni";
         public const string STANDUPERO_CREATE_INVALID_PARAMETER_EXCEPTION = "Para agregar un standupero debe pasar un standupero válido";
         public const string STANDUPERO_CREATE_ALREADY_EXISTS_EXCEPTION = "Para agregar un standupero debe pasar un standupero que no exista previamente";
-        public const string STANDUPERO_NOT_CREATED_EXCEPTION = "Falla al querer crear un standupero nuevo";
-        public const string STANDUPERO_UPDATE_INVALID_EXCEPTION = "Para agregar un standupero debe pasar un standupero válido";
+        public const string STANDUPERO_CREATE_NOT_CREATED_EXCEPTION = "Falla al querer crear un standupero nuevo";
         public const string STANDUPERO_UPDATE_INVALID_PARAMETER_EXCEPTION = "Para editar un standupero debe pasar un standupero válido";
         public const string STANDUPERO_UPDATE_NOT_EXISTS_EXCEPTION = "Para editar un standupero debe pasar un standupero que exista previamente";
         public const string STANDUPERO_UPDATE_NOT_UPDATED_EXCEPTION = "Falla al querer editar un standupero";
         public const string STANDUPERO_DELETE_BY_APELLIDO_INVALID_PARAMETER_EXCEPTION = "Para borrar un standupero por apellido debe pasar un apellido válido";
         public const string STANDUPERO_DELETE_NOT_EXISTS_EXCEPTION = "Para borrar un standupero debe pasar un standupero que exista previamente";
         public const string STANDUPERO_DELETE_NOT_DELETED_EXCEPTION = "Falla al querer borrar un standupero";
-        
+
 
 
         //Productor
-        public const string PRODUCTOR_INVALID_EXCEPTION = "productor_inválido";
-        public const string PRODUCTOR_ALREADY_EXISTS_EXCEPTION = "productor_ya_existente";
-        public const string PRODUCTOR_NOT_EXISTS_EXCEPTION = "productor_no_existente";
-        public const string PRODUCTOR_NOT_UPDATED_EXCEPTION = "productor_no_actualizado";
-        public const string PRODUCTOR_NOT_CREATED_EXCEPTION = "productor_no_creado";
-        public const string PRODUCTOR_NOT_DELETED_EXCEPTION = "productor_no_borrado";
+        public const string INVALID_PRODUCTOR_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch al querer obtener todos los productores";
+        public const string PRODUCTOR_GET_ALL_EXCEPTION = "Falla al querer obtener toos los productores";
+        public const string PRODUCTOR_GET_BY_APELLIDO_INVALID_PARAMETER_EXCEPTION = "Para obtener un productor por apellido debe pasar un apellido válido";
+        public const string PRODUCTOR_GET_BY_APELLIDO_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un productor por apellido";
+        public const string PRODUCTOR_GET_BY_DNI_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un productor por dni";
+        public const string PRODUCTOR_GET_BY_DNI_INVALID_PARAMETER_EXCEPTION = "Para obtener un productor por dni debe pasar un dni válido";
+        public const string PRODUCTOR_GET_INNERID_BY_DNI_INVALID_PARAMETER_EXCEPTION = "Para obtener un productor innerId por dni debe pasar un dni válido";
+        public const string PRODUCTOR_GET_INNERID_BY_DNI_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un productor innerId por dni";
+        public const string PRODUCTOR_CREATE_INVALID_PARAMETER_EXCEPTION = "Para agregar un productor debe pasar un productor válido";
+        public const string PRODUCTOR_CREATE_ALREADY_EXISTS_EXCEPTION = "Para agregar un productor debe pasar un productor que no exista previamente";
+        public const string PRODUCTOR_CREATE_NOT_CREATED_EXCEPTION = "Falla al querer crear un productor nuevo";
+        public const string PRODUCTOR_UPDATE_INVALID_PARAMETER_EXCEPTION = "Para editar un productor debe pasar un productor válido";
+        public const string PRODUCTOR_UPDATE_NOT_EXISTS_EXCEPTION = "Para editar un productor debe pasar un productor que exista previamente";
+        public const string PRODUCTOR_UPDATE_NOT_UPDATED_EXCEPTION = "Falla al querer editar un productor";
+        public const string PRODUCTOR_DELETE_BY_APELLIDO_INVALID_PARAMETER_EXCEPTION = "Para borrar un productor por apellido debe pasar un apellido válido";
+        public const string PRODUCTOR_DELETE_NOT_EXISTS_EXCEPTION = "Para borrar un productor debe pasar un productor que exista previamente";
+        public const string PRODUCTOR_DELETE_NOT_DELETED_EXCEPTION = "Falla al querer borrar un productor";
 
 
         //Show
@@ -77,8 +88,8 @@ namespace SUA.Repositorios
             if (response == null)
                 throw new Exception(INVALID_STANDUPERO_ES_CONNECTION_EXCEPTION);
 
-            if (response.OriginalException != null)
-                throw new Exception(response.OriginalException.Message);
+            if (!response.IsValid)
+                throw new Exception(STANDUPERO_GET_ALL_EXCEPTION);
 
             var standuperos = new List<Standupero>();
             if (response.Total > 0)
@@ -164,7 +175,6 @@ namespace SUA.Repositorios
             return innerId;
         }
         public void AddStandupero(Standupero standupero)
-
         {
             if (standupero == null)
                 throw new Exception(STANDUPERO_CREATE_INVALID_PARAMETER_EXCEPTION);
@@ -180,7 +190,7 @@ namespace SUA.Repositorios
               ).Result;
 
             if (!response.IsValid)
-                throw new Exception(STANDUPERO_NOT_CREATED_EXCEPTION);
+                throw new Exception(STANDUPERO_CREATE_NOT_CREATED_EXCEPTION);
         }
         public void UpdateStandupero(Standupero standupero)
         {
@@ -232,9 +242,10 @@ namespace SUA.Repositorios
                   );
 
             if (response == null)
-                throw new Exception(INVALID_ES_CONNECTION_EXCEPTION);
-            if (response.OriginalException != null)
-                throw new Exception(response.OriginalException.Message);
+                throw new Exception(INVALID_PRODUCTOR_ES_CONNECTION_EXCEPTION);
+
+            if (!response.IsValid)
+                throw new Exception(PRODUCTOR_GET_ALL_EXCEPTION);
 
             var productores = new List<Productor>();
             if (response.Total > 0)
@@ -246,6 +257,9 @@ namespace SUA.Repositorios
         }
         public Productor GetProductorByApellido(string apellido)
         {
+            if (string.IsNullOrEmpty(apellido))
+                throw new Exception(PRODUCTOR_GET_BY_APELLIDO_INVALID_PARAMETER_EXCEPTION);
+
             var response = Client.Search<Productor>(s => s
                 .Index(Index)
                 .Type(Index)
@@ -255,6 +269,10 @@ namespace SUA.Repositorios
 
             if (response == null)
                 return null;
+
+            if (!response.IsValid)
+                throw new Exception(PRODUCTOR_GET_BY_APELLIDO_INVALID_SEARCH_EXCEPTION);
+
             Productor productor = null;
             if (response.Total > 0)
             {
@@ -265,6 +283,9 @@ namespace SUA.Repositorios
         }
         public Productor GetProductorByDni(string dni)
         {
+            if (string.IsNullOrEmpty(dni))
+                throw new Exception(PRODUCTOR_GET_BY_DNI_INVALID_PARAMETER_EXCEPTION);
+
             var response = Client.Search<Productor>(s => s
                    .Index(Index)
                    .Type(Index)
@@ -272,6 +293,10 @@ namespace SUA.Repositorios
 
             if (response == null)
                 return null;
+
+            if (!response.IsValid)
+                throw new Exception(PRODUCTOR_GET_BY_DNI_INVALID_SEARCH_EXCEPTION);
+
             Productor productor = null;
             if (response.Total > 0)
             {
@@ -282,6 +307,9 @@ namespace SUA.Repositorios
         }
         public string GetProductorInnerIdByDni(string dni)
         {
+            if (string.IsNullOrEmpty(dni))
+                throw new Exception(PRODUCTOR_GET_INNERID_BY_DNI_INVALID_PARAMETER_EXCEPTION);
+
             var response = Client.Search<Productor>(s => s
                     .Index(Index)
                     .Type(Index)
@@ -291,6 +319,10 @@ namespace SUA.Repositorios
             string innerId = null;
             if (response == null)
                 return innerId;
+
+            if (response.IsValid)
+                throw new Exception(PRODUCTOR_GET_INNERID_BY_DNI_INVALID_SEARCH_EXCEPTION);
+
             if (response.Total > 0)
             {
                 foreach (var item in response.Hits)
@@ -301,11 +333,11 @@ namespace SUA.Repositorios
         public void AddProductor(Productor productor)
         {
             if (productor == null)
-                throw new Exception(PRODUCTOR_INVALID_EXCEPTION);
+                throw new Exception(PRODUCTOR_CREATE_INVALID_PARAMETER_EXCEPTION);
 
             var resultado = GetProductorByDni(productor.Dni);
             if (resultado != null)
-                throw new Exception(PRODUCTOR_ALREADY_EXISTS_EXCEPTION);
+                throw new Exception(PRODUCTOR_CREATE_ALREADY_EXISTS_EXCEPTION);
 
             var response = Client.IndexAsync(productor, i => i
               .Index(Index)
@@ -314,16 +346,16 @@ namespace SUA.Repositorios
               ).Result;
 
             if (!response.IsValid)
-                throw new Exception(PRODUCTOR_NOT_CREATED_EXCEPTION);
+                throw new Exception(PRODUCTOR_CREATE_NOT_CREATED_EXCEPTION);
         }
         public void UpdateProductor(Productor productor)
         {
             if (productor == null)
-                throw new Exception(PRODUCTOR_INVALID_EXCEPTION);
+                throw new Exception(PRODUCTOR_UPDATE_INVALID_PARAMETER_EXCEPTION);
 
             var innerId = GetProductorInnerIdByDni(productor.Dni);
             if (innerId == null)
-                throw new Exception(PRODUCTOR_NOT_EXISTS_EXCEPTION);
+                throw new Exception(PRODUCTOR_UPDATE_NOT_EXISTS_EXCEPTION);
 
             var result = Client.Index(productor, i => i
                             .Index(Index)
@@ -332,16 +364,16 @@ namespace SUA.Repositorios
                             .Refresh(Refresh.True));
 
             if (!result.IsValid)
-                throw new Exception(PRODUCTOR_NOT_UPDATED_EXCEPTION);
+                throw new Exception(PRODUCTOR_UPDATE_NOT_UPDATED_EXCEPTION);
         }
         public void DeleteProductor(string dni)
         {
             if (string.IsNullOrEmpty(dni))
-                throw new Exception(PRODUCTOR_INVALID_EXCEPTION);
+                throw new Exception(PRODUCTOR_DELETE_BY_APELLIDO_INVALID_PARAMETER_EXCEPTION);
 
             var innerId = GetProductorInnerIdByDni(dni);
             if (innerId == null)
-                throw new Exception(PRODUCTOR_NOT_EXISTS_EXCEPTION);
+                throw new Exception(PRODUCTOR_DELETE_NOT_EXISTS_EXCEPTION);
 
             var response = Client.Delete<Productor>(innerId, d => d
                                                         .Index(Index)
@@ -349,13 +381,12 @@ namespace SUA.Repositorios
                                                         .Refresh(Refresh.True)
                                                         );
             if (!response.IsValid)
-                throw new Exception(PRODUCTOR_NOT_DELETED_EXCEPTION);
+                throw new Exception(PRODUCTOR_DELETE_NOT_DELETED_EXCEPTION);
         }
         public void DeleteAllProductores()
         {
             Client.DeleteByQuery<Productor>(q => q.Type(Index));
         }
-
 
 
         /*--------------------Show-----------------------*/
