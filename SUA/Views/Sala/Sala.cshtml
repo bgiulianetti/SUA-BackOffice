@@ -216,12 +216,145 @@
                                 </td>
                             </tr>
                         </table>
-
+                        
+                        <hr style="color: #8dd9f7">
+                        
                         <table style="border-spacing: 20px">
-                            
+                            <tr>
+                                <td>
+                                    <label>Acomodadores </label>
+                                    @Html.TextBoxFor(model => model.Acomodadores, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                                <td>
+                                    <label>Boleteros </label>
+                                    @Html.TextBoxFor(model => model.Boletero, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
                         </table>
 
                         <hr style="color: #8dd9f7">
+
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <label>Camarin Descripción</label>
+                                    @Html.TextBoxFor(model => model.Camarin.Descripcion, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                                <td>
+                                    <label>Camarin Baño </label>
+                                    @Html.TextBoxFor(model => model.Camarin.Toilet, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+                        </table>
+
+                        <hr style="color: #8dd9f7">
+
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <label>Carteleria - Descripción</label>
+                                    @Html.TextBoxFor(model => model.Carteleria.Descripcion, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Precio</label>
+                                    @Html.TextBoxFor(model => model.Carteleria.Precio, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                                <td>
+                                    <label>Cantidad </label>
+                                    @Html.TextBoxFor(model => model.Carteleria.Cantidad, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+                        </table>
+
+                        <hr style="color: #8dd9f7">
+
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <label>Prensa - Nombre</label>
+                                    @Html.TextBoxFor(model => model.Prensa.Nombre, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                                <td>
+                                    <label>Teléfono</label>
+                                    @Html.TextBoxFor(model => model.Prensa.Telefono, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Email</label>
+                                    @Html.TextBoxFor(model => model.Prensa.Email, new { @class = "form-control", Style = "width:300px", @type="email" })
+                                </td>
+                                <td>
+                                    <label>Descripción</label>
+                                    @Html.TextBoxFor(model => model.Prensa.Descripcion, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+                        </table>
+
+                        <hr style="color: #8dd9f7">
+
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <label>Boleteria - Horario</label>
+                                    @Html.TextBoxFor(model => model.Boleteria.Horario, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                                <td>
+                                    <label>Teléfono</label>
+                                    @Html.TextBoxFor(model => model.Boleteria.Telefono, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Descripción</label>
+                                    @Html.TextBoxFor(model => model.Boleteria.Descripcion, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+                        </table>
+
+                        <hr style="color: #8dd9f7">
+
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <label>Horario Sala</label>
+                                    @Html.TextBoxFor(model => model.Horario, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Prueba de sonido / Ensayo - Horario</label>
+                                    @Html.TextBoxFor(model => model.PruebaSonidoEnsayo.Horario, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                                <td>
+                                    <label>Descripción</label>
+                                    @Html.TextBoxFor(model => model.PruebaSonidoEnsayo.Descripcion, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+                        </table>
+
+                        <hr style="color: #8dd9f7">
+
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <label>Ticketera online</label>
+                                    @Html.TextBoxFor(model => model.TicketeraOnline, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Como pagan</label>
+                                    @Html.TextBoxFor(model => model.ComoPagan, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                                <td>
+                                    <label>Aclaraciones Sala</label>
+                                    @Html.TextBoxFor(model => model.AclaracionesSala, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+                        </table>
 
 
                         <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />

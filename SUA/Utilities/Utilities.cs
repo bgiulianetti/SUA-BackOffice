@@ -154,10 +154,11 @@ namespace SUA.Utilities
             {
                 "Impuesto Municipal",
                 "Comisión por Tarjeta​",
-                "Argentores",
                 "SADAIC",
                 "AADET",
-                "Ticketing"
+                "Ticketing",
+                "IMM",
+                "Agadu"
             };
             return ConverListToSelectListItem(impuestos);
         }
