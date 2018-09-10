@@ -1,4 +1,5 @@
-﻿using SUA.Servicios;
+﻿using SUA.Models;
+using SUA.Servicios;
 using SUA.Utilities;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,39 @@ namespace SUA.Controllers
                 return View(sala);
             }
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Sala(Sala sala, string accion, string _impuestos)
+        {
+            ViewBag.titulo = "Crear Sala";
+            sala.ImpuestosYGastos = GetImpuestosList(_impuestos);
+
+            var service = new SalaService();
+            try
+            {
+                if (string.Equals(accion, "Post"))
+                {
+                    sala.SetIdAndFechaAlta();
+                    service.AddSala(sala);
+                    ViewBag.mensaje = "creado";
+                }
+                else if (string.Equals(accion, "Put"))
+                {
+                    service.UpdateSala(sala);
+                    ViewBag.mensaje = "actualizado";
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.mensaje = ex.Message;
+            }
+            return View();
+        }
+
+        private List<string> GetImpuestosList(string impuestos)
+        {
+            return impuestos.Split('-').ToList();
         }
     }
 }
