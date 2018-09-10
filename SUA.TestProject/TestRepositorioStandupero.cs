@@ -166,15 +166,15 @@ namespace SUA.TestProject
                 Observaciones = "Ninguna Observacion",
                 Celular = "1122526344",
                 Email = "bruno.giulianetti@gmail.com",
-                InstagramUser = "@bgiulianetti"
+                InstagramUser = "@darioorsi"
             };
         }
 
         [TestMethod]
         public void GetStanduperoFollowers()
         {
-
-            var userinfo = repository.GetInstagramUserInfo("");
+            var standupero = CrearStandupero("32576829", "Orsi", "Dario", "Argentina");
+            var userinfo = repository.GeStanduperoInstagramUserInfo(standupero.InstagramUser);
         }
     }
 }

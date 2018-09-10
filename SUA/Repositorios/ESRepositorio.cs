@@ -274,7 +274,7 @@ namespace SUA.Repositorios
         {
             Client.DeleteByQuery<Standupero>(q => q.Type(Index));
         }
-        public InstagramUserInfo GeStanduperotInstagramUserInfo(string instagramUsername)
+        public InstagramUserInfo GeStanduperoInstagramUserInfo(string instagramUsername)
         {
             var Client = new HttpClient()
             { BaseAddress = new Uri("https://www.instagram.com/") };
@@ -757,7 +757,7 @@ namespace SUA.Repositorios
             if (sala == null)
                 throw new Exception(SALA_UPDATE_INVALID_PARAMETER_EXCEPTION);
 
-            var innerId = GetShowInnerIdById(sala.UniqueId.ToString());
+            var innerId = GetSalaInnerIdById(sala.UniqueId.ToString());
             if (innerId == null)
                 throw new Exception(SALA_UPDATE_NOT_EXISTS_EXCEPTION);
 
@@ -795,7 +795,7 @@ namespace SUA.Repositorios
             }
             return innerId;
         }
-        public void DeletSala(string id)
+        public void DeleteSala(string id)
         {
             if (string.IsNullOrEmpty(id))
                 throw new Exception(SALA_DELETE_BY_ID_INVALID_PARAMETER_EXCEPTION);

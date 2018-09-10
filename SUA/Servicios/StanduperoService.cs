@@ -64,7 +64,7 @@ namespace SUA.Servicios
 
         public InstagramUserInfo GetInstagramUserInfo(string instagramUsername)
         {
-            return Repository.GeStanduperotInstagramUserInfo(instagramUsername);
+            return Repository.GeStanduperoInstagramUserInfo(instagramUsername);
         }
 
     }

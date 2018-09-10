@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SUA.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,7 +8,7 @@ namespace SUA.Models
 {
     public class Sala
     {
-        public int UniqueId { get; set; }
+        public string UniqueId { get; set; }
         public string Nombre { get; set; }
         public Ubicacion Direccion { get; set; }
         public int Capacidad { get; set; }
@@ -36,5 +37,22 @@ namespace SUA.Models
         public PruebaSonidoEnsayo PruebaSonidoEnsayo { get; set; }
         public string ComoPagan { get; set; }
         public string AclaracionesSala { get; set; }
+        public DateTime FechaAlta { get; set; }
+
+        public void SetIdAndFechaAlta()
+        {
+            UniqueId = UtilitiesAndStuff.GenerateUniqueId();
+            FechaAlta = DateTime.Now;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj != null && obj is Sala && (obj as Sala).GetHashCode() == GetHashCode();
+        }
+
+        public override int GetHashCode()
+        {
+            return UniqueId.GetHashCode();
+        }
     }
 }

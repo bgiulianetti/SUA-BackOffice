@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SUA.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,7 +20,7 @@ namespace SUA.Models
 
         public void SetIdAndFechaAlta()
         {
-            UniqueId = DateTime.Now.ToString("yyyyMMddHHssfff");
+            UniqueId = UtilitiesAndStuff.GenerateUniqueId();
             FechaAlta = DateTime.Now;
         }
 
