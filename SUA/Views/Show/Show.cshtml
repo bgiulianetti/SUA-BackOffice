@@ -50,7 +50,15 @@
                                 </td>
                                 <td>
                                     <label>Standuperos Seleccionados</label>
-                                    <select multiple="multiple" class="form-control" id="standuperosSeleccionados" name="standuperosSeleccionados" required></select>
+                                    <select multiple="multiple" class="form-control" id="standuperosSeleccionados" name="standuperosSeleccionados" required>
+                                        @if (ViewBag.accion == "Put")
+                                        {
+                                            foreach (var item in Model.Integrantes)
+                                            {
+                                                <option value="@item.Dni">@item.Nombre @item.Apellido</option>
+                                            }
+                                        }
+                                    </select>
                                     <input type="button" value="Borarr" class="form-control" id="borrar" />
                                 </td>
                             </tr>
@@ -88,6 +96,8 @@
                         <input name="accion" class="hidden" value="@ViewBag.accion" />
                         <input id="_standuperos" name="_standuperos" class="hidden" />
                         <input id="_productor" name="_productor" class="hidden" />
+                        @Html.TextBoxFor(model => model.UniqueId, new { @class = "hidden"})
+                        
 
                         <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
                     </form>
@@ -107,11 +117,12 @@
         var seleccion = $("#standuperos option:selected");
         if (seleccion.val() == undefined)
             alert("Debe seleccionar un standupero");
-        else {
+        else
+        {
             $("#standuperosSeleccionados").append('<option value="' + seleccion.val() + '">' + seleccion.html() + '</option>');
             $("#standuperos option[value='" + seleccion.val() + "']").remove();
 
-            //selecciono el nuevo standupero agregado
+            //selecciono el ultimo standupero
             $("#standuperosSeleccionados").val(seleccion.val());
             generateStanduperosHiddenList();
         }
@@ -122,9 +133,14 @@
         var seleccion = $("#standuperosSeleccionados option:selected");
         if (seleccion.val() == undefined)
             alert("Debe seleccionar un standupero");
-        else {
+        else
+        {
             $("#standuperos").append('<option value="' + seleccion.val() + '">' + seleccion.html() + '</option>');
             $("#standuperosSeleccionados option[value='" + seleccion.val() + "']").remove();
+
+            //selecciono el ultimo standupero
+            $("#standuperosSeleccionados option:last").attr("selected", "selected");
+            generateStanduperosHiddenList();
         }
     });
 
@@ -142,8 +158,16 @@
         $("#_standuperos").val(_standuperos);
     }
 
+    //seteo productor hidden field
     var productorId = $("#productorList option:selected").val();
     $("#_productor").val(productorId);
+
+    //seteo id hidden field
+    //var id = window.location.href.split('=')[1];
+    //$("#id").val(productorId);
+
+    //selecciono ultimo item de standuperosSeleccionados (solo para Edit)
+    $("#standuperosSeleccionados option:last").attr("selected", "selected");
 
     $("#productorList").change(function () {
         $("#_productor").val($("#productorList option:selected").val());

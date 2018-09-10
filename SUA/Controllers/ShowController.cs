@@ -15,47 +15,58 @@ namespace SUA.Controllers
         {
             ViewBag.mensaje = "Get";
 
-            var standuperoService = new StanduperoService();
-            ViewBag.standuperos = standuperoService.GetStanduperos();
-
             var productoresService = new ProductorService();
             ViewBag.productores = productoresService.GetProductores();
 
+
+            var standuperoService = new StanduperoService();
+            var standuperos = standuperoService.GetStanduperos();
+
             if (string.IsNullOrEmpty(id))
             {
+                ViewBag.standuperos = standuperos;
                 ViewBag.accion = "Post";
                 ViewBag.titulo = "Crear Show";
             }
             else
             {
-                ViewBag.accion = "Put";
-                ViewBag.titulo = "Editar Show";
                 var showService = new ShowService();
                 var show = showService.GetShowById(id);
+
+                foreach (var item in show.Integrantes)
+                {
+                    if(standuperos.Contains(item))
+                        standuperos.Remove(item);
+                }
+
+                ViewBag.standuperos = standuperos;
+                ViewBag.accion = "Put";
+                ViewBag.titulo = "Editar Show";
                 return View(show);
             }
             return View();
         }
 
         [HttpPost]
-        public ActionResult Show(Show show, string accion, string _standuperos, string _productor)
+        public ActionResult Show(Show show, string accion, string _standuperos, string _productor/*, string id*/)
         {
             ViewBag.titulo = "Crear Show";
             show.Integrantes = GetStanduperosListByDnis(_standuperos);
             show.Productor = new ProductorService().GetProductorByDni(_productor);
-            show.SetIdAndFechaAlta();
 
             var service = new ShowService();
             try
             {
                 if (string.Equals(accion, "Post"))
                 {
+                    show.SetIdAndFechaAlta();
                     service.AddShow(show);
                     ViewBag.mensaje = "creado";
                 }
 
                 else if (string.Equals(accion, "Put"))
                 {
+                    //show.UniqueId = id;
                     service.UpdateShow(show);
                     ViewBag.mensaje = "actualizado";
                 }

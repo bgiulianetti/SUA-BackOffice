@@ -9,7 +9,9 @@
                         <th></th>
                         <th>Show</th>
                         <th>Nombre</th>
+                        <th>Integrantes</th>
                         <th>Productor</th>
+                        <th>Camarin</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -17,21 +19,44 @@
                         <th></th>
                         <th>Show</th>
                         <th>Nombre</th>
+                        <th>Integrantes</th>
                         <th>Productor</th>
+                        <th>Camarin</th>
                     </tr>
                 </tfoot>
                 <tbody>
                     @foreach (var item in ViewBag.shows)
                     {
-                        <tr>
-                            <td>
-                                @Html.ActionImage("DeleteShow", "Productor", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
-                                @Html.ActionImage("Show", "Show", new { dni = item.UniqueId }, "~/assets/img/edit_icon.png")
-                            </td>
-                            <td>@item._Show</td>
-                            <td>@item.Nombre
-                            <td>@item.Productor.Nombre @item.Productor.Apellido</td>
-                        </tr>
+                        var newRecord = true;
+                        foreach (var integrante in item.Integrantes)
+                        {
+                            if (newRecord)
+                            {
+                                newRecord = false;
+                                <tr>
+                                    <td>
+                                        @Html.ActionImage("DeleteShow", "Productor", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
+                                        @Html.ActionImage("Show", "Show", new { id = item.UniqueId }, "~/assets/img/edit_icon.png")
+                                    </td>
+                                    <td>@item._Show</td>
+                                    <td>@item.Nombre</td>
+                                    <td>@integrante.Nombre @integrante.Apellido</td>
+                                    <td>@item.Productor.Nombre @item.Productor.Apellido</td>
+                                    <th>@item.Camarin</th>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>@integrante.Nombre @integrante.Apellido</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            }
+                        }
                     }
                 </tbody>
             </table>

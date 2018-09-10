@@ -115,7 +115,8 @@
                     'csvHtml5',
                     { extend: 'pdf', title: "Listado de Shows", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/') }
                 ],
-                'columnDefs': [{ "targets": 0, "className": "text-center" }]
+                'columnDefs': [{ "targets": 0, "className": "text-center" }],
+                "bSort": false
             });
 
             var contador = 0;
