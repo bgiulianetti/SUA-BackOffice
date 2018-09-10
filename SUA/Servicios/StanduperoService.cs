@@ -62,22 +62,9 @@ namespace SUA.Servicios
             Repository.DeleteAllStanduperos();
         }
 
-        public InstagramUserInfo GetInstagramUserInfo(string dni)
+        public InstagramUserInfo GetInstagramUserInfo(string instagramUsername)
         {
-            var Client = new HttpClient();
-            Client.BaseAddress = new Uri("https://www.instagram.com/");
-            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-
-            var request = "nicolasdetracy";
-            var response = Client.GetAsync(request).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                var responseJson = response.Content.ReadAsStringAsync().Result;
-                var userResponse = JsonConvert.DeserializeObject(responseJson);
-                return null;
-            }
-            return null;
+            return Repository.GeStanduperotInstagramUserInfo(instagramUsername);
         }
 
     }

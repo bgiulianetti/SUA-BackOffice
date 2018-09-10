@@ -7,6 +7,7 @@ using SUA.Models;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
+
 namespace SUA.TestProject
 {
     [TestClass]
@@ -172,17 +173,8 @@ namespace SUA.TestProject
         [TestMethod]
         public void GetStanduperoFollowers()
         {
-            var Client = new HttpClient()
-            { BaseAddress = new Uri("https://www.instagram.com/")};
-            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-
-            var request = "nicolasdetracy";
-            var response = Client.GetAsync(request).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                var responseJson = response.Content.ReadAsStringAsync().Result;
-            }
+            var userinfo = repository.GetInstagramUserInfo("");
         }
     }
 }

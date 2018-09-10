@@ -5,6 +5,9 @@ using System.Web;
 using SUA.Models;
 using Nest;
 using Elasticsearch.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
 
 namespace SUA.Repositorios
 {
@@ -245,7 +248,25 @@ namespace SUA.Repositorios
         {
             Client.DeleteByQuery<Standupero>(q => q.Type(Index));
         }
+        public InstagramUserInfo GeStanduperotInstagramUserInfo(string instagramUsername)
+        {
+            var Client = new HttpClient()
+            { BaseAddress = new Uri("https://www.instagram.com/") };
+            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+            var request = instagramUsername;
+            var response = Client.GetAsync(request).Result;
+            InstagramUserInfo igInfo = null;
+            if (response.IsSuccessStatusCode)
+            {
+                var responseJson = response.Content.ReadAsStringAsync().Result;
+                var stringObject = responseJson.Split(new string[] { "window._sharedData =" }, StringSplitOptions.None)[1]
+                                               .Split(new string[] { "</script>" }, StringSplitOptions.None)[0];
+                stringObject = stringObject.Remove(stringObject.Length - 1);
+                igInfo = JsonConvert.DeserializeObject<InstagramUserInfo>(stringObject);
+            }
+            return igInfo;
+        }
 
         /*--------------------Productor-----------------------*/
         public List<Productor> GetProductores()
