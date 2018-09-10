@@ -48,7 +48,7 @@ namespace SUA.Controllers
         }
 
         [HttpPost]
-        public ActionResult Show(Show show, string accion, string _standuperos, string _productor/*, string id*/)
+        public ActionResult Show(Show show, string accion, string _standuperos, string _productor)
         {
             ViewBag.titulo = "Crear Show";
             show.Integrantes = GetStanduperosListByDnis(_standuperos);
@@ -63,10 +63,8 @@ namespace SUA.Controllers
                     service.AddShow(show);
                     ViewBag.mensaje = "creado";
                 }
-
                 else if (string.Equals(accion, "Put"))
                 {
-                    //show.UniqueId = id;
                     service.UpdateShow(show);
                     ViewBag.mensaje = "actualizado";
                 }
@@ -94,6 +92,20 @@ namespace SUA.Controllers
                 ViewBag.mensaje = ex.Message;
             }
             return View();
+        }
+
+        public ActionResult DeleteShow(string id)
+        {
+            var service = new ShowService();
+            try
+            {
+                service.DeleteShow(id);
+            }
+            catch /*(Exception ex)*/
+            {
+                //loguear mensaje o mandar pagina de error
+            }
+            return RedirectToAction("Shows", "Show");
         }
 
         private List<Standupero> GetStanduperosListByDnis(string dnis)
