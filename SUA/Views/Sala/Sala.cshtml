@@ -1,0 +1,292 @@
+﻿@model SUA.Models.Sala
+<style>
+    table {
+        border-spacing: 20px;
+    }
+
+    td {
+        padding: 10px;
+    }
+</style>
+
+<div class="main-content">
+    @using (Html.BeginForm("Sala", "Sala", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        if (ViewBag.mensaje == "creado")
+        {
+            <label>La sala ha sido creada con éxito. Puede verla en el <a href="@Url.RouteUrl("Salas")">Listado de Salas</a></label>
+        }
+        else if (ViewBag.mensaje == "actualizado")
+        {
+            <label>La sala ha sido actualizada con éxito. Puede ver los cambios en el <a href="@Url.RouteUrl("Salas")">Listado de Salas</a></label>
+        }
+        else if (ViewBag.mensaje == "Get")
+        {
+            <div class="panel">
+                <div class="panel-body">
+                    <form data-id="" id="pdf-create-form" to-action="/pdfs/create">
+
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <label>Nombre </label>
+                                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                                <td>
+                                    <label>Capacidad </label>
+                                    @Html.TextBoxFor(model => model.Capacidad, new { @class = "form-control", Style = "width:300px", required = "required", @type = "number" })
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        <hr style="color: #8dd9f7">
+                       
+                        <table>
+                            <tr>
+                                <td>
+                                    <label>Dirección </label>
+                                    @Html.TextBoxFor(model => model.Direccion.Direccion, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                                <td>
+                                    <label>Ciudad </label>
+                                    @Html.TextBoxFor(model => model.Direccion.Ciudad, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Localidad </label>
+                                    @Html.TextBoxFor(model => model.Direccion.Localidad, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                                <td>
+                                    <label title="Para averiguar el código postal podes hacerlo ingresando la dirección en: https://www.correoargentino.com.ar/formularios/cpa">Código Postal </label>
+                                    @Html.TextBoxFor(model => model.Direccion.CodigoPostal, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Provincia </label>
+                                    @Html.DropDownListFor(model => model.Direccion.Provincia, new SelectList(ViewBag.provincias, "Text", "Value"), new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                                <td>
+                                    <label>País </label>
+                                    @Html.DropDownListFor(model => model.Direccion.Pais, new SelectList(ViewBag.paises, "Text", "Value"), new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        <hr style="color: #8dd9f7">
+
+                        <table>
+                            <tr>
+                                <td>
+                                    <label>Administrador </label>
+                                    @Html.TextBoxFor(model => model.Administrador, new { @class = "form-control", Style = "width:300px", required = "required"})
+                                </td>
+                                <td>
+                                    <label>WhatsApp personal </label>
+                                    @Html.TextBoxFor(model => model.WhatsAppPersonal, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Telefono</label>
+                                    @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", Style = "width:300px", required = "required", @type="tel" })
+                                </td>
+                                <td>
+                                    <label>Email</label>
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", Style = "width:300px", required = "required", @type = "email" })
+                                </td>
+                            </tr>                      
+                        </table>
+
+                        <hr style="color: #8dd9f7">
+
+                        <table>
+                            <tr>
+                                <td>
+                                    <label>Detalle Luces</label>
+                                    @Html.TextBoxFor(model => model.Luces, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Tecnico luces </label>
+                                    @Html.TextBoxFor(model => model.TecnicoLuces.Nombre, new { @placeholder="nombre", @class = "form-control", Style = "width:300px", required = "required", })
+                                </td>
+                                <td>
+                                    <label>Telefono</label>
+                                    @Html.TextBoxFor(model => model.TecnicoLuces.Telefono, new { @placeholder = "telefono", @class = "form-control", Style = "width:300px", required = "required", @type= "tel" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Email</label>
+                                    @Html.TextBoxFor(model => model.TecnicoLuces.Email, new { @placeholder = "email", @class = "form-control", Style = "width:300px", required = "required", @type = "email" })
+                                </td>
+                                <td>
+                                    <label>Descripción</label>
+                                    @Html.TextBoxFor(model => model.TecnicoLuces.Descripcion, new { @placeholder = "descripcion", @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+
+                        </table>
+
+                        <hr style="color: #8dd9f7">
+                        
+                        <table>
+                            <tr>
+                                <td>
+                                    <label>Detalle Sonido</label>
+                                    @Html.TextBoxFor(model => model.Sonido, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Tecnico Sonido </label>
+                                    @Html.TextBoxFor(model => model.TecnicoSonido.Nombre, new { @placeholder = "nombre", @class = "form-control", Style = "width:300px", required = "required", })
+                                </td>
+                                <td>
+                                    <label>Telefono</label>
+                                    @Html.TextBoxFor(model => model.TecnicoSonido.Telefono, new { @placeholder = "telefono", @class = "form-control", Style = "width:300px", required = "required", @type = "tel" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Email</label>
+                                    @Html.TextBoxFor(model => model.TecnicoSonido.Email, new { @placeholder = "email", @class = "form-control", Style = "width:300px", required = "required", @type = "email" })
+                                </td>
+                                <td>
+                                    <label>Descripción</label>
+                                    @Html.TextBoxFor(model => model.TecnicoSonido.Descripcion, new { @placeholder = "descripcion", @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+
+                        </table>
+
+                        <hr style="color: #8dd9f7">
+
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <label>Proyector </label>
+                                    @Html.TextBoxFor(model => model.Proyector, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                                <td>
+                                    <label>Pantalla </label>
+                                    @Html.TextBoxFor(model => model.Pantalla, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+                        </table>
+
+                        <hr style="color: #8dd9f7">
+
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <label>Arreglo </label>
+                                    @Html.TextBoxFor(model => model.Arreglo, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                                <td>
+                                    <label>Arreglo Económico </label>
+                                    @Html.TextBoxFor(model => model.ArregloEconomico, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+                        </table>
+
+                        <hr style="color: #8dd9f7">
+
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <label>Argentores </label>
+                                    @Html.TextBoxFor(model => model.Argentores, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Impuestos y Gastos </label>
+                                    @Html.DropDownListFor(model => model.ImpuestosYGastos, new SelectList(ViewBag.impuestos, "Text", "Value"), new { @id="impuestos", @multiple="multiple", @class = "form-control", Style = "width:300px", required = "required" })
+                                    <input class="form-control", id="impuestoAMano" type="text"/>
+                                    <input type="button" value="Agregar" class="form-control" id="agregar" />
+                                </td>
+                                <td>
+                                    <label>Seleccionados</label>
+                                    <select multiple="multiple" class="form-control" id="impuestosSeleccionados" name="impuestosSeleccionados" required Style="width:300px; height:124px"></select>
+                                    <input type="button" value="Borarr" class="form-control" id="borrar" />
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table style="border-spacing: 20px">
+                            
+                        </table>
+
+                        <hr style="color: #8dd9f7">
+
+
+                        <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
+                        <input name="impuestos" class="hidden" id="_impuestos" data-form="error-box" />
+                        <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        }
+        else
+        {
+            <label>@ViewBag.mensaje</label>
+        }
+    }
+
+</div>
+<script>
+
+    $("#agregar").click(function (event) {
+
+        if ($("#impuestoAMano").val() != "" && $("#impuestoAMano").val() != " ")
+        {
+            $("#impuestosSeleccionados").append('<option>' + $("#impuestoAMano").val() + '</option>');
+            $("#impuestoAMano").val("");
+            generateImpuestosHiddenList();
+        }
+        else if ($("#impuestos option:selected").val() != undefined)
+        {
+            $("#impuestosSeleccionados").append('<option>' + $("#impuestos option:selected").text() + '</option>');
+            generateImpuestosHiddenList();
+        }
+        else
+        {
+            alert("Debe seleccionar un impuesto de la lista o especificar uno a mano en el cuadro de texto");
+        }
+
+    });
+
+    $("#borrar").click(function (event)
+    {
+        var seleccion = $("#impuestosSeleccionados option:selected");
+        if (seleccion.val() == undefined)
+        {
+            alert("Debe seleccionar un impuesto");
+        }
+        else
+        {
+            $("#impuestosSeleccionados option:selected").remove();
+            generateImpuestosHiddenList();
+        }
+    });
+
+    function generateImpuestosHiddenList()
+    {
+        var list = $("#impuestosSeleccionados");
+        var i = 0;
+        var _impuestos = "";
+        while (list[0].children[i] != undefined)
+        {
+            if (_impuestos == "")
+                _impuestos = list[0].children[i].value;
+            else
+                _impuestos = _impuestos + "-" + list[0].children[i].value;
+            i++;
+        }
+        $("#_impuestos").val(_impuestos);
+    }
+</script>

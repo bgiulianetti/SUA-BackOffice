@@ -149,6 +149,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductorController.cs" />
+    <Compile Include="Controllers\SalaController.cs" />
     <Compile Include="Controllers\ShowController.cs" />
     <Compile Include="Controllers\StanduperoController.cs" />
     <Compile Include="Extension\HtmlHelperExtensions.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="Repositorios\ESSettings.cs" />
     <Compile Include="Repositorios\ESRepositorio.cs" />
     <Compile Include="Servicios\ProductorService.cs" />
+    <Compile Include="Servicios\SalaService.cs" />
     <Compile Include="Servicios\ShowService.cs" />
     <Compile Include="Servicios\StanduperoService.cs" />
     <Compile Include="Utilities\Utilities.cs" />
@@ -248,6 +250,7 @@
     <Content Include="Views\Productor\Productores.cshtml" />
     <Content Include="Views\Show\Show.cshtml" />
     <Content Include="Views\Show\Shows.cshtml" />
+    <Content Include="Views\Sala\Sala.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

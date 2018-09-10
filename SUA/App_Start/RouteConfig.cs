@@ -64,6 +64,20 @@ namespace SUA
             );
 
 
+            //============================sala=======================================
+            routes.MapRoute(
+                name: "Sala",
+                url: "sala",
+                defaults: new { controller = "Sala", action = "Sala" }
+            );
+
+            routes.MapRoute(
+                name: "Salas",
+                url: "salas",
+                defaults: new { controller = "Sala", action = "Salas" }
+            );
+
+
 
 
 

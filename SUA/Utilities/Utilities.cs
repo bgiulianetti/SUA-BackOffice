@@ -147,5 +147,19 @@ namespace SUA.Utilities
         {
             return DateTime.Now.ToString("yyyyMMddHHssfff");
         }
+
+        public static List<SelectListItem> GetImpuestos()
+        {
+            var impuestos = new List<string>
+            {
+                "Impuesto Municipal",
+                "Comisión por Tarjeta​",
+                "Argentores",
+                "SADAIC",
+                "AADET",
+                "Ticketing"
+            };
+            return ConverListToSelectListItem(impuestos);
+        }
     }
 }
