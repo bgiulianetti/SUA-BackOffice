@@ -17,7 +17,7 @@ namespace SUA.Repositorios
 
         //Standupero
         public const string INVALID_STANDUPERO_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch al querer obtener todos los standuperos";
-        public const string STANDUPERO_GET_ALL_EXCEPTION = "Falla al querer obtener toos los standuperos";
+        public const string STANDUPERO_GET_ALL_EXCEPTION = "Falla al querer obtener todos los standuperos";
         public const string STANDUPERO_GET_BY_APELLIDO_INVALID_PARAMETER_EXCEPTION = "Para obtener un standupero por apellido debe pasar un apellido válido";
         public const string STANDUPERO_GET_BY_APELLIDO_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un standupero por apellido";
         public const string STANDUPERO_GET_BY_DNI_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un standupero por dni";
@@ -37,7 +37,7 @@ namespace SUA.Repositorios
 
         //Productor
         public const string INVALID_PRODUCTOR_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch al querer obtener todos los productores";
-        public const string PRODUCTOR_GET_ALL_EXCEPTION = "Falla al querer obtener toos los productores";
+        public const string PRODUCTOR_GET_ALL_EXCEPTION = "Falla al querer obtener todos los productores";
         public const string PRODUCTOR_GET_BY_APELLIDO_INVALID_PARAMETER_EXCEPTION = "Para obtener un productor por apellido debe pasar un apellido válido";
         public const string PRODUCTOR_GET_BY_APELLIDO_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un productor por apellido";
         public const string PRODUCTOR_GET_BY_DNI_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un productor por dni";
@@ -56,9 +56,11 @@ namespace SUA.Repositorios
 
 
 
+
+
         //show
         public const string INVALID_SHOW_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch al querer obtener todos los shows";
-        public const string SHOW_GET_ALL_EXCEPTION = "Falla al querer obtener toos los shows";
+        public const string SHOW_GET_ALL_EXCEPTION = "Falla al querer obtener todos los shows";
         public const string SHOW_GET_BY_NOMBRE_INVALID_PARAMETER_EXCEPTION = "Para obtener un show por nombre debe pasar un nombre válido";
         public const string SHOW_GET_BY_NOMBRE_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un show por nombre";
         public const string SHOW_GET_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para obtener un show por id debe pasar un id válido";
@@ -76,6 +78,30 @@ namespace SUA.Repositorios
         public const string SHOW_DELETE_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para borrar un show por id debe pasar un id válido";
         public const string SHOW_DELETE_NOT_EXISTS_EXCEPTION = "Para borrar un show debe pasar un show que exista previamente";
         public const string SHOW_DELETE_NOT_DELETED_EXCEPTION = "Falla al querer borrar un show";
+
+
+
+
+        //Salas
+        public const string INVALID_SALA_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch al querer obtener todas las salas";
+        public const string SALA_GET_ALL_EXCEPTION = "Falla al querer obtener todas las salas";
+        public const string SALA_GET_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para obtener una sala por id debe pasar un id válido";
+        public const string SALA_GET_BY_ID_INVALID_SEARCH_EXCEPTION = "Error al querer buscar una sala por id";
+        public const string SALA_GET_BY_NOMBRE_INVALID_PARAMETER_EXCEPTION = "Para obtener una sala por nombre debe pasar un nombre válido";
+        public const string SALA_GET_BY_NOMBRE_INVALID_SEARCH_EXCEPTION = "Error al querer buscar una sala por nombre";
+        public const string SALA_GET_BY_PROVINCIA_INVALID_PARAMETER_EXCEPTION = "Para obtener una sala por provincia debe pasar una provincia válida";
+        public const string SALA_GET_BY_PROVINCIA_INVALID_SEARCH_EXCEPTION = "Error al querer buscar una sala por provincia";
+        public const string SALA_CREATE_INVALID_PARAMETER_EXCEPTION = "Para agregar una sala debe pasar una sala válida";
+        public const string SALA_CREATE_ALREADY_EXISTS_EXCEPTION = "Para agregar una sala debe pasar una sala que no exista previamente";
+        public const string SALA_CREATE_NOT_CREATED_EXCEPTION = "Falla al querer crear una sala nueva";
+        public const string SALA_UPDATE_INVALID_PARAMETER_EXCEPTION = "Para editar una sala debe pasar una sala válida";
+        public const string SALA_UPDATE_NOT_EXISTS_EXCEPTION = "Para editar una sala debe pasar una sala que exista previamente";
+        public const string SALA_UPDATE_NOT_UPDATED_EXCEPTION = "Falla al querer editar una sala";
+        public const string SALA_GET_INNERID_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para obtener una sala innerId por id debe pasar un id válido";
+        public const string SALA_GET_INNERID_BY_ID_INVALID_SEARCH_EXCEPTION = "Error al querer buscar una sala innerId por id";
+        public const string SALA_DELETE_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para borrar una sala por id debe pasar un id válido";
+        public const string SALA_DELETE_NOT_EXISTS_EXCEPTION = "Para borrar una sala debe pasar una sala que exista previamente";
+        public const string SALA_DELETE_NOT_DELETED_EXCEPTION = "Falla al querer borrar una sala";
 
 
 
@@ -424,6 +450,8 @@ namespace SUA.Repositorios
         }
 
 
+
+
         /*--------------------Show-----------------------*/
         public List<Show> GetShows()
         {
@@ -604,6 +632,186 @@ namespace SUA.Repositorios
             Client.DeleteByQuery<Show>(q => q.Type(Index));
         }
 
+
+
+        /*--------------------Sala-----------------------*/
+        public List<Sala> GetSalas()
+        {
+            var response = Client.Search<Sala>(p => p
+                   .Index(Index)
+                   .Type(Index)
+                  );
+
+            if (response == null)
+                throw new Exception(INVALID_SALA_ES_CONNECTION_EXCEPTION);
+
+            if (!response.IsValid)
+                throw new Exception(SALA_GET_ALL_EXCEPTION);
+
+            var salas = new List<Sala>();
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    salas.Add(item);
+            }
+            return salas;
+        }
+        public Sala GetSalaById(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(SALA_GET_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Sala>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q
+                    .Match(m => m.Field(f => f.UniqueId).Query(id)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(SALA_GET_BY_ID_INVALID_SEARCH_EXCEPTION);
+
+            Sala sala = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    sala = item;
+            }
+            return sala;
+        }
+        public Sala GetSalaByNombre(string nombre)
+        {
+            if (string.IsNullOrEmpty(nombre))
+                throw new Exception(SALA_GET_BY_NOMBRE_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Sala>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q
+                    .Match(m => m.Field(f => f.Nombre).Query(nombre)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(SALA_GET_BY_NOMBRE_INVALID_SEARCH_EXCEPTION);
+
+            Sala sala = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    sala = item;
+            }
+            return sala;
+        }
+        public Sala GetSalaByProvincia(string provincia)
+        {
+            if (string.IsNullOrEmpty(provincia))
+                throw new Exception(SALA_GET_BY_PROVINCIA_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Sala>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q
+                    .Match(m => m.Field(f => f.Direccion.Provincia).Query(provincia)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(SALA_GET_BY_PROVINCIA_INVALID_SEARCH_EXCEPTION);
+
+            Sala sala = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    sala = item;
+            }
+            return sala;
+        }
+        public void AddSala(Sala sala)
+        {
+            if (sala == null)
+                throw new Exception(SALA_CREATE_INVALID_PARAMETER_EXCEPTION);
+
+            var resultado = GetSalaById(sala.UniqueId.ToString());
+            if (resultado != null)
+                throw new Exception(SALA_CREATE_ALREADY_EXISTS_EXCEPTION);
+
+            var response = Client.IndexAsync(sala, i => i
+              .Index(Index)
+              .Type(Index)
+              .Refresh(Refresh.True)
+              ).Result;
+
+            if (!response.IsValid)
+                throw new Exception(SALA_CREATE_NOT_CREATED_EXCEPTION);
+        }
+        public void UpdateSala(Sala sala)
+        {
+            if (sala == null)
+                throw new Exception(SALA_UPDATE_INVALID_PARAMETER_EXCEPTION);
+
+            var innerId = GetShowInnerIdById(sala.UniqueId.ToString());
+            if (innerId == null)
+                throw new Exception(SALA_UPDATE_NOT_EXISTS_EXCEPTION);
+
+            var result = Client.Index(sala, i => i
+                            .Index(Index)
+                            .Type(Index)
+                            .Id(innerId)
+                            .Refresh(Refresh.True));
+
+            if (!result.IsValid)
+                throw new Exception(SALA_UPDATE_NOT_UPDATED_EXCEPTION);
+        }
+        public string GetSalaInnerIdById(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(SALA_GET_INNERID_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Sala>(s => s
+                    .Index(Index)
+                    .Type(Index)
+                    .Query(q => q.Term("uniqueId", id))
+                  );
+
+            string innerId = null;
+            if (response == null)
+                return innerId;
+
+            if (!response.IsValid)
+                throw new Exception(SALA_GET_INNERID_BY_ID_INVALID_SEARCH_EXCEPTION);
+
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Hits)
+                    innerId = item.Id;
+            }
+            return innerId;
+        }
+        public void DeletSala(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(SALA_DELETE_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
+            var innerId = GetSalaInnerIdById(id);
+            if (innerId == null)
+                throw new Exception(SALA_DELETE_NOT_EXISTS_EXCEPTION);
+
+            var response = Client.Delete<Sala>(innerId, d => d
+                                                    .Index(Index)
+                                                    .Type(Index)
+                                                    .Refresh(Refresh.True)
+                                                    );
+            if (!response.IsValid)
+                throw new Exception(SALA_DELETE_NOT_DELETED_EXCEPTION);
+        }
 
         /*---------Metodos genericos------------------*/
 

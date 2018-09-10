@@ -7,6 +7,7 @@ namespace SUA.Models
 {
     public class Sala
     {
+        public int UniqueId { get; set; }
         public string Nombre { get; set; }
         public Ubicacion Direccion { get; set; }
         public int Capacidad { get; set; }
