@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SUA.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,11 +8,26 @@ namespace SUA.Models
 {
     public class Fecha
     {
+        public string UniqueId { get; set; }
         public Show Show { get; set; }
         public Sala Sala { get; set; }
         public DateTime FechaHorario { get; set; }
         public List<Productor> Productores { get; set; }
         public Borderaux Borederaux { get; set; }
-        public Dictionary<string, double> PrecioEntrada { get; set; }
+
+        public void SetIdAndFechaAlta()
+        {
+            UniqueId = UtilitiesAndStuff.GenerateUniqueId();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj != null && obj is Fecha && (obj as Fecha).GetHashCode() == GetHashCode();
+        }
+
+        public override int GetHashCode()
+        {
+            return UniqueId.GetHashCode();
+        }
     }
 }

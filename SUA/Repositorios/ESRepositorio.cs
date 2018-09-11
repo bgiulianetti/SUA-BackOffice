@@ -105,6 +105,33 @@ namespace SUA.Repositorios
 
 
 
+        //Fecha
+        public const string INVALID_FECHA_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch al querer obtener todas las fechas";
+        public const string FECHA_GET_ALL_EXCEPTION = "Falla al querer obtener todos las fechas";
+        public const string FECHA_GET_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para obtener una fehca por id debe pasar un id válido";
+        public const string FECHA_GET_BY_ID_INVALID_SEARCH_EXCEPTION = "Error al querer buscar una fecha por id";
+        public const string FECHA_GET_BY_NOMBRE_SHOW_INVALID_PARAMETER_EXCEPTION = "Para obtener fehcas por nombre de show debe pasar un nombre de show válido";
+        public const string FECHA_GET_BY_NOMBRE_SHOW_INVALID_SEARCH_EXCEPTION = "Error al querer buscar fechas por nombre de show";
+        public const string FECHA_GET_BY_PROVINCIA_INVALID_PARAMETER_EXCEPTION = "Para obtener fechas por provincia debe pasar una provincia válida";
+        public const string FECHA_GET_BY_PROVINCIA_INVALID_SEARCH_EXCEPTION = "Error al querer buscar fechas por provincia";
+        public const string FECHA_GET_BY_NOMBRE_SALA_INVALID_PARAMETER_EXCEPTION = "Para obtener fechas por nombre de sala debe pasar un nombre de sala válido";
+        public const string FECHA_GET_BY_NOMBRE_SALA_INVALID_SEARCH_EXCEPTION = "Error al querer buscar fechas por nombre de sala";
+        public const string FECHA_GET_BY_SALA_Y_HORARIO_SALA_INVALID_PARAMETER_EXCEPTION = "Para obtener fechas por sala y horario debe pasar una sala y un horario válido";
+        public const string FECHA_GET_BY_SALA_Y_HORARIO_SALA_INVALID_SEARCH_EXCEPTION = "Error al querer buscar fechas por sala y horario";
+        public const string FECHA_CREATE_INVALID_PARAMETER_EXCEPTION = "Para agregar una fecha debe pasar una fecha válida";
+        public const string FECHA_CREATE_ALREADY_EXISTS_EXCEPTION = "Para agregar una fecha debe pasar una fecha que no exista previamente";
+        public const string FECHA_CREATE_NOT_CREATED_EXCEPTION = "Falla al querer crear una fecha nueva";
+        public const string FECHA_UPDATE_INVALID_PARAMETER_EXCEPTION = "Para editar una fecha debe pasar una fecha válida";
+        public const string FECHA_UPDATE_NOT_EXISTS_EXCEPTION = "Para editar una fecha debe pasar una fecha que exista previamente";
+        public const string FECHA_UPDATE_NOT_UPDATED_EXCEPTION = "Falla al querer editar una fecha";
+        public const string FECHA_GET_INNERID_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para obtener una fecha innerId por id debe pasar un id válido";
+        public const string FECHA_GET_INNERID_BY_ID_INVALID_SEARCH_EXCEPTION = "Error al querer buscar una fecha innerId por id";
+        public const string FECHA_DELETE_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para borrar una fecha por id debe pasar un id válido";
+        public const string FECHA_DELETE_NOT_EXISTS_EXCEPTION = "Para borrar una fecha debe pasar una fecha que exista previamente";
+        public const string FECHA_DELETE_NOT_DELETED_EXCEPTION = "Falla al querer borrar una fecha";
+
+
+
         protected ElasticClient Client { get; set; }
         protected string Index { get; set; }
 
@@ -119,8 +146,9 @@ namespace SUA.Repositorios
             Index = index;
         }
 
-        /*-------------------Standupero-------------------*/
 
+
+        /*-------------------Standupero-------------------*/
         public List<Standupero> GetStanduperos()
         {
             var response = Client.Search<Standupero>(s => s
@@ -297,6 +325,10 @@ namespace SUA.Repositorios
             return igInfo;
         }
 
+
+
+
+
         /*--------------------Productor-----------------------*/
         public List<Productor> GetProductores()
         {
@@ -454,6 +486,7 @@ namespace SUA.Repositorios
         {
             Client.DeleteByQuery<Productor>(q => q.Type(Index));
         }
+
 
 
 
@@ -643,6 +676,8 @@ namespace SUA.Repositorios
 
 
 
+
+
         /*--------------------Sala-----------------------*/
         public List<Sala> GetSalas()
         {
@@ -828,6 +863,254 @@ namespace SUA.Repositorios
             if (!response.IsValid)
                 throw new Exception(SALA_DELETE_NOT_DELETED_EXCEPTION);
         }
+
+
+
+
+
+        /*-------------------Fecha-------------------*/
+
+        public List<Fecha> GetFechas()
+        {
+            var response = Client.Search<Fecha>(s => s
+                   .Index(Index)
+                   .Type(Index)
+                  );
+
+            if (response == null)
+                throw new Exception(INVALID_FECHA_ES_CONNECTION_EXCEPTION);
+
+            if (!response.IsValid)
+                throw new Exception(FECHA_GET_ALL_EXCEPTION);
+
+            var fechas = new List<Fecha>();
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    fechas.Add(item);
+            }
+            return fechas;
+        }
+        public Fecha GetFechaById(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(FECHA_GET_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Fecha>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q
+                    .Match(m => m.Field(f => f.UniqueId).Query(id)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(FECHA_GET_BY_ID_INVALID_SEARCH_EXCEPTION);
+
+            Fecha fecha = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    fecha = item;
+            }
+            return fecha;
+        }
+        public List<Fecha> GetFechasByShow(string nombreShow)
+        {
+            if (string.IsNullOrEmpty(nombreShow))
+                throw new Exception(FECHA_GET_BY_NOMBRE_SHOW_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Fecha>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q
+                    .Match(m => m.Field(f => f.Show._Show).Query(nombreShow)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(FECHA_GET_BY_NOMBRE_SHOW_INVALID_SEARCH_EXCEPTION);
+
+            List<Fecha> fechas = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    fechas.Add(item);
+            }
+            return fechas;
+        }
+        public List<Fecha> GetFechasByProvincia(string nombreProvincia)
+        {
+            if (string.IsNullOrEmpty(nombreProvincia))
+                throw new Exception(FECHA_GET_BY_PROVINCIA_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Fecha>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q
+                    .Match(m => m.Field(f => f.Sala.Direccion.Provincia).Query(nombreProvincia)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(FECHA_GET_BY_PROVINCIA_INVALID_SEARCH_EXCEPTION);
+
+            List<Fecha> fechas = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    fechas.Add(item);
+            }
+            return fechas;
+        }
+        public List<Fecha> GetFechasByNombreSala(string nombreSala)
+        {
+            if (string.IsNullOrEmpty(nombreSala))
+                throw new Exception(FECHA_GET_BY_NOMBRE_SALA_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Fecha>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q
+                    .Match(m => m.Field(f => f.Sala.Nombre).Query(nombreSala)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(FECHA_GET_BY_NOMBRE_SALA_INVALID_SEARCH_EXCEPTION);
+
+            List<Fecha> fechas = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    fechas.Add(item);
+            }
+            return fechas;
+        }
+        public List<Fecha> GetFechasBySalaAndFechaAndHorario(string idSala, DateTime fechaYHorario)
+        {
+            if (string.IsNullOrEmpty(idSala) || fechaYHorario == null)
+                throw new Exception(FECHA_GET_BY_SALA_Y_HORARIO_SALA_INVALID_PARAMETER_EXCEPTION);
+
+
+            var response = Client.Search<Fecha>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q
+                    .Match(m => m.Field(f => f.Sala.UniqueId).Query(idSala)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(FECHA_GET_BY_SALA_Y_HORARIO_SALA_INVALID_SEARCH_EXCEPTION);
+
+            List<Fecha> fechas = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                {
+                    if(item.FechaHorario == fechaYHorario)
+                        fechas.Add(item);
+                }
+            }
+            return fechas;
+        }
+        public void AddFecha(Fecha fecha)
+        {
+            if (fecha == null)
+                throw new Exception(FECHA_CREATE_INVALID_PARAMETER_EXCEPTION);
+
+            if (!IndexExists())
+                CreateIndex();
+
+            var resultado = GetFechaById(fecha.UniqueId);
+            if (resultado != null)
+                throw new Exception(FECHA_CREATE_ALREADY_EXISTS_EXCEPTION);
+
+            var fechaObtenida = GetFechasBySalaAndFechaAndHorario(fecha.Sala.UniqueId, fecha.FechaHorario);
+            if(fechaObtenida != null)
+                throw new Exception(FECHA_CREATE_ALREADY_EXISTS_EXCEPTION);
+
+            var response = Client.IndexAsync(fecha, i => i
+              .Index(Index)
+              .Type(Index)
+              .Refresh(Refresh.True)
+              ).Result;
+
+            if (!response.IsValid)
+                throw new Exception(FECHA_CREATE_NOT_CREATED_EXCEPTION);
+        }
+        public void UpdateFecha(Fecha fecha)
+        {
+            if (fecha == null)
+                throw new Exception(FECHA_UPDATE_INVALID_PARAMETER_EXCEPTION);
+
+            var innerId = GetFechaInnerIdById(fecha.UniqueId);
+            if (innerId == null)
+                throw new Exception(FECHA_UPDATE_NOT_EXISTS_EXCEPTION);
+
+            var result = Client.Index(fecha, i => i
+                            .Index(Index)
+                            .Type(Index)
+                            .Id(innerId)
+                            .Refresh(Refresh.True));
+
+            if (!result.IsValid)
+                throw new Exception(FECHA_UPDATE_NOT_UPDATED_EXCEPTION);
+        }
+        public string GetFechaInnerIdById(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(FECHA_GET_INNERID_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Fecha>(s => s
+                    .Index(Index)
+                    .Type(Index)
+                    .Query(q => q.Term("uniqueId", id))
+                  );
+
+            string innerId = null;
+            if (response == null)
+                return innerId;
+
+            if (!response.IsValid)
+                throw new Exception(FECHA_GET_INNERID_BY_ID_INVALID_SEARCH_EXCEPTION);
+
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Hits)
+                    innerId = item.Id;
+            }
+            return innerId;
+        }
+        public void DeleteFecha(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(FECHA_DELETE_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
+            var innerId = GetFechaInnerIdById(id);
+            if (innerId == null)
+                throw new Exception(FECHA_DELETE_NOT_EXISTS_EXCEPTION);
+
+            var response = Client.Delete<Fecha>(innerId, d => d
+                                                    .Index(Index)
+                                                    .Type(Index)
+                                                    .Refresh(Refresh.True)
+                                                    );
+            if (!response.IsValid)
+                throw new Exception(FECHA_DELETE_NOT_DELETED_EXCEPTION);
+        }
+
 
 
         /*---------Metodos genericos------------------*/
