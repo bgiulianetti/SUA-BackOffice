@@ -30,7 +30,7 @@
                             <tr>
                                 <td>
                                     <label>Show </label>
-                                    <select name="showsList" class="form-control" id="showsList" Style = "width:300px" required>
+                                    <select name="showsList" class="form-control" id="showsList" Style="width:300px" required>
                                         @foreach (var item in ViewBag.shows)
                                         {
                                             <option value="@item.UniqueId">@item._Show - @item.Nombre</option>
@@ -39,7 +39,15 @@
                                 </td>
                                 <td>
                                     <label>Fecha</label>
-                                    @Html.TextBoxFor(model => model.FechaHorario, new { @class = "form-control", Style = "width:300px", required = "required", @type = "datetime-local" })
+                                    @if (ViewBag.accion == "Post")
+                                    {
+                                        @Html.TextBoxFor(model => model.FechaHorario, new { @class = "form-control", Style = "width:300px", required = "required", @type = "datetime-local" })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(model => model.FechaHorario, new { @class = "form-control", Style = "width:300px", required = "required", @type = "datetime-local" })
+                                    }
+
                                 </td>
                             </tr>
 
@@ -49,7 +57,7 @@
                             <tr>
                                 <td>
                                     <label>Sala</label>
-                                    <select name="salaList" multiple="multiple" class="form-control" id="salaList" Style = "width:300px; height:200px" required>
+                                    <select name="salaList" multiple="multiple" class="form-control" id="salaList" Style="width:300px; height:200px" required>
                                         @foreach (var item in ViewBag.salas)
                                         {
                                             <option value="@item.UniqueId">@item.Nombre</option>
@@ -58,7 +66,7 @@
                                 </td>
                                 <td>
                                     <label>Información</label>
-                                    <textarea class="form-control" id="salaList" Style = "width:300px;height:200px"></textarea>
+                                    <textarea class="form-control" id="salaList" Style="width:300px;height:200px" readonly="readonly"></textarea>
                                 </td>
                             </tr>
                         </table>
@@ -67,7 +75,7 @@
                             <tr>
                                 <td>
                                     <label>Productores</label>
-                                    <select name="productoresList" class="form-control" id="productoresList" Style = "width:300px" required>
+                                    <select name="productoresList" class="form-control" id="productoresList" Style="width:300px" required>
                                         @foreach (var item in ViewBag.productores)
                                         {
                                             <option value="@item.Dni">@item.Nombre @item.Apellido</option>
@@ -76,7 +84,7 @@
                                 </td>
                             </tr>
                         </table>
-                     
+
 
                         <hr style="color: #8dd9f7">
                         <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />

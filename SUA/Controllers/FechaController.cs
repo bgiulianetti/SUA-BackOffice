@@ -12,13 +12,13 @@ namespace SUA.Controllers
     public class FechaController : Controller
     {
         [HttpGet]
-        public ActionResult Fecha(string dni)
+        public ActionResult Fecha(string id)
         {
             ViewBag.mensaje = "Get";
             ViewBag.salas = new SalaService().GetSalas();
             ViewBag.shows = new ShowService().GetShows();
             ViewBag.productores = new ProductorService().GetProductores();
-            if (string.IsNullOrEmpty(dni))
+            if (string.IsNullOrEmpty(id))
             {
                 ViewBag.accion = "Post";
                 ViewBag.titulo = "Crear Fecha";
@@ -28,7 +28,7 @@ namespace SUA.Controllers
                 ViewBag.accion = "Put";
                 ViewBag.titulo = "Editar Fecha";
                 var service = new StanduperoService();
-                var standupero = service.GetStanduperoByDni(dni);
+                var standupero = service.GetStanduperoByDni(id);
                 return View(standupero);
             }
             return View();
