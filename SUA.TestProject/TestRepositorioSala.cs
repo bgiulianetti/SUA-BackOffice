@@ -191,7 +191,8 @@ namespace SUA.TestProject
                 Telefono = "0800-teatro",
                 TicketeraOnline = "Si, pero es una garcha",
                 UniqueId = id,
-                WhatsAppPersonal = "personal whatsapp"
+                WhatsAppPersonal = "personal whatsapp",
+                RepeticionEnDias = 60
             };
         }
 

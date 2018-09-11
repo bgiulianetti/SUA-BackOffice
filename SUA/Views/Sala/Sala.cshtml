@@ -37,6 +37,12 @@
                                     @Html.TextBoxFor(model => model.Capacidad, new { @class = "form-control", Style = "width:300px", required = "required", @type = "number" })
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <label>Repetir cada [días] </label>
+                                    @Html.TextBoxFor(model => model.RepeticionEnDias, new { @class = "form-control", Style = "width:300px", required = "required", @type="number" })
+                                </td>
+                            </tr>
                         </table>
                         
                         <hr style="color: #8dd9f7">

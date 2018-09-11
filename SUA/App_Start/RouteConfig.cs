@@ -50,7 +50,7 @@ namespace SUA
 
 
 
-            //============================produtor=======================================
+            //============================Show=======================================
             routes.MapRoute(
                 name: "Show",
                 url: "show",
@@ -78,7 +78,18 @@ namespace SUA
             );
 
 
+            //============================fecha=======================================
+            routes.MapRoute(
+                name: "Fecha",
+                url: "fecha",
+                defaults: new { controller = "Fecha", action = "Fecha" }
+            );
 
+            routes.MapRoute(
+                name: "Fechas",
+                url: "fechas",
+                defaults: new { controller = "Fecha", action = "Fechas" }
+            );
 
 
 

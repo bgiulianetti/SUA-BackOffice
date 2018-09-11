@@ -147,6 +147,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\FechaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductorController.cs" />
     <Compile Include="Controllers\SalaController.cs" />
@@ -252,6 +253,8 @@
     <Content Include="Views\Show\Shows.cshtml" />
     <Content Include="Views\Sala\Sala.cshtml" />
     <Content Include="Views\Sala\Salas.cshtml" />
+    <Content Include="Views\Fecha\Fecha.cshtml" />
+    <Content Include="Views\Fecha\Fechas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

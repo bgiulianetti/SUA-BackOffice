@@ -38,6 +38,7 @@ namespace SUA.Models
         public string ComoPagan { get; set; }
         public string AclaracionesSala { get; set; }
         public DateTime FechaAlta { get; set; }
+        public int RepeticionEnDias { get; set; }
 
         public void SetIdAndFechaAlta()
         {

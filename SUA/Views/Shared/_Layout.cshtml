@@ -25,11 +25,12 @@
     <script type="text/javascript" src="./assets/js/jquery/jquery-2.1.0.min.js?v=5022"></script>
     <script type="text/javascript" src="./assets/js/bootstrap/bootstrap.min.js?v=5022"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    
+    <!--Datetime picker jquery-->
+    <script type="text/javascript" src="js/jquery-ui-timepicker-addon.js"></script>
 
     <script>
         $(document).ready(function () {
-
-
 
 
 
@@ -260,8 +261,8 @@
                             <a href="#subFechas" data-to="fechas" data-toggle="collapse" class="collapsed"> <span>Fechas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subFechas" class="collapse ">
                                 <ul class="nav">
-                                    <li><a href="#" class="">Listar</a></li>
-                                    <li><a href="#" class="">Crear</a></li>
+                                    <li><a href="@Url.RouteUrl("Fechas")" class="">Listar</a></li>
+                                    <li><a href="@Url.RouteUrl("Fecha")" class="">Crear</a></li>
                                 </ul>
                             </div>
                         </li>

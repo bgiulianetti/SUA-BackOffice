@@ -19,9 +19,19 @@ namespace SUA.Servicios
             Repository = new ESRepositorio(settings, ESRepositorio.ContentType.sala.ToString());
         }
 
-        public List<Sala> GetSalas()
+        public List<Sala> GetSalas(bool orderByVencimiento)
         {
-            return Repository.GetSalas();
+            var salas = Repository.GetSalas();
+            if(orderByVencimiento)
+            {
+
+            }
+            else
+            {
+                salas.OrderBy(s => s.Nombre);
+            }
+
+            return salas;
         }
         public Sala GetSalaById(string id)
         {
