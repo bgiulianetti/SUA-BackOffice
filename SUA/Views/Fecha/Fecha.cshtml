@@ -30,36 +30,52 @@
                             <tr>
                                 <td>
                                     <label>Show </label>
-                                    <select name="showList" class="form-control" id="showList" required>
+                                    <select name="showsList" class="form-control" id="showsList" Style = "width:300px" required>
                                         @foreach (var item in ViewBag.shows)
                                         {
                                             <option value="@item.UniqueId">@item._Show - @item.Nombre</option>
                                         }
                                     </select>
                                 </td>
-                            </tr>
-                            <tr>
                                 <td>
-                                    <input type="text" name="fecha" id="fecha" value="" />
+                                    <label>Fecha</label>
+                                    @Html.TextBoxFor(model => model.FechaHorario, new { @class = "form-control", Style = "width:300px", required = "required", @type = "datetime-local" })
                                 </td>
                             </tr>
+
+                        </table>
+                        <hr style="color: #8dd9f7">
+                        <table>
                             <tr>
                                 <td>
                                     <label>Sala</label>
-                                    <select name="salaList" class="form-control" id="salaList" required>
+                                    <select name="salaList" multiple="multiple" class="form-control" id="salaList" Style = "width:300px; height:200px" required>
                                         @foreach (var item in ViewBag.salas)
                                         {
                                             <option value="@item.UniqueId">@item.Nombre</option>
                                         }
                                     </select>
                                 </td>
-                            </tr>
-                            <tr>
-                                
+                                <td>
+                                    <label>Información</label>
+                                    <textarea class="form-control" id="salaList" Style = "width:300px;height:200px"></textarea>
+                                </td>
                             </tr>
                         </table>
                         <hr style="color: #8dd9f7">
-
+                        <table>
+                            <tr>
+                                <td>
+                                    <label>Productores</label>
+                                    <select name="productoresList" class="form-control" id="productoresList" Style = "width:300px" required>
+                                        @foreach (var item in ViewBag.productores)
+                                        {
+                                            <option value="@item.Dni">@item.Nombre @item.Apellido</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
                      
 
                         <hr style="color: #8dd9f7">
@@ -77,9 +93,17 @@
 
 </div>
 
-
-<script type="text/javascript">
-    $(function(){
-        $('#fecha').datetimepicker();
+<script>
+    $("#showsList").change(function () {
+        var array = @Html.Raw(Json.Encode(@ViewBag.shows));
+        for (var i = 0; i < array.length; i++)
+        {
+            if ($("#showsList").val() == array[i].UniqueId)
+            {
+                var dniProductor = array[i].Productor.Dni;
+                $('#productoresList option[value="' + dniProductor + '"]').attr("selected", "selected");
+            }
+        }
     });
 </script>
+

@@ -116,6 +116,8 @@ namespace SUA.Repositorios
         public const string FECHA_GET_BY_PROVINCIA_INVALID_SEARCH_EXCEPTION = "Error al querer buscar fechas por provincia";
         public const string FECHA_GET_BY_NOMBRE_SALA_INVALID_PARAMETER_EXCEPTION = "Para obtener fechas por nombre de sala debe pasar un nombre de sala válido";
         public const string FECHA_GET_BY_NOMBRE_SALA_INVALID_SEARCH_EXCEPTION = "Error al querer buscar fechas por nombre de sala";
+        public const string FECHA_GET_BY_ID_SALA_INVALID_PARAMETER_EXCEPTION = "Para obtener fechas por id de sala debe pasar un id de sala válido";
+        public const string FECHA_GET_BY_ID_SALA_INVALID_SEARCH_EXCEPTION = "Error al querer buscar fechas por id de sala";
         public const string FECHA_GET_BY_SALA_Y_HORARIO_SALA_INVALID_PARAMETER_EXCEPTION = "Para obtener fechas por sala y horario debe pasar una sala y un horario válido";
         public const string FECHA_GET_BY_SALA_Y_HORARIO_SALA_INVALID_SEARCH_EXCEPTION = "Error al querer buscar fechas por sala y horario";
         public const string FECHA_CREATE_INVALID_PARAMETER_EXCEPTION = "Para agregar una fecha debe pasar una fecha válida";
@@ -995,6 +997,32 @@ namespace SUA.Repositorios
             }
             return fechas;
         }
+        public List<Fecha> GetFechasByIdSala(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(FECHA_GET_BY_ID_SALA_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Fecha>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q
+                    .Match(m => m.Field(f => f.Sala.UniqueId).Query(id)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(FECHA_GET_BY_ID_SALA_INVALID_SEARCH_EXCEPTION);
+
+            var fechas = new List<Fecha>();
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    fechas.Add(item);
+            }
+            return fechas;
+        }
         public Fecha GetFechaBySalaAndFechaAndHorario(string idSala, DateTime fechaYHorario)
         {
             if (string.IsNullOrEmpty(idSala) || fechaYHorario == null)
@@ -1110,7 +1138,7 @@ namespace SUA.Repositorios
             if (!response.IsValid)
                 throw new Exception(FECHA_DELETE_NOT_DELETED_EXCEPTION);
         }
-
+        
 
 
         /*---------Metodos genericos------------------*/

@@ -15,17 +15,17 @@ namespace SUA.Controllers
         {
             ViewBag.mensaje = "Get";
             ViewBag.salas = new SalaService().GetSalas();
-            ViewBag.provincias = UtilitiesAndStuff.GetProvincias();
-            ViewBag.paises = UtilitiesAndStuff.GetPaises();
+            ViewBag.shows = new ShowService().GetShows();
+            ViewBag.productores = new ProductorService().GetProductores();
             if (string.IsNullOrEmpty(dni))
             {
                 ViewBag.accion = "Post";
-                ViewBag.titulo = "Crear Standupero";
+                ViewBag.titulo = "Crear Fecha";
             }
             else
             {
                 ViewBag.accion = "Put";
-                ViewBag.titulo = "Editar Standupero";
+                ViewBag.titulo = "Editar Fecha";
                 var service = new StanduperoService();
                 var standupero = service.GetStanduperoByDni(dni);
                 return View(standupero);
@@ -34,13 +34,10 @@ namespace SUA.Controllers
         }
 
 
-
-
-
         [HttpGet]
         public ActionResult Fechas()
         {
-            ViewBag.titulo = "Standuperos";
+            ViewBag.titulo = "Fechas";
             var service = new StanduperoService();
             try
             {
