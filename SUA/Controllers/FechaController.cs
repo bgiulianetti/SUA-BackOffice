@@ -1,4 +1,5 @@
-﻿using SUA.Servicios;
+﻿using SUA.Models;
+using SUA.Servicios;
 using SUA.Utilities;
 using System;
 using System.Collections.Generic;
@@ -33,16 +34,46 @@ namespace SUA.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Fecha(Fecha fecha, string accion, string showsList, string salaList, string productoresList)
+        {
+            ViewBag.titulo = "Crear Fecha";
+            fecha.Productor = new ProductorService().GetProductorByDni(productoresList);
+            fecha.Sala = new SalaService().GetSalaById(salaList);
+            fecha.Show = new ShowService().GetShowById(showsList);
+
+            var service = new FechaService();
+            try
+            {
+                if (string.Equals(accion, "Post"))
+                {
+                    fecha.SetIdAndFechaAlta();
+                    service.AddFecha(fecha);
+                    ViewBag.mensaje = "creado";
+                }
+                else if (string.Equals(accion, "Put"))
+                {
+                    service.UpdateFecha(fecha);
+                    ViewBag.mensaje = "actualizado";
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.mensaje = ex.Message;
+            }
+            return View();
+        }
+
 
         [HttpGet]
         public ActionResult Fechas()
         {
             ViewBag.titulo = "Fechas";
-            var service = new StanduperoService();
+            var service = new FechaService();
             try
             {
-                var standuperos = service.GetStanduperos();
-                ViewBag.standuperos = standuperos;
+                var fechas = service.GetFechas();
+                ViewBag.fechas = fechas;
                 ViewBag.mensaje = "listar";
             }
             catch (Exception ex)

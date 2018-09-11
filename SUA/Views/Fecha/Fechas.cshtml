@@ -1,7 +1,53 @@
-﻿
-@{
-    ViewBag.Title = "Fechas";
-}
+﻿<div id="container" class="main-content" style="padding:50px;  width: 100%;">
+    @if (ViewBag.mensaje == "listar")
+    {
+        <div style="width: 100%; overflow-x: auto;  white-space: nowrap;">
 
-<h2>Fechas</h2>
+            <table id="table_fechas" class="display compact hover nowrap">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Show</th>
+                        <th>Sala</th>
+                        <th>Provincia</th>
+                        <th>Fecha</th>
+                        <th>Productor</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th>Show</th>
+                        <th>Sala</th>
+                        <th>Provincia</th>
+                        <th>Fecha</th>
+                        <th>Productor</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in ViewBag.fechas)
+                    {
+                        <tr>
+                            <td>
+                                @Html.ActionImage("DeleteFecha", "Fecha", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
+                                @Html.ActionImage("Fecha", "Fecha", new { id = item.UniqueId }, "~/assets/img/edit_icon.png")
+                                @Html.ActionImage("Bordereaux", "Fecha", new { id = item.UniqueId }, "~/assets/img/borderaux_icon.png")
+                            </td>
+                            <td>@item.Show._Show - @item.Show.Nombre</td>
+                            <td>@item.Sala.Nombre</td>
+                            <td>@item.Sala.Direccion.Provincia</td>
+                            <td>@item.FechaHorario</td>
+                            <td>@item.Productor.Nombre @item.Productor.Apellido</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
+        </div>
+    }
+    else
+    {
+        <label>@ViewBag.mensaje</label>
+    }
+
+</div>

@@ -194,6 +194,43 @@
             //$('#table_salas_filter').hide();
 
 
+
+
+            //-----------------------------Datatables Fecha------------------------------
+            var tableStanduperos = $('#table_fechas').DataTable({
+                responsive: true,
+                dom: 'l<B>ftip',
+                buttons: [
+                    { extend: 'excelHtml5', title: "Fechas", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/') },
+                    'csvHtml5',
+                    { extend: 'pdf', title: "Listado de Fechas", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/'), orientation: 'landscape' }
+                ],
+                'columnDefs': [{ "targets": 0, "className": "text-center" }],
+                "bSort": false
+            });
+
+            var contador = 0;
+            $('#table_fechas tfoot th').each(function () {
+                if (contador != 0) {
+                    var title = $(this).text();
+                    $(this).html('<input type="text" placeholder="' + title + '" />');
+                }
+                contador++;
+            });
+
+
+            // Apply the search
+            var table = $('#table_fechas').DataTable();
+            table.columns().every(function () {
+                var that = this;
+                $('input', this.footer()).on('keyup change', function () {
+                    if (that.search() !== this.value)
+                        that.search(this.value).draw();
+                });
+            });
+            //$('#table_salas_filter').hide();
+
+
         });
     </script>
 

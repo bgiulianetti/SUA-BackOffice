@@ -12,7 +12,7 @@ namespace SUA.Models
         public Show Show { get; set; }
         public Sala Sala { get; set; }
         public DateTime FechaHorario { get; set; }
-        public List<Productor> Productores { get; set; }
+        public Productor Productor { get; set; }
         public Borderaux Borederaux { get; set; }
 
         public void SetIdAndFechaAlta()

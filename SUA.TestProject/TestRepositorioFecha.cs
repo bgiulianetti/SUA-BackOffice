@@ -253,7 +253,7 @@ namespace SUA.TestProject
             {
                 Borederaux = null,
                 FechaHorario = fechaYhorario,
-                Productores = new List<Productor> { new TestRepositorioProductor().CrearProductor("32576829", "Giulianetti", "0800-fede", "Argentina") },
+                Productores = new TestRepositorioProductor().CrearProductor("32576829", "Giulianetti", "0800-fede", "Argentina"),
                 Sala = new TestRepositorioSala().CrearSala(idSala),
                 Show = new TestRepositorioShow().CrearShow("Sanata"),
                 UniqueId = id
