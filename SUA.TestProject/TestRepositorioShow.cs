@@ -128,7 +128,7 @@ namespace SUA.TestProject
             repository.CreateIndex();
             try
             {
-                repository.GetShowByNombre(show.Nombre);
+                repository.DeleteShow(show.Nombre);
             }
             catch (Exception ex)
             {
@@ -148,54 +148,19 @@ namespace SUA.TestProject
             var showObtenido = repository.GetShowByNombre(show.Nombre);
             Assert.AreEqual(showObtenido, null);
         }
-
-        private Productor CrearProductor(string dni, string apellido, string nombre, string pais)
-        {
-            return new Productor
-            {
-                Nombre = nombre,
-                Apellido = apellido,
-                Direccion = new Ubicacion { Direccion = "Migueletes 680", Localidad = "CABA", Ciudad = "CABA", CodigoPostal = "1426", Provincia = "Buenos Aires", Pais = pais },
-                Dni = dni,
-                FechaAlta = DateTime.Now,
-                FechaNacimiento = new DateTime(1986, 10, 10),
-                TransportePropio = "bicicleta",
-                DatosBancarios = new DatosBancarios { TipoCuenta = "Caja de Ahorro", Alias = "musica.caoba.jaula", Banco = "BANCO SANTANDER RIO", Cbu = "cbu", CuilCuit = "20-32576829-1", NombreCompleto = "Bruno Nicolas giulianetti" },
-                Observaciones = "Ninguna Observacion",
-                Celular = "1122526344",
-                Email = "bruno.giulianetti@gmail.com"
-            };
-        }
-        private Standupero CrearStandupero(string dni, string apellido, string nombre, string pais)
-        {
-            return new Standupero
-            {
-                Nombre = nombre,
-                Apellido = apellido,
-                Direccion = new Ubicacion { Direccion = "Migueletes 680", Localidad = "CABA", Ciudad = "CABA", CodigoPostal = "1426", Provincia = "Buenos Aires", Pais = pais },
-                Dni = dni,
-                FechaAlta = DateTime.Now,
-                FechaNacimiento = new DateTime(1986, 10, 10),
-                TransportePropio = "bicicleta",
-                Foto = "url de una foto",
-                DatosBancarios = new DatosBancarios { TipoCuenta = "Caja de Ahorro", Alias = "musica.caoba.jaula", Banco = "BANCO SANTANDER RIO", Cbu = "cbu", CuilCuit = "20-32576829-1", NombreCompleto = "Bruno Nicolas giulianetti" },
-                Observaciones = "Ninguna Observacion",
-                Celular = "1122526344",
-                Email = "bruno.giulianetti@gmail.com",
-                InstagramUser = "@bgiulianetti"
-            };
-        }
-        private Show CrearShow(string nombre)
+  
+        public Show CrearShow(string nombre)
         {
             var show = new Show
             {
                 _Show = "Sanata",
                 Nombre = nombre,
-                Integrantes = new List<Standupero> { CrearStandupero("12345989", "Chouy", "Mike", "Argentina"), CrearStandupero("36621192", "Orsi", "Dario", "Argentina"), },
+                Integrantes = new List<Standupero> { new TestRepositorioStandupero().CrearStandupero("12345989", "Chouy", "Mike", "Argentina"),
+                                                     new TestRepositorioStandupero().CrearStandupero("36621192", "Orsi", "Dario", "Argentina"), },
                 Rider = "5 microfonos",
                 Camarin = "camarin muy grande",
                 Observaciones = "Son graciosos",
-                Productor = CrearProductor("32576829", "Giulianeetti", "Federico", "Argentina")
+                Productor = new TestRepositorioProductor().CrearProductor("32576829", "Giulianeetti", "Federico", "Argentina")
             };
             show.SetIdAndFechaAlta();
             return show;

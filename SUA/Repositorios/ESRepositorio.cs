@@ -791,7 +791,7 @@ namespace SUA.Repositorios
                 throw new Exception(SALA_CREATE_ALREADY_EXISTS_EXCEPTION);
 
             var salaObtenidaPorNombre = GetSalaByNombre(sala.Nombre);
-            if(salaObtenidaPorNombre.Direccion.Provincia == sala.Direccion.Provincia)
+            if(salaObtenidaPorNombre != null && salaObtenidaPorNombre.Direccion.Provincia == sala.Direccion.Provincia)
                 throw new Exception(SALA_CREATE_ALREADY_EXISTS_EXCEPTION);
 
             var response = Client.IndexAsync(sala, i => i
@@ -935,7 +935,7 @@ namespace SUA.Repositorios
             if (!response.IsValid)
                 throw new Exception(FECHA_GET_BY_NOMBRE_SHOW_INVALID_SEARCH_EXCEPTION);
 
-            List<Fecha> fechas = null;
+            var fechas = new List<Fecha>();
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
@@ -961,7 +961,7 @@ namespace SUA.Repositorios
             if (!response.IsValid)
                 throw new Exception(FECHA_GET_BY_PROVINCIA_INVALID_SEARCH_EXCEPTION);
 
-            List<Fecha> fechas = null;
+            var fechas = new List<Fecha>();
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
@@ -969,7 +969,7 @@ namespace SUA.Repositorios
             }
             return fechas;
         }
-        public List<Fecha> GetFechasByNombreSala(string nombreSala)
+        public List<Fecha> GetFechasBySala(string nombreSala)
         {
             if (string.IsNullOrEmpty(nombreSala))
                 throw new Exception(FECHA_GET_BY_NOMBRE_SALA_INVALID_PARAMETER_EXCEPTION);
@@ -987,7 +987,7 @@ namespace SUA.Repositorios
             if (!response.IsValid)
                 throw new Exception(FECHA_GET_BY_NOMBRE_SALA_INVALID_SEARCH_EXCEPTION);
 
-            List<Fecha> fechas = null;
+            var fechas = new List<Fecha>();
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
@@ -995,7 +995,7 @@ namespace SUA.Repositorios
             }
             return fechas;
         }
-        public List<Fecha> GetFechasBySalaAndFechaAndHorario(string idSala, DateTime fechaYHorario)
+        public Fecha GetFechaBySalaAndFechaAndHorario(string idSala, DateTime fechaYHorario)
         {
             if (string.IsNullOrEmpty(idSala) || fechaYHorario == null)
                 throw new Exception(FECHA_GET_BY_SALA_Y_HORARIO_SALA_INVALID_PARAMETER_EXCEPTION);
@@ -1014,16 +1014,16 @@ namespace SUA.Repositorios
             if (!response.IsValid)
                 throw new Exception(FECHA_GET_BY_SALA_Y_HORARIO_SALA_INVALID_SEARCH_EXCEPTION);
 
-            List<Fecha> fechas = null;
+            Fecha fecha = null;
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
                 {
                     if(item.FechaHorario == fechaYHorario)
-                        fechas.Add(item);
+                        fecha =item;
                 }
             }
-            return fechas;
+            return fecha;
         }
         public void AddFecha(Fecha fecha)
         {
@@ -1037,7 +1037,7 @@ namespace SUA.Repositorios
             if (resultado != null)
                 throw new Exception(FECHA_CREATE_ALREADY_EXISTS_EXCEPTION);
 
-            var fechaObtenida = GetFechasBySalaAndFechaAndHorario(fecha.Sala.UniqueId, fecha.FechaHorario);
+            var fechaObtenida = GetFechaBySalaAndFechaAndHorario(fecha.Sala.UniqueId, fecha.FechaHorario);
             if(fechaObtenida != null)
                 throw new Exception(FECHA_CREATE_ALREADY_EXISTS_EXCEPTION);
 

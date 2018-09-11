@@ -72,9 +72,13 @@ namespace SUA.TestProject
             var sala1 = CrearSala(id1);
             repository.AddSala(sala1);
 
+            //genero retraso
+            int i = 0; i++; i.ToString();
 
-            var id2 = UtilitiesAndStuff.GenerateUniqueId();
+            var id2 = UtilitiesAndStuff.GenerateUniqueId().Replace("2","f");
             var sala2 = CrearSala(id2);
+            sala2.Nombre = "Teatro Maipo";
+            sala2.Direccion.Provincia = "Córdoba";
             repository.AddSala(sala2);
 
             var salas = repository.GetSalas();
@@ -154,7 +158,7 @@ namespace SUA.TestProject
             Assert.AreEqual(salaObtenida, null);
         }
 
-        private Sala CrearSala(string id)
+        public Sala CrearSala(string id)
         {
             return new Sala
             {

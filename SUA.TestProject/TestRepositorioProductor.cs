@@ -121,7 +121,7 @@ namespace SUA.TestProject
             repository.CreateIndex();
             try
             {
-                repository.GetProductorByDni(productor.Dni);
+                repository.DeleteProductor(productor.Dni);
             }
             catch (Exception ex)
             {
@@ -141,7 +141,7 @@ namespace SUA.TestProject
             Assert.AreEqual(producorObtenido, null);
         }
 
-        private Productor CrearProductor(string dni, string apellido, string nombre, string pais)
+        public Productor CrearProductor(string dni, string apellido, string nombre, string pais)
         {
             return new Productor
             {
