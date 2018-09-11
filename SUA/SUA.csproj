@@ -251,6 +251,7 @@
     <Content Include="Views\Show\Show.cshtml" />
     <Content Include="Views\Show\Shows.cshtml" />
     <Content Include="Views\Sala\Sala.cshtml" />
+    <Content Include="Views\Sala\Salas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

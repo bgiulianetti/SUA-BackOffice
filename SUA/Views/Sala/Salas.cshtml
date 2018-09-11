@@ -1,0 +1,61 @@
+﻿<div id="container" class="main-content" style="padding:50px;  width: 100%;">
+    @if (ViewBag.mensaje == "listar")
+    {
+        <div style="width: 100%; overflow-x: auto;  white-space: nowrap;">
+
+            <table id="table_salas" class="display compact hover nowrap">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Nombre</th>
+                        <th>Direccion</th>
+                        <th>Localidad</th>
+                        <th>Capacidad</th>
+                        <th>Teléfono</th>
+                        <th>Administrador</th>
+                        <th>Email</th>
+                        <th>Arreglo</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th>Nombre</th>
+                        <th>Direccion</th>
+                        <th>Localidad</th>
+                        <th>Capacidad</th>
+                        <th>Teléfono</th>
+                        <th>Administrador</th>
+                        <th>Email</th>
+                        <th>Arreglo</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in ViewBag.salas)
+                    {
+                        <tr>
+                            <td>
+                                @Html.ActionImage("DeleteSala", "Sala", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
+                                @Html.ActionImage("Sala", "Sala", new { id = item.UniqueId }, "~/assets/img/edit_icon.png")
+                            </td>
+                            <td>@item.Nombre</td>
+                            <td>@item.Direccion.Direccion</td>
+                            <td>@item.Direccion.Localidad</td>
+                            <td>@item.Capacidad</td>
+                            <td>@item.Telefono</td>
+                            <td>@item.Administrador</td>
+                            <td>@item.Email</td>
+                            <td>@item.Arreglo</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    }
+    else
+    {
+        <label>@ViewBag.mensaje</label>
+    }
+
+</div>

@@ -62,6 +62,38 @@ namespace SUA.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult Salas()
+        {
+            ViewBag.titulo = "Salas";
+            var service = new SalaService();
+            try
+            {
+                var salas = service.GetSalas();
+                ViewBag.salas = salas;
+                ViewBag.mensaje = "listar";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.mensaje = ex.Message;
+            }
+            return View();
+        }
+
+        public ActionResult DeleteSala(string id)
+        {
+            var service = new SalaService();
+            try
+            {
+                service.DeleteSala(id);
+            }
+            catch /*(Exception ex)*/
+            {
+                //loguear mensaje o mandar pagina de error
+            }
+            return RedirectToAction("Salas", "Sala");
+        }
+
         private List<string> GetImpuestosList(string impuestos)
         {
             return impuestos.Split('-').ToList();

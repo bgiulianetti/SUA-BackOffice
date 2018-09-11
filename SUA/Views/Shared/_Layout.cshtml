@@ -32,6 +32,9 @@
 
 
 
+
+
+
             //-----------------------------Datatables Standupero------------------------------
             var tableStanduperos = $('#table_standuperos').DataTable({
                 responsive: true,
@@ -71,6 +74,10 @@
 
 
 
+
+
+
+
             //-----------------------------Datatables Productores------------------------------
             var tableStanduperos = $('#table_productores').DataTable({
                 responsive: true,
@@ -102,7 +109,12 @@
                         that.search(this.value).draw();
                 });
             });
-            //$('#table_standuperos_filter').hide();
+            //$('#table_productores_filter').hide();
+
+
+
+
+
 
 
 
@@ -138,7 +150,49 @@
                         that.search(this.value).draw();
                 });
             });
-            //$('#table_standuperos_filter').hide();
+            //$('#table_shows_filter').hide();
+
+
+
+
+
+
+
+
+
+            //-----------------------------Datatables Salas------------------------------
+            var tableStanduperos = $('#table_salas').DataTable({
+                responsive: true,
+                dom: 'l<B>ftip',
+                buttons: [
+                    { extend: 'excelHtml5', title: "Salas", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/') },
+                    'csvHtml5',
+                    { extend: 'pdf', title: "Listado de Salas", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/'), orientation: 'landscape' }
+                ],
+                'columnDefs': [{ "targets": 0, "className": "text-center" }],
+                "bSort": false
+            });
+
+            var contador = 0;
+            $('#table_salas tfoot th').each(function () {
+                if (contador != 0) {
+                    var title = $(this).text();
+                    $(this).html('<input type="text" placeholder="' + title + '" />');
+                }
+                contador++;
+            });
+
+
+            // Apply the search
+            var table = $('#table_salas').DataTable();
+            table.columns().every(function () {
+                var that = this;
+                $('input', this.footer()).on('keyup change', function () {
+                    if (that.search() !== this.value)
+                        that.search(this.value).draw();
+                });
+            });
+            //$('#table_salas_filter').hide();
 
 
 
@@ -188,8 +242,8 @@
                             <a href="#subSalas" data-to="salas" data-toggle="collapse" class="collapsed"> <span>Salas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subSalas" class="collapse ">
                                 <ul class="nav">
-                                    <li><a href="#" class="">Listar</a></li>
-                                    <li><a href="#" class="">Crear</a></li>
+                                    <li><a href="@Url.RouteUrl("Salas")" class="">Listar</a></li>
+                                    <li><a href="@Url.RouteUrl("Sala")" class="">Crear</a></li>
                                 </ul>
                             </div>
                         </li>

@@ -211,7 +211,16 @@
                                 </td>
                                 <td>
                                     <label>Seleccionados</label>
-                                    <select multiple="multiple" class="form-control" id="impuestosSeleccionados" name="impuestosSeleccionados" required Style="width:300px; height:124px"></select>
+                                    <select multiple="multiple" class="form-control" id="impuestosSeleccionados" name="impuestosSeleccionados" required Style="width:300px; height:124px">
+                                        @if (ViewBag.accion == "Put")
+                                        {
+                                            foreach (var item in Model.ImpuestosYGastos)
+                                            {
+                                                <option>@item</option>
+                                            }
+                                        }
+                                    </select>
+                                    
                                     <input type="button" value="Borarr" class="form-control" id="borrar" />
                                 </td>
                             </tr>
@@ -359,6 +368,8 @@
 
                         <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
                         <input name="_impuestos" class="hidden" id="_impuestos"   data-form="error-box" />
+                        @Html.TextBoxFor(model => model.UniqueId, new { @class = "hidden" })
+
                         <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
                     </form>
                 </div>

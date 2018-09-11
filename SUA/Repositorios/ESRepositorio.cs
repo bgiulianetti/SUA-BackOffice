@@ -222,6 +222,9 @@ namespace SUA.Repositorios
             if (standupero == null)
                 throw new Exception(STANDUPERO_CREATE_INVALID_PARAMETER_EXCEPTION);
 
+            if (!IndexExists())
+                CreateIndex();
+
             var resultado = GetStanduperoByDni(standupero.Dni);
             if (resultado != null)
                 throw new Exception(STANDUPERO_CREATE_ALREADY_EXISTS_EXCEPTION);
@@ -396,6 +399,9 @@ namespace SUA.Repositorios
             if (productor == null)
                 throw new Exception(PRODUCTOR_CREATE_INVALID_PARAMETER_EXCEPTION);
 
+            if (!IndexExists())
+                CreateIndex();
+
             var resultado = GetProductorByDni(productor.Dni);
             if (resultado != null)
                 throw new Exception(PRODUCTOR_CREATE_ALREADY_EXISTS_EXCEPTION);
@@ -528,6 +534,9 @@ namespace SUA.Repositorios
         {
             if (show == null)
                 throw new Exception(SHOW_CREATE_INVALID_PARAMETER_EXCEPTION);
+
+            if (!IndexExists())
+                CreateIndex();
 
             var resultado = GetShowByNombre(show.Nombre);
             if (resultado != null)
@@ -739,8 +748,15 @@ namespace SUA.Repositorios
             if (sala == null)
                 throw new Exception(SALA_CREATE_INVALID_PARAMETER_EXCEPTION);
 
-            var resultado = GetSalaById(sala.UniqueId.ToString());
+            if (!IndexExists())
+                CreateIndex();
+
+            var resultado = GetSalaById(sala.UniqueId);
             if (resultado != null)
+                throw new Exception(SALA_CREATE_ALREADY_EXISTS_EXCEPTION);
+
+            var salaObtenidaPorNombre = GetSalaByNombre(sala.Nombre);
+            if(salaObtenidaPorNombre.Direccion.Provincia == sala.Direccion.Provincia)
                 throw new Exception(SALA_CREATE_ALREADY_EXISTS_EXCEPTION);
 
             var response = Client.IndexAsync(sala, i => i
@@ -757,7 +773,7 @@ namespace SUA.Repositorios
             if (sala == null)
                 throw new Exception(SALA_UPDATE_INVALID_PARAMETER_EXCEPTION);
 
-            var innerId = GetSalaInnerIdById(sala.UniqueId.ToString());
+            var innerId = GetSalaInnerIdById(sala.UniqueId);
             if (innerId == null)
                 throw new Exception(SALA_UPDATE_NOT_EXISTS_EXCEPTION);
 
@@ -812,6 +828,7 @@ namespace SUA.Repositorios
             if (!response.IsValid)
                 throw new Exception(SALA_DELETE_NOT_DELETED_EXCEPTION);
         }
+
 
         /*---------Metodos genericos------------------*/
 
