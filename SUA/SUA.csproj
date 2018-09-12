@@ -164,6 +164,7 @@
     <Compile Include="Models\Contacto.cs" />
     <Compile Include="Models\DatosBancarios.cs" />
     <Compile Include="Models\Fecha.cs" />
+    <Compile Include="Models\InfoSalasVista.cs" />
     <Compile Include="Models\InstagramUserInfo.cs" />
     <Compile Include="Models\Persona.cs" />
     <Compile Include="Models\Productor.cs" />

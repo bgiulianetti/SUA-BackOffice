@@ -18,6 +18,10 @@ namespace SUA.Controllers
             ViewBag.salas = new SalaService().GetSalas();
             ViewBag.shows = new ShowService().GetShows();
             ViewBag.productores = new ProductorService().GetProductores();
+            ViewBag.infoSalasVista = GetInfoSalasVista();
+
+            ViewBag.infoSalaVista = GetInfoSalasVista();
+
             if (string.IsNullOrEmpty(id))
             {
                 ViewBag.accion = "Post";
@@ -97,6 +101,39 @@ namespace SUA.Controllers
                 //loguear mensaje o mandar pagina de error
             }
             return RedirectToAction("Fechas", "Fecha");
+        }
+
+        private List<InfoSalasVistaAndShow> GetInfoSalasVista()
+        {
+            var fechaService = new FechaService();
+            var salaService = new SalaService();
+            var ShowService = new ShowService();
+
+            var salas = salaService.GetSalas();
+            var shows = ShowService.GetShows();
+
+            var infosalas = new List<InfoSalasVistaAndShow>();
+            foreach (var sala in salas)
+            {
+                var ultimaFechaGeneral = fechaService.GetUltimaFechaPorSala(sala.UniqueId);
+                foreach (var show in shows)
+                {
+                    var ultimaFechaPorShow = fechaService.GetUltimaFechaPorSalaYShow(sala.UniqueId, show.UniqueId);
+
+                    infosalas.Add(new InfoSalasVistaAndShow {
+                        IdSala = sala.UniqueId,
+                        RepeticionEnDias = sala.RepeticionEnDias,
+                        Show = show._Show + " - " + show.Nombre,
+                        UltimaFechaPorShow = ultimaFechaPorShow.FechaHorario,
+                        DiasDesdeUltimaFechaPorShow = (DateTime.Now - ultimaFechaPorShow.FechaHorario).TotalDays,
+                        UltimaFechaGeneral = ultimaFechaGeneral.FechaHorario,
+                        ShowPresentadoPorultimaVezEnSala = ultimaFechaGeneral.Show._Show + " - " + ultimaFechaGeneral.Show.Nombre,
+                        DiasDesdeUltimaFechaGeneral = (DateTime.Now - ultimaFechaGeneral.FechaHorario).TotalDays,
+                        DiferenciaEnDiasVencimiento = UtilitiesAndStuff.CalcularVencimiento(ultimaFechaGeneral.FechaHorario, sala.RepeticionEnDias)
+                    });
+                }
+            }
+            return null;
         }
 
     }

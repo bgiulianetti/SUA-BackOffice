@@ -246,6 +246,13 @@ namespace SUA.TestProject
             Assert.AreEqual(fechaObtenida, null);
         }
 
+        [TestMethod]
+        public void CheckVencimiento()
+        {
+            var fecha = new DateTime(2018, 08, 12);
+            var diasVencido = UtilitiesAndStuff.CalcularVencimiento(fecha, 60);
+        }
+
 
         private Fecha CrearFecha(string id, DateTime fechaYhorario, string idSala)
         {
@@ -253,7 +260,7 @@ namespace SUA.TestProject
             {
                 Borederaux = null,
                 FechaHorario = fechaYhorario,
-                Productores = new TestRepositorioProductor().CrearProductor("32576829", "Giulianetti", "0800-fede", "Argentina"),
+                Productor = new TestRepositorioProductor().CrearProductor("32576829", "Giulianetti", "0800-fede", "Argentina"),
                 Sala = new TestRepositorioSala().CrearSala(idSala),
                 Show = new TestRepositorioShow().CrearShow("Sanata"),
                 UniqueId = id

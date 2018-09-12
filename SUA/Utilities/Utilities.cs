@@ -162,5 +162,14 @@ namespace SUA.Utilities
             };
             return ConverListToSelectListItem(impuestos);
         }
+
+        public static int CalcularVencimiento(DateTime fecha, int repeticionEnDias)
+        {
+            var fechaVencimiento = fecha.AddDays(repeticionEnDias);
+            double diasVencido = (DateTime.Now - fechaVencimiento).TotalDays;
+            var diasVencidoRedondeado = Math.Round(diasVencido, MidpointRounding.AwayFromZero);
+            return Convert.ToInt32(diasVencidoRedondeado);
+        }
+
     }
 }

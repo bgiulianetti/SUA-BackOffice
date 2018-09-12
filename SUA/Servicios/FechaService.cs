@@ -19,7 +19,6 @@ namespace SUA.Servicios
             Repository = new ESRepositorio(settings, ESRepositorio.ContentType.fecha.ToString());
         }
 
-
         public List<Fecha> GetFechas()
         {
             return Repository.GetFechas();
@@ -61,10 +60,18 @@ namespace SUA.Servicios
             Repository.DeleteFecha(id);
         }
 
-        public Fecha GetUltimaPorDeSala(string idSala)
+        public Fecha GetUltimaFechaPorSala(string idSala)
         {
             var fechas = Repository.GetFechasByIdSala(idSala);
             fechas.OrderBy(f => f.FechaHorario);
+            return fechas.First();
+        }
+
+        public Fecha GetUltimaFechaPorSalaYShow(string idSala, string idShow)
+        {
+            var fechas = Repository.GetFechasByIdSala(idSala);
+            fechas.OrderBy(f => f.FechaHorario);
+            fechas.Find(f => f.Show.UniqueId == idShow);
             return fechas.First();
         }
 
