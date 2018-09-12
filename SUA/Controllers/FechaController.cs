@@ -1,4 +1,5 @@
-﻿using SUA.Models;
+﻿using Newtonsoft.Json;
+using SUA.Models;
 using SUA.Servicios;
 using SUA.Utilities;
 using System;
@@ -18,9 +19,6 @@ namespace SUA.Controllers
             ViewBag.salas = new SalaService().GetSalas();
             ViewBag.shows = new ShowService().GetShows();
             ViewBag.productores = new ProductorService().GetProductores();
-            ViewBag.infoSalasVista = GetInfoSalasVista();
-
-            ViewBag.infoSalaVista = GetInfoSalasVista();
 
             if (string.IsNullOrEmpty(id))
             {
@@ -89,6 +87,22 @@ namespace SUA.Controllers
             return View();
         }
 
+        [HttpGet]
+        public string GetUltimaFechaByShow(string id)
+        {
+            var service = new FechaService();
+            var fecha = service.GetUltimaFechaByShowId(id);
+            return JsonConvert.SerializeObject(fecha);
+        }
+
+        [HttpGet]
+        public string GetUltimaFechaBySala(string id)
+        {
+            var service = new FechaService();
+            var fecha = service.GetUltimaFechaBySalaId(id);
+            return JsonConvert.SerializeObject(fecha);
+        }
+
         public ActionResult DeleteFecha(string id)
         {
             var service = new FechaService();
@@ -102,7 +116,9 @@ namespace SUA.Controllers
             }
             return RedirectToAction("Fechas", "Fecha");
         }
-
+       
+        
+        /*
         private List<InfoSalasVistaAndShow> GetInfoSalasVista()
         {
             var fechaService = new FechaService();
@@ -115,26 +131,50 @@ namespace SUA.Controllers
             var infosalas = new List<InfoSalasVistaAndShow>();
             foreach (var sala in salas)
             {
-                var ultimaFechaGeneral = fechaService.GetUltimaFechaPorSala(sala.UniqueId);
-                foreach (var show in shows)
+                var UltimaFechaRealizadaEnLaSala = fechaService.GetUltimaFechaPorSala(sala.UniqueId);
+                if(UltimaFechaRealizadaEnLaSala != null)
                 {
-                    var ultimaFechaPorShow = fechaService.GetUltimaFechaPorSalaYShow(sala.UniqueId, show.UniqueId);
+                    foreach (var show in shows)
+                    {
+                        var ultimaFechaDeShowEspecifico = fechaService.GetUltimaFechaPorSalaYShow(sala.UniqueId, show.UniqueId);
+                        if(ultimaFechaDeShowEspecifico != null)
+                        {
+                            infosalas.Add(new InfoSalasVistaAndShow {
+                                //info sala
+                                SalaId = sala.UniqueId,
+                                SalaRepeticionEnDias = sala.RepeticionEnDias,
 
-                    infosalas.Add(new InfoSalasVistaAndShow {
-                        IdSala = sala.UniqueId,
-                        RepeticionEnDias = sala.RepeticionEnDias,
-                        Show = show._Show + " - " + show.Nombre,
-                        UltimaFechaPorShow = ultimaFechaPorShow.FechaHorario,
-                        DiasDesdeUltimaFechaPorShow = (DateTime.Now - ultimaFechaPorShow.FechaHorario).TotalDays,
-                        UltimaFechaGeneral = ultimaFechaGeneral.FechaHorario,
-                        ShowPresentadoPorultimaVezEnSala = ultimaFechaGeneral.Show._Show + " - " + ultimaFechaGeneral.Show.Nombre,
-                        DiasDesdeUltimaFechaGeneral = (DateTime.Now - ultimaFechaGeneral.FechaHorario).TotalDays,
-                        DiferenciaEnDiasVencimiento = UtilitiesAndStuff.CalcularVencimiento(ultimaFechaGeneral.FechaHorario, sala.RepeticionEnDias)
-                    });
+                                //show especifico
+                                ShowSeleccionadoNombre = show._Show + " - " + show.Nombre,
+                                ShowSeleccionadoUltimaFechaEnLaSala = ultimaFechaDeShowEspecifico.FechaHorario,
+
+                                //show general
+                                UltimoShowPresentadoEnLaSala = UltimaFechaRealizadaEnLaSala.Show._Show + " - " + UltimaFechaRealizadaEnLaSala.Show.Nombre,
+                                UltimaFechaRealizadaEnLaSala = UltimaFechaRealizadaEnLaSala.FechaHorario,
+                            });
+                        }
+                        else
+                        {
+                            infosalas.Add(new InfoSalasVistaAndShow
+                            {
+                                //info sala
+                                SalaId = sala.UniqueId,
+                                SalaRepeticionEnDias = sala.RepeticionEnDias,
+
+                                //show especifico
+                                ShowSeleccionadoNombre = show._Show + " - " + show.Nombre,
+                                ShowSeleccionadoUltimaFechaEnLaSala = new DateTime(01, 01, 01, 00, 00, 00),
+
+                                //show general
+                                UltimoShowPresentadoEnLaSala = UltimaFechaRealizadaEnLaSala.Show._Show + " - " + UltimaFechaRealizadaEnLaSala.Show.Nombre,
+                                UltimaFechaRealizadaEnLaSala = UltimaFechaRealizadaEnLaSala.FechaHorario,
+                            });
+                        }
+                    }
                 }
             }
-            return null;
+            return infosalas;
         }
-
+        */
     }
 }

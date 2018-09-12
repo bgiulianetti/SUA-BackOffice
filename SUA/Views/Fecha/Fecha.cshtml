@@ -45,9 +45,18 @@
                                     }
                                     else
                                     {
-                                        @Html.TextBoxFor(model => model.FechaHorario,    new { @class = "form-control", Style = "width:300px", required = "required", @type = "datetime-local", @Value = Model.FechaHorario.ToString("yyyy-MM-ddTHH:mm") })
+                                        @Html.TextBoxFor(model => model.FechaHorario, new { @class = "form-control", Style = "width:300px", required = "required", @type = "datetime-local", @Value = Model.FechaHorario.ToString("yyyy-MM-ddTHH:mm") })
                                     }
 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style=" border:1px solid #598a42;">
+                                    <label>Ultimo Show</label><br />
+                                    <label id="lblUtimoShow" style="font-weight: normal;"></label>
+                                    <br />
+                                    <label>Sala</label><br />
+                                    <label id="lblSalaUltimoShow" style="font-weight: normal;"></label>
                                 </td>
                             </tr>
 
@@ -64,9 +73,12 @@
                                         }
                                     </select>
                                 </td>
-                                <td>
-                                    <label>Información</label>
-                                    <textarea class="form-control" id="salaList" Style="width:300px;height:200px" readonly="readonly"></textarea>
+                                <td style=" border:1px solid #598a42;">
+                                    <label>Ultimo Show</label><br />
+                                    <label id="lblUtimoShow" style="font-weight: normal;"></label>
+                                    <br />
+                                    <label>Sala</label><br />
+                                    <label id="lblSalaUltimoShow" style="font-weight: normal;"></label>
                                 </td>
                             </tr>
                         </table>
@@ -104,24 +116,51 @@
 </div>
 
 <script>
+
+    //seleccion automaticamente el productor cuando selecciono los distintos shows
     $("#showsList").change(function () {
         var array = @Html.Raw(Json.Encode(@ViewBag.shows));
-        for (var i = 0; i < array.length; i++)
-        {
-            if ($("#showsList").val() == array[i].UniqueId)
-            {
+        for (var i = 0; i < array.length; i++){
+            if ($("#showsList").val() == array[i].UniqueId) {
                 var dniProductor = array[i].Productor.Dni;
                 $('#productoresList option[value="' + dniProductor + '"]').attr("selected", "selected");
             }
         }
     });
 
+
+
+    //inicializo los campos para editar
     if ("@ViewBag.accion" == "Put")
     {
         $('#showsList option[value="' + "@ViewBag.show" + '"]').attr("selected", "selected");
         $('#salasList option[value="' + "@ViewBag.sala" + '"]').attr("selected", "selected");
         $('#productoresList option[value="' + "@ViewBag.productor" + '"]').attr("selected", "selected");
     }
+
+
+
+    //muestro info del show elegido
+    $('#showsList').change(function () {
+
+        var val = $("#showsList option:selected").val();
+        $.ajax({
+            url: '/fecha/GetUltimaFechaByShow?id=' + val,
+            type: 'GET',
+            accepts: 'application/Json',
+            success: function (data) {
+                var fecha = JSON.parse(data);
+                
+                $("#lblUtimoShow").text(fecha.FechaHorario.replace("T", " "));
+                $("#lblSalaUltimoShow").text(fecha.Sala.Nombre);
+            },
+            error: function () {
+                //alert(');
+            }
+        });
+
+
+    });
 
 </script>
 

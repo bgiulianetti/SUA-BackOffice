@@ -945,6 +945,32 @@ namespace SUA.Repositorios
             }
             return fechas;
         }
+        public List<Fecha> GetFechasByShowId(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(FECHA_GET_BY_NOMBRE_SHOW_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Fecha>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q
+                    .Match(m => m.Field(f => f.Show.UniqueId).Query(id)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(FECHA_GET_BY_NOMBRE_SHOW_INVALID_SEARCH_EXCEPTION);
+
+            var fechas = new List<Fecha>();
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    fechas.Add(item);
+            }
+            return fechas;
+        }
         public List<Fecha> GetFechasByProvincia(string nombreProvincia)
         {
             if (string.IsNullOrEmpty(nombreProvincia))

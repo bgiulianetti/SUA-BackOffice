@@ -13,8 +13,10 @@ namespace SUA.Servicios
 
         public FechaService()
         {
-            var node = new UriBuilder("localhost");
-            node.Port = 9200;
+            var node = new UriBuilder("localhost")
+            {
+                Port = 9200
+            };
             var settings = new ESSettings(node);
             Repository = new ESRepositorio(settings, ESRepositorio.ContentType.fecha.ToString());
         }
@@ -30,6 +32,16 @@ namespace SUA.Servicios
         public List<Fecha> GetFechasByShow(string nombreShow)
         {
             return Repository.GetFechasByShow(nombreShow);
+        }
+        public List<Fecha> GetFechasByShowId(string id)
+        {
+            return Repository.GetFechasByShowId(id);
+        }
+        public Fecha GetUltimaFechaByShowId(string id)
+        {
+            var fechas = Repository.GetFechasByShowId(id);
+            var fechasOrdenadas = fechas.OrderBy(f => f.FechaHorario);
+            return fechasOrdenadas.Last();
         }
         public List<Fecha> GetFechasByProvincia(string nombreProvincia)
         {
@@ -60,20 +72,27 @@ namespace SUA.Servicios
             Repository.DeleteFecha(id);
         }
 
-        public Fecha GetUltimaFechaPorSala(string idSala)
+        public Fecha GetUltimaFechaBySalaId(string idSala)
         {
             var fechas = Repository.GetFechasByIdSala(idSala);
-            fechas.OrderBy(f => f.FechaHorario);
-            return fechas.First();
-        }
+            if (fechas.Count > 0)
+            {
+                fechas.OrderBy(f => f.FechaHorario);
+                return fechas.Last();
+            }
+            return null;
 
-        public Fecha GetUltimaFechaPorSalaYShow(string idSala, string idShow)
+        }
+        public Fecha GetUltimaFechaBySalaAndShow(string idSala, string idShow)
         {
             var fechas = Repository.GetFechasByIdSala(idSala);
-            fechas.OrderBy(f => f.FechaHorario);
-            fechas.Find(f => f.Show.UniqueId == idShow);
-            return fechas.First();
+            var fechasPorShowEspecifico = fechas.Find(f => f.Show.UniqueId == idShow);
+            if (fechasPorShowEspecifico != null)
+            {
+                fechas.OrderBy(f => f.FechaHorario);
+                return fechas.First();
+            }
+            return null;
         }
-
     }
 }
