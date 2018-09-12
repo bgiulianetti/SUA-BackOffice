@@ -27,19 +27,22 @@ namespace SUA.Controllers
             {
                 ViewBag.accion = "Put";
                 ViewBag.titulo = "Editar Fecha";
-                var service = new StanduperoService();
-                var standupero = service.GetStanduperoByDni(id);
-                return View(standupero);
+                var service = new FechaService();
+                var fecha = service.GetFechaById(id);
+                ViewBag.productor = fecha.Productor.Dni;
+                ViewBag.sala = fecha.Sala.UniqueId;
+                ViewBag.show = fecha.Show.UniqueId;
+                return View(fecha);
             }
             return View();
         }
 
         [HttpPost]
-        public ActionResult Fecha(Fecha fecha, string accion, string showsList, string salaList, string productoresList)
+        public ActionResult Fecha(Fecha fecha, string accion, string showsList, string salasList, string productoresList)
         {
             ViewBag.titulo = "Crear Fecha";
             fecha.Productor = new ProductorService().GetProductorByDni(productoresList);
-            fecha.Sala = new SalaService().GetSalaById(salaList);
+            fecha.Sala = new SalaService().GetSalaById(salasList);
             fecha.Show = new ShowService().GetShowById(showsList);
 
             var service = new FechaService();
@@ -64,7 +67,6 @@ namespace SUA.Controllers
             return View();
         }
 
-
         [HttpGet]
         public ActionResult Fechas()
         {
@@ -82,5 +84,20 @@ namespace SUA.Controllers
             }
             return View();
         }
+
+        public ActionResult DeleteFecha(string id)
+        {
+            var service = new FechaService();
+            try
+            {
+                service.DeleteFecha(id);
+            }
+            catch /*(Exception ex)*/
+            {
+                //loguear mensaje o mandar pagina de error
+            }
+            return RedirectToAction("Fechas", "Fecha");
+        }
+
     }
 }

@@ -45,7 +45,7 @@
                                     }
                                     else
                                     {
-                                        @Html.TextBoxFor(model => model.FechaHorario, new { @class = "form-control", Style = "width:300px", required = "required", @type = "datetime-local" })
+                                        @Html.TextBoxFor(model => model.FechaHorario,    new { @class = "form-control", Style = "width:300px", required = "required", @type = "datetime-local", @Value = Model.FechaHorario.ToString("yyyy-MM-ddTHH:mm") })
                                     }
 
                                 </td>
@@ -57,7 +57,7 @@
                             <tr>
                                 <td>
                                     <label>Sala</label>
-                                    <select name="salaList" multiple="multiple" class="form-control" id="salaList" Style="width:300px; height:200px" required>
+                                    <select name="salasList" multiple="multiple" class="form-control" id="salasList" Style="width:300px; height:200px" required>
                                         @foreach (var item in ViewBag.salas)
                                         {
                                             <option value="@item.UniqueId">@item.Nombre</option>
@@ -88,6 +88,8 @@
 
                         <hr style="color: #8dd9f7">
                         <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
+                        @Html.TextBoxFor(model => model.UniqueId, new { @class = "hidden" })
+
                         <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
                     </form>
                 </div>
@@ -113,5 +115,13 @@
             }
         }
     });
+
+    if ("@ViewBag.accion" == "Put")
+    {
+        $('#showsList option[value="' + "@ViewBag.show" + '"]').attr("selected", "selected");
+        $('#salasList option[value="' + "@ViewBag.sala" + '"]').attr("selected", "selected");
+        $('#productoresList option[value="' + "@ViewBag.productor" + '"]').attr("selected", "selected");
+    }
+
 </script>
 

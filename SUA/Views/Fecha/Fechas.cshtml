@@ -31,7 +31,12 @@
                             <td>
                                 @Html.ActionImage("DeleteFecha", "Fecha", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
                                 @Html.ActionImage("Fecha", "Fecha", new { id = item.UniqueId }, "~/assets/img/edit_icon.png")
-                                @Html.ActionImage("Bordereaux", "Fecha", new { id = item.UniqueId }, "~/assets/img/borderaux_icon.png")
+
+                                @if(DateTime.Now.AddHours(3) >= item.FechaHorario)
+                                {
+                                    @Html.ActionImage("Bordereaux", "Fecha", new { id = item.UniqueId }, "~/assets/img/borderaux_icon.png")
+                                }
+                                
                             </td>
                             <td>@item.Show._Show - @item.Show.Nombre</td>
                             <td>@item.Sala.Nombre</td>
