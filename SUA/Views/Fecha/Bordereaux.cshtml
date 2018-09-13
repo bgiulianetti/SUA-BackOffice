@@ -84,8 +84,8 @@
                             <tr>
                                 <td>
                                     <label>Enrtadas </label>
-                                    <select class="form-control" id="impuestosList" style="width:200px">
-                                    @foreach (var item in ViewBag.impuestos)
+                                    <select class="form-control" id="entradasList" style="width:200px">
+                                    @foreach (var item in ViewBag.entradas)
                                     {
                                         <option value="@item.Text">@item.Value</option>
                                     }
@@ -93,30 +93,131 @@
                                 </td>
                                 <td>
                                     <label>Cantidad </label>
-                                    <input id="impuestoCantidad" class="form-control" type="number" min="0" style="width:120px" required />
+                                    <input id="entradaCantidad" class="form-control" type="number" min="0" style="width:120px" required />
                                 </td>
                                 <td>
                                     <label>Precio </label>
-                                    <input id="impuestoPrecio" class="form-control" type="number" step="0.01" min="0" style="width:120px" required/>
+                                    <input id="entradaPrecio" class="form-control" type="number" step="0.01" min="0" style="width:120px" required/>
                                 </td>
                                 <td>
                                     <label>Total </label>
-                                    <input id="impuestoTotal" class="form-control" type="number" step="0.01" min="0" style="width:120px" required />
+                                    <input id="entradaTotal" class="form-control" type="number" step="0.01" min="0" style="width:120px" required />
                                 </td>
                                 <td>
                                     <label>&nbsp;</label>
-                                    <input id="add" class="form-control" value="+" type="button" />
+                                    <input id="addEntrada" class="form-control" value="+" type="button" />
                                 </td>
                             </tr>
                         </table>
-                        <div id="impuetsosDiv">
+  
+                        <div id="entradasDiv"></div>
 
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <br />
+                                    <label>Entradas Total </label>
+                                    @Html.TextBoxFor(model => model.EntradasTotal, new { @class = "form-control", Style = "width:300px", required = "required", @type = "number", @step= "0.01" })
+                                </td>
+                                <td>
+                                    <br />
+                                    <label>Entradas Bruto </label>
+                                    @Html.TextBoxFor(model => model.EntradasBruno, new { @class = "form-control", Style = "width:300px", required = "required", @type = "number", @step = "0.01" })
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        <hr style="color: #8dd9f7">
+
+
+
+
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <label>Impuestos y Deducciones</label>
+                                    <select class="form-control" id="impuestosList" style="width:200px">
+                                        @foreach (var item in ViewBag.impuestos)
+                                        {
+                                            <option value="@item.Text">@item.Value</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <label>Porcentaje </label>
+                                    <input id="impuestoPorcentaje" class="form-control" type="number" min="0" style="width:120px" required />
+                                </td>
+                                <td>
+                                    <label>Monto </label>
+                                    <input id="impuestoMonto" class="form-control" type="number" step="0.01" min="0" style="width:120px" required />
+                                </td>
+                                <td>
+                                    <label>Comentarios </label>
+                                    <input id="impuestoComentarios" class="form-control" type="text" style="width:120px" />
+                                </td>
+                                <td>
+                                    <label>&nbsp;</label>
+                                    <input id="addImpuesto" class="form-control" value="+" type="button" />
+                                </td>
+                            </tr>
+                        </table>
+                        <div id="impuestosDiv">
                         </div>
 
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <br />
+                                    <label>Bruto </label>
+                                    @Html.TextBoxFor(model => model.ImpuestosDeduccionesBruto, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01" })
+                                </td>
+                                <td>
+                                    <br />
+                                    <label>Total a Deducir </label>
+                                    @Html.TextBoxFor(model => model.ImpuestosDeduccionesTotalDeducir, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01" })
+                                </td>
+                                <td>
+                                    <br />
+                                    <label>Neto </label>
+                                    @Html.TextBoxFor(model => model.ImpuestosDeduccionesNeto, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <br />
+                                    <label>Compañia </label>
+                                    @Html.TextBoxFor(model => model.ImpuestosDeduccionesCompanyPorcentaje, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01", @placeholder = "%" })
+                                </td>
+                                <td>
+                                    <br />
+                                    <label>&nbsp;</label>
+                                    @Html.TextBoxFor(model => model.ImpuestosDeduccionesCompanyMonto, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01", @placeholder = "$" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <br />
+                                    <label>Teatro </label>
+                                    @Html.TextBoxFor(model => model.ImpuestosDeduccionesTeatroPorcentaje, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01", @placeholder = "%" })
+                                </td>
+                                <td>
+                                    <br />
+                                    <label>&nbsp;</label>
+                                    @Html.TextBoxFor(model => model.ImpuestosDeduccionesTeatroMonto, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01", @placeholder = "$" })
+                                </td>
+                            </tr>
+                        </table>
                         <hr style="color: #8dd9f7">
+
+
+
                         <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
+                        <input id="entradasSeleccionadas" class="hidden" data-form="error-box" />
+                        <input id="counterEntradas" class="hidden" value="0" data-form="error-box" />
+
                         <input id="impuestosSeleccionados" class="hidden" data-form="error-box" />
                         <input id="counterImpuestos" class="hidden" value="0" data-form="error-box" />
+
                         <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
                     </form>
                 </div>
@@ -131,68 +232,142 @@
 </div>
 
 <script>
-    $("#add").click(function () {
+    $("#addEntrada").click(function () {
+
+        //Obtengo el contador y lo incremento
+        var contador = parseInt($("#counterEntradas").val());
+        contador = contador + 1;
+        $("#counterEntradas").val(contador);
+
+        var divContenedor = jQuery('<div id="EntradasAgregadas"></div>');
+        var entrada = jQuery('<input id="' + contador +  '-a" class="form-control-override"  value="' + $("#entradasList option:selected").text() + '" type="text" readonly style="width:200px" />');
+        var cantidad = jQuery('<input id="' + contador + '-b" class="form-control-override"  value="' + $("#entradaCantidad").val() + '" type="text" readonly style="width:120px" />');
+        var precio = jQuery('<input id="' + contador +   '-c" class="form-control-override"  value="' + $("#entradaPrecio").val() + '" type="text" readonly style="width:120px" />');
+        var total = jQuery('<input id="' + contador +    '-d" class="form-control-override"  value="' + $("#entradaTotal").val() + '" type="text" readonly style="width:120px" />');
+        var eliminar = jQuery('<input class="form-control-button" value="-" type="button" /><br />');
+        eliminar.click(function ()
+        {
+            $(this).parent().remove();
+
+            RecorreEntradas();
+
+            //Obtengo el contador y lo decremento
+            var contador = parseInt($("#counterEntradas").val());
+            contador = contador - 1;
+            $("#counterEntradas").val(contador);
+
+        });
+
+        divContenedor.append(entrada);
+        divContenedor.append(cantidad);
+        divContenedor.append(precio);
+        divContenedor.append(total);
+        divContenedor.append(eliminar);
+        $('#entradasDiv').append(divContenedor);
+
+
+        //borro los campos
+        $("#entradaCantidad").val("");
+        $("#entradaPrecio").val("");
+        $("#entradaTotal").val("");
+
+        RecorreEntradas();
+    });
+
+
+
+    $("#addImpuesto").click(function () {
 
         //Obtengo el contador y lo incremento
         var contador = parseInt($("#counterImpuestos").val());
         contador = contador + 1;
         $("#counterImpuestos").val(contador);
 
-        var divContenedor = jQuery('<div id="impuestosAgregados"></div>');
-        var impuesto = jQuery('<input id="' + contador + '-a" class="form-control-override"  value="' + $("#impuestosList option:selected").text() + '" type="text" readonly style="width:200px" />');
-        var cantidad = jQuery('<input id="' + contador + '-b" class="form-control-override"  value="' + $("#impuestoCantidad").val() + '" type="text" readonly style="width:120px" />');
-        var precio = jQuery('<input id="' + contador + '-c" class="form-control-override"  value="' + $("#impuestoPrecio").val() + '" type="text" readonly style="width:120px" />');
-        var total = jQuery('<input id="' + contador + '-d" class="form-control-override"  value="' + $("#impuestoTotal").val() + '" type="text" readonly style="width:120px" />');
+        var divContenedor = jQuery('<div id="ImpuestosAgregados"></div>');
+        var impuesto = jQuery('<input id="' + contador +    '-e" class="form-control-override"  value="' + $("#impuestosList option:selected").text() + '" type="text" readonly style="width:200px" />');
+        var porcentaje = jQuery('<input id="' + contador  + '-f" class="form-control-override"  value="' + $("#impuestoPorcentaje").val() + '" type="text" readonly style="width:120px" />');
+        var monto = jQuery('<input id="' + contador +       '-g" class="form-control-override"  value="' + $("#impuestoMonto").val() + '" type="text" readonly style="width:120px" />');
+        var comentarios = jQuery('<input id="' + contador + '-h" class="form-control-override"  value="' + $("#impuestoComentarios").val() + '" type="text" readonly style="width:120px" />');
         var eliminar = jQuery('<input class="form-control-button" value="-" type="button" /><br />');
-        eliminar.click(function ()
-        {
+        eliminar.click(function () {
             $(this).parent().remove();
+
+            RecorreImpuestos();
 
             //Obtengo el contador y lo decremento
             var contador = parseInt($("#counterImpuestos").val());
             contador = contador - 1;
             $("#counterImpuestos").val(contador);
-
-            RecorreImpuestos();
         });
 
         divContenedor.append(impuesto);
-        divContenedor.append(cantidad);
-        divContenedor.append(precio);
-        divContenedor.append(total);
+        divContenedor.append(porcentaje);
+        divContenedor.append(monto);
+        divContenedor.append(comentarios);
         divContenedor.append(eliminar);
-        $('#impuetsosDiv').append(divContenedor);
+        $('#impuestosDiv').append(divContenedor);
 
 
         //borro los campos
-        $("#impuestoCantidad").val("");
-        $("#impuestoPrecio").val("");
-        $("#impuestoTotal").val("");
+        $("#impuestoPorcentaje").val("");
+        $("#impuestoMonto").val("");
+        $("#impuestoComentarios").val("");
 
         RecorreImpuestos();
     });
 
-    function RecorreImpuestos()
+
+
+    function RecorreEntradas()
     {
-        var contador = parseInt($("#counterImpuestos").val());
-        var impuestosString = "";
+        var contador = parseInt($("#counterEntradas").val());
+        var entradasString = "";
         for (var i = contador; i > 0; i--)
         {
-            var idImpuesto = "#" + i + "-a";
+            var idEntrada = "#" + i + "-a";
             var idCantidad = "#" + i + "-b";
             var idPrecio = "#" + i + "-c";
             var idTotal = "#" + i + "-d";
-            if (impuestosString == "")
+
+            if ($(idEntrada).val() != undefined)
             {
-                impuestosString = $(idImpuesto).val() + "-" + $(idCantidad).val() + "-" + $(idPrecio).val() + "-" + $(idTotal).val();
-            }
-            else
-            {
-                impuestosString = impuestosString + "*" + $(idImpuesto).val() + "-" + $(idCantidad).val() + "-" +  $(idPrecio).val() + "-" + $(idTotal).val();
+                if (entradasString == "") {
+                    entradasString = $(idEntrada).val() + "-" + $(idCantidad).val() + "-" + $(idPrecio).val() + "-" + $(idTotal).val();
+                }
+                else {
+                    entradasString = entradasString + "*" + $(idEntrada).val() + "-" + $(idCantidad).val() + "-" + $(idPrecio).val() + "-" + $(idTotal).val();
+                }
             }
         }
-        $("#impuestosSeleccionados").val(impuestosString);
-        alert(impuestosString);
+
+
+        $("#entradasSeleccionadas").val(entradasString);
+        alert(entradasString);
+    }
+
+
+
+    function RecorreImpuestos() {
+        var contador = parseInt($("#counterImpuestos").val());
+        var entradasString = "";
+        for (var i = contador; i > 0; i--) {
+            var idImpuesto = "#" + i + "-e";
+            var idPorcentaje = "#" + i + "-f";
+            var idMonto = "#" + i + "-g";
+            var idComentarios = "#" + i + "-h";
+
+            if ($(idImpuesto).val() != undefined) {
+                if (entradasString == "") {
+                    entradasString = $(idImpuesto).val() + "-" + $(idPorcentaje).val() + "-" + $(idMonto).val() + "-" + $(idComentarios).val();
+                }
+                else {
+                    entradasString = entradasString + "*" + $(idImpuesto).val() + "-" + $(idPorcentaje).val() + "-" + $(idMonto).val() + "-" + $(idComentarios).val();
+                }
+            }
+        }
+
+        $("#impuestosSeleccionadas").val(entradasString);
+        alert(entradasString);
     }
 
 </script>

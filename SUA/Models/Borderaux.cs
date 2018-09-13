@@ -19,7 +19,7 @@ namespace SUA.Models
         public double ImpuestosDeduccionesCompanyPorcentaje { get; set; }
         public double ImpuestosDeduccionesCompanyMonto { get; set; }
         public double ImpuestosDeduccionesTeatroPorcentaje { get; set; }
-        public double ImpuestosDeduccionesTeatroTotal { get; set; }
+        public double ImpuestosDeduccionesTeatroMonto { get; set; }
 
         public Dictionary<string, double> GastosCompany { get; set; }
         public double GastosCompanyTotal { get; set; }

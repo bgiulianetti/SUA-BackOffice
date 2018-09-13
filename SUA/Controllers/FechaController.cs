@@ -138,11 +138,12 @@ namespace SUA.Controllers
             ViewBag.mensaje = "Get";
             ViewBag.impuestos = UtilitiesAndStuff.GetImpuestos();
             ViewBag.gastos = UtilitiesAndStuff.GetGastosCompany();
+            ViewBag.entradas = UtilitiesAndStuff.GetEntradas();
 
             /*
             if (string.IsNullOrEmpty(id))
             {*/
-                ViewBag.accion = "Post";
+            ViewBag.accion = "Post";
                 ViewBag.titulo = "Crear Fecha";
            /* }
             else

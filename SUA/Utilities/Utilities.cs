@@ -168,6 +168,30 @@ namespace SUA.Utilities
             return ConverListToSelectListItem(impuestos);
         }
 
+        public static List<SelectListItem> GetEntradas()
+        {
+            var entradas = new List<string>
+            {
+                "Entradas Teatro 1",
+                "Entradas Teatro 2",
+                "Entradas Teatro 3",
+                "Entradas Teatro 4",
+                "Entradas Teatro 5",
+                "Entradas Teatro 6",
+                "Entradas Ticketera 1",
+                "Entradas Ticketera 2",
+                "Entradas Ticketera 3",
+                "Entradas Ticketera 4",
+                "Entradas Ticketera 5",
+                "Entradas Ticketera 6",
+                "Aplicacion",
+                "Invitaciones",
+                "Invitaciones 2",
+                "Otras"
+            };
+            return ConverListToSelectListItem(entradas);
+        }
+
         public static List<SelectListItem> GetGastosCompany()
         {
             var gastos = new List<string>
