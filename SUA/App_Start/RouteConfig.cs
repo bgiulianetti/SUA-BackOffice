@@ -91,7 +91,11 @@ namespace SUA
                 defaults: new { controller = "Fecha", action = "Fechas" }
             );
 
-
+            routes.MapRoute(
+                name: "Bordereaux",
+                url: "bordereaux",
+                defaults: new { controller = "Fecha", action = "Bordereaux" }
+            );
 
             routes.MapRoute(
                 name: "Default",

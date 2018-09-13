@@ -131,6 +131,32 @@ namespace SUA.Controllers
             return vencimiento.ToString();
         }
 
+        [HttpGet]
+        public ActionResult Bordereaux (string id)
+        {
+            ViewBag.titulo = "Bordereaux";
+            ViewBag.mensaje = "Get";
+            ViewBag.impuestos = UtilitiesAndStuff.GetImpuestos();
+            ViewBag.gastos = UtilitiesAndStuff.GetGastosCompany();
+
+            /*
+            if (string.IsNullOrEmpty(id))
+            {*/
+                ViewBag.accion = "Post";
+                ViewBag.titulo = "Crear Fecha";
+           /* }
+            else
+            {
+                ViewBag.accion = "Put";
+                var service = new FechaService();
+                var fecha = service.GetFechaById(id);
+                ViewBag.bordereaux = fecha.Borederaux;
+                return View(fecha);
+            }*/
+            return View();
+        }
+
+
         public ActionResult DeleteFecha(string id)
         {
             var service = new FechaService();

@@ -11,12 +11,10 @@ namespace SUA.Models
         public int EntradasTotal { get; set; }
         public double EntradasBruno { get; set; }
 
-
         public List<ImpuestosDeduccionesTeatroBorderaux> ImpuestosDeduccionesTeatro { get; set; }
         public double ImpuestosDeduccionesBruto { get; set; }
         public double ImpuestosDeduccionesTotalDeducir { get; set; }
         public double ImpuestosDeduccionesNeto { get; set; }
-
 
         public double ImpuestosDeduccionesCompanyPorcentaje { get; set; }
         public double ImpuestosDeduccionesCompanyMonto { get; set; }
@@ -27,10 +25,8 @@ namespace SUA.Models
         public double GastosCompanyTotal { get; set; }
         public double GastosCompanyNeto { get; set; }
 
-
         public double SUAPorcentaje { get; set; }
         public double SUAMonto { get; set; }
-
         public double ShowPorcentaje { get; set; }
         public double ShowMonto { get; set; }
 

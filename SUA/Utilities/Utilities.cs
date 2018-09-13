@@ -158,9 +158,39 @@ namespace SUA.Utilities
                 "AADET",
                 "Ticketing",
                 "IMM",
-                "Agadu"
+                "Agadu",
+                "Argentores",
+                "Luces y Sonido",
+                "COFONTE",
+                "Alquiler Teatro",
+                "Otro"
             };
             return ConverListToSelectListItem(impuestos);
+        }
+
+        public static List<SelectListItem> GetGastosCompany()
+        {
+            var gastos = new List<string>
+            {
+                "Camarin",
+                "Ads Facebook",
+                "Carteles Calle",
+                "Cartel Puerta",
+                "Sonido",
+                "Propina Sonido",
+                "Hospedaje",
+                "Combustible",
+                "Peajes",
+                "Estacionamiento",
+                "Taxis",
+                "Buque",
+                "Pasajes avión",
+                "Direccion",
+                "Publicidad",
+                "Propina",
+                "Otro"
+            };
+            return ConverListToSelectListItem(gastos);
         }
 
         public static int CalcularVencimiento(DateTime fecha, int repeticionEnDias)
