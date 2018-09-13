@@ -1,0 +1,198 @@
+﻿@model SUA.Models.Borderaux
+<style>
+    table {
+        border-spacing: 20px;
+    }
+
+    td {
+
+    }
+
+
+    plus {
+        display: inline-block;
+        height: 134px;
+        padding: 0;
+        margin: 0;
+        vertical-align: top;
+        width: 104px;
+        background-image: url( 'http://thinkingstiff.com/images/matt.jpg' );
+        background-size: 100px 100px;
+        height: 300px;
+        width: 104px;
+    }
+
+    .form-control-override {
+        width: 100%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        background-color: #e0e1e2;
+    }
+
+    .form-control-button {
+        width: 33px;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    }
+
+
+</style>
+
+
+<div class="main-content">
+    @using (Html.BeginForm("Bordereaux", "Fecha", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        if (ViewBag.mensaje == "creado")
+        {
+            <label>El Standupero ha sido cargado con éxito. Puede verlo cargado en el <a href="@Url.RouteUrl("Standuperos")">Listado de Standuperos</a></label>
+        }
+        else if (ViewBag.mensaje == "actualizado")
+        {
+            <label>El Standupero ha sido actualizado con éxito. Puede ver los cambios en el <a href="@Url.RouteUrl("Standuperos")">Listado de Standuperos</a></label>
+        }
+        else if (ViewBag.mensaje == "Get")
+        {
+            <div class="panel">
+                <div class="panel-body">
+                    <form data-id="" id="pdf-create-form" to-action="/pdfs/create">
+
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <label>Enrtadas </label>
+                                    <select class="form-control" id="impuestosList" style="width:200px">
+                                    @foreach (var item in ViewBag.impuestos)
+                                    {
+                                        <option value="@item.Text">@item.Value</option>
+                                    }
+                                    </select>
+                                </td>
+                                <td>
+                                    <label>Cantidad </label>
+                                    <input id="impuestoCantidad" class="form-control" type="number" min="0" style="width:120px" required />
+                                </td>
+                                <td>
+                                    <label>Precio </label>
+                                    <input id="impuestoPrecio" class="form-control" type="number" step="0.01" min="0" style="width:120px" required/>
+                                </td>
+                                <td>
+                                    <label>Total </label>
+                                    <input id="impuestoTotal" class="form-control" type="number" step="0.01" min="0" style="width:120px" required />
+                                </td>
+                                <td>
+                                    <label>&nbsp;</label>
+                                    <input id="add" class="form-control" value="+" type="button" />
+                                </td>
+                            </tr>
+                        </table>
+                        <div id="impuetsosDiv">
+
+                        </div>
+
+                        <hr style="color: #8dd9f7">
+                        <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
+                        <input id="impuestosSeleccionados" class="hidden" data-form="error-box" />
+                        <input id="counterImpuestos" class="hidden" value="0" data-form="error-box" />
+                        <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        }
+        else
+        {
+            <label>@ViewBag.mensaje</label>
+        }
+    }
+
+</div>
+
+<script>
+    $("#add").click(function () {
+
+        //Obtengo el contador y lo incremento
+        var contador = parseInt($("#counterImpuestos").val());
+        contador = contador + 1;
+        $("#counterImpuestos").val(contador);
+
+        var divContenedor = jQuery('<div id="impuestosAgregados"></div>');
+        var impuesto = jQuery('<input id="' + contador + '-a" class="form-control-override"  value="' + $("#impuestosList option:selected").text() + '" type="text" readonly style="width:200px" />');
+        var cantidad = jQuery('<input id="' + contador + '-b" class="form-control-override"  value="' + $("#impuestoCantidad").val() + '" type="text" readonly style="width:120px" />');
+        var precio = jQuery('<input id="' + contador + '-c" class="form-control-override"  value="' + $("#impuestoPrecio").val() + '" type="text" readonly style="width:120px" />');
+        var total = jQuery('<input id="' + contador + '-d" class="form-control-override"  value="' + $("#impuestoTotal").val() + '" type="text" readonly style="width:120px" />');
+        var eliminar = jQuery('<input class="form-control-button" value="-" type="button" /><br />');
+        eliminar.click(function ()
+        {
+            $(this).parent().remove();
+
+            //Obtengo el contador y lo decremento
+            var contador = parseInt($("#counterImpuestos").val());
+            contador = contador - 1;
+            $("#counterImpuestos").val(contador);
+
+            RecorreImpuestos();
+        });
+
+        divContenedor.append(impuesto);
+        divContenedor.append(cantidad);
+        divContenedor.append(precio);
+        divContenedor.append(total);
+        divContenedor.append(eliminar);
+        $('#impuetsosDiv').append(divContenedor);
+
+
+        //borro los campos
+        $("#impuestoCantidad").val("");
+        $("#impuestoPrecio").val("");
+        $("#impuestoTotal").val("");
+
+        RecorreImpuestos();
+    });
+
+    function RecorreImpuestos()
+    {
+        var contador = parseInt($("#counterImpuestos").val());
+        var impuestosString = "";
+        for (var i = contador; i > 0; i--)
+        {
+            var idImpuesto = "#" + i + "-a";
+            var idCantidad = "#" + i + "-b";
+            var idPrecio = "#" + i + "-c";
+            var idTotal = "#" + i + "-d";
+            if (impuestosString == "")
+            {
+                impuestosString = $(idImpuesto).val() + "-" + $(idCantidad).val() + "-" + $(idPrecio).val() + "-" + $(idTotal).val();
+            }
+            else
+            {
+                impuestosString = impuestosString + "*" + $(idImpuesto).val() + "-" + $(idCantidad).val() + "-" +  $(idPrecio).val() + "-" + $(idTotal).val();
+            }
+        }
+        $("#impuestosSeleccionados").val(impuestosString);
+        alert(impuestosString);
+    }
+
+</script>
