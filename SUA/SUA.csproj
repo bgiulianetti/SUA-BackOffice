@@ -160,10 +160,12 @@
     <Compile Include="Models\Boleteria.cs" />
     <Compile Include="Models\Borderaux.cs" />
     <Compile Include="Models\Camarin.cs" />
+    <Compile Include="Models\EntradasBorderaux.cs" />
     <Compile Include="Models\Carteleria.cs" />
     <Compile Include="Models\Contacto.cs" />
     <Compile Include="Models\DatosBancarios.cs" />
     <Compile Include="Models\Fecha.cs" />
+    <Compile Include="Models\ImpuestosDeduccionesTeatroBorderaux.cs" />
     <Compile Include="Models\InfoSalasVista.cs" />
     <Compile Include="Models\InstagramUserInfo.cs" />
     <Compile Include="Models\Persona.cs" />
