@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SUA.Models
 {
-    public class InstagramUserInfo
+    public class InstagramUserInfoResponse
     {
         public EntryData entry_data { get; set; }
         public string User { get; set; }

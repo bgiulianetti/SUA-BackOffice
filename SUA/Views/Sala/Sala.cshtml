@@ -65,7 +65,7 @@
                                 </td>
                                 <td>
                                     <label title="Para averiguar el código postal podes hacerlo ingresando la dirección en: https://www.correoargentino.com.ar/formularios/cpa">Código Postal </label>
-                                    @Html.TextBoxFor(model => model.Direccion.CodigoPostal, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.TextBoxFor(model => model.Direccion.CodigoPostal, new { @class = "form-control", Style = "width:300px"})
                                 </td>
                             </tr>
                             <tr>
@@ -86,21 +86,21 @@
                             <tr>
                                 <td>
                                     <label>Administrador </label>
-                                    @Html.TextBoxFor(model => model.Administrador, new { @class = "form-control", Style = "width:300px", required = "required"})
+                                    @Html.TextBoxFor(model => model.Administrador, new { @class = "form-control", Style = "width:300px"})
                                 </td>
                                 <td>
                                     <label>WhatsApp personal </label>
-                                    @Html.TextBoxFor(model => model.WhatsAppPersonal, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.TextBoxFor(model => model.WhatsAppPersonal, new { @class = "form-control", Style = "width:300px" })
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label>Telefono</label>
-                                    @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", Style = "width:300px", required = "required", @type="tel" })
+                                    @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", Style = "width:300px", @type="tel" })
                                 </td>
                                 <td>
                                     <label>Email</label>
-                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", Style = "width:300px", required = "required", @type = "email" })
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", Style = "width:300px", @type = "email" })
                                 </td>
                             </tr>                      
                         </table>
@@ -111,23 +111,23 @@
                             <tr>
                                 <td>
                                     <label>Detalle Luces</label>
-                                    @Html.TextBoxFor(model => model.Luces, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.TextBoxFor(model => model.Luces, new { @class = "form-control", Style = "width:300px"})
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label>Tecnico luces </label>
-                                    @Html.TextBoxFor(model => model.TecnicoLuces.Nombre, new { @placeholder="nombre", @class = "form-control", Style = "width:300px", required = "required", })
+                                    @Html.TextBoxFor(model => model.TecnicoLuces.Nombre, new { @placeholder="nombre", @class = "form-control", Style = "width:300px" })
                                 </td>
                                 <td>
                                     <label>Telefono</label>
-                                    @Html.TextBoxFor(model => model.TecnicoLuces.Telefono, new { @placeholder = "telefono", @class = "form-control", Style = "width:300px", required = "required", @type= "tel" })
+                                    @Html.TextBoxFor(model => model.TecnicoLuces.Telefono, new { @placeholder = "telefono", @class = "form-control", Style = "width:300px", @type= "tel" })
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label>Email</label>
-                                    @Html.TextBoxFor(model => model.TecnicoLuces.Email, new { @placeholder = "email", @class = "form-control", Style = "width:300px", required = "required", @type = "email" })
+                                    @Html.TextBoxFor(model => model.TecnicoLuces.Email, new { @placeholder = "email", @class = "form-control", Style = "width:300px", @type = "email" })
                                 </td>
                                 <td>
                                     <label>Descripción</label>
@@ -143,23 +143,23 @@
                             <tr>
                                 <td>
                                     <label>Detalle Sonido</label>
-                                    @Html.TextBoxFor(model => model.Sonido, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.TextBoxFor(model => model.Sonido, new { @class = "form-control", Style = "width:300px" })
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label>Tecnico Sonido </label>
-                                    @Html.TextBoxFor(model => model.TecnicoSonido.Nombre, new { @placeholder = "nombre", @class = "form-control", Style = "width:300px", required = "required", })
+                                    @Html.TextBoxFor(model => model.TecnicoSonido.Nombre, new { @placeholder = "nombre", @class = "form-control", Style = "width:300px" })
                                 </td>
                                 <td>
                                     <label>Telefono</label>
-                                    @Html.TextBoxFor(model => model.TecnicoSonido.Telefono, new { @placeholder = "telefono", @class = "form-control", Style = "width:300px", required = "required", @type = "tel" })
+                                    @Html.TextBoxFor(model => model.TecnicoSonido.Telefono, new { @placeholder = "telefono", @class = "form-control", Style = "width:300px", @type = "tel" })
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label>Email</label>
-                                    @Html.TextBoxFor(model => model.TecnicoSonido.Email, new { @placeholder = "email", @class = "form-control", Style = "width:300px", required = "required", @type = "email" })
+                                    @Html.TextBoxFor(model => model.TecnicoSonido.Email, new { @placeholder = "email", @class = "form-control", Style = "width:300px", @type = "email" })
                                 </td>
                                 <td>
                                     <label>Descripción</label>
@@ -211,13 +211,13 @@
                             <tr>
                                 <td>
                                     <label>Impuestos y Gastos </label>
-                                    @Html.DropDownListFor(model => model.ImpuestosYGastos, new SelectList(ViewBag.impuestos, "Text", "Value"), new { @id="impuestos", @multiple="multiple", @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.DropDownListFor(model => model.ImpuestosYGastos, new SelectList(ViewBag.impuestos, "Text", "Value"), new { @id="impuestos", @multiple="multiple", @class = "form-control", Style = "width:300px" })
                                     <input class="form-control", id="impuestoAMano" type="text"/>
                                     <input type="button" value="Agregar" class="form-control" id="agregar" />
                                 </td>
                                 <td>
                                     <label>Seleccionados</label>
-                                    <select multiple="multiple" class="form-control" id="impuestosSeleccionados" name="impuestosSeleccionados" required Style="width:300px; height:124px">
+                                    <select multiple="multiple" class="form-control" id="impuestosSeleccionados" name="impuestosSeleccionados" Style="width:300px; height:124px">
                                         @if (ViewBag.accion == "Put")
                                         {
                                             foreach (var item in Model.ImpuestosYGastos)

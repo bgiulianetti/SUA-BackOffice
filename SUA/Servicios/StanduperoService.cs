@@ -62,7 +62,7 @@ namespace SUA.Servicios
             Repository.DeleteAllStanduperos();
         }
 
-        public InstagramUserInfo GetInstagramUserInfo(string instagramUsername)
+        public InstagramUserInfoResponse GetInstagramUserInfo(string instagramUsername)
         {
             return Repository.GeStanduperoInstagramUserInfo(instagramUsername);
         }

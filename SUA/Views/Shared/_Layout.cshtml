@@ -65,7 +65,7 @@
                         that.search(this.value).draw();
                 });
             });
-            //$('#table_standuperos_filter').hide();
+            $('#table_standuperos_filter').hide();
 
 
 
@@ -108,7 +108,7 @@
                         that.search(this.value).draw();
                 });
             });
-            //$('#table_productores_filter').hide();
+            $('#table_productores_filter').hide();
 
 
 
@@ -149,7 +149,7 @@
                         that.search(this.value).draw();
                 });
             });
-            //$('#table_shows_filter').hide();
+            $('#table_shows_filter').hide();
 
 
 
@@ -191,7 +191,7 @@
                         that.search(this.value).draw();
                 });
             });
-            //$('#table_salas_filter').hide();
+            $('#table_salas_filter').hide();
 
 
 
@@ -228,11 +228,13 @@
                         that.search(this.value).draw();
                 });
             });
-            //$('#table_salas_filter').hide();
+            $('#table_salas_filter').hide();
 
 
-            
-            $("#container").prepend($(".dataTables_length"));
+            $("#entries").append($(".dt-buttons"));
+            $("#entries").append(jQuery('<br />'));
+            $("#entries").append($(".dataTables_length"));
+            $("#busqueda").append($("#table_standuperos_filter"));
 
         });
     </script>

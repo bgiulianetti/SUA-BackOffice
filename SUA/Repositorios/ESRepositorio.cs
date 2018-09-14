@@ -307,7 +307,7 @@ namespace SUA.Repositorios
         {
             Client.DeleteByQuery<Standupero>(q => q.Type(Index));
         }
-        public InstagramUserInfo GeStanduperoInstagramUserInfo(string instagramUsername)
+        public InstagramUserInfoResponse GeStanduperoInstagramUserInfo(string instagramUsername)
         {
             var Client = new HttpClient()
             { BaseAddress = new Uri("https://www.instagram.com/") };
@@ -315,14 +315,14 @@ namespace SUA.Repositorios
 
             var request = instagramUsername;
             var response = Client.GetAsync(request).Result;
-            InstagramUserInfo igInfo = null;
+            InstagramUserInfoResponse igInfo = null;
             if (response.IsSuccessStatusCode)
             {
                 var responseJson = response.Content.ReadAsStringAsync().Result;
                 var stringObject = responseJson.Split(new string[] { "window._sharedData =" }, StringSplitOptions.None)[1]
                                                .Split(new string[] { "</script>" }, StringSplitOptions.None)[0];
                 stringObject = stringObject.Remove(stringObject.Length - 1);
-                igInfo = JsonConvert.DeserializeObject<InstagramUserInfo>(stringObject);
+                igInfo = JsonConvert.DeserializeObject<InstagramUserInfoResponse>(stringObject);
             }
             return igInfo;
         }
