@@ -141,7 +141,6 @@ namespace SUA.Controllers
             var fecha = fechaService.GetFechaById(id);
             if(fecha.Borederaux == null)
             {
-                
                 ViewBag.impuestos = UtilitiesAndStuff.GetImpuestos();
                 ViewBag.gastos = UtilitiesAndStuff.GetGastosCompany();
                 ViewBag.entradas = UtilitiesAndStuff.GetEntradas();
@@ -152,6 +151,7 @@ namespace SUA.Controllers
                 ViewBag.impuestos = UtilitiesAndStuff.GetImpuestos();
                 ViewBag.gastos = UtilitiesAndStuff.GetGastosCompany();
                 ViewBag.entradas = UtilitiesAndStuff.GetEntradas();
+                ViewBag.idFecha = fecha.UniqueId;
                 return View(fecha.Borederaux);
             }
             return View();

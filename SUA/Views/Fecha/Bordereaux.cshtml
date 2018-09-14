@@ -110,7 +110,29 @@
                             </tr>
                         </table>
   
-                        <div id="entradasDiv"></div>
+                        <div id="entradasDiv">
+                            @if(ViewBag.accion == "Put")
+                            {
+                                int contador = 1;
+                                <div id="EntradasAgregadas">
+                                    @foreach (var item in Model.Entradas)
+                                    {
+                                        var idEntrada = contador + "-a";
+                                        var idCantidad = contador + "-b";
+                                        var idPrecio = contador + "-c";
+                                        var idTotal = contador + "-d";
+
+                                        <input id="@idEntrada" class="form-control-override" value="@item.Nombre" type="text" readonly style="width:200px" />
+                                        <input id="@idCantidad" class="form-control-override" value="@item.Cantidad" type="text" readonly style="width:120px" />
+                                        <input id="@idPrecio" class="form-control-override" value="@item.Precio" type="text" readonly style="width:120px" />
+                                        <input id="@idTotal" class="form-control-override" value="@item.Total" type="text" readonly style="width:120px" />
+                                        <input id="deleteEntrada" class="form-control-button" value="-" type="button" /><br />
+
+                                        contador = contador + 1;
+                                    }
+                                </div>
+                            }
+                        </div>
 
                         <table style="border-spacing: 20px">
                             <tr>
@@ -159,7 +181,29 @@
                             </tr>
                         </table>
                         
-                        <div id="impuestosDiv"></div>
+                        <div id="impuestosDiv">
+                            @if (ViewBag.accion == "Put")
+                            {
+                                int contador = 1;
+                                <div id="ImpuestosAgregados">
+                                    @foreach (var item in Model.ImpuestosDeduccionesTeatro)
+                                    {
+                                        var idImpuesto = contador + "-e";
+                                        var idPorcentaje = contador + "-f";
+                                        var idMonto = contador + "-g";
+                                        var idComentarios = contador + "-h";
+
+                                        <input id="@idImpuesto" class="form-control-override" value="@item.Nombre" type="text" readonly style="width:200px" />
+                                        <input id="@idPorcentaje" class="form-control-override" value="@item.Porcentaje" type="text" readonly style="width:120px" />
+                                        <input id="@idMonto" class="form-control-override" value="@item.Monto" type="text" readonly style="width:120px" />
+                                        <input id="@idComentarios" class="form-control-override" value="@item.Comentarios" type="text" readonly style="width:120px" />
+                                        <input id="deleteImpuesto" class="form-control-button" value="-" type="button" /><br />
+
+                                        contador = contador + 1;
+                                    }
+                                </div>
+                            }
+                        </div>
 
                         <table style="border-spacing: 20px">
                             <tr>
@@ -229,7 +273,25 @@
                             </tr>
                         </table>
 
-                        <div id="gastosDiv"></div>
+                        <div id="gastosDiv">
+                            @if (ViewBag.accion == "Put")
+                            {
+                                int contador = 1;
+                                <div id="GastosAgregados">
+                                    @foreach (var item in Model.GastosCompany)
+                                    {
+                                        var idGasto = contador + "-i";
+                                        var idMonto = contador + "-j";
+
+                                        <input id="@idGasto" class="form-control-override" value="@item.Key" type="text" readonly style="width:200px" />
+                                        <input id="@idMonto" class="form-control-override" value="@item.Value" type="text" readonly style="width:120px" />
+                                        <input id="deleteGasto" class="form-control-button" value="-" type="button" /><br />
+
+                                        contador = contador + 1;
+                                    }
+                                </div>
+                            }
+                        </div>
 
                         <table style="border-spacing: 20px">
                             <tr>
@@ -281,7 +343,16 @@
                             <tr>
                                 <td>
                                     <label>Fecha Cobro </label>
-                                    @Html.TextBoxFor(model => model.FechaCobro, new { @class = "form-control", Style = "width:200px", required = "required", @type = "date" })
+                                    @if (ViewBag.accion == "Put")
+                                    {
+                                        @Html.TextBoxFor(model => model.FechaCobro, new { @class = "form-control", Style = "width:200px", required = "required", @type = "date", @Value = Model.FechaCobro.ToString("yyyy-MM-dd") })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(model => model.FechaCobro, new { @class = "form-control", Style = "width:200px", required = "required", @type = "date" })
+                                    }
+
+                                    
                                 </td>
                             </tr>
                             <tr>
@@ -304,18 +375,29 @@
 
                         <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
                         
-                        <input name="_entradas" id="entradasSeleccionadas" class="hidden" data-form="error-box" />
-                        <input id="counterEntradas" class="hidden" value="0" data-form="error-box" />
-
+                       
+                        <input name="_entradas" id="entradasSeleccionadas" class="hidden" data-form="error-box" />    
                         <input name="_impuestos" id="impuestosSeleccionados" class="hidden" data-form="error-box" />
-                        <input id="counterImpuestos" class="hidden" value="0" data-form="error-box" />
-
                         <input name="_gastos" id="gastosSeleccionados" class="hidden" data-form="error-box" />
-                        <input id="counterGastos" class="hidden" value="0" data-form="error-box" />
 
                         <input name="id" id="idFecha" class="hidden" data-form="error-box" />
 
-                        <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
+
+                        @if (ViewBag.accion == "Put")
+                        {                          
+                            <input id="counterEntradas" class="hidden" value="@Model.Entradas.Count" data-form="error-box" />                        
+                            <input id="counterImpuestos" class="hidden" value="@Model.ImpuestosDeduccionesTeatro.Count" data-form="error-box" />
+                            <input id="counterGastos" class="hidden" value="@Model.GastosCompany.Count" data-form="error-box" />
+                            <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar cambios</button>
+                        }
+                        else
+                        {
+                            <input id="counterEntradas" class="hidden" value="0" data-form="error-box" />
+                            <input id="counterImpuestos" class="hidden" value="0" data-form="error-box" />
+                            <input id="counterGastos" class="hidden" value="0" data-form="error-box" />
+                            <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
+                        }
+
                     </form>
                 </div>
             </div>
@@ -330,9 +412,63 @@
 
 <script>
 
-    //tomo el id de la querystring
-    var _idFecha = window.location.href.split('=')[1];
-    $("#idFecha").val(_idFecha);
+    if('@ViewBag.accion' == "Post")
+    {
+        //tomo el id de la querystring
+        var _idFecha = window.location.href.split('=')[1];
+        $("#idFecha").val(_idFecha);
+    }
+    else
+    {
+        //tomo el idFecha enviado por el action Method
+        var _idFecha = @ViewBag.idFecha;
+        $("#idFecha").val(_idFecha);
+
+
+
+        //agrego evento de click a boton 'eliminar entrada' agregado de forma dinamica en el Put
+        $("#deleteEntrada").click(function () {
+            $(this).parent().remove();
+
+            RecorreEntradas();
+
+            //Obtengo el contador y lo decremento
+            var contador = parseInt($("#counterEntradas").val());
+            contador = contador - 1;
+            $("#counterEntradas").val(contador);
+        });
+
+
+        //agrego evento de click a boton 'eliminar impuesto' agregado de forma dinamica en el Put
+        $("#deleteImpuesto").click(function () {
+            $(this).parent().remove();
+
+            RecorreImpuestos();
+
+            //Obtengo el contador y lo decremento
+            var contador = parseInt($("#counterImpuestos").val());
+            contador = contador - 1;
+            $("#counterImpuestos").val(contador);
+        });
+
+        //agrego evento de click a boton 'eliminar gasto' agregado de forma dinamica en el Put
+        $("#deleteGasto").click(function () {
+            $(this).parent().remove();
+
+            RecorreGastos();
+
+            //Obtengo el contador y lo decremento
+            var contador = parseInt($("#counterGastos").val());
+            contador = contador - 1;
+            $("#counterGastos").val(contador);
+        });
+
+
+        RecorreEntradas();
+        RecorreImpuestos();
+        RecorreGastos();
+    }
+
 
     $("#addEntrada").click(function () {
 
@@ -472,6 +608,7 @@
             }
         }
         $("#entradasSeleccionadas").val(entradasString);
+        alert(entradasString);
     }
 
     function RecorreImpuestos() {
@@ -493,6 +630,7 @@
             }
         }
         $("#impuestosSeleccionados").val(entradasString);
+        alert(entradasString);
     }
 
     function RecorreGastos() {
@@ -512,6 +650,7 @@
             }
         }
         $("#gastosSeleccionados").val(entradasString);
+        alert(entradasString);
     }
 
 </script>
