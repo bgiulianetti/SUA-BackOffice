@@ -140,20 +140,6 @@ namespace SUA.Controllers
             ViewBag.gastos = UtilitiesAndStuff.GetGastosCompany();
             ViewBag.entradas = UtilitiesAndStuff.GetEntradas();
 
-            /*
-            if (string.IsNullOrEmpty(id))
-            {*/
-            ViewBag.accion = "Post";
-                ViewBag.titulo = "Crear Fecha";
-           /* }
-            else
-            {
-                ViewBag.accion = "Put";
-                var service = new FechaService();
-                var fecha = service.GetFechaById(id);
-                ViewBag.bordereaux = fecha.Borederaux;
-                return View(fecha);
-            }*/
             return View();
         }
 

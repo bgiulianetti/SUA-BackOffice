@@ -83,7 +83,7 @@
                         <table style="border-spacing: 20px">
                             <tr>
                                 <td>
-                                    <label>Enrtadas </label>
+                                    <label>Entradas </label>
                                     <select class="form-control" id="entradasList" style="width:200px">
                                     @foreach (var item in ViewBag.entradas)
                                     {
@@ -117,20 +117,17 @@
                                 <td>
                                     <br />
                                     <label>Entradas Total </label>
-                                    @Html.TextBoxFor(model => model.EntradasTotal, new { @class = "form-control", Style = "width:300px", required = "required", @type = "number", @step= "0.01" })
+                                    @Html.TextBoxFor(model => model.EntradasTotal, new { @class = "form-control", Style = "width:300px", required = "required", @type = "number", @step= "0.01", @placeholder = "$" })
                                 </td>
                                 <td>
                                     <br />
                                     <label>Entradas Bruto </label>
-                                    @Html.TextBoxFor(model => model.EntradasBruno, new { @class = "form-control", Style = "width:300px", required = "required", @type = "number", @step = "0.01" })
+                                    @Html.TextBoxFor(model => model.EntradasBruno, new { @class = "form-control", Style = "width:300px", required = "required", @type = "number", @step = "0.01", @placeholder = "$" })
                                 </td>
                             </tr>
                         </table>
                         
                         <hr style="color: #8dd9f7">
-
-
-
 
                         <table style="border-spacing: 20px">
                             <tr>
@@ -145,15 +142,15 @@
                                 </td>
                                 <td>
                                     <label>Porcentaje </label>
-                                    <input id="impuestoPorcentaje" class="form-control" type="number" min="0" style="width:120px" required />
+                                    <input id="impuestoPorcentaje" class="form-control" type="number" min="0" style="width:120px" placeholder="%" required />
                                 </td>
                                 <td>
                                     <label>Monto </label>
-                                    <input id="impuestoMonto" class="form-control" type="number" step="0.01" min="0" style="width:120px" required />
+                                    <input id="impuestoMonto" class="form-control" type="number" step="0.01" min="0" style="width:120px" placeholder="$" required />
                                 </td>
                                 <td>
                                     <label>Comentarios </label>
-                                    <input id="impuestoComentarios" class="form-control" type="text" style="width:120px" />
+                                    <input id="impuestoComentarios" class="form-control" type="text" placeholder="[texto]" style="width:120px" />
                                 </td>
                                 <td>
                                     <label>&nbsp;</label>
@@ -161,8 +158,8 @@
                                 </td>
                             </tr>
                         </table>
-                        <div id="impuestosDiv">
-                        </div>
+                        
+                        <div id="impuestosDiv"></div>
 
                         <table style="border-spacing: 20px">
                             <tr>
@@ -207,16 +204,115 @@
                                 </td>
                             </tr>
                         </table>
+                        
                         <hr style="color: #8dd9f7">
 
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <label>Gastos Compañia </label>
+                                    <select class="form-control" id="gastosList" style="width:200px">
+                                        @foreach (var item in ViewBag.gastos)
+                                        {
+                                            <option value="@item.Text">@item.Value</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <label>Monto </label>
+                                    <input id="gastoMonto" class="form-control" type="number" min="0" style="width:120px" required />
+                                </td>
+                                <td>
+                                    <label>&nbsp;</label>
+                                    <input id="addGasto" class="form-control" value="+" type="button" />
+                                </td>
+                            </tr>
+                        </table>
 
+                        <div id="gastosDiv"></div>
+
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <br />
+                                    <label>Total Gastos </label>
+                                    @Html.TextBoxFor(model => model.GastosCompanyTotal, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01" })
+                                </td>
+                                <td>
+                                    <br />
+                                    <label>Neto</label>
+                                    @Html.TextBoxFor(model => model.GastosCompanyNeto, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01" })
+                                </td>
+                            </tr>
+                        </table>
+
+
+                        <hr style="color: #8dd9f7">
+
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <br />
+                                    <label>SUA </label>
+                                    @Html.TextBoxFor(model => model.SUAPorcentaje, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01", @placeholder = "%" })
+                                </td>
+                                <td>
+                                    <br />
+                                    <label>&nbsp;</label>
+                                    @Html.TextBoxFor(model => model.SUAMonto, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01", @placeholder = "$" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <br />
+                                    <label>Show </label>
+                                    @Html.TextBoxFor(model => model.ShowPorcentaje, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01", @placeholder = "%" })
+                                </td>
+                                <td>
+                                    <br />
+                                    <label>&nbsp;</label>
+                                    @Html.TextBoxFor(model => model.ShowMonto, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01", @placeholder = "$" })
+                                </td>
+                            </tr>
+                        </table>
+
+                        <hr style="color: #8dd9f7">
+
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <label>Fecha Cobro </label>
+                                    @Html.TextBoxFor(model => model.FechaCobro, new { @class = "form-control", Style = "width:200px", required = "required", @type = "date" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <br />
+                                    <label>Forma</label>
+                                    @Html.TextBoxFor(model => model.Forma, new { @class = "form-control", Style = "width:400px", required = "required" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <br />
+                                    <label>Comentarios </label>
+                                    @Html.TextBoxFor(model => model.Comentarios, new { @class = "form-control", Style = "width:400px" })
+                                </td>
+                            </tr>
+                        </table>
+
+                        <hr style="color: #8dd9f7">
 
                         <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
+                        
                         <input id="entradasSeleccionadas" class="hidden" data-form="error-box" />
                         <input id="counterEntradas" class="hidden" value="0" data-form="error-box" />
 
                         <input id="impuestosSeleccionados" class="hidden" data-form="error-box" />
                         <input id="counterImpuestos" class="hidden" value="0" data-form="error-box" />
+
+                        <input id="gastosSeleccionados" class="hidden" data-form="error-box" />
+                        <input id="counterGastos" class="hidden" value="0" data-form="error-box" />
 
                         <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
                     </form>
@@ -274,8 +370,6 @@
         RecorreEntradas();
     });
 
-
-
     $("#addImpuesto").click(function () {
 
         //Obtengo el contador y lo incremento
@@ -316,7 +410,39 @@
         RecorreImpuestos();
     });
 
+    $("#addGasto").click(function () {
 
+        //Obtengo el contador y lo incremento
+        var contador = parseInt($("#counterGastos").val());
+        contador = contador + 1;
+        $("#counterGastos").val(contador);
+
+        var divContenedor = jQuery('<div id="GastosAgregados"></div>');
+        var gasto = jQuery('<input id="' + contador + '-i" class="form-control-override"  value="' + $("#gastosList option:selected").text() + '" type="text" readonly style="width:200px" />');
+        var monto = jQuery('<input id="' + contador + '-j" class="form-control-override"  value="' + $("#gastoMonto").val() + '" type="text" readonly style="width:120px" />');
+        var eliminar = jQuery('<input class="form-control-button" value="-" type="button" /><br />');
+        eliminar.click(function () {
+            $(this).parent().remove();
+
+            RecorreGastos();
+
+            //Obtengo el contador y lo decremento
+            var contador = parseInt($("#counterGastos").val());
+            contador = contador - 1;
+            $("#counterGastos").val(contador);
+        });
+
+        divContenedor.append(gasto);
+        divContenedor.append(monto);
+        divContenedor.append(eliminar);
+        $('#gastosDiv').append(divContenedor);
+
+
+        //borro los campos
+        $("#gastoMonto").val("");
+
+        RecorreGastos();
+    });
 
     function RecorreEntradas()
     {
@@ -345,8 +471,6 @@
         alert(entradasString);
     }
 
-
-
     function RecorreImpuestos() {
         var contador = parseInt($("#counterImpuestos").val());
         var entradasString = "";
@@ -367,6 +491,27 @@
         }
 
         $("#impuestosSeleccionadas").val(entradasString);
+        alert(entradasString);
+    }
+
+    function RecorreGastos() {
+        var contador = parseInt($("#counterGastos").val());
+        var entradasString = "";
+        for (var i = contador; i > 0; i--) {
+            var idGasto = "#" + i + "-i";
+            var idMonto = "#" + i + "-j";
+
+            if ($(idGasto).val() != undefined) {
+                if (entradasString == "") {
+                    entradasString = $(idGasto).val() + "-" + $(idMonto).val();
+                }
+                else {
+                    entradasString = entradasString + "*" + $(idGasto).val() + "-" + $(idMonto).val();
+                }
+            }
+        }
+
+        $("#gastosSeleccionadas").val(entradasString);
         alert(entradasString);
     }
 
