@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SUA.Models
 {
-    public class Borderaux
+    public class Bordereaux
     {
         public List<EntradasBorderaux> Entradas { get; set; }
         public int EntradasTotal { get; set; }

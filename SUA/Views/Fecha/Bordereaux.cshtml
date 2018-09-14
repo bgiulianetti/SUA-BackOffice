@@ -1,4 +1,4 @@
-﻿@model SUA.Models.Borderaux
+﻿@model SUA.Models.Bordereaux
 <style>
     table {
         border-spacing: 20px;
@@ -68,11 +68,11 @@
     {
         if (ViewBag.mensaje == "creado")
         {
-            <label>El Standupero ha sido cargado con éxito. Puede verlo cargado en el <a href="@Url.RouteUrl("Standuperos")">Listado de Standuperos</a></label>
+            <label>El bordereaux ha sido cargado con éxito. Puede verlo cargado en el <a href="@Url.RouteUrl("Fechas")">Listado de Fechas</a></label>
         }
         else if (ViewBag.mensaje == "actualizado")
         {
-            <label>El Standupero ha sido actualizado con éxito. Puede ver los cambios en el <a href="@Url.RouteUrl("Standuperos")">Listado de Standuperos</a></label>
+            <label>El bordereaux ha sido actualizado con éxito. Puede ver los cambios en el <a href="@Url.RouteUrl("Fechas")">Listado de Fechas</a></label>
         }
         else if (ViewBag.mensaje == "Get")
         {
@@ -93,15 +93,15 @@
                                 </td>
                                 <td>
                                     <label>Cantidad </label>
-                                    <input id="entradaCantidad" class="form-control" type="number" min="0" style="width:120px" required />
+                                    <input id="entradaCantidad" class="form-control" type="number" min="0" style="width:120px" />
                                 </td>
                                 <td>
                                     <label>Precio </label>
-                                    <input id="entradaPrecio" class="form-control" type="number" step="0.01" min="0" style="width:120px" required/>
+                                    <input id="entradaPrecio" class="form-control" type="number" step="0.01" min="0" style="width:120px"/>
                                 </td>
                                 <td>
                                     <label>Total </label>
-                                    <input id="entradaTotal" class="form-control" type="number" step="0.01" min="0" style="width:120px" required />
+                                    <input id="entradaTotal" class="form-control" type="number" step="0.01" min="0" style="width:120px" />
                                 </td>
                                 <td>
                                     <label>&nbsp;</label>
@@ -142,11 +142,11 @@
                                 </td>
                                 <td>
                                     <label>Porcentaje </label>
-                                    <input id="impuestoPorcentaje" class="form-control" type="number" min="0" style="width:120px" placeholder="%" required />
+                                    <input id="impuestoPorcentaje" class="form-control" type="number" min="0" style="width:120px" placeholder="%" />
                                 </td>
                                 <td>
                                     <label>Monto </label>
-                                    <input id="impuestoMonto" class="form-control" type="number" step="0.01" min="0" style="width:120px" placeholder="$" required />
+                                    <input id="impuestoMonto" class="form-control" type="number" step="0.01" min="0" style="width:120px" placeholder="$" />
                                 </td>
                                 <td>
                                     <label>Comentarios </label>
@@ -220,7 +220,7 @@
                                 </td>
                                 <td>
                                     <label>Monto </label>
-                                    <input id="gastoMonto" class="form-control" type="number" min="0" style="width:120px" required />
+                                    <input id="gastoMonto" class="form-control" type="number" min="0" style="width:120px" />
                                 </td>
                                 <td>
                                     <label>&nbsp;</label>
@@ -245,7 +245,6 @@
                                 </td>
                             </tr>
                         </table>
-
 
                         <hr style="color: #8dd9f7">
 
@@ -305,14 +304,16 @@
 
                         <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
                         
-                        <input id="entradasSeleccionadas" class="hidden" data-form="error-box" />
+                        <input name="_entradas" id="entradasSeleccionadas" class="hidden" data-form="error-box" />
                         <input id="counterEntradas" class="hidden" value="0" data-form="error-box" />
 
-                        <input id="impuestosSeleccionados" class="hidden" data-form="error-box" />
+                        <input name="_impuestos" id="impuestosSeleccionados" class="hidden" data-form="error-box" />
                         <input id="counterImpuestos" class="hidden" value="0" data-form="error-box" />
 
-                        <input id="gastosSeleccionados" class="hidden" data-form="error-box" />
+                        <input name="_gastos" id="gastosSeleccionados" class="hidden" data-form="error-box" />
                         <input id="counterGastos" class="hidden" value="0" data-form="error-box" />
+
+                        <input name="id" id="idFecha" class="hidden" data-form="error-box" />
 
                         <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
                     </form>
@@ -328,6 +329,11 @@
 </div>
 
 <script>
+
+    //tomo el id de la querystring
+    var _idFecha = window.location.href.split('=')[1];
+    $("#idFecha").val(_idFecha);
+
     $("#addEntrada").click(function () {
 
         //Obtengo el contador y lo incremento
@@ -465,10 +471,7 @@
                 }
             }
         }
-
-
         $("#entradasSeleccionadas").val(entradasString);
-        alert(entradasString);
     }
 
     function RecorreImpuestos() {
@@ -489,9 +492,7 @@
                 }
             }
         }
-
-        $("#impuestosSeleccionadas").val(entradasString);
-        alert(entradasString);
+        $("#impuestosSeleccionados").val(entradasString);
     }
 
     function RecorreGastos() {
@@ -510,9 +511,7 @@
                 }
             }
         }
-
-        $("#gastosSeleccionadas").val(entradasString);
-        alert(entradasString);
+        $("#gastosSeleccionados").val(entradasString);
     }
 
 </script>

@@ -13,7 +13,7 @@ namespace SUA.Models
         public Sala Sala { get; set; }
         public DateTime FechaHorario { get; set; }
         public Productor Productor { get; set; }
-        public Borderaux Borederaux { get; set; }
+        public Bordereaux Borederaux { get; set; }
 
         public void SetIdAndFechaAlta()
         {

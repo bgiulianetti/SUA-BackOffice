@@ -136,13 +136,51 @@ namespace SUA.Controllers
         {
             ViewBag.titulo = "Bordereaux";
             ViewBag.mensaje = "Get";
-            ViewBag.impuestos = UtilitiesAndStuff.GetImpuestos();
-            ViewBag.gastos = UtilitiesAndStuff.GetGastosCompany();
-            ViewBag.entradas = UtilitiesAndStuff.GetEntradas();
 
+            var fechaService = new FechaService();
+            var fecha = fechaService.GetFechaById(id);
+            if(fecha.Borederaux == null)
+            {
+                
+                ViewBag.impuestos = UtilitiesAndStuff.GetImpuestos();
+                ViewBag.gastos = UtilitiesAndStuff.GetGastosCompany();
+                ViewBag.entradas = UtilitiesAndStuff.GetEntradas();
+            }
+            else
+            {
+                ViewBag.accion = "Put";
+                ViewBag.impuestos = UtilitiesAndStuff.GetImpuestos();
+                ViewBag.gastos = UtilitiesAndStuff.GetGastosCompany();
+                ViewBag.entradas = UtilitiesAndStuff.GetEntradas();
+                return View(fecha.Borederaux);
+            }
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Bordereaux(Bordereaux bordereaux, string accion, string _entradas, string _impuestos, string _gastos, string id)
+        {
+            ViewBag.titulo = "Bordereaux";
+            bordereaux.Entradas = GetEntradas(_entradas);
+            bordereaux.ImpuestosDeduccionesTeatro = GetImpuestos(_impuestos);
+            bordereaux.GastosCompany = GetGastos(_gastos);
+            var service = new FechaService();
+            var fecha = service.GetFechaById(id);
+            try
+            {
+                fecha.Borederaux = bordereaux;
+                service.UpdateFecha(fecha);
+                if (fecha.Borederaux != null)
+                    ViewBag.mensaje = "creado";
+                else
+                    ViewBag.mensaje = "actualizado";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.mensaje = ex.Message;
+            }
+            return View();
+        }
 
         public ActionResult DeleteFecha(string id)
         {
@@ -156,6 +194,54 @@ namespace SUA.Controllers
                 //loguear mensaje o mandar pagina de error
             }
             return RedirectToAction("Fechas", "Fecha");
+        }
+
+
+        public List<EntradasBorderaux> GetEntradas(string _entradas)
+        {
+            var lista = _entradas.Split('*').ToList();
+            var entradas = new List<EntradasBorderaux>();
+            foreach (var item in lista)
+            {
+                var entradaString = item.Split('-');
+                entradas.Add(new EntradasBorderaux {
+                    Nombre = entradaString[0],
+                    Cantidad = Int32.Parse(entradaString[1]),
+                    Precio = double.Parse(entradaString[2]),
+                    Total = double.Parse(entradaString[3])
+                });
+            }
+            return entradas;
+        }
+
+        public List<ImpuestosDeduccionesTeatroBorderaux> GetImpuestos(string _impuestos)
+        {
+            var lista = _impuestos.Split('*').ToList();
+            var impuestos = new List<ImpuestosDeduccionesTeatroBorderaux>();
+            foreach (var item in lista)
+            {
+                var impuestoString = item.Split('-');
+                impuestos.Add(new ImpuestosDeduccionesTeatroBorderaux
+                {
+                    Nombre = impuestoString[0],
+                    Porcentaje = double.Parse(impuestoString[1]),
+                    Monto = double.Parse(impuestoString[2]),
+                    Comentarios = impuestoString[3]
+                });
+            }
+            return impuestos;
+        }
+
+        public Dictionary<string, double> GetGastos(string _gastos)
+        {
+            var gastosList = _gastos.Split('*').ToList();
+            var gastos = new Dictionary<string, double>();
+            foreach (var item in gastosList)
+            {
+                var gasto = item.Split('-');
+                gastos.Add(gasto[0], double.Parse(gasto[1]));
+            }
+            return gastos;
         }
        
     }
