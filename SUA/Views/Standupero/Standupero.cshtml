@@ -74,10 +74,6 @@
                                     <label>Instagram User</label>
                                     @Html.TextBoxFor(model => model.InstagramUser, new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
-                                <td>
-                                    <label>Foto</label>
-                                    @Html.TextBoxFor(model => model.Foto, new { @class = "form-control", Style = "width:300px" })
-                                </td>
                             </tr>
                         </table>
                         <hr style="color: #8dd9f7">
@@ -85,31 +81,31 @@
                             <tr>
                                 <td>
                                     <label>Dirección </label>
-                                    @Html.TextBoxFor(model => model.Direccion.Direccion, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.TextBoxFor(model => model.Direccion.Direccion, new { @class = "form-control", Style = "width:300px" })
                                 </td>
                                 <td>
                                     <label>Ciudad </label>
-                                    @Html.TextBoxFor(model => model.Direccion.Ciudad, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.TextBoxFor(model => model.Direccion.Ciudad, new { @class = "form-control", Style = "width:300px" })
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label>Localidad </label>
-                                    @Html.TextBoxFor(model => model.Direccion.Localidad, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.TextBoxFor(model => model.Direccion.Localidad, new { @class = "form-control", Style = "width:300px" })
                                 </td>
                                 <td>
                                     <label title="Para averiguar el código postal podes hacerlo ingresando la dirección en: https://www.correoargentino.com.ar/formularios/cpa">Código Postal </label>
-                                    @Html.TextBoxFor(model => model.Direccion.CodigoPostal, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.TextBoxFor(model => model.Direccion.CodigoPostal, new { @class = "form-control", Style = "width:300px" })
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label>Provincia </label>
-                                    @Html.DropDownListFor(model => model.Direccion.Provincia, new SelectList(ViewBag.provincias, "Text", "Value"), new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.DropDownListFor(model => model.Direccion.Provincia, new SelectList(ViewBag.provincias, "Text", "Value"), new { @class = "form-control", Style = "width:300px"})
                                 </td>
                                 <td>
                                     <label>País </label>
-                                    @Html.DropDownListFor(model => model.Direccion.Pais, new SelectList(ViewBag.paises, "Text", "Value"), new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.DropDownListFor(model => model.Direccion.Pais, new SelectList(ViewBag.paises, "Text", "Value"), new { @class = "form-control", Style = "width:300px"})
                                 </td>
                             </tr>
                         </table>
@@ -120,27 +116,27 @@
                             <tr>
                                 <td>
                                     <label>Nombre Completo </label>
-                                    @Html.TextBoxFor(model => model.DatosBancarios.NombreCompleto, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.TextBoxFor(model => model.DatosBancarios.NombreCompleto, new { @class = "form-control", Style = "width:300px" })
                                 </td>
                                 <td>
                                     <label>Cuit/Cuil</label>
-                                    @Html.TextBoxFor(model => model.DatosBancarios.CuilCuit, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.TextBoxFor(model => model.DatosBancarios.CuilCuit, new { @class = "form-control", Style = "width:300px" })
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label>CBU</label>
-                                    @Html.TextBoxFor(model => model.DatosBancarios.Cbu, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.TextBoxFor(model => model.DatosBancarios.Cbu, new { @class = "form-control", Style = "width:300px"})
                                 </td>
                                 <td>
                                     <label>Alias</label>
-                                    @Html.TextBoxFor(model => model.DatosBancarios.Alias, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.TextBoxFor(model => model.DatosBancarios.Alias, new { @class = "form-control", Style = "width:300px"})
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label>Tipo de Cuenta</label>
-                                    @Html.TextBoxFor(model => model.DatosBancarios.TipoCuenta, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.TextBoxFor(model => model.DatosBancarios.TipoCuenta, new { @class = "form-control", Style = "width:300px" })
                                 </td>
                                 <td>
                                     <label>Banco</label>
