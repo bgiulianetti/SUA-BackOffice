@@ -1,6 +1,22 @@
 ﻿<div id="container" class="main-content" style="padding:50px;  width: 100%;">
+
     @if (ViewBag.mensaje == "listar")
     {
+        <table style="border-spacing: 20px">
+            <tr>
+                <td>
+                    <div id="entries" style="width:200px"></div>
+                </td>
+                <td>
+                    <div id="botones" style="width:200px; padding-top:5px"></div>
+                </td>
+                <td>
+                    <div id="busqueda" style="width:200px"></div>
+                </td>
+            </tr>
+        </table>
+        <hr style="color: #8dd9f7">
+
         <div style="width: 100%; overflow-x: auto;  white-space: nowrap;">
 
             <table id="table_shows" class="display compact hover nowrap">
@@ -62,6 +78,18 @@
             </table>
 
         </div>
+
+        <hr style="color: #8dd9f7">
+        <table style="border-spacing: 20px">
+            <tr>
+                <td>
+                    <div id="info" style="width:200px"></div>
+                </td>
+                <td>
+                    <div id="paginado" style="width:200px"></div>
+                </td>
+            </tr>
+        </table>
     }
     else
     {
