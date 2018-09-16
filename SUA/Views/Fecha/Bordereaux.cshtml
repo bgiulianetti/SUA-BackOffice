@@ -136,7 +136,7 @@
                             <tr>
                                 <td>
                                     <br />
-                                    <label>Cantidad Total</label>
+                                    <label>Total</label>
                                     @Html.TextBoxFor(model => model.EntradasTotal, new { @id="entradasTotal",  @class = "form-control", Style = "width:300px", required = "required", @type = "number", @step= "0.01", @readonly="readonly"})
                                 </td>
                                 <td>
@@ -161,16 +161,16 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <label>Porcentaje </label>
-                                    <input id="impuestoPorcentaje" class="form-control" type="number" min="0" style="width:120px" placeholder="%" />
+                                    <label>% </label>
+                                    <input id="impuestoPorcentaje" class="form-control" type="number" min="0" style="width:75px"/>
                                 </td>
                                 <td>
-                                    <label>Monto </label>
-                                    <input id="impuestoMonto" class="form-control" type="number" step="0.01" min="0" style="width:120px" placeholder="$" />
+                                    <label>$ </label>
+                                    <input id="impuestoMonto" class="form-control" type="number" step="0.01" min="0" style="width:75px" readonly  />
                                 </td>
                                 <td>
                                     <label>Comentarios </label>
-                                    <input id="impuestoComentarios" class="form-control" type="text" placeholder="[texto]" style="width:300px" />
+                                    <input id="impuestoComentarios" class="form-control" type="text" placeholder="[texto]" style="width:220px" />
                                 </td>
                                 <td>
                                     <label>&nbsp;</label>
@@ -230,7 +230,7 @@
                                 <td>
                                     <br />
                                     <label>&nbsp;</label>
-                                    @Html.TextBoxFor(model => model.ImpuestosDeduccionesCompanyMonto, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01", @placeholder = "$" })
+                                    @Html.TextBoxFor(model => model.ImpuestosDeduccionesCompanyMonto, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01", @placeholder = "$", @readonly = "readonly" })
                                 </td>
                             </tr>
                             <tr>
@@ -242,7 +242,7 @@
                                 <td>
                                     <br />
                                     <label>&nbsp;</label>
-                                    @Html.TextBoxFor(model => model.ImpuestosDeduccionesTeatroMonto, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01", @placeholder = "$" })
+                                    @Html.TextBoxFor(model => model.ImpuestosDeduccionesTeatroMonto, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01", @placeholder = "$", @readonly = "readonly" })
                                 </td>
                             </tr>
                         </table>
@@ -296,12 +296,12 @@
                                 <td>
                                     <br />
                                     <label>Total Gastos </label>
-                                    @Html.TextBoxFor(model => model.GastosCompanyTotal, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01" })
+                                    @Html.TextBoxFor(model => model.GastosCompanyTotal, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01", @readonly = "readonly" })
                                 </td>
                                 <td>
                                     <br />
                                     <label>Neto</label>
-                                    @Html.TextBoxFor(model => model.GastosCompanyNeto, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01" })
+                                    @Html.TextBoxFor(model => model.GastosCompanyNeto, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01", @readonly = "readonly" })
                                 </td>
                             </tr>
                         </table>
@@ -318,7 +318,7 @@
                                 <td>
                                     <br />
                                     <label>&nbsp;</label>
-                                    @Html.TextBoxFor(model => model.SUAMonto, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01", @placeholder = "$" })
+                                    @Html.TextBoxFor(model => model.SUAMonto, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01", @placeholder = "$", @readonly = "readonly" })
                                 </td>
                             </tr>
                             <tr>
@@ -330,7 +330,7 @@
                                 <td>
                                     <br />
                                     <label>&nbsp;</label>
-                                    @Html.TextBoxFor(model => model.ShowMonto, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01", @placeholder = "$" })
+                                    @Html.TextBoxFor(model => model.ShowMonto, new { @class = "form-control", Style = "width:200px", required = "required", @type = "number", @step = "0.01", @placeholder = "$", @readonly = "readonly" })
                                 </td>
                             </tr>
                         </table>
@@ -340,7 +340,7 @@
                         <table style="border-spacing: 20px">
                             <tr>
                                 <td>
-                                    <label>Fecha Cobro </label>
+                                    <label>Fecha de Cobro </label>
                                     @if (ViewBag.accion == "Put")
                                     {
                                     @Html.TextBoxFor(model => model.FechaCobro, new { @class = "form-control", Style = "width:200px", required = "required", @type = "date", @Value = Model.FechaCobro.ToString("yyyy-MM-dd") })
@@ -471,6 +471,7 @@
     {
         if ($("#entradaCantidad").val()  != "" && $("#entradaPrecio").val() != "")
         {
+            //hago calculo
             var total = $("#entradaCantidad").val() * $("#entradaPrecio").val();
             $("#entradaTotal").val(total);
 
@@ -514,49 +515,61 @@
         }
         else
         {
-            alert("Debe completar precio y cantidad poder ingresar una entrada")
+            alert("Debe completar precio y cantidad poder ingresar una entrada");
         }
         
     });
 
-    $("#addImpuesto").click(function () {
+    $("#addImpuesto").click(function ()
+    {
 
-        //Obtengo el contador y lo incremento
-        var contador = parseInt($("#counterImpuestos").val());
-        contador = contador + 1;
-        $("#counterImpuestos").val(contador);
+        if ($("#impuestoPorcentaje").val() != "")
+        {
+            //hago calculo
+            var monto = $("#impuestoPorcentaje").val() * $("#entradasBruto").val() / 100;
+            $("#impuestoMonto").val(monto);
 
-        var divContenedor = jQuery('<div id="ImpuestosAgregados"></div>');
-        var impuesto = jQuery('<input id="' + contador +    '-e" class="form-control-override"  value="' + $("#impuestosList option:selected").text() + '" type="text" readonly style="width:200px" />');
-        var porcentaje = jQuery('<input id="' + contador  + '-f" class="form-control-override"  value="' + $("#impuestoPorcentaje").val() + '" type="text" readonly style="width:120px" />');
-        var monto = jQuery('<input id="' + contador +       '-g" class="form-control-override"  value="' + $("#impuestoMonto").val() + '" type="text" readonly style="width:120px" />');
-        var comentarios = jQuery('<input id="' + contador + '-h" class="form-control-override"  value="' + $("#impuestoComentarios").val() + '" type="text" readonly style="width:300px" />');
-        var eliminar = jQuery('<input class="form-control-button" value="-" type="button" /><br />');
-        eliminar.click(function () {
-            $(this).parent().remove();
+            //Obtengo el contador y lo incremento
+            var contador = parseInt($("#counterImpuestos").val());
+            contador = contador + 1;
+            $("#counterImpuestos").val(contador);
+
+            var divContenedor = jQuery('<div id="ImpuestosAgregados"></div>');
+            var impuesto = jQuery('<input id="' + contador + '-e" class="form-control-override"  value="' + $("#impuestosList option:selected").text() + '" type="text" readonly style="width:200px" />');
+            var porcentaje = jQuery('<input id="' + contador + '-f" class="form-control-override"  value="' + $("#impuestoPorcentaje").val() + '" type="text" readonly style="width:120px" />');
+            var monto = jQuery('<input id="' + contador + '-g" class="form-control-override"  value="' + $("#impuestoMonto").val() + '" type="text" readonly style="width:120px" />');
+            var comentarios = jQuery('<input id="' + contador + '-h" class="form-control-override"  value="' + $("#impuestoComentarios").val() + '" type="text" readonly style="width:300px" />');
+            var eliminar = jQuery('<input class="form-control-button" value="-" type="button" /><br />');
+            eliminar.click(function () {
+                $(this).parent().remove();
+
+                RecorreImpuestos();
+
+                //Obtengo el contador y lo decremento
+                var contador = parseInt($("#counterImpuestos").val());
+                contador = contador - 1;
+                $("#counterImpuestos").val(contador);
+            });
+
+            divContenedor.append(impuesto);
+            divContenedor.append(porcentaje);
+            divContenedor.append(monto);
+            divContenedor.append(comentarios);
+            divContenedor.append(eliminar);
+            $('#impuestosDiv').append(divContenedor);
+
+
+            //borro los campos
+            $("#impuestoPorcentaje").val("");
+            $("#impuestoMonto").val("");
+            $("#impuestoComentarios").val("");
 
             RecorreImpuestos();
-
-            //Obtengo el contador y lo decremento
-            var contador = parseInt($("#counterImpuestos").val());
-            contador = contador - 1;
-            $("#counterImpuestos").val(contador);
-        });
-
-        divContenedor.append(impuesto);
-        divContenedor.append(porcentaje);
-        divContenedor.append(monto);
-        divContenedor.append(comentarios);
-        divContenedor.append(eliminar);
-        $('#impuestosDiv').append(divContenedor);
-
-
-        //borro los campos
-        $("#impuestoPorcentaje").val("");
-        $("#impuestoMonto").val("");
-        $("#impuestoComentarios").val("");
-
-        RecorreImpuestos();
+        }
+        else
+        {
+            alert("Debe ingresar un porcentaje válido");
+        }
     });
 
     $("#addGasto").click(function () {
@@ -608,10 +621,12 @@
 
             if ($(idEntrada).val() != undefined)
             {
-                if (entradasString == "") {
+                if (entradasString == "")
+                {
                     entradasString = $(idEntrada).val() + "-" + $(idCantidad).val() + "-" + $(idPrecio).val() + "-" + $(idTotal).val();
                 }
-                else {
+                else
+                {
                     entradasString = entradasString + "*" + $(idEntrada).val() + "-" + $(idCantidad).val() + "-" + $(idPrecio).val() + "-" + $(idTotal).val();
                 }
 
@@ -630,24 +645,38 @@
         
     }
 
-    function RecorreImpuestos() {
+    function RecorreImpuestos()
+    {
+        var sumatoriaMonto = 0;
         var contador = parseInt($("#counterImpuestos").val());
         var entradasString = "";
-        for (var i = contador; i > 0; i--) {
+        for (var i = contador; i > 0; i--)
+        {
             var idImpuesto = "#" + i + "-e";
             var idPorcentaje = "#" + i + "-f";
             var idMonto = "#" + i + "-g";
             var idComentarios = "#" + i + "-h";
 
-            if ($(idImpuesto).val() != undefined) {
-                if (entradasString == "") {
+            if ($(idImpuesto).val() != undefined)
+            {
+                if (entradasString == "")
+                {
                     entradasString = $(idImpuesto).val() + "-" + $(idPorcentaje).val() + "-" + $(idMonto).val() + "-" + $(idComentarios).val();
                 }
-                else {
+                else
+                {
                     entradasString = entradasString + "*" + $(idImpuesto).val() + "-" + $(idPorcentaje).val() + "-" + $(idMonto).val() + "-" + $(idComentarios).val();
                 }
+
+                //Hago las sumatorias
+                sumatoriaMonto = sumatoriaMonto + parseInt($(idMonto).val());
             }
         }
+
+        //asigno los totales
+        $("#impuestosDeduccionesTotalDeducir").val(sumatoriaMonto);
+        $("#impuestosDeduccionesNeto").val(parseInt($("#impuestosDeduccionesBruto").val()) - sumatoriaMonto);
+
         $("#impuestosSeleccionados").val(entradasString);
     }
 
