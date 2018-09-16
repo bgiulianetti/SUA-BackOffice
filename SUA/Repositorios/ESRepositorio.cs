@@ -8,6 +8,7 @@ using Elasticsearch.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace SUA.Repositorios
 {
@@ -326,6 +327,15 @@ namespace SUA.Repositorios
             }
             return igInfo;
         }
+        public InstagramUserInfoResponse GeStanduperoSocialBlade(string instagramUsername)
+        {
+            using (WebClient client = new WebClient())
+            {
+                string htmlCode = client.DownloadString("https://socialblade.com/instagram/user/darioorsi/legacy");
+            }
+            return null;
+        }
+
 
 
 

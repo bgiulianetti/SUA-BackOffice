@@ -232,10 +232,11 @@
 
 
             $("#entries").append($(".dt-buttons"));
-            $("#entries").append(jQuery('<br />'));
-            $("#entries").append($(".dataTables_length"));
-            $("#busqueda").append($("#table_standuperos_filter"));
-
+            $("#botones").append($(".dataTables_length"));
+            $("#info").append($("#table_standuperos_info"));
+            $("#paginado").append($("#table_standuperos_paginate"));
+            $("#paginado").attr("style", "padding: 0.5em 1em;");
+            //
         });
     </script>
 
@@ -314,7 +315,7 @@
         </div>
         <!-- END SIDEBAR -->
         <!-- MAIN -->
-        <div class="main">
+        <div class="main" style="font-size: 14px;">
             <!-- NAVBAR -->
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
@@ -327,13 +328,8 @@
 
                 </div>
             </nav>
-            <!-- END NAVBAR -->
-            <!-- MAIN CONTENT -->
-
 
             @RenderBody()
-
-            <!-- END MAIN CONTENT -->
 
             <footer>
                 <div class="container-fluid">
