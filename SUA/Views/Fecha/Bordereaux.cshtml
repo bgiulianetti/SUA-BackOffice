@@ -382,23 +382,24 @@
                 <input name="_entradas" id="entradasSeleccionadas" class="hidden" data-form="error-box" />
                 <input name="_impuestos" id="impuestosSeleccionados" class="hidden" data-form="error-box" />
                 <input name="_gastos" id="gastosSeleccionados" class="hidden" data-form="error-box" />
+                <input name="_arregloFijo" id="_arregloFijo" class="hidden" data-form="error-box" />
 
                 <input name="id" id="idFecha" class="hidden" data-form="error-box" />
 
 
                 @if (ViewBag.accion == "Put")
                 {
-                <input id="counterEntradas" class="hidden" value="@Model.Entradas.Count" data-form="error-box" />
-                <input id="counterImpuestos" class="hidden" value="@Model.ImpuestosDeduccionesTeatro.Count" data-form="error-box" />
-                <input id="counterGastos" class="hidden" value="@Model.GastosCompany.Count" data-form="error-box" />
-                <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar cambios</button>
+                    <input id="counterEntradas" class="hidden" value="@Model.Entradas.Count" data-form="error-box" />
+                    <input id="counterImpuestos" class="hidden" value="@Model.ImpuestosDeduccionesTeatro.Count" data-form="error-box" />
+                    <input id="counterGastos" class="hidden" value="@Model.GastosCompany.Count" data-form="error-box" />
+                    <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar cambios</button>
                 }
                 else
                 {
-                <input id="counterEntradas" class="hidden" value="0" data-form="error-box" />
-                <input id="counterImpuestos" class="hidden" value="0" data-form="error-box" />
-                <input id="counterGastos" class="hidden" value="0" data-form="error-box" />
-                <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
+                    <input id="counterEntradas" class="hidden" value="0" data-form="error-box" />
+                    <input id="counterImpuestos" class="hidden" value="0" data-form="error-box" />
+                    <input id="counterGastos" class="hidden" value="0" data-form="error-box" />
+                    <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
                 }
 
             </form>
@@ -731,10 +732,10 @@
 
 
     $("#impuestosDeduccionesCompanyPorcentaje").bind('input', function () {
-        var company = parseInt($('#impuestosDeduccionesCompanyPorcentaje').val());
+        var company = parseFloat($('#impuestosDeduccionesCompanyPorcentaje').val());
         $('#impuestosDeduccionesTeatroPorcentaje').val(100 - company);
 
-        var neto = parseInt($("#impuestosDeduccionesNeto").val());
+        var neto = parseFloat($("#impuestosDeduccionesNeto").val());
         var montoCompany = neto * company / 100;
         var teatro = neto - montoCompany;
         $("#impuestosDeduccionesCompanyMonto").val(montoCompany);
@@ -742,21 +743,22 @@
     });
 
     $("#impuestoPorcentaje").bind('input', function () {
-        var porcentaje = parseInt($('#impuestoPorcentaje').val());
+        var porcentaje = parseFloat($('#impuestoPorcentaje').val());
         $('#impuestoMonto').val(parseInt($("#entradasBruto").val()) * porcentaje / 100);
     });
 
     $("#impuestoMonto").bind('input', function () {
-        var monto = parseInt($('#impuestoMonto').val());
+        var monto = parseFloat($('#impuestoMonto').val());
         $('#impuestoPorcentaje').val(monto * 100 / parseInt($("#entradasBruto").val()));
     });
 
 
     $("#impuestosDeduccionesTeatroMonto").bind('input', function ()
     {
-        var montoTeatro = parseInt($('#impuestosDeduccionesTeatroMonto').val());
-        var neto = parseInt($("#impuestosDeduccionesNeto").val());
+        var montoTeatro = parseFloat($('#impuestosDeduccionesTeatroMonto').val());
+        var neto = parseFloat($("#impuestosDeduccionesNeto").val());
         var porcentajeTeatro = montoTeatro * 100 / neto;
+        var porcentajeTeatro = porcentajeTeatro.toFixed(2);
         $('#impuestosDeduccionesTeatroPorcentaje').val(porcentajeTeatro);
 
 
@@ -784,11 +786,13 @@
             $("#impuestosDeduccionesCompanyPorcentaje").attr("readonly", "readonly");
             $("#impuestosDeduccionesCompanyPorcentaje").val("");
             $("#impuestosDeduccionesTeatroMonto").removeAttr("readonly", "readonly");
+            $("#_arregloFijo").val("si");
         }
         else
         {
             $("#impuestosDeduccionesCompanyPorcentaje").removeAttr("readonly", "readonly");
             $("#impuestosDeduccionesTeatroMonto").attr("readonly", "readonly");
+            $("#_arregloFijo").val("no");
         }
     });
 

@@ -245,14 +245,56 @@
                     { extend: 'pdf', title: "Listado de Fechas", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/'), orientation: 'landscape' }
                 ],
                 'columnDefs': [{ "targets": 0, "className": "text-center" }],
-                "bSort": false
+                "bSort": false,
+
+                ///////////////////////////////////////////
+
+                        "footerCallback": function (row, data, start, end, display) {
+                    var api = this.api(), data;
+
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function (i) { return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 :typeof i === 'number' ? i : 0;};
+
+                    // Total over all pages
+                    bruto = api.column(8).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
+                    sala = api.column(9).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
+                    show = api.column(10).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
+                    sua = api.column(11).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
+
+                    // Total de pagina
+                    bruto_parcial = api.column(8, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
+                    sala_parcial = api.column(9, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
+                    show_parcial = api.column(10, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
+                    sua_parcial = api.column(11, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
+
+                    // Update footer
+                    var texto_bruto = '$' + bruto_parcial + ' ( $' + bruto + ' total)';
+                    $(api.column(8).footer()).html('<label>' + texto_bruto + '</label>');
+
+                    var texto_sala = '$' + sala_parcial + ' ( $' + sala + ' total)';
+                    $(api.column(9).footer()).html('<label>' + texto_sala + '</label>');
+
+                    var texto_show = '$' + show_parcial + ' ( $' + show + ' total)';
+                    $(api.column(10).footer()).html('<label>' + texto_show + '</label>')
+
+                    var texto_sua = '$' + sua_parcial + ' ( $' + sua + ' total)';;
+                    $(api.column(11).footer()).html('<label>' + texto_sua + '</label>');
+
+                }
+                ////////////////////////////////////////////
+
+
             });
 
             var contador = 0;
             $('#table_fechas_cerradas tfoot th').each(function () {
-                if (contador != 0) {
+                if (contador != 0)
+                {
                     var title = $(this).text();
-                    $(this).html('<input type="text" placeholder="' + title + '" />');
+                    if (title == "Fecha" || title == "Show" || title == "Sala" || title == "Ciudad" || title == "Cantidad Entradas" || title == "Capacidad Total" || title == "Asistencia")
+                        $(this).html('<input type="text" placeholder="' + title + '" />');
+                    else
+                        $(this).html('<label style="color:green">' + title + '</label>');
                 }
                 contador++;
             });
@@ -268,10 +310,6 @@
                 });
             });
             $('#table_fechas_cerradas_filter').hide();
-
-
-
-
 
 
 
@@ -364,7 +402,7 @@
                                 <ul class="nav">
                                     <li><a href="@Url.RouteUrl("Fechas")" class="">Listar</a></li>
                                     <li><a href="@Url.RouteUrl("Fecha")" class="">Crear</a></li>
-                                    <!--<li><a href="@Url.RouteUrl("FechasCerradas")" class="">Fechas Cerradas</a></li>-->
+                                    <li><a href="@Url.RouteUrl("FechasCerradas")" class="">Fechas Cerradas</a></li>
                                 </ul>
                             </div>
                         </li>
