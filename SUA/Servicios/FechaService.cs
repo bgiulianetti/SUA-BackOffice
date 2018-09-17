@@ -94,5 +94,18 @@ namespace SUA.Servicios
             }
             return null;
         }
+
+        public List<Fecha> GetFechasConBordereaux()
+        {
+            var fechasConBordereaux = new List<Fecha>();
+            var fechas = Repository.GetFechas();
+            foreach (var item in fechas)
+            {
+                if (item.Borederaux != null)
+                    fechasConBordereaux.Add(item);
+            }
+            return fechasConBordereaux;
+        }
+
     }
 }

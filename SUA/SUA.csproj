@@ -263,6 +263,7 @@
     <Content Include="Views\Fecha\Fecha.cshtml" />
     <Content Include="Views\Fecha\Fechas.cshtml" />
     <Content Include="Views\Fecha\Bordereaux.cshtml" />
+    <Content Include="Views\Fecha\FechasCerradas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

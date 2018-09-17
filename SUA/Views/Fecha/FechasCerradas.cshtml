@@ -1,0 +1,98 @@
+﻿<div id="container" class="main-content" style="padding:50px;  width: 100%;">
+    @if (ViewBag.mensaje == "listar")
+    {
+        <table style="border-spacing: 20px">
+            <tr>
+                <td>
+                    <div id="entries" style="width:200px"></div>
+                </td>
+                <td>
+                    <div id="botones" style="width:200px; padding-top:5px"></div>
+                </td>
+                <td>
+                    <div id="busqueda" style="width:200px"></div>
+                </td>
+            </tr>
+        </table>
+        <hr style="color: #8dd9f7">
+
+        <div style="width: 100%; overflow-x: auto;  white-space: nowrap;">
+
+            <table id="table_fechas_cerradas" class="display compact hover nowrap">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Fecha</th>
+                        <th>Show</th>
+                        <th>Sala</th>
+                        <th>Ciudad</th>
+                        <th>Cantidad Entradas</th>
+                        <th>Capacidad Total</th>
+                        <th>Asistencia</th>
+                        <th>Bruto</th>
+                        <th>Neto Sala</th>
+                        <th>Neto Show</th>
+                        <th>Neto SUA</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th>Fecha</th>
+                        <th>Show</th>
+                        <th>Sala</th>
+                        <th>Ciudad</th>
+                        <th>Cantidad Entradas</th>
+                        <th>Capacidad Total</th>
+                        <th>Asistencia</th>
+                        <th>Bruto</th>
+                        <th>Neto Sala</th>
+                        <th>Neto Show</th>
+                        <th>Neto SUA</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in ViewBag.fechas)
+                    {
+                        var porcentaje = item.Borederaux.EntradasTotal * 100 / item.Sala.Capacidad;
+                        <tr>
+                            <td>
+                                @Html.ActionImage("DetalleFecha", "Fecha", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
+                            </td>
+                            <td>@item.FechaHorario</td>
+                            <td>@item.Show._Show - @item.Show.Nombre</td>
+                            <td>@item.Sala.Nombre</td>
+                            <td>@item.Sala.Direccion.Ciudad</td>
+                            <td>@item.Borederaux.EntradasTotal</td>
+                            <td>@item.Sala.Capacidad</td>
+                            <td>@porcentaje %</td>
+                            <td>$@item.Borederaux.EntradasBruto</td>
+                            <td>$@item.Borederaux.ImpuestosDeduccionesTeatroMonto</td>
+                            <td>$@item.Borederaux.ShowMonto</td>
+                            <td>$@item.Borederaux.SUAMonto</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+
+        <hr style="color: #8dd9f7">
+        <table style="border-spacing: 20px">
+            <tr>
+                <td>
+                    <div id="info" style="width:200px"></div>
+                </td>
+                <td>
+                    <div id="paginado" style="width:200px"></div>
+                </td>
+            </tr>
+        </table>
+
+    }
+    else
+    {
+        <label>@ViewBag.mensaje</label>
+    }
+
+</div>

@@ -9,7 +9,7 @@ namespace SUA.Models
     {
         public List<EntradasBorderaux> Entradas { get; set; }
         public int EntradasTotal { get; set; }
-        public double EntradasBruno { get; set; }
+        public double EntradasBruto { get; set; }
 
         public List<ImpuestosDeduccionesTeatroBorderaux> ImpuestosDeduccionesTeatro { get; set; }
         public double ImpuestosDeduccionesBruto { get; set; }

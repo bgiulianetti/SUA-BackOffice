@@ -184,6 +184,25 @@ namespace SUA.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult FechasCerradas()
+        {
+            ViewBag.titulo = "Fechas Cerradas";
+            try
+            {
+                ViewBag.mensaje = "listar";
+                var service = new FechaService();
+                var fechas = service.GetFechasConBordereaux();
+                ViewBag.fechas = fechas;
+            }
+            catch(Exception ex)
+            {
+                ViewBag.menasje = ex.Message;
+            }
+            
+            return View();
+        }
+
         public ActionResult DeleteFecha(string id)
         {
             var service = new FechaService();
@@ -197,7 +216,6 @@ namespace SUA.Controllers
             }
             return RedirectToAction("Fechas", "Fecha");
         }
-
 
         public List<EntradasBorderaux> GetEntradas(string _entradas)
         {
@@ -218,8 +236,11 @@ namespace SUA.Controllers
 
         public List<ImpuestosDeduccionesTeatroBorderaux> GetImpuestos(string _impuestos)
         {
-            var lista = _impuestos.Split('*').ToList();
             var impuestos = new List<ImpuestosDeduccionesTeatroBorderaux>();
+            if (string.IsNullOrEmpty(_impuestos))
+                return impuestos;
+
+            var lista = _impuestos.Split('*').ToList();
             foreach (var item in lista)
             {
                 var impuestoString = item.Split('-');
@@ -236,8 +257,11 @@ namespace SUA.Controllers
 
         public Dictionary<string, double> GetGastos(string _gastos)
         {
-            var gastosList = _gastos.Split('*').ToList();
             var gastos = new Dictionary<string, double>();
+            if (string.IsNullOrEmpty(_gastos))
+                return gastos;
+
+            var gastosList = _gastos.Split('*').ToList();
             foreach (var item in gastosList)
             {
                 var gasto = item.Split('-');
