@@ -13,6 +13,8 @@ namespace SUA.Controllers
     {
         public ActionResult Index()
         {
+            //https://fullcalendar.io/docs/events-json-feed
+            //aca paso la info
             ViewBag.titulo = "Inicio";
             return View();
         }

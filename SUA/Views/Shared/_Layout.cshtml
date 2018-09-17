@@ -31,7 +31,15 @@
         $(document).ready(function () {
 
 
-
+            $('#calendar').fullCalendar({
+                locale: 'es',
+                themeSystem: "cosmo",
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay,listMonth'
+                }
+            });
 
 
             //-----------------------------Datatables Standupero------------------------------
@@ -470,14 +478,10 @@
     <script src="~/assets/js/jquery/jquery.confirm.min.js"></script>
 
 
-
-
-
-
-
-
-
-
+    <link rel='stylesheet' href="~/assets/calendar/fullcalendar.min.css" />
+    <script src="~/assets/calendar/lib/moment.min.js"></script>
+    <script src="~/assets/calendar/fullcalendar.js"></script>
+    <link href="https://code.jquery.com/ui/1.12.1/themes/cupertino/jquery-ui.css" rel="stylesheet">
 
 </body>
 
