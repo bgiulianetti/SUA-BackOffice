@@ -247,7 +247,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <label><input id="arregloFijo" type="checkbox" name="checkbox" value="ArregloFijo">Arreglo Fijo</label>
+                            <label><input id="check_arregloFijo" type="checkbox" name="checkbox" value="ArregloFijo">Arreglo Fijo</label>
                         </td>
                     </tr>
                 </table>
@@ -382,7 +382,7 @@
                 <input name="_entradas" id="entradasSeleccionadas" class="hidden" data-form="error-box" />
                 <input name="_impuestos" id="impuestosSeleccionados" class="hidden" data-form="error-box" />
                 <input name="_gastos" id="gastosSeleccionados" class="hidden" data-form="error-box" />
-                <input name="_arregloFijo" id="check_arregloFijo" class="hidden" data-form="error-box" />
+                <input name="_arregloFijo" id="_arregloFijo" value="no" class="hidden" data-form="error-box" />
 
                 <input name="id" id="idFecha" class="hidden" data-form="error-box" />
 
@@ -424,14 +424,14 @@
 
 
         //Seteo check arreglo fijo
-        var valor = '@Model.ArregloFijo';
+        var valor = '@ViewBag.ArregloFijo';
         if (valor == "true")
         {
-            $("#check_arregloFijo").prop('checked', true);
+            $("#check_arregloFijo").prop("checked", true);
         }
         else
         {
-            $("#check_arregloFijo").prop('checked', false);
+            $("#check_arregloFijo").prop("checked", false);
         }
 
         //agrego evento de click a boton 'eliminar entrada' agregado de forma dinamica en el Put
@@ -790,20 +790,20 @@
         $("#showMonto").val(show);
     });
 
-    $("#arregloFijo").change(function ()
+    $("#check_arregloFijo").change(function ()
     {
         if (this.checked)
         {
             $("#impuestosDeduccionesCompanyPorcentaje").attr("readonly", "readonly");
             $("#impuestosDeduccionesCompanyPorcentaje").val("");
             $("#impuestosDeduccionesTeatroMonto").removeAttr("readonly", "readonly");
-            $("#check_arregloFijo").val("si");
+            $("#_arregloFijo").val("si");
         }
         else
         {
             $("#impuestosDeduccionesCompanyPorcentaje").removeAttr("readonly", "readonly");
             $("#impuestosDeduccionesTeatroMonto").attr("readonly", "readonly");
-            $("#check_arregloFijo").val("no");
+            $("#_arregloFijo").val("no");
         }
     });
 

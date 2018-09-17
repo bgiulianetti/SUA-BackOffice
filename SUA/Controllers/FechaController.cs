@@ -143,12 +143,15 @@ namespace SUA.Controllers
             var fecha = fechaService.GetFechaById(id);
             if(fecha.Borederaux == null)
             {
+                ViewBag.arregloFijo = "false";
+                ViewBag.accion = "Post";
                 ViewBag.impuestos = UtilitiesAndStuff.GetImpuestos();
                 ViewBag.gastos = UtilitiesAndStuff.GetGastosCompany();
                 ViewBag.entradas = UtilitiesAndStuff.GetEntradas();
             }
             else
             {
+                ViewBag.arregloFijo = fecha.Borederaux.ArregloFijo.ToString().ToLower();
                 ViewBag.accion = "Put";
                 ViewBag.impuestos = UtilitiesAndStuff.GetImpuestos();
                 ViewBag.gastos = UtilitiesAndStuff.GetGastosCompany();
