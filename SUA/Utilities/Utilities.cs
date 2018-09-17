@@ -187,7 +187,9 @@ namespace SUA.Utilities
                 "Aplicacion",
                 "Invitaciones",
                 "Invitaciones 2",
-                "Otras"
+                "Otras",
+                "Wix",
+                "Wix 50% off"
             };
             return ConverListToSelectListItem(entradas);
         }
