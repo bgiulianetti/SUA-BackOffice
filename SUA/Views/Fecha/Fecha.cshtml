@@ -101,6 +101,22 @@
                         </table>
 
                         <hr style="color: #8dd9f7">
+
+
+                        <table>
+                            <tr>
+                                <td>
+                                    Enviar email a <br /><br />
+                                    <label class="form-control" for="standuperos"> <input type="radio" name="standuperos" id="standuperos" value="standuperos">&nbsp;&nbsp;Standuperos</label>
+                                    <label class="form-control" for="productores"> <input type="radio" name="productores" id="productores" value="productores">&nbsp;&nbsp;Productores</label>
+                                    <label class="form-control" for="ambos"> <input type="radio" name="ambos" id="ambos" value="ambos">&nbsp;&nbsp;Ambos</label>
+                                    <label class="form-control" for="nadie"> <input type="radio" name="nadie" id="nadie" value="nadie">&nbsp;&nbsp;Nadie</label>
+                                    <br>
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="color: #8dd9f7">
+
                         <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
                         @Html.TextBoxFor(model => model.UniqueId, new { @class = "hidden" })
 
