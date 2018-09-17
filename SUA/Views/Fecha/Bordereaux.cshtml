@@ -382,7 +382,7 @@
                 <input name="_entradas" id="entradasSeleccionadas" class="hidden" data-form="error-box" />
                 <input name="_impuestos" id="impuestosSeleccionados" class="hidden" data-form="error-box" />
                 <input name="_gastos" id="gastosSeleccionados" class="hidden" data-form="error-box" />
-                <input name="_arregloFijo" id="_arregloFijo" class="hidden" data-form="error-box" />
+                <input name="_arregloFijo" id="check_arregloFijo" class="hidden" data-form="error-box" />
 
                 <input name="id" id="idFecha" class="hidden" data-form="error-box" />
 
@@ -422,6 +422,17 @@
         var _idFecha = '@ViewBag.idFecha';
         $("#idFecha").val(_idFecha);
 
+
+        //Seteo check arreglo fijo
+        var valor = '@Model.ArregloFijo';
+        if (valor == "true")
+        {
+            $("#check_arregloFijo").prop('checked', true);
+        }
+        else
+        {
+            $("#check_arregloFijo").prop('checked', false);
+        }
 
         //agrego evento de click a boton 'eliminar entrada' agregado de forma dinamica en el Put
         $("#deleteEntrada").click(function () {
@@ -786,13 +797,13 @@
             $("#impuestosDeduccionesCompanyPorcentaje").attr("readonly", "readonly");
             $("#impuestosDeduccionesCompanyPorcentaje").val("");
             $("#impuestosDeduccionesTeatroMonto").removeAttr("readonly", "readonly");
-            $("#_arregloFijo").val("si");
+            $("#check_arregloFijo").val("si");
         }
         else
         {
             $("#impuestosDeduccionesCompanyPorcentaje").removeAttr("readonly", "readonly");
             $("#impuestosDeduccionesTeatroMonto").attr("readonly", "readonly");
-            $("#_arregloFijo").val("no");
+            $("#check_arregloFijo").val("no");
         }
     });
 

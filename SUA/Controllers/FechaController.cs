@@ -160,14 +160,14 @@ namespace SUA.Controllers
         }
 
         [HttpPost]
-        public ActionResult Bordereaux(Bordereaux bordereaux, string accion, string _entradas, string _impuestos, string _gastos, string id, string _arrefloFijo)
+        public ActionResult Bordereaux(Bordereaux bordereaux, string accion, string _entradas, string _impuestos, string _gastos, string id, string _arregloFijo)
         {
             ViewBag.titulo = "Bordereaux";
             bordereaux.Entradas = GetEntradas(_entradas);
             bordereaux.ImpuestosDeduccionesTeatro = GetImpuestos(_impuestos);
             bordereaux.GastosCompany = GetGastos(_gastos);
 
-            if (_arrefloFijo == "si")
+            if (_arregloFijo == "si")
                 bordereaux.ArregloFijo = true;
             else
                 bordereaux.ArregloFijo = false;
