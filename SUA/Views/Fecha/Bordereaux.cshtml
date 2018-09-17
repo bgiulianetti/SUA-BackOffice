@@ -525,10 +525,6 @@
 
         if ($("#impuestoPorcentaje").val() != "")
         {
-            //hago calculo
-            var monto = $("#impuestoPorcentaje").val() * $("#entradasBruto").val() / 100;
-            $("#impuestoMonto").val(monto);
-
             //Obtengo el contador y lo incremento
             var contador = parseInt($("#counterImpuestos").val());
             contador = contador + 1;
@@ -713,7 +709,8 @@
 
 
         $("#GastosCompanyTotal").val(sumatoriaGastos);
-        $("#GastosCompanyNeto").val(parseInt($("#impuestosDeduccionesCompanyMonto").val()) - sumatoriaGastos);
+        var neto = parseInt($("#impuestosDeduccionesCompanyMonto").val()) - sumatoriaGastos;
+        $("#gastosCompanyNeto").val(neto);
 
         $("#gastosSeleccionados").val(entradasString);
     }
