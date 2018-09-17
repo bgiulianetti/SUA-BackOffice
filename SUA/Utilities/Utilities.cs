@@ -152,18 +152,18 @@ namespace SUA.Utilities
         {
             var impuestos = new List<string>
             {
-                "Impuesto Municipal",
-                "Comisión por Tarjeta​",
-                "SADAIC",
                 "AADET",
-                "Ticketing",
-                "IMM",
                 "Agadu",
-                "Argentores",
-                "Luces y Sonido",
-                "COFONTE",
                 "Alquiler Teatro",
-                "Otro"
+                "Argentores",
+                "COFONTE",
+                "Comisión por Tarjeta​",
+                "IMM",
+                "Impuesto Municipal",
+                "Luces y Sonido",
+                "Otro",
+                "SADAIC",
+                "Ticketing"
             };
             return ConverListToSelectListItem(impuestos);
         }
@@ -172,6 +172,7 @@ namespace SUA.Utilities
         {
             var entradas = new List<string>
             {
+                "Aplicacion",
                 "Entradas Teatro 1",
                 "Entradas Teatro 2",
                 "Entradas Teatro 3",
@@ -184,7 +185,6 @@ namespace SUA.Utilities
                 "Entradas Ticketera 4",
                 "Entradas Ticketera 5",
                 "Entradas Ticketera 6",
-                "Aplicacion",
                 "Invitaciones",
                 "Invitaciones 2",
                 "Otras",
@@ -198,23 +198,23 @@ namespace SUA.Utilities
         {
             var gastos = new List<string>
             {
-                "Camarin",
                 "Ads Facebook",
-                "Carteles Calle",
-                "Cartel Puerta",
-                "Sonido",
-                "Propina Sonido",
-                "Hospedaje",
-                "Combustible",
-                "Peajes",
-                "Estacionamiento",
-                "Taxis",
                 "Buque",
-                "Pasajes avión",
+                "Camarin",
+                "Cartel Puerta",
+                "Carteles Calle",
+                "Combustible",
                 "Direccion",
-                "Publicidad",
+                "Estacionamiento",
+                "Hospedaje",
+                "Otro",
+                "Pasajes avión",
+                "Peajes",
                 "Propina",
-                "Otro"
+                "Propina Sonido",
+                "Publicidad",
+                "Sonido",
+                "Taxis"
             };
             return ConverListToSelectListItem(gastos);
         }
