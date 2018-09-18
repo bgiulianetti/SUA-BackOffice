@@ -28,8 +28,9 @@
     
 
     <script>
-        $(document).ready(function () {
 
+        $(document).ready(function ()
+        {
             var array = @Html.Raw(Json.Encode(@ViewBag.fechas));
             $('#calendar').fullCalendar({
                 header: {
@@ -173,7 +174,7 @@
 
 
             //-----------------------------Datatables Salas------------------------------
-            var tableStanduperos = $('#table_salas').DataTable({
+            var tableSalas = $('#table_salas').DataTable({
                 responsive: true,
                 dom: 'l<B>ftip',
                 buttons: [
@@ -183,6 +184,11 @@
                 ],
                 'columnDefs': [{ "targets": 0, "className": "text-center" }]
             });
+
+            $('#min, #max').keyup(function () {
+                tableSalas.draw();
+            });
+
 
             var contador = 0;
             $('#table_salas tfoot th').each(function () {
@@ -486,6 +492,25 @@
     <script src="~/assets/calendar/lib/moment.min.js"></script>
     <script src="~/assets/calendar/fullcalendar.js"></script>
     <link href="https://code.jquery.com/ui/1.12.1/themes/cupertino/jquery-ui.css" rel="stylesheet">
+
+    <script>
+        /* Custom filtering function which will search data in column four between two values */
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+                var min = parseInt($('#min').val(), 10);
+                var max = parseInt($('#max').val(), 10);
+                var age = parseFloat(data[4]) || 0; // use data for the age column
+
+                if ((isNaN(min) && isNaN(max)) ||
+                    (isNaN(min) && age <= max) ||
+                    (min <= age && isNaN(max)) ||
+                    (min <= age && age <= max)) {
+                    return true;
+                }
+                return false;
+            }
+        );
+    </script>
 
 </body>
 
