@@ -28,10 +28,8 @@ namespace SUA.Controllers
             {
                 var calendarFeed = new CalendarFeed
                 {
-                    Fecha = fecha.FechaHorario.ToString("yyyy-MM-ddThh:mm"),
-                    Productor = fecha.Productor.Nombre + " " + fecha.Productor.Apellido,
-                    Sala = fecha.Sala.Nombre,
-                    Show = fecha.Show._Show
+                    title = fecha.Show._Show +  " - " + fecha.Sala.Nombre,
+                    start = fecha.FechaHorario.ToString("yyyy-MM-ddThh:mm")
                 };
                 fechasCalendar.Add(calendarFeed);
             }

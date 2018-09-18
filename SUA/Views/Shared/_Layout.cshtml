@@ -30,7 +30,7 @@
     <script>
         $(document).ready(function () {
 
-
+            var array = @Html.Raw(Json.Encode(@ViewBag.fechas));
             $('#calendar').fullCalendar({
                 header: {
                     left: 'prev,next today',
@@ -39,20 +39,7 @@
                 },
                 eventSources: [
                     {
-                        events: [
-                            {
-                                title: 'Sanata - Maipo',
-                                start: '2018-09-20'
-                            },
-                            {
-                                title: 'Nicolas De Tracy - Chacarerian',
-                                start: '2018-09-22',
-                            },
-                            {
-                                title: 'event3',
-                                start: '2010-01-09T12:30:00',
-                            }
-                        ],
+                        events: array,
                         color: 'light-blue',
                         textColor: 'white'
                     }
@@ -386,6 +373,7 @@
                     <ul class="nav">
                         <li><a href="@Url.RouteUrl("Index")" data-to="dashboard" class="active"><i class="lnr lnr-home"></i> <span>Back Office</span></a></li>
                         <li><a href="#" class=""><i class="lnr lnr-cog"></i> <span>Configurar Sitio</span></a></li>
+                        <li><a href="#" class=""><i class="lnr lnr-chart-bars"></i> <span>Estadisticas</span></a></li>
                         <li>
                             <a href="#sublogos" data-toggle="collapse" class="collapsed"> <span>Standuperos</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="sublogos" class="collapse ">
@@ -429,6 +417,7 @@
                                     <li><a href="@Url.RouteUrl("Fechas")" class="">Listar</a></li>
                                     <li><a href="@Url.RouteUrl("Fecha")" class="">Crear</a></li>
                                     <li><a href="@Url.RouteUrl("FechasCerradas")" class="">Fechas Cerradas</a></li>
+                                    <li><a href="#" class="">Reportes</a></li>
                                 </ul>
                             </div>
                         </li>

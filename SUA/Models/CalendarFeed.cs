@@ -7,9 +7,9 @@ namespace SUA.Models
 {
     public class CalendarFeed
     {
-        public string Show { get; set; }
-        public string Fecha { get; set; }
-        public string Sala { get; set; }
-        public string Productor { get; set; }
+        public string title { get; set; }
+        public string start { get; set; }
+        //public string Sala { get; set; }
+        //public string Productor { get; set; }
     }
 }
