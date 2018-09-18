@@ -416,7 +416,7 @@
 
 <script>
 
-    if('@ViewBag.accion' == "Put")
+    if ('@ViewBag.accion' == "Put")
     {
         //tomo el idFecha enviado por el action Method
         var _idFecha = '@ViewBag.idFecha';
@@ -741,7 +741,6 @@
     }
 
 
-
     $("#impuestosDeduccionesCompanyPorcentaje").bind('input', function () {
         var company = parseFloat($('#impuestosDeduccionesCompanyPorcentaje').val());
         $('#impuestosDeduccionesTeatroPorcentaje').val(100 - company);
@@ -752,17 +751,6 @@
         $("#impuestosDeduccionesCompanyMonto").val(montoCompany);
         $("#impuestosDeduccionesTeatroMonto").val(teatro);
     });
-
-    $("#impuestoPorcentaje").bind('input', function () {
-        var porcentaje = parseFloat($('#impuestoPorcentaje').val());
-        $('#impuestoMonto').val(parseInt($("#entradasBruto").val()) * porcentaje / 100);
-    });
-
-    $("#impuestoMonto").bind('input', function () {
-        var monto = parseFloat($('#impuestoMonto').val());
-        $('#impuestoPorcentaje').val(monto * 100 / parseInt($("#entradasBruto").val()));
-    });
-
 
     $("#impuestosDeduccionesTeatroMonto").bind('input', function ()
     {
