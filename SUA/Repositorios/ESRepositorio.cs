@@ -746,8 +746,7 @@ namespace SUA.Repositorios
             var response = Client.Search<Sala>(s => s
                 .Index(Index)
                 .Type(Index)
-                .Query(q => q
-                    .Match(m => m.Field(f => f.Nombre).Query(nombre)))
+                .Query(q => q.Term("nombre", nombre))
                     );
 
             if (response == null)

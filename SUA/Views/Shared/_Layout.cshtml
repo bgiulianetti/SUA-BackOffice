@@ -181,8 +181,7 @@
                     'csvHtml5',
                     { extend: 'pdf', title: "Listado de Salas", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/'), orientation: 'landscape' }
                 ],
-                'columnDefs': [{ "targets": 0, "className": "text-center" }],
-                "bSort": false
+                'columnDefs': [{ "targets": 0, "className": "text-center" }]
             });
 
             var contador = 0;
@@ -204,6 +203,7 @@
                         that.search(this.value).draw();
                 });
             });
+
             $('#table_salas_filter').hide();
 
 
@@ -218,8 +218,7 @@
                     'csvHtml5',
                     { extend: 'pdf', title: "Listado de Fechas", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/'), orientation: 'landscape' }
                 ],
-                'columnDefs': [{ "targets": 0, "className": "text-center" }],
-                "bSort": false
+                'columnDefs': [{ "targets": 0, "className": "text-center" }]
             });
 
             var contador = 0;
@@ -258,11 +257,10 @@
                     { extend: 'pdf', title: "Listado de Fechas", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/'), orientation: 'landscape' }
                 ],
                 'columnDefs': [{ "targets": 0, "className": "text-center" }],
-                "bSort": false,
 
                 ///////////////////////////////////////////
 
-                        "footerCallback": function (row, data, start, end, display) {
+                "footerCallback": function (row, data, start, end, display) {
                     var api = this.api(), data;
 
                     // Remove the formatting to get integer data for summation
@@ -292,8 +290,7 @@
 
                     var texto_sua = '$' + sua_parcial + ' ( $' + sua + ' total)';;
                     $(api.column(11).footer()).html('<label>' + texto_sua + '</label>');
-
-                }
+            }
                 ////////////////////////////////////////////
 
 

@@ -27,6 +27,7 @@ namespace SUA.Utilities
                 "La Rioja",
                 "Mendoza",
                 "Misiones",
+                "Montevideo",
                 "Neuquén",
                 "Río Negro",
                 "Salta",
@@ -51,6 +52,7 @@ namespace SUA.Utilities
                 "Ecuador",
                 "España",
                 "Perú",
+                "Uruguay",
                 "Venezuela​"
             };
             return ConverListToSelectListItem(paises);
