@@ -191,10 +191,17 @@
 
 
             var contador = 0;
-            $('#table_salas tfoot th').each(function () {
-                if (contador != 0) {
+            $('#table_salas tfoot th').each(function ()
+            {
+                if (contador != 0)
+                {
                     var title = $(this).text();
-                    $(this).html('<input type="text" placeholder="' + title + '" />');
+                    if (title == "Capacidad")
+                    {
+                        $(this).html('<div id="divCapacidad"> </div>');
+                    }
+                    else
+                        $(this).html('<input type="text" placeholder="' + title + '" />');
                 }
                 contador++;
             });
@@ -202,12 +209,21 @@
 
             // Apply the search
             var table = $('#table_salas').DataTable();
-            table.columns().every(function () {
-                var that = this;
-                $('input', this.footer()).on('keyup change', function () {
-                    if (that.search() !== this.value)
-                        that.search(this.value).draw();
-                });
+            table.columns().every(function ()
+            {
+                if (this.placeholder == "min" || this.placeholder == "max")
+                {
+                    console.log("esta escribiendo en el min y max");
+                }
+                else
+                {
+                    var that = this;
+                    $('input', this.footer()).on('keyup change', function () {
+                        if (that.search() !== this.value)
+                            that.search(this.value).draw();
+                    });
+                }
+
             });
 
             $('#table_salas_filter').hide();

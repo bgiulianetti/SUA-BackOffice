@@ -13,14 +13,6 @@
                     <div id="busqueda" style="width:200px"></div>
                 </td>
             </tr>
-            <tr>
-                <td>Minimum age:</td>
-                <td><input type="text" id="min" name="min"></td>
-            </tr>
-            <tr>
-                <td>Maximum age:</td>
-                <td><input type="text" id="max" name="max"></td>
-            </tr>
         </table>
         <hr style="color: #8dd9f7">
 
@@ -73,6 +65,8 @@
                     }
                 </tbody>
             </table>
+            <input style="width:40px" type="text" placeholder="min" id="min" name="min">
+            <input style="width:40px" type="text" placeholder="max" id="max" name="max">
 
         </div>
 
@@ -95,3 +89,7 @@
     }
 
 </div>
+<script>
+    $("#divCapacidad").append($("#min"));
+    $("#divCapacidad").append($("#max"));
+</script>
