@@ -13,10 +13,29 @@ namespace SUA.Controllers
     {
         public ActionResult Index()
         {
-            //https://fullcalendar.io/docs/events-json-feed
-            //aca paso la info
+            ViewBag.fechas = GetFechasFormateadasParaCalendarFeed();
             ViewBag.titulo = "Inicio";
             return View();
+        }
+
+
+        public List<CalendarFeed> GetFechasFormateadasParaCalendarFeed()
+        {
+            var fechasCalendar = new List<CalendarFeed>();
+            var service = new FechaService();
+            var fechas = service.GetFechas();
+            foreach (var fecha in fechas)
+            {
+                var calendarFeed = new CalendarFeed
+                {
+                    Fecha = fecha.FechaHorario.ToString("yyyy-MM-ddThh:mm"),
+                    Productor = fecha.Productor.Nombre + " " + fecha.Productor.Apellido,
+                    Sala = fecha.Sala.Nombre,
+                    Show = fecha.Show._Show
+                };
+                fechasCalendar.Add(calendarFeed);
+            }
+            return fechasCalendar;
         }
     }
 }

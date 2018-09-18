@@ -159,6 +159,7 @@
     </Compile>
     <Compile Include="Models\Boleteria.cs" />
     <Compile Include="Models\Bordereaux.cs" />
+    <Compile Include="Models\CalendarFeed.cs" />
     <Compile Include="Models\Camarin.cs" />
     <Compile Include="Models\EntradasBorderaux.cs" />
     <Compile Include="Models\Carteleria.cs" />

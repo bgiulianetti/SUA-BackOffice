@@ -32,13 +32,31 @@
 
 
             $('#calendar').fullCalendar({
-                locale: 'es',
-                themeSystem: "cosmo",
                 header: {
                     left: 'prev,next today',
                     center: 'title',
                     right: 'month,agendaWeek,agendaDay,listMonth'
-                }
+                },
+                eventSources: [
+                    {
+                        events: [
+                            {
+                                title: 'Sanata - Maipo',
+                                start: '2018-09-20'
+                            },
+                            {
+                                title: 'Nicolas De Tracy - Chacarerian',
+                                start: '2018-09-22',
+                            },
+                            {
+                                title: 'event3',
+                                start: '2010-01-09T12:30:00',
+                            }
+                        ],
+                        color: 'light-blue',
+                        textColor: 'white'
+                    }
+                ]
             });
 
 
