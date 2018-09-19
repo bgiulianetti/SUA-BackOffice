@@ -51,9 +51,16 @@
 
                                 @if(DateTime.Now.AddHours(3) >= item.FechaHorario)
                                 {
-                                    @Html.ActionImage("Bordereaux", "Fecha", new { id = item.UniqueId }, "~/assets/img/borderaux_icon.png")
+                                    if (item.Borederaux == null)
+                                    {
+                                        @Html.ActionImage("Bordereaux", "Fecha", new { id = item.UniqueId }, "~/assets/img/add_borderaux_icon.png")
+                                    }
+                                    else
+                                    {
+                                        @Html.ActionImage("Bordereaux", "Fecha", new { id = item.UniqueId }, "~/assets/img/borderaux_icon.png")
+                                    }
                                 }
-                                
+
                             </td>
                             <td>@item.Show._Show - @item.Show.Nombre</td>
                             <td>@item.Sala.Nombre</td>

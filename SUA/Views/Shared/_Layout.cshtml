@@ -394,20 +394,13 @@
                         <li><a href="#" class=""><i class="lnr lnr-cog"></i> <span>Configurar Sitio</span></a></li>
                         <li><a href="#" class=""><i class="lnr lnr-chart-bars"></i> <span>Estadisticas</span></a></li>
                         <li>
-                            <a href="#sublogos" data-toggle="collapse" class="collapsed"> <span>Standuperos</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-                            <div id="sublogos" class="collapse ">
+                            <a href="#subFechas" data-to="fechas" data-toggle="collapse" class="collapsed"> <span>Fechas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subFechas" class="collapse ">
                                 <ul class="nav">
-                                    <li><a href="@Url.RouteUrl("Standuperos")" class="">Listar</a></li>
-                                    <li><a href="@Url.RouteUrl("Standupero")" class="">Crear</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="#subShows" data-to="shows" data-toggle="collapse" class="collapsed"> <span>Shows</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-                            <div id="subShows" class="collapse ">
-                                <ul class="nav">
-                                    <li><a href="@Url.RouteUrl("Shows")" class="">Listar</a></li>
-                                    <li><a href="@Url.RouteUrl("Show")" class="">Crear</a></li>
+                                    <li><a href="@Url.RouteUrl("Fechas")" class="">Listar</a></li>
+                                    <li><a href="@Url.RouteUrl("Fecha")" class="">Crear</a></li>
+                                    <li><a href="@Url.RouteUrl("FechasCerradas")" class="">Fechas Cerradas</a></li>
+                                    <li><a href="#" class="">Reportes</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -421,22 +414,31 @@
                             </div>
                         </li>
                         <li>
+                            <a href="#subShows" data-to="shows" data-toggle="collapse" class="collapsed"> <span>Shows</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subShows" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="@Url.RouteUrl("Shows")" class="">Listar</a></li>
+                                    <li><a href="@Url.RouteUrl("Show")" class="">Crear</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li>
+                            <a href="#sublogos" data-toggle="collapse" class="collapsed"> <span>Standuperos</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="sublogos" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="@Url.RouteUrl("Standuperos")" class="">Listar</a></li>
+                                    <li><a href="@Url.RouteUrl("Standupero")" class="">Crear</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li>
                             <a href="#subProductores" data-to="productores" data-toggle="collapse" class="collapsed"> <span>Productores</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subProductores" class="collapse ">
                                 <ul class="nav">
                                     <li><a href="@Url.RouteUrl("Productores")" class="">Listar</a></li>
                                     <li><a href="@Url.RouteUrl("Productor")" class="">Crear</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="#subFechas" data-to="fechas" data-toggle="collapse" class="collapsed"> <span>Fechas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-                            <div id="subFechas" class="collapse ">
-                                <ul class="nav">
-                                    <li><a href="@Url.RouteUrl("Fechas")" class="">Listar</a></li>
-                                    <li><a href="@Url.RouteUrl("Fecha")" class="">Crear</a></li>
-                                    <li><a href="@Url.RouteUrl("FechasCerradas")" class="">Fechas Cerradas</a></li>
-                                    <li><a href="#" class="">Reportes</a></li>
                                 </ul>
                             </div>
                         </li>
