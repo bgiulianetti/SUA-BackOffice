@@ -26,13 +26,13 @@
                         <th>Show</th>
                         <th>Sala</th>
                         <th>Ciudad</th>
-                        <th>Cantidad Entradas</th>
-                        <th>Capacidad Total</th>
                         <th>Asistencia</th>
-                        <th>Bruto</th>
-                        <th>Neto Sala</th>
-                        <th>Neto Show</th>
-                        <th>Neto SUA</th>
+                        <th>&nbsp;Impuestos&nbsp;</th>
+                        <th>&nbsp;&nbsp;Gastos&nbsp;&nbsp;</th>
+                        <th>&nbsp;&nbsp;Bruto&nbsp;&nbsp;</th>
+                        <th>&nbsp;&nbsp;Neto Sala&nbsp;&nbsp;</th>
+                        <th>&nbsp;&nbsp;Neto Show&nbsp;&nbsp;</th>
+                        <th>&nbsp;&nbsp;Neto SUA&nbsp;&nbsp;</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -42,9 +42,9 @@
                         <th>Show</th>
                         <th>Sala</th>
                         <th>Ciudad</th>
-                        <th>Cantidad Entradas</th>
-                        <th>Capacidad Total</th>
                         <th>Asistencia</th>
+                        <th>Impuestos</th>
+                        <th>Gastos</th>
                         <th>Bruto</th>
                         <th>Neto Sala</th>
                         <th>Neto Show</th>
@@ -56,16 +56,14 @@
                     {
                         var porcentaje = item.Borederaux.EntradasTotal * 100 / item.Sala.Capacidad;
                         <tr>
-                            <td>
-                                @Html.ActionImage("DetalleFecha", "Fecha", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
-                            </td>
+                            <td>@Html.ActionImage("DetalleFecha", "Fecha", new { id = item.UniqueId }, "~/assets/img/delete_icon.png") </td>
                             <td>@item.FechaHorario</td>
                             <td>@item.Show._Show - @item.Show.Nombre</td>
                             <td>@item.Sala.Nombre</td>
                             <td>@item.Sala.Direccion.Ciudad</td>
-                            <td>@item.Borederaux.EntradasTotal</td>
-                            <td>@item.Sala.Capacidad</td>
-                            <td>@porcentaje %</td>
+                            <td>@porcentaje%  (@item.Borederaux.EntradasTotal/@item.Sala.Capacidad)</td>
+                            <td>$@item.Borederaux.ImpuestosDeduccionesTotalDeducir</td>
+                            <td>$@item.Borederaux.GastosCompanyTotal</td>
                             <td>$@item.Borederaux.EntradasBruto</td>
                             <td>$@item.Borederaux.ImpuestosDeduccionesTeatroMonto</td>
                             <td>$@item.Borederaux.ShowMonto</td>
