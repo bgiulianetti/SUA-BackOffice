@@ -274,50 +274,32 @@
                 responsive: true,
                 dom: 'l<B>ftip',
                 buttons: [
-                    { extend: 'excelHtml5', title: "Fechas", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/') },
+                    {
+                        extend: 'excelHtml5',
+                        title: "Fechas",
+                        messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/')
+                    },
                     'csvHtml5',
-                    { extend: 'pdf', title: "Listado de Fechas", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/'), orientation: 'landscape' }
+                    {
+                        extend: 'pdf',
+                        title: "Listado de Fechas",
+                        messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/'),
+                        orientation: 'landscape',
+                        messageBottom: 'Esto es algo que tengo que probar a ver que ondiss!! \n \n mande un salto de linea a ver si saltaaaaa'
+                    }
                 ],
                 'columnDefs': [{ "targets": 0, "className": "text-center" }],
-
-                ///////////////////////////////////////////
-
-                "footerCallback": function (row, data, start, end, display) {
-                    var api = this.api(), data;
-
-                    // Remove the formatting to get integer data for summation
-                    var intVal = function (i) { return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 :typeof i === 'number' ? i : 0;};
-
-                    // Total over all pages
-                    bruto = api.column(8).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
-                    sala = api.column(9).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
-                    show = api.column(10).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
-                    sua = api.column(11).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
-
-                    // Total de pagina
-                    bruto_parcial = api.column(8, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
-                    sala_parcial = api.column(9, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
-                    show_parcial = api.column(10, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
-                    sua_parcial = api.column(11, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
-
-                    // Update footer
-                    var texto_bruto = '$' + bruto_parcial + ' ( $' + bruto + ' total)';
-                    $(api.column(8).footer()).html('<label>' + texto_bruto + '</label>');
-
-                    var texto_sala = '$' + sala_parcial + ' ( $' + sala + ' total)';
-                    $(api.column(9).footer()).html('<label>' + texto_sala + '</label>');
-
-                    var texto_show = '$' + show_parcial + ' ( $' + show + ' total)';
-                    $(api.column(10).footer()).html('<label>' + texto_show + '</label>')
-
-                    var texto_sua = '$' + sua_parcial + ' ( $' + sua + ' total)';;
-                    $(api.column(11).footer()).html('<label>' + texto_sua + '</label>');
-            }
-                ////////////////////////////////////////////
-
+                drawCallback: function () {
+                    var api = this.api();
+                    $("#brutoTotal").val('$' + api.column(8, { page: 'current' }).data().sum());
+                    $("#netoSala").val('$' + api.column(9, { page: 'current' }).data().sum());
+                    $("#netoShow").val('$' + api.column(10, { page: 'current' }).data().sum());
+                    $("#netoSUA").val('$' + api.column(11, { page: 'current' }).data().sum());
+                }
 
             });
 
+            //Genero los footer de busqueda
             var contador = 0;
             $('#table_fechas_cerradas tfoot th').each(function () {
                 if (contador != 0)
@@ -330,13 +312,12 @@
                 }
                 contador++;
             });
-
-
             // Apply the search
             var table = $('#table_fechas_cerradas').DataTable();
             table.columns().every(function () {
                 var that = this;
-                $('input', this.footer()).on('keyup change', function () {
+                $('input', this.footer()).on('keyup change', function ()
+                {
                     if (that.search() !== this.value)
                         that.search(this.value).draw();
                 });
@@ -345,15 +326,11 @@
 
 
 
-
-
             $("#entries").append($(".dt-buttons"));
             $("#botones").append($(".dataTables_length"));
 
             $("#info").append($("#table_standuperos_info"));
             $("#table_standuperos_paginate").hide();
-            //$("#paginado").append($("#table_standuperos_paginate"));
-            //$("#paginado").attr("style", "padding: 0.5em 1em;");
 
             $("#info").append($("#table_productores_info"));
             $("#table_productores_paginate").hide();
@@ -366,6 +343,9 @@
 
             $("#info").append($("#table_fechas_info"));
             $("#table_fechas_paginate").hide();
+
+
+            $("#table_fechas_cerradas_paginate").hide();
 
 
         });
@@ -501,6 +481,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.19/api/sum().js"></script>
 
 
     <script src="~/assets/js/jquery/jquery.confirm.min.js"></script>
