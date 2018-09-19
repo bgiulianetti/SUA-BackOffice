@@ -270,6 +270,7 @@
 
 
             //-----------------------------Datatables Fecha Cerradas------------------------------
+            var bruto = $("#brutoTotal").val();
             var tableStanduperos = $('#table_fechas_cerradas').DataTable({
                 responsive: true,
                 dom: 'l<B>ftip',
@@ -285,7 +286,8 @@
                         title: "Listado de Fechas",
                         messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/'),
                         orientation: 'landscape',
-                        messageBottom: 'Esto es algo que tengo que probar a ver que ondiss!! \n \n mande un salto de linea a ver si saltaaaaa'
+                        messageBottom: 'Bruto: ' + bruto + '\n' +  
+                                       'Neto Sala: ' + $("#netoSala").val() + '\n'
                     }
                 ],
                 'columnDefs': [{ "targets": 0, "className": "text-center" }],
@@ -308,7 +310,7 @@
                     if (title == "Fecha" || title == "Show" || title == "Sala" || title == "Ciudad" || title == "Cantidad Entradas" || title == "Capacidad Total" || title == "Asistencia")
                         $(this).html('<input type="text" placeholder="' + title + '" />');
                     else
-                        $(this).html('<label style="color:green">' + title + '</label>');
+                        $(this).html('<label></label>');
                 }
                 contador++;
             });
