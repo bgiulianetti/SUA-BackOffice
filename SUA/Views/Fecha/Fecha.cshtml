@@ -71,7 +71,7 @@
                                     <select name="salasList" multiple="multiple" class="form-control" id="salasList" Style="width:300px; height:200px" required>
                                         @foreach (var item in ViewBag.salas)
                                         {
-                                            <option value="@item.UniqueId">@item.Nombre</option>
+                                            <option value="@item.UniqueId">@item.Nombre - @item.Direccion.Localidad</option>
                                         }
                                     </select>
 
