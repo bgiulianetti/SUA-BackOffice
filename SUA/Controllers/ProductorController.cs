@@ -39,6 +39,7 @@ namespace SUA.Controllers
         {
             ViewBag.titulo = "Crear Productor";
             var service = new ProductorService();
+            productor.Direccion.Provincia = productor.Direccion.Provincia.Replace("@", " ");
             try
             {
                 if (string.Equals(accion, "Post"))

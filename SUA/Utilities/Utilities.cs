@@ -38,7 +38,7 @@ namespace SUA.Utilities
                 "Tierra del Fuego",
                 "Tucumán"
             };
-            return ConverListToSelectListItem(provincias);
+            return ConverProvinciasToSelectListItem(provincias);
         }
 
         public static List<SelectListItem> GetPaises()
@@ -143,6 +143,15 @@ namespace SUA.Utilities
             var selectList = new List<SelectListItem>();
             foreach (var item in list)
                 selectList.Add(new SelectListItem { Text = item.Replace(" ", ""), Value = item });
+
+            return selectList;
+        }
+
+        public static List<SelectListItem> ConverProvinciasToSelectListItem(List<string> list)
+        {
+            var selectList = new List<SelectListItem>();
+            foreach (var item in list)
+                selectList.Add(new SelectListItem { Text = item.Replace(" ", "@"), Value = item });
 
             return selectList;
         }

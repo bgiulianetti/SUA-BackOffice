@@ -40,6 +40,8 @@ namespace SUA.Controllers
             ViewBag.titulo = "Crear Sala";
             sala.ImpuestosYGastos = GetImpuestosList(_impuestos);
 
+            sala.Direccion.Provincia = sala.Direccion.Provincia.Replace("@", " ");
+
             var service = new SalaService();
             try
             {

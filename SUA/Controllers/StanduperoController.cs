@@ -38,6 +38,7 @@ namespace SUA.Controllers
         public ActionResult Standupero(Standupero standupero, string accion)
         {
             var service = new StanduperoService();
+            standupero.Direccion.Provincia = standupero.Direccion.Provincia.Replace("@", " ");
             try
             {
                 if (string.Equals(accion, "Post"))
