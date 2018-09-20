@@ -13,7 +13,14 @@ namespace SUA.Controllers
     {
         public ActionResult Index()
         {
+            try
+            {
             ViewBag.fechas = GetFechasFormateadasParaCalendarFeed();
+            }
+            catch(Exception ex)
+            {
+                ViewBag.mensaje = ex.Message;
+            }
             ViewBag.titulo = "Inicio";
             return View();
         }
