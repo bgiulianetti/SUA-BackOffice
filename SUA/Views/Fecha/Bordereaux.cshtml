@@ -57,6 +57,57 @@
         -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
         transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     }
+    .form-control-button-entrada {
+        width: 33px;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    }
+    .form-control-button-impuesto {
+        width: 33px;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    }
+    .form-control-button-gasto {
+        width: 33px;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    }
 </style>
 
 
@@ -112,23 +163,21 @@
                             @if (ViewBag.accion == "Put")
                             {
                                 int contador = 1;
-                                <div id="EntradasAgregadas">
-                                    @foreach (var item in Model.Entradas)
-                                    {
-                                        var idEntrada = contador + "-a";
-                                        var idCantidad = contador + "-b";
-                                        var idPrecio = contador + "-c";
-                                        var idTotal = contador + "-d";
-
+                                foreach (var item in Model.Entradas)
+                                {
+                                    var idEntrada = contador + "-a";
+                                    var idCantidad = contador + "-b";
+                                    var idPrecio = contador + "-c";
+                                    var idTotal = contador + "-d";
+                                    <div id="EntradasAgregadas">
                                         <input id="@idEntrada" class="form-control-override" value="@item.Nombre" type="text" readonly style="width:200px" />
                                         <input id="@idCantidad" class="form-control-override" value="@item.Cantidad" type="text" readonly style="width:120px" />
                                         <input id="@idPrecio" class="form-control-override" value="@item.Precio" type="text" readonly style="width:120px" />
                                         <input id="@idTotal" class="form-control-override" value="@item.Total" type="text" readonly style="width:120px" />
-                                        <input id="deleteEntrada" class="form-control-button" value="-" type="button" /><br />
-
-                                        contador = contador + 1;
-                                    }
-                                </div>
+                                        <input id="deleteEntrada" class="form-control-button-entrada" value="-" type="button" /><br />
+                                    </div>
+                                    contador = contador + 1;
+                                }
                             }
                         </div>
 
@@ -183,23 +232,21 @@
                             @if (ViewBag.accion == "Put")
                             {
                                 int contador = 1;
-                                <div id="ImpuestosAgregados">
-                                    @foreach (var item in Model.ImpuestosDeduccionesTeatro)
-                                    {
-                                        var idImpuesto = contador + "-e";
-                                        var idPorcentaje = contador + "-f";
-                                        var idMonto = contador + "-g";
-                                        var idComentarios = contador + "-h";
-
+                                foreach (var item in Model.ImpuestosDeduccionesTeatro)
+                                {
+                                    var idImpuesto = contador + "-e";
+                                    var idPorcentaje = contador + "-f";
+                                    var idMonto = contador + "-g";
+                                    var idComentarios = contador + "-h";
+                                    <div id="ImpuestosAgregados">
                                         <input id="@idImpuesto" class="form-control-override" value="@item.Nombre" type="text" readonly style="width:200px" />
                                         <input id="@idPorcentaje" class="form-control-override" value="@item.Porcentaje" type="text" readonly style="width:75px" />
                                         <input id="@idMonto" class="form-control-override" value="@item.Monto" type="text" readonly style="width:75px" />
                                         <input id="@idComentarios" class="form-control-override" value="@item.Comentarios" type="text" readonly style="width:220px" />
-                                        <input id="deleteImpuesto" class="form-control-button" value="-" type="button" /><br />
-
-                                        contador = contador + 1;
-                                    }
-                                </div>
+                                        <input id="deleteImpuesto" class="form-control-button-impuesto" value="-" type="button" /><br />
+                                    </div>
+                                    contador = contador + 1;
+                                }
                             }
                         </div>
 
@@ -280,19 +327,18 @@
                             @if (ViewBag.accion == "Put")
                             {
                                 int contador = 1;
-                                <div id="GastosAgregados">
-                                    @foreach (var item in Model.GastosCompany)
-                                    {
-                                        var idGasto = contador + "-i";
-                                        var idMonto = contador + "-j";
-
+                                
+                                foreach (var item in Model.GastosCompany)
+                                {
+                                    var idGasto = contador + "-i";
+                                    var idMonto = contador + "-j";
+                                    <div id="GastosAgregados">
                                         <input id="@idGasto" class="form-control-override" value="@item.Key" type="text" readonly style="width:200px" />
                                         <input id="@idMonto" class="form-control-override" value="@item.Value" type="text" readonly style="width:120px" />
-                                        <input id="deleteGasto" class="form-control-button" value="-" type="button" /><br />
-
-                                        contador = contador + 1;
-                                    }
-                                </div>
+                                        <input id="deleteGasto" class="form-control-button-gasto" value="-" type="button" /><br />
+                                    </div>
+                                    contador = contador + 1;
+                                }
                             }
                         </div>
 
@@ -423,8 +469,7 @@
     else
     {
         //tomo el id de la querystring
-        var _idFecha = window.location.href.split('=')[1];
-        $("#idFecha").val(_idFecha);
+        $("#idFecha").val(window.location.href.split('=')[1]);
 
         $("#impuestosDeduccionesTotalDeducir").val("0");
     }
@@ -467,7 +512,7 @@
         }
     });
 
-    function RecorreEntradas()
+    function RecorreEntradas(accion)
     {
         var cantidadEntradas = 0;
         var bruto = 0;
@@ -497,17 +542,19 @@
             }
         }
 
-        //asigno los totales
-        $("#entradasTotal").val(cantidadEntradas);
-        $("#entradasBruto").val(bruto);
+        if (accion != "PUT")
+        {
+            //asigno los totales
+            $("#entradasTotal").val(cantidadEntradas);
+            $("#entradasBruto").val(bruto);
 
-        CalcularTotalADeducirAndNeto(bruto);
-
+            CalcularTotalADeducirAndNeto(bruto);
+        }
         $("#entradasSeleccionadas").val(entradasString);
 
     }
 
-    function RecorreImpuestos()
+    function RecorreImpuestos(accion)
     {
         var totalDeducir = 0;
         var contador = parseInt($("#counterImpuestos").val());
@@ -535,13 +582,16 @@
             }
         }
 
-        $("#impuestosDeduccionesTotalDeducir").val(totalDeducir);
-        $("#impuestosDeduccionesNeto").val(parseFloat($("#entradasBruto").val()) - totalDeducir);
+        if (accion != "PUT")
+        {
+            $("#impuestosDeduccionesTotalDeducir").val(totalDeducir);
+            $("#impuestosDeduccionesNeto").val(parseFloat($("#entradasBruto").val()) - totalDeducir);
+        }
 
         $("#impuestosSeleccionados").val(entradasString);
     }
 
-    function RecorreGastos()
+    function RecorreGastos(accion)
     {
         var sumatoriaGastos = 0;
         var contador = parseInt($("#counterGastos").val());
@@ -565,10 +615,11 @@
             }
         }
 
-
-        $("#GastosCompanyTotal").val(sumatoriaGastos);
-        var neto = parseFloat($("#impuestosDeduccionesCompanyMonto").val()) - sumatoriaGastos;
-        $("#gastosCompanyNeto").val(neto);
+        if (accion != "PUT") {
+            $("#GastosCompanyTotal").val(sumatoriaGastos);
+            var neto = parseFloat($("#impuestosDeduccionesCompanyMonto").val()) - sumatoriaGastos;
+            $("#gastosCompanyNeto").val(neto);
+        }
 
         $("#gastosSeleccionados").val(entradasString);
     }
@@ -621,7 +672,7 @@
         $("#entradaPrecio").val("");
         $("#entradaTotal").val("");
 
-        RecorreEntradas();
+        RecorreEntradas("POST");
     }
 
     function AgregarImpuesto()
@@ -661,7 +712,7 @@
         $("#impuestoMonto").val("");
         $("#impuestoComentarios").val("");
 
-        RecorreImpuestos();
+        RecorreImpuestos("POST");
     }
 
     function AgregarGasto()
@@ -695,45 +746,37 @@
         //borro los campos
         $("#gastoMonto").val("");
 
-        RecorreGastos();
+        RecorreGastos("POST");
     }
 
-    function ComportamientoPut() {
+    function ComportamientoPut()
+    {
          //tomo el idFecha enviado por el action Method
-        var _idFecha = '@ViewBag.idFecha';
-        $("#idFecha").val(_idFecha);
-
+        $("#idFecha").val('@ViewBag.idFecha');
 
         //Seteo check arreglo fijo
         var valor = '@ViewBag.ArregloFijo';
         if (valor == "true")
-        {
             $("#check_arregloFijo").prop("checked", true);
-        }
         else
-        {
             $("#check_arregloFijo").prop("checked", false);
-        }
 
         //agrego evento de click a boton 'eliminar entrada' agregado de forma dinamica en el Put
-        $("#deleteEntrada").click(function () {
+        $(".form-control-button-entrada").click(function ()
+        {
             $(this).parent().remove();
-
             RecorreEntradas();
-
             //Obtengo el contador y lo decremento
             var contador = parseInt($("#counterEntradas").val());
             contador = contador - 1;
             $("#counterEntradas").val(contador);
         });
 
-
         //agrego evento de click a boton 'eliminar impuesto' agregado de forma dinamica en el Put
-        $("#deleteImpuesto").click(function () {
+        $(".form-control-button-impuesto").click(function ()
+        {
             $(this).parent().remove();
-
             RecorreImpuestos();
-
             //Obtengo el contador y lo decremento
             var contador = parseInt($("#counterImpuestos").val());
             contador = contador - 1;
@@ -741,24 +784,23 @@
         });
 
         //agrego evento de click a boton 'eliminar gasto' agregado de forma dinamica en el Put
-        $("#deleteGasto").click(function () {
+        $(".form-control-button-gasto").click(function ()
+        {
             $(this).parent().remove();
-
             RecorreGastos();
-
             //Obtengo el contador y lo decremento
             var contador = parseInt($("#counterGastos").val());
             contador = contador - 1;
             $("#counterGastos").val(contador);
         });
 
-
-        RecorreEntradas();
-        RecorreImpuestos();
-        RecorreGastos();
+        RecorreEntradas("PUT");
+        RecorreImpuestos("PUT");
+        RecorreGastos("PUT");
     }
 
-    $("#entradaPrecio").keydown(function (event) {
+    $("#entradaPrecio").keydown(function (event)
+    {
         var keyCode = event.keyCode || event.which;
 
         if (keyCode == 9)
@@ -775,7 +817,8 @@
         }
     });
 
-    $("#impuestosDeduccionesCompanyPorcentaje").bind('input', function () {
+    $("#impuestosDeduccionesCompanyPorcentaje").bind('input', function ()
+    {
         var company = parseFloat($('#impuestosDeduccionesCompanyPorcentaje').val());
         $('#impuestosDeduccionesTeatroPorcentaje').val(100 - company);
 
@@ -793,15 +836,13 @@
         var porcentajeTeatro = montoTeatro * 100 / neto;
         var porcentajeTeatro = porcentajeTeatro.toFixed(2);
         $('#impuestosDeduccionesTeatroPorcentaje').val(porcentajeTeatro);
-
-
-        //$("#impuestosDeduccionesCompanyPorcentaje").val(100 - porcentajeTeatro);
         $("#impuestosDeduccionesCompanyMonto").val(neto - montoTeatro);
 
 
     });
 
-    $("#suaPorcentaje").bind('input', function () {
+    $("#suaPorcentaje").bind('input', function ()
+    {
         var company = parseFloat($('#suaPorcentaje').val());
         $('#showPorcentaje').val(100 - company);
 

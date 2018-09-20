@@ -4,6 +4,7 @@ using SUA.Servicios;
 using SUA.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -256,8 +257,8 @@ namespace SUA.Controllers
                 impuestos.Add(new ImpuestosDeduccionesTeatroBorderaux
                 {
                     Nombre = impuestoString[0],
-                    Porcentaje = double.Parse(impuestoString[1]),
-                    Monto = double.Parse(impuestoString[2]),
+                    Porcentaje = double.Parse(impuestoString[1], CultureInfo.InvariantCulture),
+                    Monto = double.Parse(impuestoString[2], CultureInfo.InvariantCulture),
                     Comentarios = impuestoString[3]
                 });
             }
