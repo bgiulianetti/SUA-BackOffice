@@ -423,13 +423,10 @@
                         <hr style="color: #8dd9f7">
 
                         <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
-
-
                         <input name="_entradas" id="entradasSeleccionadas" class="hidden" data-form="error-box" />
                         <input name="_impuestos" id="impuestosSeleccionados" class="hidden" data-form="error-box" />
                         <input name="_gastos" id="gastosSeleccionados" class="hidden" data-form="error-box" />
                         <input name="_arregloFijo" id="_arregloFijo" value="no" class="hidden" data-form="error-box" />
-
                         <input name="id" id="idFecha" class="hidden" data-form="error-box" />
 
 
@@ -470,10 +467,8 @@
     {
         //tomo el id de la querystring
         $("#idFecha").val(window.location.href.split('=')[1]);
-
         $("#impuestosDeduccionesTotalDeducir").val("0");
     }
-
 
     $("#addEntrada").click(function ()
     {
@@ -576,7 +571,6 @@
                 {
                     entradasString = entradasString + "*" + $(idImpuesto).val() + "-" + $(idPorcentaje).val() + "-" + $(idMonto).val() + "-" + $(idComentarios).val();
                 }
-
                 //Hago las sumatorias
                 totalDeducir = totalDeducir + parseFloat($(idMonto).val());
             }
@@ -584,7 +578,7 @@
 
         if (accion != "PUT")
         {
-            $("#impuestosDeduccionesTotalDeducir").val(totalDeducir);
+            $("#impuestosDeduccionesTotalDeducir").val(totalDeducir.toString().replace(",", "."));
             $("#impuestosDeduccionesNeto").val(parseFloat($("#entradasBruto").val()) - totalDeducir);
         }
 
@@ -624,8 +618,9 @@
         $("#gastosSeleccionados").val(entradasString);
     }
 
-    function CalcularTotalADeducirAndNeto(bruto)
+    function CalcularTotalADeducirAndNeto()
     {
+        var bruto = $("#entradasBruto").val();
         $("#impuestosDeduccionesBruto").val(bruto);
         $("#impuestosDeduccionesNeto").val(bruto - parseFloat($("#impuestosDeduccionesTotalDeducir").val()));
     }
@@ -647,17 +642,7 @@
         var precio = jQuery('<input id="' + contador + '-c" class="form-control-override"  value="' + $("#entradaPrecio").val() + '" type="text" readonly style="width:120px" />');
         var total = jQuery('<input id="' + contador + '-d" class="form-control-override"  value="' + $("#entradaTotal").val() + '" type="text" readonly style="width:120px" />');
         var eliminar = jQuery('<input class="form-control-button" value="-" type="button" /><br />');
-        eliminar.click(function () {
-            $(this).parent().remove();
-
-            RecorreEntradas();
-
-            //Obtengo el contador y lo decremento
-            var contador = parseInt($("#counterEntradas").val());
-            contador = contador - 1;
-            $("#counterEntradas").val(contador);
-
-        });
+        eliminar.click(BorrarEntrada);
 
         divContenedor.append(entrada);
         divContenedor.append(cantidad);
@@ -688,16 +673,7 @@
         var monto = jQuery('<input id="' + contador + '-g" class="form-control-override"  value="' + $("#impuestoMonto").val() + '" type="text" readonly style="width:75px" />');
         var comentarios = jQuery('<input id="' + contador + '-h" class="form-control-override"  value="' + $("#impuestoComentarios").val() + '" type="text" readonly style="width:220px" />');
         var eliminar = jQuery('<input class="form-control-button" value="-" type="button" /><br />');
-        eliminar.click(function () {
-            $(this).parent().remove();
-
-            RecorreImpuestos();
-
-            //Obtengo el contador y lo decremento
-            var contador = parseInt($("#counterImpuestos").val());
-            contador = contador - 1;
-            $("#counterImpuestos").val(contador);
-        });
+        eliminar.click(BorrarImpuesto);
 
         divContenedor.append(impuesto);
         divContenedor.append(porcentaje);
@@ -726,16 +702,7 @@
         var gasto = jQuery('<input id="' + contador + '-i" class="form-control-override"  value="' + $("#gastosList option:selected").text() + '" type="text" readonly style="width:200px" />');
         var monto = jQuery('<input id="' + contador + '-j" class="form-control-override"  value="' + $("#gastoMonto").val() + '" type="text" readonly style="width:120px" />');
         var eliminar = jQuery('<input class="form-control-button" value="-" type="button" /><br />');
-        eliminar.click(function () {
-            $(this).parent().remove();
-
-            RecorreGastos();
-
-            //Obtengo el contador y lo decremento
-            var contador = parseInt($("#counterGastos").val());
-            contador = contador - 1;
-            $("#counterGastos").val(contador);
-        });
+        eliminar.click(BorrarGasto);
 
         divContenedor.append(gasto);
         divContenedor.append(monto);
@@ -749,54 +716,22 @@
         RecorreGastos("POST");
     }
 
-    function ComportamientoPut()
+    function BorrarEntrada()
     {
-         //tomo el idFecha enviado por el action Method
-        $("#idFecha").val('@ViewBag.idFecha');
+        $(this).parent().remove();
+        RecorreEntradas();
+    }
 
-        //Seteo check arreglo fijo
-        var valor = '@ViewBag.ArregloFijo';
-        if (valor == "true")
-            $("#check_arregloFijo").prop("checked", true);
-        else
-            $("#check_arregloFijo").prop("checked", false);
+    function BorrarImpuesto()
+    {
+        $(this).parent().remove();
+        RecorreImpuestos();
+    }
 
-        //agrego evento de click a boton 'eliminar entrada' agregado de forma dinamica en el Put
-        $(".form-control-button-entrada").click(function ()
-        {
-            $(this).parent().remove();
-            RecorreEntradas();
-            //Obtengo el contador y lo decremento
-            var contador = parseInt($("#counterEntradas").val());
-            contador = contador - 1;
-            $("#counterEntradas").val(contador);
-        });
-
-        //agrego evento de click a boton 'eliminar impuesto' agregado de forma dinamica en el Put
-        $(".form-control-button-impuesto").click(function ()
-        {
-            $(this).parent().remove();
-            RecorreImpuestos();
-            //Obtengo el contador y lo decremento
-            var contador = parseInt($("#counterImpuestos").val());
-            contador = contador - 1;
-            $("#counterImpuestos").val(contador);
-        });
-
-        //agrego evento de click a boton 'eliminar gasto' agregado de forma dinamica en el Put
-        $(".form-control-button-gasto").click(function ()
-        {
-            $(this).parent().remove();
-            RecorreGastos();
-            //Obtengo el contador y lo decremento
-            var contador = parseInt($("#counterGastos").val());
-            contador = contador - 1;
-            $("#counterGastos").val(contador);
-        });
-
-        RecorreEntradas("PUT");
-        RecorreImpuestos("PUT");
-        RecorreGastos("PUT");
+    function BorrarGasto()
+    {
+        $(this).parent().remove();
+        RecorreGastos();
     }
 
     $("#entradaPrecio").keydown(function (event)
@@ -869,5 +804,31 @@
             $("#_arregloFijo").val("no");
         }
     });
+
+    function ComportamientoPut()
+    {
+         //tomo el idFecha enviado por el action Method
+        $("#idFecha").val('@ViewBag.idFecha');
+
+        //Seteo check arreglo fijo
+        var valor = '@ViewBag.ArregloFijo';
+        if (valor == "true")
+            $("#check_arregloFijo").prop("checked", true);
+        else
+            $("#check_arregloFijo").prop("checked", false);
+
+        //agrego evento de click a boton 'eliminar entrada' agregado de forma dinamica en el Put
+        $(".form-control-button-entrada").click(BorrarEntrada);
+
+        //agrego evento de click a boton 'eliminar impuesto' agregado de forma dinamica en el Put
+        $(".form-control-button-impuesto").click(BorrarImpuesto);
+
+        //agrego evento de click a boton 'eliminar gasto' agregado de forma dinamica en el Put
+        $(".form-control-button-gasto").click(BorrarGasto);
+
+        RecorreEntradas("PUT");
+        RecorreImpuestos("PUT");
+        RecorreGastos("PUT");
+    }
 
 </script>
