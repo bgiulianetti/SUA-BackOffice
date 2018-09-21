@@ -15,7 +15,7 @@ namespace SUA.Controllers
         {
             try
             {
-                ViewBag.fechas = GetFechasFormateadasParaCalendarFeed();
+                //ViewBag.fechas = GetFechasFormateadasParaCalendarFeed();
             }
             catch(Exception ex)
             {

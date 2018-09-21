@@ -164,9 +164,27 @@ namespace SUA.Controllers
         }
 
         [HttpPost]
-        public ActionResult Bordereaux(Bordereaux bordereaux, string accion, string _entradas, string _impuestos, string _gastos, string id, string _arregloFijo)
+        public ActionResult Bordereaux(Bordereaux bordereaux, string accion, string _entradas, string _impuestos, string _gastos, string id, string _arregloFijo, 
+                                       string ImpuestosDeduccionesBruto, string ImpuestosDeduccionesTotalDeducir, string ImpuestosDeduccionesNeto, string ImpuestosDeduccionesCompanyPorcentaje, 
+                                       string ImpuestosDeduccionesCompanyMonto, string ImpuestosDeduccionesTeatroPorcentaje, string ImpuestosDeduccionesTeatroMonto, string GastosCompanyTotal,
+                                       string GastosCompanyNeto, string SUAPorcentaje, string SUAMonto, string ShowPorcentaje, string ShowMonto)
         {
             ViewBag.titulo = "Bordereaux";
+
+            bordereaux.ImpuestosDeduccionesBruto = float.Parse(ImpuestosDeduccionesBruto, CultureInfo.InvariantCulture);
+            bordereaux.ImpuestosDeduccionesTotalDeducir = float.Parse(ImpuestosDeduccionesTotalDeducir, CultureInfo.InvariantCulture);
+            bordereaux.ImpuestosDeduccionesNeto = float.Parse(ImpuestosDeduccionesNeto, CultureInfo.InvariantCulture);
+            bordereaux.ImpuestosDeduccionesCompanyPorcentaje = float.Parse(ImpuestosDeduccionesCompanyPorcentaje, CultureInfo.InvariantCulture);
+            bordereaux.ImpuestosDeduccionesCompanyMonto = float.Parse(ImpuestosDeduccionesCompanyMonto, CultureInfo.InvariantCulture);
+            bordereaux.ImpuestosDeduccionesTeatroPorcentaje = float.Parse(ImpuestosDeduccionesTeatroPorcentaje, CultureInfo.InvariantCulture);
+            bordereaux.ImpuestosDeduccionesTeatroMonto = float.Parse(ImpuestosDeduccionesTeatroMonto, CultureInfo.InvariantCulture);
+            bordereaux.GastosCompanyTotal = float.Parse(GastosCompanyTotal, CultureInfo.InvariantCulture);
+            bordereaux.GastosCompanyNeto = float.Parse(GastosCompanyNeto, CultureInfo.InvariantCulture);
+            bordereaux.SUAPorcentaje = float.Parse(SUAPorcentaje, CultureInfo.InvariantCulture);
+            bordereaux.SUAMonto = float.Parse(SUAMonto, CultureInfo.InvariantCulture);
+            bordereaux.ShowPorcentaje = float.Parse(ShowPorcentaje, CultureInfo.InvariantCulture);
+            bordereaux.ShowMonto = float.Parse(ShowMonto, CultureInfo.InvariantCulture);
+
             bordereaux.Entradas = GetEntradas(_entradas);
             bordereaux.ImpuestosDeduccionesTeatro = GetImpuestos(_impuestos);
             bordereaux.GastosCompany = GetGastos(_gastos);
@@ -210,6 +228,11 @@ namespace SUA.Controllers
                 ViewBag.menasje = ex.Message;
             }
             
+            return View();
+        }
+
+        public ActionResult Test()
+        {
             return View();
         }
 
@@ -275,7 +298,16 @@ namespace SUA.Controllers
             foreach (var item in gastosList)
             {
                 var gasto = item.Split('-');
-                gastos.Add(gasto[0], double.Parse(gasto[1]));
+                double valor = 0;
+                gastos.TryGetValue(gasto[0], out valor);
+                if (valor != 0)
+                {
+                    gastos[gasto[0]] = valor + double.Parse(gasto[1]);
+                }
+                else
+                {
+                    gastos.Add(gasto[0], double.Parse(gasto[1]));
+                }
             }
             return gastos;
         }
