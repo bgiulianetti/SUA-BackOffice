@@ -92,26 +92,29 @@ namespace SUA.Controllers
 
         [HttpGet]
         public string GetUltimaFechaByShow(string id)
-        {
+        {/*
             var service = new FechaService();
             var fecha = service.GetUltimaFechaByShowId(id);
-            return JsonConvert.SerializeObject(fecha);
+            return JsonConvert.SerializeObject(fecha);*/
+            return "";
         }
 
         [HttpGet]
         public string GetUltimaFechaBySala(string idSala)
-        {
+        {/*
             var service = new FechaService();
             var fecha = service.GetUltimaFechaBySalaId(idSala);
-            return JsonConvert.SerializeObject(fecha);
+            return JsonConvert.SerializeObject(fecha);*/
+            return "";
         }
 
         [HttpGet]
         public string GetUltimaFechaByShowAndSala(string idShow, string idSala)
-        {
+        {/*
             var service = new FechaService();
             var fecha = service.GetUltimaFechaBySalaAndShow(idSala, idShow);
-            return JsonConvert.SerializeObject(fecha);
+            return JsonConvert.SerializeObject(fecha);*/
+            return "";
         }
 
         [HttpGet]
@@ -260,8 +263,8 @@ namespace SUA.Controllers
                 entradas.Add(new EntradasBorderaux {
                     Nombre = entradaString[0],
                     Cantidad = Int32.Parse(entradaString[1]),
-                    Precio = double.Parse(entradaString[2]),
-                    Total = double.Parse(entradaString[3])
+                    Precio = float.Parse(entradaString[2], CultureInfo.InvariantCulture),
+                    Total = float.Parse(entradaString[3], CultureInfo.InvariantCulture)
                 });
             }
             return entradas;
@@ -280,17 +283,17 @@ namespace SUA.Controllers
                 impuestos.Add(new ImpuestosDeduccionesTeatroBorderaux
                 {
                     Nombre = impuestoString[0],
-                    Porcentaje = double.Parse(impuestoString[1], CultureInfo.InvariantCulture),
-                    Monto = double.Parse(impuestoString[2], CultureInfo.InvariantCulture),
+                    Porcentaje = float.Parse(impuestoString[1], CultureInfo.InvariantCulture),
+                    Monto = float.Parse(impuestoString[2], CultureInfo.InvariantCulture),
                     Comentarios = impuestoString[3]
                 });
             }
             return impuestos;
         }
 
-        public Dictionary<string, double> GetGastos(string _gastos)
+        public List<GastosBordereaux> GetGastos(string _gastos)
         {
-            var gastos = new Dictionary<string, double>();
+            var gastos = new List<GastosBordereaux>();
             if (string.IsNullOrEmpty(_gastos))
                 return gastos;
 
@@ -298,16 +301,7 @@ namespace SUA.Controllers
             foreach (var item in gastosList)
             {
                 var gasto = item.Split('-');
-                double valor = 0;
-                gastos.TryGetValue(gasto[0], out valor);
-                if (valor != 0)
-                {
-                    gastos[gasto[0]] = valor + double.Parse(gasto[1]);
-                }
-                else
-                {
-                    gastos.Add(gasto[0], double.Parse(gasto[1]));
-                }
+                gastos.Add(new GastosBordereaux {Gasto = gasto[0], Monto = float.Parse(gasto[1], CultureInfo.InvariantCulture), Detalle = gasto[0] });
             }
             return gastos;
         }

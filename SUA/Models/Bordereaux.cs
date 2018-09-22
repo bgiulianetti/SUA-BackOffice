@@ -22,7 +22,7 @@ namespace SUA.Models
         public float ImpuestosDeduccionesTeatroMonto { get; set; }
 
         public bool ArregloFijo { get; set; }
-        public Dictionary<string, double> GastosCompany { get; set; }
+        public List<GastosBordereaux> GastosCompany { get; set; }
         public float GastosCompanyTotal { get; set; }
         public float GastosCompanyNeto { get; set; }
 

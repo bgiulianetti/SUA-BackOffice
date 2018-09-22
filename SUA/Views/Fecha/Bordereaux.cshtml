@@ -317,6 +317,10 @@
                                     <input id="gastoMonto" class="form-control" type="number" min="0" style="width:120px" />
                                 </td>
                                 <td>
+                                    <label>Detalle </label>
+                                    <input id="gastoDetalle" class="form-control" style="width:120px" />
+                                </td>
+                                <td>
                                     <label>&nbsp;</label>
                                     <input id="addGasto" class="form-control" value="+" type="button" />
                                 </td>
@@ -327,14 +331,16 @@
                             @if (ViewBag.accion == "Put")
                             {
                                 int contador = 1;
-                                
+
                                 foreach (var item in Model.GastosCompany)
                                 {
                                     var idGasto = contador + "-i";
                                     var idMonto = contador + "-j";
+                                    var idDetalle = contador + "-k";
                                     <div id="GastosAgregados">
-                                        <input id="@idGasto" class="form-control-override" value="@item.Key" type="text" readonly style="width:200px" />
-                                        <input id="@idMonto" class="form-control-override" value="@item.Value.ToString().Replace(",",".")" type="text" readonly style="width:120px" />
+                                        <input id="@idGasto" class="form-control-override" value="@item.Gasto" type="text" readonly style="width:200px" />
+                                        <input id="@idMonto" class="form-control-override" value="@item.Monto.ToString().Replace(",",".")" type="text" readonly style="width:120px" />
+                                        <input id="@idDetalle" class="form-control-override" value="@item.Detalle" type="text" readonly style="width:120px" />
                                         <input id="deleteGasto" class="form-control-button-gasto" value="-" type="button" /><br />
                                     </div>
                                     contador = contador + 1;
@@ -597,16 +603,17 @@
         {
             var idGasto = "#" + i + "-i";
             var idMonto = "#" + i + "-j";
+            var idDetalle = "#" + i + "-k";
 
             if ($(idGasto).val() != undefined)
             {
                 if (entradasString == "")
                 {
-                    entradasString = $(idGasto).val() + "-" + $(idMonto).val();
+                    entradasString = $(idGasto).val() + "-" + $(idMonto).val() + "-" + $(idDetalle).val();
                 }
                 else
                 {
-                    entradasString = entradasString + "*" + $(idGasto).val() + "-" + $(idMonto).val();
+                    entradasString = entradasString + "*" + $(idGasto).val() + "-" + $(idMonto).val() + "-" + $(idDetalle).val();
                 }
                 sumatoriaGastos = sumatoriaGastos + parseFloat($(idMonto).val());
             }
@@ -705,17 +712,20 @@
         var divContenedor = jQuery('<div id="GastosAgregados"></div>');
         var gasto = jQuery('<input id="' + contador + '-i" class="form-control-override"  value="' + $("#gastosList option:selected").text() + '" type="text" readonly style="width:200px" />');
         var monto = jQuery('<input id="' + contador + '-j" class="form-control-override"  value="' + $("#gastoMonto").val() + '" type="text" readonly style="width:120px" />');
+        var detalle = jQuery('<input id="' + contador + '-k" class="form-control-override"  value="' + $("#gastoDetalle").val() + '" type="text" readonly style="width:120px" />');
         var eliminar = jQuery('<input class="form-control-button" value="-" type="button" /><br />');
         eliminar.click(BorrarGasto);
 
         divContenedor.append(gasto);
         divContenedor.append(monto);
+        divContenedor.append(detalle);
         divContenedor.append(eliminar);
         $('#gastosDiv').append(divContenedor);
 
 
         //borro los campos
         $("#gastoMonto").val("");
+        $("#gastoDetalle").val("");
 
         RecorreGastos("POST");
     }

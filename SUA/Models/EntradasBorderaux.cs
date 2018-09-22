@@ -9,8 +9,8 @@ namespace SUA.Models
     {
         public string Nombre { get; set; }
         public int Cantidad { get; set; }
-        public double Precio { get; set; }
-        public double Total
+        public float Precio { get; set; }
+        public float Total
         {
             get; set;
             /*get { return Cantidad * Precio; }
