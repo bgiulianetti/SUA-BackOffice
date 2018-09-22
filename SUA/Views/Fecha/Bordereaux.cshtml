@@ -240,8 +240,8 @@
                                     var idComentarios = contador + "-h";
                                     <div id="ImpuestosAgregados">
                                         <input id="@idImpuesto" class="form-control-override" value="@item.Nombre" type="text" readonly style="width:200px" />
-                                        <input id="@idPorcentaje" class="form-control-override" value="@item.Porcentaje" type="text" readonly style="width:75px" />
-                                        <input id="@idMonto" class="form-control-override" value="@item.Monto" type="text" readonly style="width:75px" />
+                                        <input id="@idPorcentaje" class="form-control-override" value='@item.Porcentaje.ToString().Replace(",",".")' type="text" readonly style="width:75px" />
+                                        <input id="@idMonto" class="form-control-override" value='@item.Monto.ToString().Replace(",",".")' type="text" readonly style="width:75px" />
                                         <input id="@idComentarios" class="form-control-override" value="@item.Comentarios" type="text" readonly style="width:220px" />
                                         <input id="deleteImpuesto" class="form-control-button-impuesto" value="-" type="button" /><br />
                                     </div>
@@ -334,7 +334,7 @@
                                     var idMonto = contador + "-j";
                                     <div id="GastosAgregados">
                                         <input id="@idGasto" class="form-control-override" value="@item.Key" type="text" readonly style="width:200px" />
-                                        <input id="@idMonto" class="form-control-override" value="@item.Value" type="text" readonly style="width:120px" />
+                                        <input id="@idMonto" class="form-control-override" value="@item.Value.ToString().Replace(",",".")" type="text" readonly style="width:120px" />
                                         <input id="deleteGasto" class="form-control-button-gasto" value="-" type="button" /><br />
                                     </div>
                                     contador = contador + 1;
@@ -612,10 +612,11 @@
             }
         }
 
-        if (accion != "PUT") {
+        if (accion != "PUT")
+        {
             $("#GastosCompanyTotal").val(sumatoriaGastos);
             var neto = parseFloat($("#impuestosDeduccionesCompanyMonto").val()) - sumatoriaGastos;
-            $("#gastosCompanyNeto").val(neto);
+            $("#gastosCompanyNeto").val(neto.toFixed(2));
         }
 
         $("#gastosSeleccionados").val(entradasString);
@@ -828,6 +829,23 @@
 
         //agrego evento de click a boton 'eliminar gasto' agregado de forma dinamica en el Put
         $(".form-control-button-gasto").click(BorrarGasto);
+
+
+
+        //reemplazo las comas por los puntos
+        $("#impuestosDeduccionesTotalDeducir").val($("#impuestosDeduccionesTotalDeducir").val().replace(",", "."));
+        $("#impuestosDeduccionesNeto").val($("#impuestosDeduccionesNeto").val().replace(",", "."));
+        $("#impuestosDeduccionesCompanyPorcentaje").val($("#impuestosDeduccionesCompanyPorcentaje").val().replace(",", "."));
+        $("#impuestosDeduccionesCompanyMonto").val($("#impuestosDeduccionesCompanyMonto").val().replace(",", "."));
+        $("#impuestosDeduccionesTeatroPorcentaje").val($("#impuestosDeduccionesTeatroPorcentaje").val().replace(",", "."));
+        $("#impuestosDeduccionesTeatroMonto").val($("#impuestosDeduccionesTeatroMonto").val().replace(",", "."));
+        $("#GastosCompanyTotal").val($("#GastosCompanyTotal").val().replace(",", "."));
+        $("#gastosCompanyNeto").val($("#gastosCompanyNeto").val().replace(",", "."));
+        $("#suaPorcentaje").val($("#suaPorcentaje").val().replace(",", "."));
+        $("#suaMonto").val($("#suaMonto").val().replace(",", "."));
+        $("#showPorcentaje").val($("#showPorcentaje").val().replace(",", "."));
+        $("#showMonto").val($("#showMonto").val().replace(",", "."));
+
 
         RecorreEntradas("PUT");
         RecorreImpuestos("PUT");
