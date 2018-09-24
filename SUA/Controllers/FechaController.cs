@@ -301,7 +301,7 @@ namespace SUA.Controllers
             foreach (var item in gastosList)
             {
                 var gasto = item.Split('-');
-                gastos.Add(new GastosBordereaux {Gasto = gasto[0], Monto = float.Parse(gasto[1], CultureInfo.InvariantCulture), Detalle = gasto[0] });
+                gastos.Add(new GastosBordereaux {Gasto = gasto[0], Monto = float.Parse(gasto[1], CultureInfo.InvariantCulture), Detalle = gasto[2] });
             }
             return gastos;
         }

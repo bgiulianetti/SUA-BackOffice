@@ -621,7 +621,7 @@
 
         if (accion != "PUT")
         {
-            $("#GastosCompanyTotal").val(sumatoriaGastos);
+            $("#GastosCompanyTotal").val(sumatoriaGastos.toFixed(2));
             var neto = parseFloat($("#impuestosDeduccionesCompanyMonto").val()) - sumatoriaGastos;
             $("#gastosCompanyNeto").val(neto.toFixed(2));
         }
