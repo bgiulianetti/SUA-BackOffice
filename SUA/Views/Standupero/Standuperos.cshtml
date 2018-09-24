@@ -79,3 +79,52 @@
 
 </div>
 
+<script>
+
+    $(document).ready(function () {
+
+        var tableStanduperos = $('#table_standuperos').DataTable({
+            responsive: true,
+            dom: 'l<B>ftip',
+            buttons: [
+                { extend: 'excelHtml5', title: "Standuperos", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/') },
+                'csvHtml5',
+                { extend: 'pdf', title: "Listado de Standuperos", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/') }
+            ],
+            'columnDefs': [{ "targets": 0, "className": "text-center" }]
+        });
+
+        var contador = 0;
+        $('#table_standuperos tfoot th').each(function () {
+            if (contador != 0) {
+                var title = $(this).text();
+                $(this).html('<input type="text" placeholder="' + title + '" />');
+            }
+            contador++;
+        });
+
+
+        // Apply the search
+        var table = $('#table_standuperos').DataTable();
+        table.columns().every(function () {
+            var that = this;
+            $('input', this.footer()).on('keyup change', function () {
+                if (that.search() !== this.value)
+                    that.search(this.value).draw();
+            });
+        });
+        $('#table_standuperos_filter').hide();
+
+
+        $("#entries").append($(".dt-buttons"));
+        $("#botones").append($(".dataTables_length"));
+
+        $("#info").append($("#table_standuperos_info"));
+        $("#table_standuperos_paginate").hide();
+
+    });
+
+
+
+</script>
+

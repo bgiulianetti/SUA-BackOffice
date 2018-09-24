@@ -16,5 +16,23 @@
 
 </div>
 <script>
+    $(document).ready(function ()
+    {
+        var array = @Html.Raw(Json.Encode(@ViewBag.fechas));
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay,listMonth'
+            },
+            eventSources: [
+                {
+                    events: array,
+                    color: 'light-blue',
+                    textColor: 'white'
+                }
+            ]
+        });
 
+    });
 </script>

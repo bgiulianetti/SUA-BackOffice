@@ -77,3 +77,53 @@
     }
 
 </div>
+
+<script>
+
+
+    $(document).ready(function () {
+        var tableStanduperos = $('#table_productores').DataTable({
+            responsive: true,
+            dom: 'l<B>ftip',
+            buttons: [
+                { extend: 'excelHtml5', title: "Productores", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/') },
+                'csvHtml5',
+                { extend: 'pdf', title: "Listado de Productores", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/') }
+            ],
+            'columnDefs': [{ "targets": 0, "className": "text-center" }]
+        });
+
+        var contador = 0;
+        $('#table_productores tfoot th').each(function () {
+            if (contador != 0) {
+                var title = $(this).text();
+                $(this).html('<input type="text" placeholder="' + title + '" />');
+            }
+            contador++;
+        });
+
+
+        // Apply the search
+        var table = $('#table_productores').DataTable();
+        table.columns().every(function () {
+            var that = this;
+            $('input', this.footer()).on('keyup change', function () {
+                if (that.search() !== this.value)
+                    that.search(this.value).draw();
+            });
+        });
+        $('#table_productores_filter').hide();
+
+        $("#entries").append($(".dt-buttons"));
+        $("#botones").append($(".dataTables_length"));
+
+        $("#info").append($("#table_productores_info"));
+        $("#table_productores_paginate").hide();
+
+
+    });
+
+
+
+
+</script>

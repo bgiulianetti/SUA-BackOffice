@@ -49,7 +49,7 @@
                                 @Html.ActionImage("DeleteFecha", "Fecha", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
                                 @Html.ActionImage("Fecha", "Fecha", new { id = item.UniqueId }, "~/assets/img/edit_icon.png")
 
-                                @if(DateTime.Now.AddHours(3) >= item.FechaHorario)
+                                @if (DateTime.Now.AddHours(3) >= item.FechaHorario)
                                 {
                                     if (item.Borederaux == null)
                                     {
@@ -92,3 +92,48 @@
     }
 
 </div>
+
+<script>
+
+    $(document).ready(function () {
+        var tableStanduperos = $('#table_fechas').DataTable({
+            responsive: true,
+            dom: 'l<B>ftip',
+            buttons: [
+                { extend: 'excelHtml5', title: "Fechas", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/') },
+                'csvHtml5',
+                { extend: 'pdf', title: "Listado de Fechas", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/'), orientation: 'landscape' }
+            ],
+            'columnDefs': [{ "targets": 0, "className": "text-center" }]
+        });
+
+        var contador = 0;
+        $('#table_fechas tfoot th').each(function () {
+            if (contador != 0) {
+                var title = $(this).text();
+                $(this).html('<input type="text" placeholder="' + title + '" />');
+            }
+            contador++;
+        });
+
+
+        // Apply the search
+        var table = $('#table_fechas').DataTable();
+        table.columns().every(function () {
+            var that = this;
+            $('input', this.footer()).on('keyup change', function () {
+                if (that.search() !== this.value)
+                    that.search(this.value).draw();
+            });
+        });
+        $('#table_fechas_filter').hide();
+
+        $("#entries").append($(".dt-buttons"));
+        $("#botones").append($(".dataTables_length"));
+
+        $("#info").append($("#table_fechas_info"));
+        $("#table_fechas_paginate").hide();
+    });
+
+
+</script>

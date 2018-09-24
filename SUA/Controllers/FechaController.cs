@@ -92,34 +92,31 @@ namespace SUA.Controllers
 
         [HttpGet]
         public string GetUltimaFechaByShow(string id)
-        {/*
+        {
             var service = new FechaService();
             var fecha = service.GetUltimaFechaByShowId(id);
-            return JsonConvert.SerializeObject(fecha);*/
-            return "";
+            return JsonConvert.SerializeObject(fecha);
         }
 
         [HttpGet]
         public string GetUltimaFechaBySala(string idSala)
-        {/*
+        {
             var service = new FechaService();
             var fecha = service.GetUltimaFechaBySalaId(idSala);
-            return JsonConvert.SerializeObject(fecha);*/
-            return "";
+            return JsonConvert.SerializeObject(fecha);
         }
 
         [HttpGet]
         public string GetUltimaFechaByShowAndSala(string idShow, string idSala)
-        {/*
+        {
             var service = new FechaService();
             var fecha = service.GetUltimaFechaBySalaAndShow(idSala, idShow);
-            return JsonConvert.SerializeObject(fecha);*/
-            return "";
+            return JsonConvert.SerializeObject(fecha);
         }
 
         [HttpGet]
         public string CalcularVencimiento(string idSala)
-        {/*
+        {
             if (idSala == "")
                 return "";
 
@@ -134,8 +131,7 @@ namespace SUA.Controllers
                 return "";
 
             var vencimiento = UtilitiesAndStuff.CalcularVencimiento(fecha.FechaHorario, sala.RepeticionEnDias);
-            return vencimiento.ToString();*/
-            return "";
+            return vencimiento.ToString();
         }
 
         [HttpGet]
