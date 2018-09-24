@@ -33,7 +33,7 @@
                 </td>
                 <td>
                     <label>&nbsp;&nbsp;</label><br />
-                    <input type="button" value="Ok"/>
+                    <input type="button" id="buttonDateFilter" value="Ok"/>
                 </td>
             </tr>
 
@@ -226,8 +226,28 @@
     function getMensaje()
     {
         var filtro = "Filtro de Busqueda \n\n";
-
         return '\nBruto: ' + $("#brutoTotal").val() + '      ||      Neto Sala: ' + $("#netoSala").val() + '      ||       Neto Show: ' + $("#netoShow").val() + '      ||      Neto SUA: ' + $("#netoSUA").val();
     }
+
+
+
+    $('#buttonDateFilter').click(function ()
+    {
+        var from = $("#fecha_desde").val();
+        var from = $("#fecha_hasta").val();
+
+        $.ajax({
+            url: '/fecha/GetFechasByDateRange?from=' + from + '&to=' + to,
+            type: 'GET',
+            accepts: 'application/Json',
+            success: function (data) {
+                var fecha = JSON.parse(data);
+                $("#lblUtimoShow").text(fecha.FechaHorario.replace("T", " "));
+                $("#lblSalaUltimoShow").text(fecha.Sala.Nombre);
+            },
+            error: function () { }
+        });
+
+    });
 
 </script>

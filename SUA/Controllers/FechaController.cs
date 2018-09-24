@@ -332,5 +332,16 @@ namespace SUA.Controllers
 
         }
 
+        [HttpGet]
+        public string GetFechasByDateRange(DateTime from, DateTime to)
+        {
+            if (from == null && to == null)
+                return "";
+
+            var service = new FechaService();
+            var fechas = service.GetFechasByDateRange(from, to);
+            return JsonConvert.SerializeObject(fechas);
+
+        }
     }
 }

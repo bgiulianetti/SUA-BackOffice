@@ -71,7 +71,6 @@ namespace SUA.Servicios
         {
             Repository.DeleteFecha(id);
         }
-
         public Fecha GetUltimaFechaBySalaId(string idSala)
         {
             var fechas = Repository.GetFechasByIdSala(idSala);
@@ -94,7 +93,6 @@ namespace SUA.Servicios
             }
             return null;
         }
-
         public List<Fecha> GetFechasConBordereaux()
         {
             var fechasConBordereaux = new List<Fecha>();
@@ -106,6 +104,11 @@ namespace SUA.Servicios
             }
             return fechasConBordereaux;
         }
-
+        public List<Fecha> GetFechasByDateRange(DateTime from, DateTime to)
+        {
+            var fechas = Repository.GetFechas();  
+            var fechasFiltradas = fechas.Where(f => f.FechaHorario.Date >= from.Date && f.FechaHorario.Date <= to.Date).OrderBy(f => f.FechaHorario.Date);
+            return fechasFiltradas.ToList();
+        }
     }
 }
