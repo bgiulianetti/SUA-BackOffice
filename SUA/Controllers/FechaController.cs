@@ -119,7 +119,7 @@ namespace SUA.Controllers
 
         [HttpGet]
         public string CalcularVencimiento(string idSala)
-        {
+        {/*
             if (idSala == "")
                 return "";
 
@@ -134,7 +134,8 @@ namespace SUA.Controllers
                 return "";
 
             var vencimiento = UtilitiesAndStuff.CalcularVencimiento(fecha.FechaHorario, sala.RepeticionEnDias);
-            return vencimiento.ToString();
+            return vencimiento.ToString();*/
+            return "";
         }
 
         [HttpGet]
@@ -201,12 +202,12 @@ namespace SUA.Controllers
             var fecha = service.GetFechaById(id);
             try
             {
-                fecha.Borederaux = bordereaux;
-                service.UpdateFecha(fecha);
                 if (fecha.Borederaux != null)
                     ViewBag.mensaje = "creado";
                 else
                     ViewBag.mensaje = "actualizado";
+                fecha.Borederaux = bordereaux;
+                service.UpdateFecha(fecha);
             }
             catch (Exception ex)
             {

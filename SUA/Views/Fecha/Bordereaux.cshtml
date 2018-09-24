@@ -766,6 +766,27 @@
         }
     });
 
+    $("#impuestoComentarios").keydown(function (event) {
+        var keyCode = event.keyCode || event.which;
+
+        if (keyCode == 13)
+        {
+            event.preventDefault();
+            AgregarImpuesto();
+            $("#impuestosList").focus();
+        }
+    });
+
+    $("#gastoDetalle").keydown(function (event) {
+        var keyCode = event.keyCode || event.which;
+
+        if (keyCode == 13) {
+            event.preventDefault();
+            AgregarGasto();
+            $("#gastosList").focus();
+        }
+    });
+
     $("#impuestosDeduccionesCompanyPorcentaje").bind('input', function ()
     {
         var company = parseFloat($('#impuestosDeduccionesCompanyPorcentaje').val());
