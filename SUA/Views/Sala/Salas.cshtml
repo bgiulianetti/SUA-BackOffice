@@ -94,10 +94,6 @@
 
     $(document).ready(function ()
     {
-
-
-
-        //-----------------------------Datatables Salas------------------------------
         var tableSalas = $('#table_salas').DataTable({
             responsive: true,
             dom: 'l<B>ftip',
@@ -109,11 +105,27 @@
             'columnDefs': [{ "targets": 0, "className": "text-center" }]
         });
 
+        //atach de key de textbox capacidad de salas para que redibuje la tabla
         $('#min, #max').keyup(function () {
             tableSalas.draw();
         });
 
+        AplicarFiltrosEnFooter();
+        AplicarFiltroCapacidad();
+    });
 
+    function AcomodaDOM()
+    {
+        $('#table_salas_filter').hide();
+        $("#divCapacidad").append($("#SearchContainer"));
+        $("#info").append($("#table_salas_info"));
+        $("#table_salas_paginate").hide();
+        $("#entries").append($(".dt-buttons"));
+        $("#botones").append($(".dataTables_length"));
+    }
+
+    function AplicarFiltrosEnFooter()
+    {
         var contador = 0;
         $('#table_salas tfoot th').each(function () {
             if (contador != 0) {
@@ -143,24 +155,15 @@
             }
 
         });
+    }
 
-        $('#table_salas_filter').hide();
-
-        $("#divCapacidad").append($("#SearchContainer"));
-
-        $("#info").append($("#table_salas_info"));
-        $("#table_salas_paginate").hide();
-
-        $("#entries").append($(".dt-buttons"));
-        $("#botones").append($(".dataTables_length"));
-
-
-        //filtro de capacidad
+    function AplicarFiltroCapacidad()
+    {
         $.fn.dataTable.ext.search.push(
             function (settings, data, dataIndex) {
                 var min = parseInt($('#min').val(), 10);
                 var max = parseInt($('#max').val(), 10);
-                var age = parseFloat(data[4]) || 0; 
+                var age = parseFloat(data[4]) || 0;
 
                 if ((isNaN(min) && isNaN(max)) ||
                     (isNaN(min) && age <= max) ||
@@ -171,5 +174,6 @@
                 return false;
             }
         );
-    });
+    }
+
 </script>
