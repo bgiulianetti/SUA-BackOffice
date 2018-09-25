@@ -43,36 +43,30 @@
                 <tbody>
                     @foreach (var item in ViewBag.shows)
                     {
-                        var newRecord = true;
+                        var integrantes = "";
                         foreach (var integrante in item.Integrantes)
                         {
-                            if (newRecord)
+                            if (integrantes == "")
                             {
-                                newRecord = false;
-                                <tr>
-                                    <td>
-                                        @Html.ActionImage("DeleteShow", "Show", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
-                                        @Html.ActionImage("Show", "Show", new { id = item.UniqueId }, "~/assets/img/edit_icon.png")
-                                    </td>
-                                    <td>@item._Show</td>
-                                    <td>@item.Nombre</td>
-                                    <td>@integrante.Nombre @integrante.Apellido</td>
-                                    <td>@item.Productor.Nombre @item.Productor.Apellido</td>
-                                    <th>@item.Camarin</th>
-                                </tr>
+                                integrantes = integrante.Nombre + " " + integrante.Apellido;
                             }
                             else
                             {
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>@integrante.Nombre @integrante.Apellido</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                integrantes += ", " + integrante.Nombre + " " + integrante.Apellido;
                             }
                         }
+
+                        <tr>
+                            <td>
+                                @Html.ActionImage("DeleteShow", "Show", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
+                                @Html.ActionImage("Show", "Show", new { id = item.UniqueId }, "~/assets/img/edit_icon.png")
+                            </td>
+                            <td>@item._Show</td>
+                            <td>@item.Nombre</td>
+                            <td>@integrantes</td>
+                            <td>@item.Productor.Nombre @item.Productor.Apellido</td>
+                            <th>@item.Camarin</th>
+                        </tr>
                     }
                 </tbody>
             </table>

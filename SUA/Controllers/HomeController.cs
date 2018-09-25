@@ -11,6 +11,32 @@ namespace SUA.Controllers
 {
     public class HomeController : Controller
     {
+        [HttpGet]
+        public ActionResult Login()
+        {
+            if (Request.Cookies["session"] != null)
+                return RedirectToAction("Index", "Home");
+
+            ViewBag.mensaje = "";
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(string username, string password)
+        {
+            if (username.ToString() == "sua-user" && password == "sua2018")
+            {
+                Response.Cookies["session"].Value = username;
+                Response.Cookies["session"].Expires = DateTime.Now.AddDays(5);
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ViewBag.mensaje = "fail";
+            }
+            return View();
+        }
+
         public ActionResult Index()
         {
             try
