@@ -37,8 +37,21 @@ namespace SUA.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult Logout()
+        {
+            Response.Cookies["session"].Value = null;
+            Response.Cookies["session"].Expires = DateTime.Now.AddDays(-1);
+            Session.Abandon();
+            return RedirectToAction("Login", "Home");
+        }
+
+        [HttpGet]
         public ActionResult Index()
         {
+            if (Request.Cookies["session"] == null)
+                return RedirectToAction("Login", "Home");
+
             try
             {
                 ViewBag.fechas = GetFechasFormateadasParaCalendarFeed();

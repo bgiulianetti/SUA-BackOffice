@@ -14,6 +14,9 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult Standupero(string dni)
         {
+            if (Request.Cookies["session"] == null)
+                return RedirectToAction("Login", "Home");
+
             ViewBag.mensaje = "Get";
             ViewBag.bancos = UtilitiesAndStuff.GetBancos();
             ViewBag.provincias = UtilitiesAndStuff.GetProvincias();
@@ -63,6 +66,9 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult Standuperos()
         {
+            if (Request.Cookies["session"] == null)
+                return RedirectToAction("Login", "Home");
+
             ViewBag.titulo = "Standuperos";
             var service = new StanduperoService();
             try

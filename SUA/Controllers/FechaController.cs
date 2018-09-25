@@ -18,6 +18,9 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult Fecha(string id)
         {
+            if (Request.Cookies["session"] == null)
+                return RedirectToAction("Login", "Home");
+
             ViewBag.mensaje = "Get";
             ViewBag.salas = new SalaService().GetSalas();
             ViewBag.shows = new ShowService().GetShows();
@@ -75,6 +78,9 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult Fechas()
         {
+            if (Request.Cookies["session"] == null)
+                return RedirectToAction("Login", "Home");
+
             ViewBag.titulo = "Fechas";
             var service = new FechaService();
             try
@@ -137,6 +143,9 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult Bordereaux (string id)
         {
+            if (Request.Cookies["session"] == null)
+                return RedirectToAction("Login", "Home");
+
             ViewBag.titulo = "Bordereaux";
             ViewBag.mensaje = "Get";
 
@@ -215,6 +224,9 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult FechasCerradas()
         {
+            if (Request.Cookies["session"] == null)
+                return RedirectToAction("Login", "Home");
+
             ViewBag.titulo = "Fechas Cerradas";
             try
             {
@@ -228,11 +240,6 @@ namespace SUA.Controllers
                 ViewBag.menasje = ex.Message;
             }
             
-            return View();
-        }
-
-        public ActionResult Test()
-        {
             return View();
         }
 

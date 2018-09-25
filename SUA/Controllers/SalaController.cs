@@ -14,6 +14,9 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult Sala(string id)
         {
+            if (Request.Cookies["session"] == null)
+                return RedirectToAction("Login", "Home");
+
             ViewBag.mensaje = "Get";
             ViewBag.provincias = UtilitiesAndStuff.GetProvincias();
             ViewBag.paises = UtilitiesAndStuff.GetPaises();
@@ -67,6 +70,9 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult Salas()
         {
+            if (Request.Cookies["session"] == null)
+                return RedirectToAction("Login", "Home");
+
             ViewBag.titulo = "Salas";
             var service = new SalaService();
             try

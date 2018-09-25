@@ -14,6 +14,9 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult Productor(string dni)
         {
+            if (Request.Cookies["session"] == null)
+                return RedirectToAction("Login", "Home");
+
             ViewBag.mensaje = "Get";
             ViewBag.bancos = UtilitiesAndStuff.GetBancos();
             ViewBag.provincias = UtilitiesAndStuff.GetProvincias();
@@ -64,6 +67,9 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult Productores()
         {
+            if (Request.Cookies["session"] == null)
+                return RedirectToAction("Login", "Home");
+
             ViewBag.titulo = "Productores";
             var service = new ProductorService();
             try

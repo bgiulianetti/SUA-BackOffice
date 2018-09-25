@@ -13,6 +13,9 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult Show(string id)
         {
+            if (Request.Cookies["session"] == null)
+                return RedirectToAction("Login", "Home");
+
             ViewBag.mensaje = "Get";
 
             var productoresService = new ProductorService();
@@ -79,6 +82,9 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult Shows()
         {
+            if (Request.Cookies["session"] == null)
+                return RedirectToAction("Login", "Home");
+
             ViewBag.titulo = "Productores";
             var service = new ShowService();
             try

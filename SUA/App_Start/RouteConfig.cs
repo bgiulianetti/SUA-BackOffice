@@ -25,6 +25,12 @@ namespace SUA
                 defaults: new { controller = "Home", action = "Login" }
             );
 
+            routes.MapRoute(
+                name: "Logout",
+                url: "logout",
+                defaults: new { controller = "Home", action = "Logout" }
+            );
+
 
             //============================standupero=================================
             routes.MapRoute(
