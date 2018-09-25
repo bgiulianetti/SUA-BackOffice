@@ -258,7 +258,15 @@
                 var fechaString = data[1].replace(/\//g, "-");
                 var fecha = moment(fechaString, 'DD-M-YYYY').format('DD-MM-YYYY');
 
-                return (fecha >= desde && fecha <= hasta);
+                if (fecha >= desde)
+                {
+                    if (fecha <= hasta)
+                    {
+                        return true;
+                    }
+                }
+                else
+                    return false;
             }
         );
     }
