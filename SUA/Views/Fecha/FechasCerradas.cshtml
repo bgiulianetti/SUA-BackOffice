@@ -208,7 +208,15 @@
             table.draw();
         });
 
+
         DateRangeFilter();
+
+        //deshabilito busqueda por rango de fechas
+        $("#fecha_desde").val("2000-01-01");
+        $("#fecha_hasta").val("2100-01-01");
+        $("#fecha_desde").attr("disabled", "disabled");
+        $("#fecha_hasta").attr("disabled", "disabled");
+        $("#buttonDateFilter").attr("disabled", "disabled");
 
     });
 
@@ -266,27 +274,57 @@
         $('#table_fechas_cerradas_filter').hide();
     }
 
-    function DateRangeFilter() {
+    function DateRangeFilter()
+    {
         $.fn.dataTable.ext.search.push(
             function (settings, data, dataIndex)
             {
-                var desde = moment($('#fecha_desde').val()).format('DD-MM-YYYY');
-                var hasta = moment($('#fecha_hasta').val()).format('DD-MM-YYYY');
+                var desde = ConvertDate(moment($('#fecha_desde').val(), 'YYYY-M-DD').format('YYYY-MM-DD'));
+                var hasta = ConvertDate(moment($('#fecha_hasta').val(), 'YYYY-M-DD').format('YYYY-MM-DD'));
+                var fecha = ConvertDate(data[1]);
 
-                var fechaString = data[1].replace(/\//g, "-");
-                var fecha = moment(fechaString, 'DD-M-YYYY').format('DD-MM-YYYY');
-
-                if (fecha >= desde)
-                {
-                    if (fecha <= hasta)
-                    {
-                        return true;
-                    }
-                }
-                else
-                    return false;
+                return (fecha >= desde && fecha <= hasta);
             }
         );
+    }
+
+    $("#filterCheck").change(function ()
+    {
+        if (this.checked)
+        {
+            $("#fecha_desde").removeAttr("disabled", "disabled");
+            $("#fecha_hasta").removeAttr("disabled", "disabled");
+            $("#buttonDateFilter").removeAttr("disabled", "disabled");
+        }
+        else
+        {
+            $("#fecha_desde").val("2000-01-01");
+            $("#fecha_hasta").val("2100-01-01");
+
+            $("#fecha_desde").attr("disabled", "disabled");
+            $("#fecha_hasta").attr("disabled", "disabled");
+            $("#buttonDateFilter").attr("disabled", "disabled");
+            var table = $('#table_fechas_cerradas').DataTable();
+            table.draw();
+        }
+    });
+
+    function ConvertDate(date)
+    {
+        var fechaString = "";
+        if (date.indexOf(' ') > -1)
+        {
+            var fechaMalFormateada = date.replace(/\//g, "-").split(' ')[0];
+            fechaString = fechaMalFormateada.split('-')[2] + '-' + fechaMalFormateada.split('-')[1] + '-' + fechaMalFormateada.split('-')[0];
+        }
+        else
+        {
+            fechaString = date.replace(/\//g, "-");
+        }
+        var fecha_moment = moment(fechaString, 'YYYY-M-DD').format('YYYY-MM-DD');
+        var parts = fecha_moment.split('-');
+        var fecha = new Date(parts[0], parts[1] - 1, parts[2]); 
+        return fecha;
     }
 
 </script>
