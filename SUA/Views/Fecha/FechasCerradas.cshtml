@@ -21,7 +21,7 @@
             <tr>
                 <td>
                     <label>&nbsp;</label><br />
-                    <input type="checkbox" />&nbsp;&nbsp;
+                    <input type="checkbox" id="filterCheck"/>&nbsp;&nbsp;
                 </td>
                 <td>
                     <label>Desde</label><br />
@@ -111,6 +111,14 @@
             </tr>
             <tr>
                 <td>
+                    <label>Impuestos</label>
+                    <input class="form-control" id="impuestoTotal" type="text" readonly />
+                </td>
+                <td>
+                    <label>Gastos</label>
+                    <input class="form-control" id="gastoTotal" type="text" readonly />
+                </td>
+                <td>
                     <label>Bruto total</label>
                     <input class="form-control" id="brutoTotal" type="text" readonly/> 
                 </td>
@@ -182,6 +190,8 @@
             drawCallback: function ()
             {
                 var api = this.api();
+                $("#impuestoTotal").val('$' + api.column(6, { page: 'current' }).data().sum());
+                $("#gastoTotal").val('$' + api.column(7, { page: 'current' }).data().sum());
                 $("#brutoTotal").val('$' + api.column(8, { page: 'current' }).data().sum());
                 $("#netoSala").val('$' + api.column(9, { page: 'current' }).data().sum());
                 $("#netoShow").val('$' + api.column(10, { page: 'current' }).data().sum());
@@ -235,8 +245,16 @@
 
     function getMensaje()
     {
-        var filtro = "Filtro de Busqueda \n\n";
-        return '\nBruto: ' + $("#brutoTotal").val() + '      ||      Neto Sala: ' + $("#netoSala").val() + '      ||       Neto Show: ' + $("#netoShow").val() + '      ||      Neto SUA: ' + $("#netoSUA").val();
+        var mensaje = '\nImpuestos: ' + $("#impuestoTotal").val() + '      ||      Gastos: ' + $("#gastoTotal").val() + '      ||       Bruto: ' +
+            $("#brutoTotal").val() + '      ||      Neto Sala: ' + $("#netoSala").val() + '      ||      Neto Show: ' + $("#netoShow").val() +
+            '      ||      Neto SUA: ' + $("#netoSUA").val();
+
+        if ($('#filterCheck').prop('checked'))
+        {
+            mensaje = "Filtro de Busqueda \n\n Desde: " + $('#fecha_desde').val() + "  Hasta: " + $('#fecha_hasta').val() + "\n\n" + mensaje;
+        }
+        return mensaje;
+        
     }
 
     function AcomodaDOM()
