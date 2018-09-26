@@ -112,6 +112,7 @@
 
         AplicarFiltrosEnFooter();
         AplicarFiltroCapacidad();
+        AcomodaDOM();
     });
 
     function AcomodaDOM()
@@ -130,7 +131,8 @@
         $('#table_salas tfoot th').each(function () {
             if (contador != 0) {
                 var title = $(this).text();
-                if (title == "Capacidad") {
+                if (title == "Capacidad")
+                {
                     $(this).html('<div id="divCapacidad"> </div>');
                 }
                 else
