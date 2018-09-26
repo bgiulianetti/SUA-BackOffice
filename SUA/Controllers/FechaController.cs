@@ -1,10 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using Newtonsoft.Json;
 using SUA.Models;
 using SUA.Servicios;
 using SUA.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -359,6 +363,54 @@ namespace SUA.Controllers
             var fechas = service.GetFechasByDateRange(from, to);
             return JsonConvert.SerializeObject(fechas);
 
+        }
+
+        [HttpGet]
+        public ActionResult PrintBordereaux(string id)
+        {
+            var service = new FechaService();
+            var fecha = service.GetFechaById(id);
+
+            //Pdf
+            Document doc = new Document(PageSize.A4, 10, 10, 10, 10);
+            FileStream file = new FileStream("Bordereaux", FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
+            PdfWriter.GetInstance(doc, file);
+
+            doc.Open();
+
+            var titulo = new Chunk("Bordereaux - " + fecha.Show._Show + " - " + fecha.Show.Nombre, FontFactory.GetFont("ARIAL", 20, BaseColor.RED));
+            doc.Add(titulo);
+            doc.Add(new Paragraph(" "));
+            var entradas = new Chunk("Entradas" , FontFactory.GetFont("ARIAL", 20, BaseColor.BLACK));
+            doc.Add(entradas);
+
+
+            var entradasTitulo = new Chunk("Entrada             | Precio    | Total     ", FontFactory.GetFont("ARIAL", 20, BaseColor.BLACK));
+
+            var entradaText = "";
+            foreach (var item in fecha.Borederaux.Entradas)
+            {
+                var entrada = item.Nombre;
+                while (entrada.Length <= 20)
+                    entrada += " ";
+                entrada += " | ";
+
+                var precio = item.Precio.ToString();
+                while (precio.Length <= 10)
+                    precio += " ";
+                precio += " | ";
+
+                if (entradaText == "")
+                    entradaText = entrada + precio + item.Total;
+                else
+                    entrada += "\n" + entrada + precio + item.Total;
+
+            }
+            doc.Add(new Paragraph(entradaText, FontFactory.GetFont("COURIER", 12)));
+            doc.Close();
+            Process.Start("pepito");
+
+            return null;
         }
     }
 }

@@ -121,6 +121,12 @@ namespace SUA
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "printBordereaux",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Fecha", action = "PrintBordereaux", id = UrlParameter.Optional }
+            );
         }
     }
 }
