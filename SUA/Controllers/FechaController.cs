@@ -371,9 +371,12 @@ namespace SUA.Controllers
             var service = new FechaService();
             var fecha = service.GetFechaById(id);
 
+
+            string filename = Server.MapPath("~/assets/Pdf/" + "Bordereaux - " + id + ".pdf");
+
             //Pdf
             Document doc = new Document(PageSize.A4, 10, 10, 10, 10);
-            FileStream file = new FileStream("Bordereaux", FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
+            FileStream file = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
             PdfWriter.GetInstance(doc, file);
 
             doc.Open();
@@ -408,7 +411,7 @@ namespace SUA.Controllers
             }
             doc.Add(new Paragraph(entradaText, FontFactory.GetFont("COURIER", 12)));
             doc.Close();
-            Process.Start("pepito");
+            Process.Start(filename);
 
             return null;
         }
