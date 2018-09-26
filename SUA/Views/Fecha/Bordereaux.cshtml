@@ -734,18 +734,66 @@
     {
         $(this).parent().remove();
         RecorreEntradas();
+        RecorreImpuestos();
+        if ($('#check_arregloFijo').prop('checked'))
+            CalcularTeatroMontoFijo();
+        else
+            CalcularPorcentajesPostImpuestos();
+        RecorreGastos();
+        CalcularSUAMontoNetoFinal();
     }
 
     function BorrarImpuesto()
     {
         $(this).parent().remove();
         RecorreImpuestos();
+        if ($('#check_arregloFijo').prop('checked'))
+            CalcularTeatroMontoFijo();
+        else
+            CalcularPorcentajesPostImpuestos();
+        RecorreGastos();
+        CalcularSUAMontoNetoFinal();
     }
 
     function BorrarGasto()
     {
         $(this).parent().remove();
         RecorreGastos();
+        CalcularSUAMontoNetoFinal();
+    }
+
+    function CalcularPorcentajesPostImpuestos()
+    {
+        var company = parseFloat($('#impuestosDeduccionesCompanyPorcentaje').val());
+        $('#impuestosDeduccionesTeatroPorcentaje').val(100 - company);
+
+        var neto = parseFloat($("#impuestosDeduccionesNeto").val());
+        var montoCompany = (neto * company / 100).toFixed(2);
+        var teatro = (neto - montoCompany).toFixed(2);
+        $("#impuestosDeduccionesCompanyMonto").val(montoCompany);
+        $("#impuestosDeduccionesTeatroMonto").val(teatro);
+    }
+
+    function CalcularTeatroMontoFijo()
+    {
+        var montoTeatro = parseFloat($('#impuestosDeduccionesTeatroMonto').val());
+        var neto = parseFloat($("#impuestosDeduccionesNeto").val());
+        var porcentajeTeatro = montoTeatro * 100 / neto;
+        var porcentajeTeatro = porcentajeTeatro.toFixed(2);
+        $('#impuestosDeduccionesTeatroPorcentaje').val(porcentajeTeatro);
+        $("#impuestosDeduccionesCompanyMonto").val(neto - montoTeatro);
+    }
+
+    function CalcularSUAMontoNetoFinal()
+    {
+        var company = parseFloat($('#suaPorcentaje').val());
+        $('#showPorcentaje').val(100 - company);
+
+        var neto = parseFloat($("#gastosCompanyNeto").val());
+        var montoCompany = neto * company / 100;
+        var show = neto - montoCompany;
+        $("#suaMonto").val(montoCompany.toFixed(2));
+        $("#showMonto").val(show.toFixed(2));
     }
 
     $("#entradaPrecio").keydown(function (event)
@@ -787,41 +835,11 @@
         }
     });
 
-    $("#impuestosDeduccionesCompanyPorcentaje").bind('input', function ()
-    {
-        var company = parseFloat($('#impuestosDeduccionesCompanyPorcentaje').val());
-        $('#impuestosDeduccionesTeatroPorcentaje').val(100 - company);
+    $("#impuestosDeduccionesCompanyPorcentaje").bind('input', CalcularPorcentajesPostImpuestos);
 
-        var neto = parseFloat($("#impuestosDeduccionesNeto").val());
-        var montoCompany = (neto * company / 100).toFixed(2);
-        var teatro = (neto - montoCompany).toFixed(2);
-        $("#impuestosDeduccionesCompanyMonto").val(montoCompany);
-        $("#impuestosDeduccionesTeatroMonto").val(teatro);
-    });
+    $("#impuestosDeduccionesTeatroMonto").bind('input', CalcularTeatroMontoFijo);
 
-    $("#impuestosDeduccionesTeatroMonto").bind('input', function ()
-    {
-        var montoTeatro = parseFloat($('#impuestosDeduccionesTeatroMonto').val());
-        var neto = parseFloat($("#impuestosDeduccionesNeto").val());
-        var porcentajeTeatro = montoTeatro * 100 / neto;
-        var porcentajeTeatro = porcentajeTeatro.toFixed(2);
-        $('#impuestosDeduccionesTeatroPorcentaje').val(porcentajeTeatro);
-        $("#impuestosDeduccionesCompanyMonto").val(neto - montoTeatro);
-
-
-    });
-
-    $("#suaPorcentaje").bind('input', function ()
-    {
-        var company = parseFloat($('#suaPorcentaje').val());
-        $('#showPorcentaje').val(100 - company);
-
-        var neto = parseFloat($("#gastosCompanyNeto").val());
-        var montoCompany = neto * company / 100;
-        var show = neto - montoCompany;
-        $("#suaMonto").val(montoCompany.toFixed(2));
-        $("#showMonto").val(show.toFixed(2));
-    });
+    $("#suaPorcentaje").bind('input', CalcularSUAMontoNetoFinal);
 
     $("#check_arregloFijo").change(function ()
     {
