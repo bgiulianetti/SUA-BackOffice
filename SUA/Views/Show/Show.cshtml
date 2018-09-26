@@ -113,6 +113,21 @@
 
 <script>
 
+    var accion = "@ViewBag.accion";
+    if (accion == "Put")
+    {
+        //selecciono el productor
+        $("#productorList").val("@ViewBag.productor");
+
+        //seteo productor hidden field
+        var productorId = $("#productorList option:selected").val();
+        $("#_productor").val(productorId);
+
+        //selecciono ultimo item de standuperosSeleccionados
+        $("#standuperosSeleccionados option:last").attr("selected", "selected");
+        generateStanduperosHiddenList();
+    }
+
     $("#agregar").click(function (event) {
         var seleccion = $("#standuperos option:selected");
         if (seleccion.val() == undefined)
@@ -144,7 +159,8 @@
         }
     });
 
-    function generateStanduperosHiddenList() {
+    function generateStanduperosHiddenList()
+    {
         var list = $("#standuperosSeleccionados");
         var i = 0;
         var _standuperos = "";
@@ -157,17 +173,6 @@
         }
         $("#_standuperos").val(_standuperos);
     }
-
-    //seteo productor hidden field
-    var productorId = $("#productorList option:selected").val();
-    $("#_productor").val(productorId);
-
-    //seteo id hidden field
-    //var id = window.location.href.split('=')[1];
-    //$("#id").val(productorId);
-
-    //selecciono ultimo item de standuperosSeleccionados (solo para Edit)
-    $("#standuperosSeleccionados option:last").attr("selected", "selected");
 
     $("#productorList").change(function () {
         $("#_productor").val($("#productorList option:selected").val());

@@ -42,6 +42,7 @@ namespace SUA.Controllers
                         standuperos.Remove(item);
                 }
 
+                ViewBag.productor = show.Productor.Dni;
                 ViewBag.standuperos = standuperos;
                 ViewBag.accion = "Put";
                 ViewBag.titulo = "Editar Show";
@@ -70,6 +71,7 @@ namespace SUA.Controllers
                 {
                     service.UpdateShow(show);
                     ViewBag.mensaje = "actualizado";
+                    ViewBag.productor = show.Productor.Dni;
                 }
             }
             catch (Exception ex)
