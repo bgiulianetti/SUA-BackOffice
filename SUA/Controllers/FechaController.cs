@@ -400,23 +400,17 @@ namespace SUA.Controllers
 
             doc.Add(new Paragraph("Show: " + fecha.Show._Show + " - " + fecha.Show.Nombre, FontFactory.GetFont("ARIAL", 12, BaseColor.BLACK)));
             doc.Add(new Paragraph("Teatro: " + fecha.Sala.Nombre, FontFactory.GetFont("ARIAL", 12, BaseColor.BLACK)));
-            doc.Add(new Paragraph("Fecha: " + fecha.FechaHorario.ToString("dd-MM-yyyy hh:mm"), FontFactory.GetFont("ARIAL", 12, BaseColor.BLACK)));
-
-
-            //Entradas
+            doc.Add(new Paragraph("Localidad: " + fecha.Sala.Direccion.Ciudad, FontFactory.GetFont("ARIAL", 12, BaseColor.BLACK)));
+            doc.Add(new Paragraph("Fecha: " + fecha.FechaHorario.ToString("dd/MM/yyyy HH:mm"), FontFactory.GetFont("ARIAL", 12, BaseColor.BLACK)));
             doc.Add(new Paragraph(" "));
-            var entradasTitulo = new Chunk("Entradas", FontFactory.GetFont("ARIAL", 14, BaseColor.BLACK));
-            doc.Add(entradasTitulo);
+            doc.Add(new Paragraph(" "));
+
             AgregarEntradas(doc, fecha.Borederaux);
-            //doc.Add(new Paragraph("Total: " + fecha.Borederaux.EntradasTotal.ToString(), FontFactory.GetFont("ARIAL", 12, BaseColor.BLACK)));
-            //doc.Add(new Paragraph("Bruto: $" + fecha.Borederaux.EntradasBruto.ToString(), FontFactory.GetFont("ARIAL", 12, BaseColor.BLACK)));
-
-
-            //Impuestos
             doc.Add(new Paragraph(" "));
-            var impuestosTitulo = new Chunk("Impuestos y Deducciones Teatro", FontFactory.GetFont("ARIAL", 15, BaseColor.BLACK));
-            doc.Add(entradasTitulo);
-            AgregarImpuestos(doc, fecha.Borederaux.ImpuestosDeduccionesTeatro);
+            Paragraph p = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.GRAY, Element.ALIGN_LEFT, 1)));
+            doc.Add(p);
+            doc.Add(new Paragraph(" "));
+            AgregarImpuestos(doc, fecha.Borederaux);
 
             doc.Close();
             Process.Start(filename);
@@ -427,71 +421,107 @@ namespace SUA.Controllers
         {
             PdfPTable table = new PdfPTable(4);
             table.DefaultCell.Padding = 3;
+
             table.SetWidths(new int[] { 20, 10, 10, 10 });
-            table.DefaultCell.BorderWidth = 2;
+            table.DefaultCell.BorderWidth = 1;
             table.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            table.AddCell("Entrada");
-            table.AddCell("Cantidad");
-            table.AddCell("Precio");
-            table.AddCell("Total");
+            table.AddCell(new Phrase("Entrada", FontFactory.GetFont(FontFactory.COURIER_BOLD, 12)));
+            table.AddCell(new Phrase("Cantidad", FontFactory.GetFont(FontFactory.COURIER_BOLD, 12)));
+            table.AddCell(new Phrase("Precio", FontFactory.GetFont(FontFactory.COURIER_BOLD, 12)));
+            table.AddCell(new Phrase("Total", FontFactory.GetFont(FontFactory.COURIER_BOLD, 12)));
+            table.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
+
 
             table.HeaderRows = 1;
-            table.DefaultCell.BorderWidth = 1;
+            table.DefaultCell.BorderWidth = 0;
             foreach (var item in bordereaux.Entradas)
             {
-                table.AddCell(new Phrase(item.Nombre));
-                table.AddCell(new Phrase(item.Cantidad.ToString()));
-                table.AddCell(new Phrase("$" + item.Precio.ToString()));
-                table.AddCell(new Phrase("$" + item.Total.ToString()));
+                table.AddCell(new Phrase(item.Nombre, FontFactory.GetFont(FontFactory.COURIER, 10)));
+                table.AddCell(new Phrase(item.Cantidad.ToString(), FontFactory.GetFont(FontFactory.COURIER, 10)));
+                table.AddCell(new Phrase("$" + item.Precio.ToString(), FontFactory.GetFont(FontFactory.COURIER, 10)));
+                table.AddCell(new Phrase("$" + item.Total.ToString(), FontFactory.GetFont(FontFactory.COURIER, 10)));
+
                 table.CompleteRow();
             }
             doc.Add(table);
-
 
             var totales = new PdfPTable(2);
             totales.DefaultCell.Padding = 3;
             totales.SetWidths(new int[] { 10, 10 });
-            totales.DefaultCell.BorderWidth = 1;
             totales.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
-
-
-            totales.HeaderRows = 1;
+            totales.HeaderRows = 0;         
             totales.DefaultCell.BorderWidth = 1;
-            totales.AddCell(new Phrase("Total: " + bordereaux.EntradasTotal.ToString()));
-            totales.AddCell(new Phrase("Bruto: $" + bordereaux.EntradasBruto.ToString()));
+            totales.AddCell(new Phrase("Total: " + bordereaux.EntradasTotal.ToString(), FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
+            totales.AddCell(new Phrase("Bruto: $" + bordereaux.EntradasBruto.ToString(), FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
             totales.CompleteRow();
             doc.Add(totales);
-
-
         }
 
-        private void AgregarImpuestos(Document doc, List<ImpuestosDeduccionesTeatroBorderaux> impuestos)
+        private void AgregarImpuestos(Document doc, Bordereaux bordereaux)
         {
             PdfPTable table = new PdfPTable(4);
             table.DefaultCell.Padding = 3;
-            table.SetWidths(new int[] { 20, 10, 10, 20 });
-            table.DefaultCell.BorderWidth = 2;
+            table.SetWidths(new int[] { 25, 8, 8, 25 });
+            table.DefaultCell.BorderWidth = 1;
             table.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            table.AddCell("Impuesto");
-            table.AddCell("%");
-            table.AddCell("$");
-            table.AddCell("Comentario");
+            table.AddCell(new Phrase("Impuestos/Deducciones", FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
+            table.AddCell(new Phrase("%", FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
+            table.AddCell(new Phrase("$", FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
+            table.AddCell(new Phrase("Comentarios", FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
 
             table.HeaderRows = 1;
-            table.DefaultCell.BorderWidth = 1;
-            foreach (var item in impuestos)
+            table.DefaultCell.BorderWidth = 0;
+            foreach (var item in bordereaux.ImpuestosDeduccionesTeatro)
             {
-                table.AddCell(new Phrase(item.Nombre));
-                if(item.Porcentaje.ToString() == "" || item.Porcentaje.ToString() == "0")
-                    table.AddCell(new Phrase("-"));
+                table.AddCell(new Phrase(item.Nombre, FontFactory.GetFont(FontFactory.COURIER, 10)));
+                if (item.Porcentaje.ToString() == "" || item.Porcentaje.ToString() == "0")
+                    table.AddCell(new Phrase("-", FontFactory.GetFont(FontFactory.COURIER, 10)));
                 else
-                    table.AddCell(new Phrase(item.Porcentaje.ToString() + "%"));
+                    table.AddCell(new Phrase(item.Porcentaje.ToString() + "%", FontFactory.GetFont(FontFactory.COURIER, 10)));
 
-                table.AddCell(new Phrase("$" + item.Monto.ToString()));
-                table.AddCell(new Phrase(item.Comentarios));
+                table.AddCell(new Phrase("$" + item.Monto.ToString(), FontFactory.GetFont(FontFactory.COURIER, 10)));
+                table.AddCell(new Phrase(item.Comentarios, FontFactory.GetFont(FontFactory.COURIER, 10)));
                 table.CompleteRow();
             }
             doc.Add(table);
+
+            var totales = new PdfPTable(3);
+            totales.DefaultCell.Padding = 3;
+            totales.SetWidths(new int[] { 10, 10, 10 });
+            totales.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
+            totales.HeaderRows = 0;
+            totales.DefaultCell.BorderWidth = 1;
+            totales.AddCell(new Phrase("Bruto: $" + bordereaux.ImpuestosDeduccionesBruto.ToString(), FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
+            totales.AddCell(new Phrase("Deducir: $" + bordereaux.ImpuestosDeduccionesTotalDeducir.ToString(), FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
+            totales.AddCell(new Phrase("Neto: $" + bordereaux.ImpuestosDeduccionesNeto.ToString(), FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
+            totales.CompleteRow();
+            doc.Add(totales);
+
+            doc.Add(new Paragraph(" "));
+
+            var arreglo = new PdfPTable(2);
+            arreglo.DefaultCell.Padding = 3;
+            arreglo.SetWidths(new int[] { 10, 10, 10 });
+            arreglo.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
+            arreglo.HeaderRows = 0;
+            arreglo.DefaultCell.BorderWidth = 1;
+
+            if (bordereaux.ArregloFijo)
+            {
+                arreglo.AddCell(new Phrase("Teatro fijo: $" + bordereaux.ImpuestosDeduccionesTeatroMonto.ToString(), FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
+                arreglo.AddCell(new Phrase("SUA Neto: $" + bordereaux.ImpuestosDeduccionesCompanyMonto.ToString(), FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
+                arreglo.CompleteRow();
+            }
+            else
+            {
+                arreglo.AddCell(new Phrase("Teatro: " + bordereaux.ImpuestosDeduccionesTeatroPorcentaje.ToString() + "%", FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
+                arreglo.AddCell(new Phrase("Neto: $" + bordereaux.ImpuestosDeduccionesTeatroMonto.ToString(), FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
+                arreglo.CompleteRow();
+                arreglo.AddCell(new Phrase("SUA: " + bordereaux.ImpuestosDeduccionesCompanyPorcentaje.ToString() + "%", FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
+                arreglo.AddCell(new Phrase("Neto: $" + bordereaux.ImpuestosDeduccionesCompanyMonto.ToString(), FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
+                arreglo.CompleteRow();
+            }
+            doc.Add(arreglo);
         }
     }
 }
