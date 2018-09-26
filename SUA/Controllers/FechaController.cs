@@ -366,22 +366,16 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
-        public void PrintBordereaux(string id)
+        public ActionResult PrintBordereaux(string id)
         {
             var service = new FechaService();
             var fecha = service.GetFechaById(id);
 
-            PrepareDocument(fecha);
-        }
-
-
-        private void PrepareDocument(Fecha fecha)
-        {
             Document doc = new Document(PageSize.A4, 20, 20, 15, 10);
             string filename = Server.MapPath("~/assets/Pdf/" + "Bordereaux - " + fecha.UniqueId + ".pdf");
             FileStream file = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
             PdfWriter.GetInstance(doc, file);
-        
+
             doc.Open();
 
             AgregarCabecera(doc, fecha);
@@ -398,6 +392,11 @@ namespace SUA.Controllers
 
             doc.Close();
             Process.Start(filename);
+
+            //descargo el archivo
+            var di = new DirectoryInfo(filename);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(di.FullName);
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, "bordereaux-" + fecha.UniqueId  + ".pdf");
         }
 
         private void AgregarCabecera(Document doc, Fecha fecha)
@@ -408,16 +407,15 @@ namespace SUA.Controllers
             jpg.ScaleToFit(140f, 120f);
             jpg.SpacingBefore = 10f;
             jpg.SpacingAfter = 17f;
-            jpg.Left = 20;
             jpg.Alignment = Element.ALIGN_LEFT;
             doc.Add(jpg);
 
 
             //Cabecera
-            doc.Add(new Paragraph("   Show: " + fecha.Show._Show + " - " + fecha.Show.Nombre, FontFactory.GetFont(FontFactory.COURIER, 12)));
-            doc.Add(new Paragraph("   Teatro: " + fecha.Sala.Nombre, FontFactory.GetFont(FontFactory.COURIER, 12, BaseColor.BLACK)));
-            doc.Add(new Paragraph("   Localidad: " + fecha.Sala.Direccion.Ciudad, FontFactory.GetFont(FontFactory.COURIER, 12, BaseColor.BLACK)));
-            doc.Add(new Paragraph("   Fecha: " + fecha.FechaHorario.ToString("dd/MM/yyyy HH:mm") + "hs", FontFactory.GetFont(FontFactory.COURIER, 12, BaseColor.BLACK)));
+            doc.Add(new Paragraph("  Show: " + fecha.Show._Show + " - " + fecha.Show.Nombre, FontFactory.GetFont(FontFactory.COURIER, 12)));
+            doc.Add(new Paragraph("  Teatro: " + fecha.Sala.Nombre, FontFactory.GetFont(FontFactory.COURIER, 12, BaseColor.BLACK)));
+            doc.Add(new Paragraph("  Localidad: " + fecha.Sala.Direccion.Ciudad, FontFactory.GetFont(FontFactory.COURIER, 12, BaseColor.BLACK)));
+            doc.Add(new Paragraph("  Fecha: " + fecha.FechaHorario.ToString("dd/MM/yyyy HH:mm") + "hs", FontFactory.GetFont(FontFactory.COURIER, 12, BaseColor.BLACK)));
             doc.Add(new Paragraph(" "));
             doc.Add(new Paragraph(" "));
         }
