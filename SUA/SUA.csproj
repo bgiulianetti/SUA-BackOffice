@@ -296,6 +296,7 @@
     <Content Include="assets\img\listado_salas.png" />
     <Content Include="assets\img\listado_shows.png" />
     <Content Include="assets\img\listado_standuperos.png" />
+    <Content Include="assets\img\print-bordereaux.png" />
     <Content Include="assets\img\sua-logo-cuadrado.png" />
     <Content Include="assets\img\sua-logo-viejo.jpeg" />
     <Content Include="assets\img\sua-logo.png" />
