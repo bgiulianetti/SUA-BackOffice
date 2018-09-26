@@ -183,7 +183,15 @@ namespace SUA.Controllers
             bordereaux.ImpuestosDeduccionesBruto = float.Parse(ImpuestosDeduccionesBruto, CultureInfo.InvariantCulture);
             bordereaux.ImpuestosDeduccionesTotalDeducir = float.Parse(ImpuestosDeduccionesTotalDeducir, CultureInfo.InvariantCulture);
             bordereaux.ImpuestosDeduccionesNeto = float.Parse(ImpuestosDeduccionesNeto, CultureInfo.InvariantCulture);
-            bordereaux.ImpuestosDeduccionesCompanyPorcentaje = float.Parse(ImpuestosDeduccionesCompanyPorcentaje, CultureInfo.InvariantCulture);
+            if(ImpuestosDeduccionesCompanyPorcentaje != "")
+            {
+                bordereaux.ImpuestosDeduccionesCompanyPorcentaje = float.Parse(ImpuestosDeduccionesCompanyPorcentaje, CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                bordereaux.ImpuestosDeduccionesCompanyPorcentaje = 0;
+            }
+
             bordereaux.ImpuestosDeduccionesCompanyMonto = float.Parse(ImpuestosDeduccionesCompanyMonto, CultureInfo.InvariantCulture);
             bordereaux.ImpuestosDeduccionesTeatroPorcentaje = float.Parse(ImpuestosDeduccionesTeatroPorcentaje, CultureInfo.InvariantCulture);
             bordereaux.ImpuestosDeduccionesTeatroMonto = float.Parse(ImpuestosDeduccionesTeatroMonto, CultureInfo.InvariantCulture);
@@ -284,6 +292,8 @@ namespace SUA.Controllers
             foreach (var item in lista)
             {
                 var impuestoString = item.Split('-');
+                if (impuestoString[1] == "")
+                    impuestoString[1] = "0";
                 impuestos.Add(new ImpuestosDeduccionesTeatroBorderaux
                 {
                     Nombre = impuestoString[0],
