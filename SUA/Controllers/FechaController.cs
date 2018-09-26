@@ -371,49 +371,127 @@ namespace SUA.Controllers
             var service = new FechaService();
             var fecha = service.GetFechaById(id);
 
+            PrepareDocument(fecha);
 
-            string filename = Server.MapPath("~/assets/Pdf/" + "Bordereaux - " + id + ".pdf");
-
-            //Pdf
-            Document doc = new Document(PageSize.A4, 10, 10, 10, 10);
-            FileStream file = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
-            PdfWriter.GetInstance(doc, file);
-
-            doc.Open();
-
-            var titulo = new Chunk("Bordereaux - " + fecha.Show._Show + " - " + fecha.Show.Nombre, FontFactory.GetFont("ARIAL", 20, BaseColor.RED));
-            doc.Add(titulo);
-            doc.Add(new Paragraph(" "));
-            var entradas = new Chunk("Entradas" , FontFactory.GetFont("ARIAL", 20, BaseColor.BLACK));
-            doc.Add(entradas);
-
-
-            var entradasTitulo = new Chunk("Entrada             | Precio    | Total     ", FontFactory.GetFont("ARIAL", 20, BaseColor.BLACK));
-
-            var entradaText = "";
-            foreach (var item in fecha.Borederaux.Entradas)
-            {
-                var entrada = item.Nombre;
-                while (entrada.Length <= 20)
-                    entrada += " ";
-                entrada += " | ";
-
-                var precio = item.Precio.ToString();
-                while (precio.Length <= 10)
-                    precio += " ";
-                precio += " | ";
-
-                if (entradaText == "")
-                    entradaText = entrada + precio + item.Total;
-                else
-                    entrada += "\n" + entrada + precio + item.Total;
-
-            }
-            doc.Add(new Paragraph(entradaText, FontFactory.GetFont("COURIER", 12)));
-            doc.Close();
-            Process.Start(filename);
 
             return null;
+        }
+
+
+        private void PrepareDocument(Fecha fecha)
+        {
+
+            Document doc = new Document(PageSize.A4, 20, 20, 15, 10);
+            string filename = Server.MapPath("~/assets/Pdf/" + "Bordereaux - " + fecha.UniqueId + ".pdf");
+            FileStream file = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
+            PdfWriter.GetInstance(doc, file);
+        
+            doc.Open();
+
+            //Logo
+            string bordereauxIcon = Server.MapPath("~/assets/img/bordereaux.png");
+            var jpg = Image.GetInstance(bordereauxIcon);
+            jpg.ScaleToFit(140f, 120f);
+            jpg.SpacingBefore = 10f;
+            jpg.SpacingAfter = 17f;
+            jpg.Alignment = Element.ALIGN_LEFT;
+            doc.Add(jpg);
+
+
+            doc.Add(new Paragraph("Show: " + fecha.Show._Show + " - " + fecha.Show.Nombre, FontFactory.GetFont("ARIAL", 12, BaseColor.BLACK)));
+            doc.Add(new Paragraph("Teatro: " + fecha.Sala.Nombre, FontFactory.GetFont("ARIAL", 12, BaseColor.BLACK)));
+            doc.Add(new Paragraph("Fecha: " + fecha.FechaHorario.ToString("dd-MM-yyyy hh:mm"), FontFactory.GetFont("ARIAL", 12, BaseColor.BLACK)));
+
+
+            //Entradas
+            doc.Add(new Paragraph(" "));
+            var entradasTitulo = new Chunk("Entradas", FontFactory.GetFont("ARIAL", 14, BaseColor.BLACK));
+            doc.Add(entradasTitulo);
+            AgregarEntradas(doc, fecha.Borederaux);
+            //doc.Add(new Paragraph("Total: " + fecha.Borederaux.EntradasTotal.ToString(), FontFactory.GetFont("ARIAL", 12, BaseColor.BLACK)));
+            //doc.Add(new Paragraph("Bruto: $" + fecha.Borederaux.EntradasBruto.ToString(), FontFactory.GetFont("ARIAL", 12, BaseColor.BLACK)));
+
+
+            //Impuestos
+            doc.Add(new Paragraph(" "));
+            var impuestosTitulo = new Chunk("Impuestos y Deducciones Teatro", FontFactory.GetFont("ARIAL", 15, BaseColor.BLACK));
+            doc.Add(entradasTitulo);
+            AgregarImpuestos(doc, fecha.Borederaux.ImpuestosDeduccionesTeatro);
+
+            doc.Close();
+            Process.Start(filename);
+        }
+
+
+        private void AgregarEntradas(Document doc, Bordereaux bordereaux)
+        {
+            PdfPTable table = new PdfPTable(4);
+            table.DefaultCell.Padding = 3;
+            table.SetWidths(new int[] { 20, 10, 10, 10 });
+            table.DefaultCell.BorderWidth = 2;
+            table.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
+            table.AddCell("Entrada");
+            table.AddCell("Cantidad");
+            table.AddCell("Precio");
+            table.AddCell("Total");
+
+            table.HeaderRows = 1;
+            table.DefaultCell.BorderWidth = 1;
+            foreach (var item in bordereaux.Entradas)
+            {
+                table.AddCell(new Phrase(item.Nombre));
+                table.AddCell(new Phrase(item.Cantidad.ToString()));
+                table.AddCell(new Phrase("$" + item.Precio.ToString()));
+                table.AddCell(new Phrase("$" + item.Total.ToString()));
+                table.CompleteRow();
+            }
+            doc.Add(table);
+
+
+            var totales = new PdfPTable(2);
+            totales.DefaultCell.Padding = 3;
+            totales.SetWidths(new int[] { 10, 10 });
+            totales.DefaultCell.BorderWidth = 1;
+            totales.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
+
+
+            totales.HeaderRows = 1;
+            totales.DefaultCell.BorderWidth = 1;
+            totales.AddCell(new Phrase("Total: " + bordereaux.EntradasTotal.ToString()));
+            totales.AddCell(new Phrase("Bruto: $" + bordereaux.EntradasBruto.ToString()));
+            totales.CompleteRow();
+            doc.Add(totales);
+
+
+        }
+
+        private void AgregarImpuestos(Document doc, List<ImpuestosDeduccionesTeatroBorderaux> impuestos)
+        {
+            PdfPTable table = new PdfPTable(4);
+            table.DefaultCell.Padding = 3;
+            table.SetWidths(new int[] { 20, 10, 10, 20 });
+            table.DefaultCell.BorderWidth = 2;
+            table.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
+            table.AddCell("Impuesto");
+            table.AddCell("%");
+            table.AddCell("$");
+            table.AddCell("Comentario");
+
+            table.HeaderRows = 1;
+            table.DefaultCell.BorderWidth = 1;
+            foreach (var item in impuestos)
+            {
+                table.AddCell(new Phrase(item.Nombre));
+                if(item.Porcentaje.ToString() == "" || item.Porcentaje.ToString() == "0")
+                    table.AddCell(new Phrase("-"));
+                else
+                    table.AddCell(new Phrase(item.Porcentaje.ToString() + "%"));
+
+                table.AddCell(new Phrase("$" + item.Monto.ToString()));
+                table.AddCell(new Phrase(item.Comentarios));
+                table.CompleteRow();
+            }
+            doc.Add(table);
         }
     }
 }
