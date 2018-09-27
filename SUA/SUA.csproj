@@ -275,13 +275,27 @@
     <Content Include="assets\calendar\locale\vi.js" />
     <Content Include="assets\calendar\locale\zh-cn.js" />
     <Content Include="assets\calendar\locale\zh-tw.js" />
-    <Content Include="assets\css\bootstrap-colorpicker.css" />
-    <Content Include="assets\css\bootstrap.min.css" />
-    <Content Include="assets\css\demo.css" />
-    <Content Include="assets\css\educatina.css" />
-    <Content Include="assets\css\main.min.css" />
-    <Content Include="assets\css\pikaday.css" />
-    <Content Include="assets\css\vendor\icon-sets.css" />
+    <Content Include="assets\css\bootstrap-colorpicker.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\css\bootstrap.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\css\demo.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\css\educatina.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\css\main.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\css\pikaday.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\css\vendor\icon-sets.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="assets\img\add_borderaux_icon.png" />
     <Content Include="assets\img\borderaux_icon.png" />
     <Content Include="assets\img\bordereaux.png" />
@@ -303,7 +317,9 @@
     <Content Include="assets\img\sua-logo.png" />
     <Content Include="assets\img\vista_calendario.png" />
     <Content Include="assets\js\bootstrap\bootstrap-colorpicker.js" />
-    <Content Include="assets\js\bootstrap\bootstrap.min.js" />
+    <Content Include="assets\js\bootstrap\bootstrap.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="assets\js\jquery\jquery-2.1.0.min.js" />
     <Content Include="assets\js\jquery\jquery.confirm.min.js" />
     <Content Include="assets\js\jscolor.js" />
