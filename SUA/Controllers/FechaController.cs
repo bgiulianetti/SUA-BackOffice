@@ -272,6 +272,7 @@ namespace SUA.Controllers
         public List<EntradasBorderaux> GetEntradas(string _entradas)
         {
             var lista = _entradas.Split('*').ToList();
+            lista.Reverse();
             var entradas = new List<EntradasBorderaux>();
             foreach (var item in lista)
             {
@@ -293,6 +294,7 @@ namespace SUA.Controllers
                 return impuestos;
 
             var lista = _impuestos.Split('*').ToList();
+            lista.Reverse();
             foreach (var item in lista)
             {
                 var impuestoString = item.Split('-');
@@ -316,6 +318,7 @@ namespace SUA.Controllers
                 return gastos;
 
             var gastosList = _gastos.Split('*').ToList();
+            gastosList.Reverse();
             foreach (var item in gastosList)
             {
                 var gasto = item.Split('-');

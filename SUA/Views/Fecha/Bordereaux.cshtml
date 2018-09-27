@@ -640,7 +640,7 @@
     {
         //hago calculo
         var total = $("#entradaCantidad").val() * $("#entradaPrecio").val();
-        $("#entradaTotal").val(total);
+        $("#entradaTotal").val(total.toFixed(2));
 
         //Obtengo el contador y lo incremento
         var contador = parseInt($("#counterEntradas").val());
@@ -804,7 +804,7 @@
         {
             event.preventDefault();
             var total = parseInt($("#entradaCantidad").val()) * parseFloat($("#entradaPrecio").val())
-            $("#entradaTotal").val(total);
+            $("#entradaTotal").val(total.toFixed(2));
         }
         else if (keyCode == 13)
         {

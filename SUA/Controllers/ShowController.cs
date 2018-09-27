@@ -87,7 +87,7 @@ namespace SUA.Controllers
             if (Request.Cookies["session"] == null)
                 return RedirectToAction("Login", "Home");
 
-            ViewBag.titulo = "Productores";
+            ViewBag.titulo = "Shows";
             var service = new ShowService();
             try
             {
