@@ -316,21 +316,45 @@
     <Content Include="assets\img\sua-logo-viejo.jpeg" />
     <Content Include="assets\img\sua-logo.png" />
     <Content Include="assets\img\vista_calendario.png" />
-    <Content Include="assets\js\bootstrap\bootstrap-colorpicker.js" />
+    <Content Include="assets\js\bootstrap\bootstrap-colorpicker.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="assets\js\bootstrap\bootstrap.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="assets\js\jquery\jquery-2.1.0.min.js" />
-    <Content Include="assets\js\jquery\jquery.confirm.min.js" />
-    <Content Include="assets\js\jscolor.js" />
-    <Content Include="assets\js\klorofil.min.js" />
-    <Content Include="assets\js\main.js" />
-    <Content Include="assets\js\microsite.js" />
-    <Content Include="assets\js\plugins\chartist\chartist.min.js" />
-    <Content Include="assets\js\plugins\jquery-easypiechart\jquery.easypiechart.min.js" />
-    <Content Include="assets\js\plugins\jquery-slimscroll\jquery.slimscroll.min.js" />
-    <Content Include="assets\js\plugins\moment\moment.js" />
-    <Content Include="assets\js\plugins\pikaday\pikaday.js" />
+    <Content Include="assets\js\jquery\jquery-2.1.0.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\js\jquery\jquery.confirm.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\js\jscolor.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\js\klorofil.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\js\main.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\js\microsite.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\js\plugins\chartist\chartist.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\js\plugins\jquery-easypiechart\jquery.easypiechart.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\js\plugins\jquery-slimscroll\jquery.slimscroll.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\js\plugins\moment\moment.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\js\plugins\pikaday\pikaday.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />

@@ -177,13 +177,14 @@ namespace SUA.Controllers
         }
 
         [HttpPost]
-        public ActionResult Bordereaux(Bordereaux bordereaux, string accion, string _entradas, string _impuestos, string _gastos, string id, string _arregloFijo, 
-                                       string ImpuestosDeduccionesBruto, string ImpuestosDeduccionesTotalDeducir, string ImpuestosDeduccionesNeto, string ImpuestosDeduccionesCompanyPorcentaje, 
-                                       string ImpuestosDeduccionesCompanyMonto, string ImpuestosDeduccionesTeatroPorcentaje, string ImpuestosDeduccionesTeatroMonto, string GastosCompanyTotal,
-                                       string GastosCompanyNeto, string SUAPorcentaje, string SUAMonto, string ShowPorcentaje, string ShowMonto)
+        public ActionResult Bordereaux(Bordereaux bordereaux, string accion, string _entradas, string _impuestos, string _gastos, string id, string _arregloFijo,
+                                       string entradasBruto, string ImpuestosDeduccionesBruto, string ImpuestosDeduccionesTotalDeducir, string ImpuestosDeduccionesNeto,
+                                       string ImpuestosDeduccionesCompanyPorcentaje, string ImpuestosDeduccionesCompanyMonto, string ImpuestosDeduccionesTeatroPorcentaje, string ImpuestosDeduccionesTeatroMonto,
+                                       string GastosCompanyTotal, string GastosCompanyNeto, string SUAPorcentaje, string SUAMonto, string ShowPorcentaje, string ShowMonto)
         {
             ViewBag.titulo = "Bordereaux";
 
+            bordereaux.EntradasBruto = float.Parse(entradasBruto, CultureInfo.InvariantCulture);
             bordereaux.ImpuestosDeduccionesBruto = float.Parse(ImpuestosDeduccionesBruto, CultureInfo.InvariantCulture);
             bordereaux.ImpuestosDeduccionesTotalDeducir = float.Parse(ImpuestosDeduccionesTotalDeducir, CultureInfo.InvariantCulture);
             bordereaux.ImpuestosDeduccionesNeto = float.Parse(ImpuestosDeduccionesNeto, CultureInfo.InvariantCulture);
