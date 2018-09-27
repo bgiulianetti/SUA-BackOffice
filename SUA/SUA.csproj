@@ -287,6 +287,7 @@
     <Content Include="assets\img\bordereaux.png" />
     <Content Include="assets\img\delete_icon.png" />
     <Content Include="assets\img\edit_icon.png" />
+    <Content Include="assets\img\favicon.ico" />
     <Content Include="assets\img\fecha.png" />
     <Content Include="assets\img\fecha_full_info.png" />
     <Content Include="assets\img\listado-fechas-cerradas-logo.jpeg" />
