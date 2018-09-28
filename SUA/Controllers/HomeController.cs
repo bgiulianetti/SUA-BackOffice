@@ -75,7 +75,7 @@ namespace SUA.Controllers
                 var calendarFeed = new CalendarFeed
                 {
                     title = fecha.Show._Show +  " - " + fecha.Sala.Nombre,
-                    start = fecha.FechaHorario.ToString("yyyy-MM-ddThh:mm")
+                    start = fecha.FechaHorario.ToString("yyyy-MM-ddTHH:mm")
                 };
                 fechasCalendar.Add(calendarFeed);
             }
