@@ -157,6 +157,8 @@ namespace SUA.Repositorios
             var response = Client.Search<Standupero>(s => s
                    .Index(Index)
                    .Type(Index)
+                   .From(0)
+                   .Size(GetCount(Index))
                   );
 
             if (response == null)
@@ -212,7 +214,7 @@ namespace SUA.Repositorios
             if (response == null)
                 return null;
 
-            if(!response.IsValid)
+            if (!response.IsValid)
                 throw new Exception(STANDUPERO_GET_BY_DNI_INVALID_SEARCH_EXCEPTION);
 
             Standupero standupero = null;
@@ -238,7 +240,7 @@ namespace SUA.Repositorios
             if (response == null)
                 return innerId;
 
-            if(!response.IsValid)
+            if (!response.IsValid)
                 throw new Exception(STANDUPERO_GET_INNERID_BY_DNI_INVALID_SEARCH_EXCEPTION);
 
             if (response.Total > 0)
@@ -347,6 +349,8 @@ namespace SUA.Repositorios
             var response = Client.Search<Productor>(p => p
                    .Index(Index)
                    .Type(Index)
+                   .From(0)
+                   .Size(GetCount(Index))
                   );
 
             if (response == null)
@@ -509,6 +513,8 @@ namespace SUA.Repositorios
             var response = Client.Search<Show>(p => p
                    .Index(Index)
                    .Type(Index)
+                   .From(0)
+                   .Size(GetCount(Index))
                   );
 
             if (response == null)
@@ -696,6 +702,8 @@ namespace SUA.Repositorios
             var response = Client.Search<Sala>(p => p
                    .Index(Index)
                    .Type(Index)
+                   .From(0)
+                   .Size(GetCount(Index))
                   );
 
             if (response == null)
@@ -802,7 +810,7 @@ namespace SUA.Repositorios
                 throw new Exception(SALA_CREATE_ALREADY_EXISTS_EXCEPTION);
 
             var salaObtenidaPorNombre = GetSalaByNombre(sala.Nombre);
-            if(salaObtenidaPorNombre != null && salaObtenidaPorNombre.Direccion.Provincia == sala.Direccion.Provincia)
+            if (salaObtenidaPorNombre != null && salaObtenidaPorNombre.Direccion.Provincia == sala.Direccion.Provincia)
                 throw new Exception(SALA_CREATE_ALREADY_EXISTS_EXCEPTION);
 
             var response = Client.IndexAsync(sala, i => i
@@ -886,6 +894,8 @@ namespace SUA.Repositorios
             var response = Client.Search<Fecha>(s => s
                    .Index(Index)
                    .Type(Index)
+                   .From(0)
+                   .Size(GetCount(Index))
                   );
 
             if (response == null)
@@ -1082,8 +1092,8 @@ namespace SUA.Repositorios
             {
                 foreach (var item in response.Documents)
                 {
-                    if(item.FechaHorario == fechaYHorario)
-                        fecha =item;
+                    if (item.FechaHorario == fechaYHorario)
+                        fecha = item;
                 }
             }
             return fecha;
@@ -1101,7 +1111,7 @@ namespace SUA.Repositorios
                 throw new Exception(FECHA_CREATE_ALREADY_EXISTS_EXCEPTION);
 
             var fechaObtenida = GetFechaBySalaAndFechaAndHorario(fecha.Sala.UniqueId, fecha.FechaHorario);
-            if(fechaObtenida != null)
+            if (fechaObtenida != null)
                 throw new Exception(FECHA_CREATE_ALREADY_EXISTS_EXCEPTION);
 
             var response = Client.IndexAsync(fecha, i => i
@@ -1173,11 +1183,26 @@ namespace SUA.Repositorios
             if (!response.IsValid)
                 throw new Exception(FECHA_DELETE_NOT_DELETED_EXCEPTION);
         }
-        
+
 
 
         /*---------Metodos genericos------------------*/
 
+        public int GetCount(string tipo)
+        {
+            ICountResponse response = null;
+            if (tipo == "standupero")
+                response = Client.Count<Standupero>(c => c.Index(Index).Type(Index));
+            else if (tipo == "productor")
+                response = Client.Count<Productor>(c => c.Index(Index).Type(Index));
+            else if (tipo == "sala")
+                response = Client.Count<Sala>(c => c.Index(Index).Type(Index));
+            else if (tipo == "fecha")
+                response = Client.Count<Fecha>(c => c.Index(Index).Type(Index));
+            else if (tipo == "show")
+                response = Client.Count<Show>(c => c.Index(Index).Type(Index));
+            return (int)response.Count;
+        }
         public void DeleteIndex()
         {
             if (IndexExists())
@@ -1186,7 +1211,7 @@ namespace SUA.Repositorios
                 if (!response.IsValid)
                     throw new Exception("delte_index_exception");
             }
-        }    
+        }
         public bool IndexExists()
         {
             var response = Client.IndexExists(Index);
