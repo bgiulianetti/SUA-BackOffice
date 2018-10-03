@@ -22,6 +22,15 @@
     <link rel="apple-touch-icon" sizes="76x76" href="~/assets/img/favicon.ico">
     <link rel="icon" type="image/png" sizes="96x96" href="~/assets/img/favicon.ico">
 
+    @{
+        if (ViewBag.title == "Inicio")
+        {
+            <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+            <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+            <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        }
+    }
+
 
     <script type="text/javascript" src="./assets/js/jquery/jquery-2.1.0.min.js?v=5022"></script>
     <script type="text/javascript" src="./assets/js/bootstrap/bootstrap.min.js?v=5022"></script>
@@ -165,6 +174,7 @@
     <link rel='stylesheet' href="~/assets/calendar/fullcalendar.min.css" />
     <script src="~/assets/calendar/lib/moment.min.js"></script>
     <script src="~/assets/calendar/fullcalendar.js"></script>
+    <script type='text/javascript' src='~/assets/calendar/gcal.js'></script>
     <link href="https://code.jquery.com/ui/1.12.1/themes/cupertino/jquery-ui.css" rel="stylesheet">
 
 </body>

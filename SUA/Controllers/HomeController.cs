@@ -52,14 +52,9 @@ namespace SUA.Controllers
             if (Request.Cookies["session"] == null)
                 return RedirectToAction("Login", "Home");
 
-            try
-            {
-                ViewBag.fechas = GetFechasFormateadasParaCalendarFeed();
-            }
-            catch(Exception ex)
-            {
-                ViewBag.mensaje = ex.Message;
-            }
+            var calendarService = new CalendarService();
+            ViewBag.CalendarsFullUrl = System.Configuration.ConfigurationManager.AppSettings.Get("CalendarsFullUrl");
+            ViewBag.Key = calendarService.GetCalendarKey();
             ViewBag.titulo = "Inicio";
             return View();
         }

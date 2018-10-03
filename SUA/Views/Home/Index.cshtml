@@ -2,12 +2,67 @@
     ViewBag.Title = "Inicio";
 }
 
+<style>
+    .btn span.glyphicon {
+        opacity: 0;
+    }
+
+    .btn.active span.glyphicon {
+        opacity: 1;
+    }
+</style>
 
 <div class="main-content">
 
 
     <div class="panel">
         <div class="panel-body" style="padding-left:130px; padding-right:130px; padding-top:50px; padding-bottom:60px">
+
+                <div class="well well-sm text-center">
+                    <h4>Mostrar Show</h4>
+
+                    <div class="btn-group" data-toggle="buttons">
+
+                        <label class="btn btn-success active">
+                            <input type="checkbox" autocomplete="off" checked>
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="checkbox" autocomplete="off">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </label>
+
+                        <label class="btn btn-danger">
+                            <input type="checkbox" autocomplete="off">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </label>
+
+
+                        <!--
+                        <label class="btn btn-info">
+                            <input type="checkbox" autocomplete="off">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </label>
+
+                        <label class="btn btn-default">
+                            <input type="checkbox" autocomplete="off">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </label>
+
+
+                        <label class="btn btn-danger">
+                            <input type="checkbox" autocomplete="off">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </label>
+                            -->
+
+                        <label class="btn btn-warning">
+                            <input type="checkbox" autocomplete="off">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </label>
+
+                    </div>
+                </div>
             <div id='calendar'></div>
         </div>
     </div>
@@ -18,21 +73,32 @@
 <script>
     $(document).ready(function ()
     {
-        var array = @Html.Raw(Json.Encode(@ViewBag.fechas));
+        //var calendars = @Html.Raw(Json.Encode(@ViewBag.fechas));
+        getCalendarsAndDrawCalendar();
+    });
+
+
+
+    function getCalendarsAndDrawCalendar() {
+        $.get("@ViewBag.CalendarsFullUrl", function (data) {
+            drawCalendar(data);
+        });
+    }
+
+    function drawCalendar(calendars) {
         $('#calendar').fullCalendar({
             header: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'month,agendaWeek,agendaDay,listMonth'
+                right: 'month,agendaWeek,listMonth'
             },
-            eventSources: [
-                {
-                    events: array,
-                    color: 'light-blue',
-                    textColor: 'white'
-                }
-            ]
+            googleCalendarApiKey: '@ViewBag.Key',
+            eventSources: calendars,
+            eventClick: function (event)
+            {
+                window.open(event.url, '_blank', 'width=700,height=600');
+                return false;
+            }
         });
-
-    });
+    }
 </script>
