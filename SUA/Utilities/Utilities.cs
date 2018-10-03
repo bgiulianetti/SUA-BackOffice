@@ -32,6 +32,7 @@ namespace SUA.Utilities
                 "Río Negro",
                 "Salta",
                 "San Juan",
+                "San Luis",
                 "Santa Cruz",
                 "Santa Fe",
                 "Santiago del Estero",
