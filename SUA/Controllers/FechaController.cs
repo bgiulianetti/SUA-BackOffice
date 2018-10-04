@@ -68,6 +68,10 @@ namespace SUA.Controllers
                 }
                 else if (string.Equals(accion, "Put"))
                 {
+                    var fechaObtenida = service.GetFechaById(fecha.UniqueId);
+                    if (fechaObtenida.Borederaux != null)
+                        fecha.Borederaux = fechaObtenida.Borederaux;
+
                     service.UpdateFecha(fecha);
                     ViewBag.mensaje = "actualizado";
                 }

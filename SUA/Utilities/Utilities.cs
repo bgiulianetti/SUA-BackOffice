@@ -159,6 +159,7 @@ namespace SUA.Utilities
                 "Otras",
                 "Wix",
                 "Wix 50% off",
+                "Wix 25% off"
 
             };
             return ConverListToSelectListItem(entradas);
