@@ -18,51 +18,32 @@
     <div class="panel">
         <div class="panel-body" style="padding-left:130px; padding-right:130px; padding-top:50px; padding-bottom:60px">
 
-                <div class="well well-sm text-center">
-                    <h4>Mostrar Show</h4>
+            <div class="well well-sm text-center">
+                <h4>Mostrar Show</h4>
 
-                    <div class="btn-group" data-toggle="buttons">
+                <div class="btn-group" data-toggle="buttons">
 
-                        <label class="btn btn-success active">
-                            <input type="checkbox" autocomplete="off" checked>
-                            <span class="glyphicon glyphicon-ok"></span>
-                        </label>
-                        <label class="btn btn-primary">
-                            <input type="checkbox" autocomplete="off">
-                            <span class="glyphicon glyphicon-ok"></span>
-                        </label>
+                    <label id="201809251121934" title="Sanata" class="btn btn-success active">
+                        <input id="check201809251121934" type="checkbox" autocomplete="off" checked>
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </label>
+                    <label id="201809251401711" title="Nicolas De Tracy" class="btn btn-primary active">
+                        <input id="check201809251401711" type="checkbox" autocomplete="off" checked>
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </label>
 
-                        <label class="btn btn-danger">
-                            <input type="checkbox" autocomplete="off">
-                            <span class="glyphicon glyphicon-ok"></span>
-                        </label>
+                    <label id="201809300847352" title="El Innombrable" class="btn btn-danger active">
+                        <input id="check201809300847352" type="checkbox" autocomplete="off" checked>
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </label>
 
+                    <label id="201810021209749" title="Laila y Gonzo" class="btn btn-warning active">
+                        <input id="check201810021209749" type="checkbox" autocomplete="off" checked>
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </label>
 
-                        <!--
-                        <label class="btn btn-info">
-                            <input type="checkbox" autocomplete="off">
-                            <span class="glyphicon glyphicon-ok"></span>
-                        </label>
-
-                        <label class="btn btn-default">
-                            <input type="checkbox" autocomplete="off">
-                            <span class="glyphicon glyphicon-ok"></span>
-                        </label>
-
-
-                        <label class="btn btn-danger">
-                            <input type="checkbox" autocomplete="off">
-                            <span class="glyphicon glyphicon-ok"></span>
-                        </label>
-                            -->
-
-                        <label class="btn btn-warning">
-                            <input type="checkbox" autocomplete="off">
-                            <span class="glyphicon glyphicon-ok"></span>
-                        </label>
-
-                    </div>
                 </div>
+            </div>
             <div id='calendar'></div>
         </div>
     </div>
@@ -74,18 +55,49 @@
     $(document).ready(function ()
     {
         //var calendars = @Html.Raw(Json.Encode(@ViewBag.fechas));
-        getCalendarsAndDrawCalendar();
+        getCalendarsAndDrawCalendar("initial");
+
+        $("#201809251121934").bind('click', getCalendarsAndDrawCalendar);
+        $("#201809251401711").bind('click', getCalendarsAndDrawCalendar);
+        $("#201809300847352").bind('click', getCalendarsAndDrawCalendar);
+        $("#201810021209749").bind('click', getCalendarsAndDrawCalendar);
     });
 
 
 
-    function getCalendarsAndDrawCalendar() {
-        $.get("@ViewBag.CalendarsFullUrl", function (data) {
-            drawCalendar(data);
+    function getCalendarsAndDrawCalendar(state)
+    {
+        $.get("@ViewBag.CalendarsFullUrl", function (data)
+        {
+            if (!$("#check201809251121934")[0].checked)
+                data = DeleteItemArray(data, "201809251121934");
+            if (!$("#check201809251401711")[0].checked)
+                data = DeleteItemArray(data, "201809251401711");
+            if (!$("#check201809300847352")[0].checked)
+                data = DeleteItemArray(data, "201809300847352");
+            if (!$("#check201810021209749")[0].checked)
+                data = DeleteItemArray(data, "201810021209749");
+
+            if (state == "initial")
+                drawCalendar(data);
+            else
+                reDrawCalendar(data);
         });
     }
 
-    function drawCalendar(calendars) {
+    function DeleteItemArray(array, id)
+    {
+        var newArray = [];
+        for (var i = 0; i < array.length; i++)
+        {
+            if (array[i].uniqueId != id)
+                newArray.push(array[i]);
+        }
+        return newArray;
+    }
+
+    function drawCalendar(calendars)
+    {
         $('#calendar').fullCalendar({
             header: {
                 left: 'prev,next today',
@@ -100,5 +112,12 @@
                 return false;
             }
         });
+        $('#calendar').fullCalendar('rerenderEvents');
+    }
+
+    function reDrawCalendar(calendars)
+    {
+        $('#calendar').fullCalendar('destroy');
+        drawCalendar(calendars);
     }
 </script>

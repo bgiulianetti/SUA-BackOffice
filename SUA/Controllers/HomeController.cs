@@ -52,13 +52,12 @@ namespace SUA.Controllers
             if (Request.Cookies["session"] == null)
                 return RedirectToAction("Login", "Home");
 
-            var calendarService = new CalendarService();
+            var calendarService = new GoogleCalendarService();
             ViewBag.CalendarsFullUrl = System.Configuration.ConfigurationManager.AppSettings.Get("CalendarsFullUrl");
             ViewBag.Key = calendarService.GetCalendarKey();
             ViewBag.titulo = "Inicio";
             return View();
         }
-
 
         public List<CalendarFeed> GetFechasFormateadasParaCalendarFeed()
         {
@@ -76,5 +75,6 @@ namespace SUA.Controllers
             }
             return fechasCalendar;
         }
+
     }
 }
