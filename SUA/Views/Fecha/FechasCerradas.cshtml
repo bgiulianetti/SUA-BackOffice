@@ -332,12 +332,12 @@
     {
         var table = $('#table_fechas_cerradas').DataTable();
 
-        $("#impuestoTotal").val("$" + table.column(6).data().sum());
-        $("#gastoTotal").val("$" + table.column(7).data().sum());
-        $("#brutoTotal").val("$" + table.column(8).data().sum());
-        $("#netoSala").val("$" + table.column(9).data().sum());
-        $("#netoShow").val("$" + table.column(10).data().sum());
-        $("#netoSUA").val("$" + table.column(11).data().sum());
+        $("#impuestoTotal").val("$" + table.column(6).data().sum().toFixed(2));
+        $("#gastoTotal").val("$" + table.column(7).data().sum().toFixed(2));
+        $("#brutoTotal").val("$" + table.column(8).data().sum().toFixed(2));
+        $("#netoSala").val("$" + table.column(9).data().sum().toFixed(2));
+        $("#netoShow").val("$" + table.column(10).data().sum().toFixed(2));
+        $("#netoSUA").val("$" + table.column(11).data().sum().toFixed(2));
     }
 
 </script>
