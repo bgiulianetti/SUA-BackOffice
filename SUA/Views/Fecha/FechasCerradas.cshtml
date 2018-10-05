@@ -86,12 +86,12 @@
                             <td>@item.Sala.Nombre</td>
                             <td>@item.Sala.Direccion.Ciudad</td>
                             <td>@porcentaje%  (@item.Borederaux.EntradasTotal/@item.Sala.Capacidad)</td>
-                            <td>$@item.Borederaux.ImpuestosDeduccionesTotalDeducir</td>
-                            <td>$@item.Borederaux.GastosCompanyTotal</td>
-                            <td>$@item.Borederaux.EntradasBruto</td>
-                            <td>$@item.Borederaux.ImpuestosDeduccionesTeatroMonto</td>
-                            <td>$@item.Borederaux.ShowMonto</td>
-                            <td>$@item.Borederaux.SUAMonto</td>
+                            <td>$@item.Borederaux.ImpuestosDeduccionesTotalDeducir.ToString().Replace(",", ".")</td>
+                            <td>$@item.Borederaux.GastosCompanyTotal.ToString().Replace(",", ".")</td>
+                            <td>$@item.Borederaux.EntradasBruto.ToString().Replace(",", ".")</td>
+                            <td>$@item.Borederaux.ImpuestosDeduccionesTeatroMonto.ToString().Replace(",", ".")</td>
+                            <td>$@item.Borederaux.ShowMonto.ToString().Replace(",", ".")</td>
+                            <td>$@item.Borederaux.SUAMonto.ToString().Replace(",", ".")</td>
                         </tr>
                     }
                 </tbody>
@@ -109,6 +109,14 @@
                     <div id="paginado" style="width:200px"></div>
                 </td>
             </tr>
+            </table>
+            <hr style="color: #8dd9f7">
+            <table>
+                <tr>
+                    <td>
+                        <h2>Totales</h2>
+                    </td>
+                </tr>
             <tr>
                 <td>
                     <label>Impuestos</label>
@@ -187,17 +195,6 @@
                 }
             ],
             'columnDefs': [{ "targets": 0, "className": "text-center" }],
-            drawCallback: function ()
-            {
-                var api = this.api();
-                $("#impuestoTotal").val('$' + api.column(6, { page: 'current' }).data().sum());
-                $("#gastoTotal").val('$' + api.column(7, { page: 'current' }).data().sum());
-                $("#brutoTotal").val('$' + api.column(8, { page: 'current' }).data().sum());
-                $("#netoSala").val('$' + api.column(9, { page: 'current' }).data().sum());
-                $("#netoShow").val('$' + api.column(10, { page: 'current' }).data().sum());
-                $("#netoSUA").val('$' + api.column(11, { page: 'current' }).data().sum());
-            }
-
         });
 
         AplicarFiltrosEnFooter();
@@ -249,6 +246,7 @@
                     that.search(this.value).draw();
             });
         });
+        generaSumatorias();
     }
 
     function getMensaje()
@@ -270,6 +268,7 @@
         $("#entries").append($(".dt-buttons"));
         $("#botones").append($(".dataTables_length"));
         $("#divFechas").append($("#fechasContainer"));
+        $("#info").append($("#table_fechas_cerradas_info"));
         $("#table_fechas_cerradas_paginate").hide();
         $('#table_fechas_cerradas_filter').hide();
     }
@@ -306,6 +305,7 @@
             $("#buttonDateFilter").attr("disabled", "disabled");
             var table = $('#table_fechas_cerradas').DataTable();
             table.draw();
+            generaSumatorias();
         }
     });
 
@@ -325,6 +325,18 @@
         var parts = fecha_moment.split('-');
         var fecha = new Date(parts[0], parts[1] - 1, parts[2]); 
         return fecha;
+    }
+
+    function generaSumatorias()
+    {
+        var table = $('#table_fechas_cerradas').DataTable();
+
+        $("#impuestoTotal").val("$" + table.column(6).data().sum());
+        $("#gastoTotal").val("$" + table.column(7).data().sum());
+        $("#brutoTotal").val("$" + table.column(8).data().sum());
+        $("#netoSala").val("$" + table.column(9).data().sum());
+        $("#netoShow").val("$" + table.column(10).data().sum());
+        $("#netoSUA").val("$" + table.column(11).data().sum());
     }
 
 </script>
