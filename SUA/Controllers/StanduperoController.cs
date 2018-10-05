@@ -38,10 +38,15 @@ namespace SUA.Controllers
         }
 
         [HttpPost]
-        public ActionResult Standupero(Standupero standupero, string accion)
+        public ActionResult Standupero(Standupero standupero, string accion, string copiarFacturacion)
         {
             var service = new StanduperoService();
             standupero.Direccion.Provincia = standupero.Direccion.Provincia.Replace("@", " ");
+            if(copiarFacturacion == "copiar")
+            {
+                standupero.DireccionFacturacion = standupero.Direccion;
+            }
+
             try
             {
                 if (string.Equals(accion, "Post"))

@@ -11,6 +11,7 @@ namespace SUA.Models
         public string Apellido { get; set; }
         public string Dni { get; set; }
         public Ubicacion Direccion { get; set; }
+        public Ubicacion DireccionFacturacion { get; set; }
         public DatosBancarios DatosBancarios { get; set; }
         public string Observaciones { get; set; }
         public string Celular { get; set; }

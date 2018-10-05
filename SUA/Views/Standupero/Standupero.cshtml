@@ -104,6 +104,40 @@
                                     @Html.DropDownListFor(model => model.Direccion.Pais, new SelectList(ViewBag.paises, "Text", "Value"), new { @class = "form-control", Style = "width:300px"})
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <label id="labelDireccion"><input id="checkDireccion" name="checkDireccion" type="checkbox" value="Copiar Direccion" />Copiar a Dirección de facturación</label>
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="color: #8dd9f7">
+                        <table id="direccionFacturacion">
+                            <tr>
+                                <td>
+                                    <label>Dirección Facturación</label>
+                                    @Html.TextBoxFor(model => model.DireccionFacturacion.Direccion, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                                <td>
+                                    <label>Ciudad </label>
+                                    @Html.TextBoxFor(model => model.DireccionFacturacion.Ciudad, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label title="Para averiguar el código postal podes hacerlo ingresando la dirección en: https://www.correoargentino.com.ar/formularios/cpa">Código Postal </label>
+                                    @Html.TextBoxFor(model => model.DireccionFacturacion.CodigoPostal, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Provincia </label>
+                                    @Html.DropDownListFor(model => model.DireccionFacturacion.Provincia, new SelectList(ViewBag.provincias, "Text", "Value"), new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                                <td>
+                                    <label>País </label>
+                                    @Html.DropDownListFor(model => model.DireccionFacturacion.Pais, new SelectList(ViewBag.paises, "Text", "Value"), new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
                         </table>
 
                         <hr style="color: #8dd9f7">
@@ -161,6 +195,7 @@
 
                         <hr style="color: #8dd9f7">
                         <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
+                        <input name="copiarFacturacion" id="hiddenCopiarFacturacion" class="hidden" value="" data-form="error-box" />
                         <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
                     </form>
                 </div>
@@ -173,4 +208,23 @@
     }
 
 </div>
+
+<script>
+    $(document).ready(function () {
+        $("#labelDireccion").bind('click', function () {
+            if ($("#checkDireccion")[0].checked)
+            {
+                $("#direccionFacturacion :input").attr("disabled", "disabled");
+                $("#hiddenCopiarFacturacion").val("copiar");
+            }
+            else
+            {
+                $("#direccionFacturacion :input").removeAttr("disabled", "disabled");
+                $("#hiddenCopiarFacturacion").val("");
+            }
+            
+
+        });
+    });
+</script>
 
