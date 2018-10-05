@@ -40,9 +40,14 @@ namespace SUA.Controllers
         [HttpPost]
         public ActionResult Standupero(Standupero standupero, string accion, string copiarFacturacion)
         {
+            ViewBag.titulo = "Crear Standupero";
             var service = new StanduperoService();
             standupero.Direccion.Provincia = standupero.Direccion.Provincia.Replace("@", " ");
-            if(copiarFacturacion == "copiar")
+
+            if(standupero.DireccionFacturacion != null)
+                standupero.DireccionFacturacion.Provincia = standupero.DireccionFacturacion.Provincia.Replace("@", " ");
+
+            if (copiarFacturacion == "copiar")
             {
                 standupero.DireccionFacturacion = standupero.Direccion;
             }

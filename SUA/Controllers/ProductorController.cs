@@ -38,11 +38,19 @@ namespace SUA.Controllers
         }
 
         [HttpPost]
-        public ActionResult Productor(Productor productor, string accion)
+        public ActionResult Productor(Productor productor, string accion, string copiarFacturacion)
         {
             ViewBag.titulo = "Crear Productor";
             var service = new ProductorService();
             productor.Direccion.Provincia = productor.Direccion.Provincia.Replace("@", " ");
+
+            if(productor.DireccionFacturacion != null)
+                productor.DireccionFacturacion.Provincia = productor.DireccionFacturacion.Provincia.Replace("@", " ");
+
+            if (copiarFacturacion == "copiar")
+            {
+                productor.DireccionFacturacion = productor.Direccion;
+            }
             try
             {
                 if (string.Equals(accion, "Post"))
