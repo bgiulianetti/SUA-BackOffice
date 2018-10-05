@@ -37,6 +37,7 @@ namespace SUA.Models
         public PruebaSonidoEnsayo PruebaSonidoEnsayo { get; set; }
         public string ComoPagan { get; set; }
         public string AclaracionesSala { get; set; }
+        public string DatosBancarios { get; set; }
         public DateTime FechaAlta { get; set; }
         public int RepeticionEnDias { get; set; }
 
