@@ -17,6 +17,7 @@ namespace SUA.Models
         public string Camarin { get; set; }
         public string Observaciones { get; set; }
         public Productor Productor { get; set; }
+        public string SiglaBordereaux { get; set; }
 
         public void SetIdAndFechaAlta()
         {

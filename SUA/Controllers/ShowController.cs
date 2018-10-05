@@ -57,6 +57,7 @@ namespace SUA.Controllers
             ViewBag.titulo = "Crear Show";
             show.Integrantes = GetStanduperosListByDnis(_standuperos);
             show.Productor = new ProductorService().GetProductorByDni(_productor);
+            show.SiglaBordereaux = show.SiglaBordereaux.ToUpper();
 
             var service = new ShowService();
             try

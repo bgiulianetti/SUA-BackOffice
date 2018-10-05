@@ -374,14 +374,15 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
-        public ActionResult PrintBordereaux(string id)
+        public void PrintBordereaux(string id)
         {
             var service = new FechaService();
             var fecha = service.GetFechaById(id);
 
             Document doc = new Document(PageSize.A4, 20, 20, 15, 10);
-            string filename = Server.MapPath("~/assets/Pdf/" + "Bordereaux - " + fecha.UniqueId + ".pdf");
-            FileStream file = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
+            var fileName = "~/assets/Pdf/" + fecha.Show.SiglaBordereaux + fecha.FechaHorario.ToString("yyyyMMdd") + ".pdf";
+            string filePath = Server.MapPath(fileName);
+            FileStream file = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
             PdfWriter.GetInstance(doc, file);
 
             doc.Open();
@@ -399,12 +400,15 @@ namespace SUA.Controllers
             AgregaFirmas(doc);
 
             doc.Close();
-            Process.Start(filename);
+            Process.Start(filePath);
 
             //descargo el archivo
-            var di = new DirectoryInfo(filename);
+            var di = new DirectoryInfo(filePath);
             byte[] fileBytes = System.IO.File.ReadAllBytes(di.FullName);
-            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, "bordereaux-" + fecha.UniqueId  + ".pdf");
+            //return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+
+            Response.Redirect(fileName);
+
         }
 
         private void AgregarCabecera(Document doc, Fecha fecha)

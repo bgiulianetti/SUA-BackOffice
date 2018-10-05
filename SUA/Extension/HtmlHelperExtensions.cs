@@ -28,6 +28,12 @@ namespace SUA.Extension
                 imgBuilder.MergeAttribute("class", "confirm");
                 anchorBuilder.MergeAttribute("href", url.Action(action, controller, routeValues));
             }
+
+            if (action == "PrintBordereaux")
+            {
+                anchorBuilder.MergeAttribute("target", "_blank");
+            }
+
             anchorBuilder.InnerHtml = imgHtml; // include the <img> tag inside
             string anchorHtml = anchorBuilder.ToString(TagRenderMode.Normal);
 

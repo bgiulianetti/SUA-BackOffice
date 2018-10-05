@@ -24,7 +24,7 @@
                         <th></th>
                         <th>Nombre</th>
                         <th>Direccion</th>
-                        <th>Localidad</th>
+                        <th>Ciudad</th>
                         <th>Capacidad</th>
                         <th>Teléfono</th>
                         <th>Administrador</th>
@@ -37,7 +37,7 @@
                         <th></th>
                         <th>Nombre</th>
                         <th>Direccion</th>
-                        <th>Localidad</th>
+                        <th>Ciudad</th>
                         <th>Capacidad</th>
                         <th>Teléfono</th>
                         <th>Administrador</th>
@@ -55,9 +55,16 @@
                             </td>
                             <td>@item.Nombre</td>
                             <td>@item.Direccion.Direccion</td>
-                            <td>@item.Direccion.Localidad</td>
+                            <td>@item.Direccion.Ciudad</td>
                             <td>@item.Capacidad</td>
-                            <td>@item.Telefono</td>
+                            @if (item.WhatsAppPersonal == null || item.WhatsAppPersonal == "")
+                            {
+                                <td>@item.Telefono</td>
+                            }
+                            else
+                            {
+                                <td>@item.WhatsAppPersonal</td>
+                            }
                             <td>@item.Administrador</td>
                             <td>@item.Email</td>
                             <td>@item.Arreglo</td>
