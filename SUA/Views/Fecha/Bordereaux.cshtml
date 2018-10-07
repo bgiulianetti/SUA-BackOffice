@@ -391,6 +391,32 @@
                                 </td>
                             </tr>
                         </table>
+                        <hr style="color: #8dd9f7">
+                        <table>
+                            <tr>
+                                <td>
+                                    <label class="form-control"><input id="check_arregloProductor" type="checkbox" name="checkbox" value="ArregloFijo">División Productor</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>                                    
+                                    <label><input id="radio_porcentajeProductor" type="radio" name="radio_productor" value="ArregloFijo">Porcentaje</label>
+                                    @Html.TextBoxFor(model => model.ProductorPorcentaje, new { @id = "ProductorPorcentaje", @class = "form-control", Style = "width:200px", @placeholder = "%", @readonly = "readonly" })
+                                </td>
+                                <td>
+                                    <label><input id="radio_fijoProductor" type="radio" name="radio_productor" value="ArregloFijo" checked>Fijo</label>
+                                    @Html.TextBoxFor(model => model.ProductorMonto, new { @id = "ProductorMonto", @class = "form-control", Style = "width:200px", @placeholder = "$", @readonly = "readonly" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <br />
+                                    <label>SUA Final</label>
+                                    @Html.TextBoxFor(model => model.ProductorPorcentaje, new { @id = "ProductorPorcentaje", @class = "form-control", Style = "width:200px", @placeholder = "$", @readonly = "readonly" })
+                                </td>
+                            </tr>
+                        </table>
 
                         <hr style="color: #8dd9f7">
 
@@ -474,6 +500,8 @@
         //tomo el id de la querystring
         $("#idFecha").val(window.location.href.split('=')[1]);
         $("#impuestosDeduccionesTotalDeducir").val("0");
+
+        divisionProductor(false);
     }
 
     $("#addEntrada").click(function ()
@@ -858,6 +886,33 @@
         }
     });
 
+    $("#check_arregloProductor").change(function () {
+        divisionProductor(this.checked);
+    });
+
+    function divisionProductor(checked) {
+        if (checked) {
+            $("#ProductorPorcentaje").removeAttr("readonly", "readonly");
+            $("#ProductorMonto").removeAttr("readonly", "readonly");
+            $("#radio_porcentajeProductor").attr('disabled', false);
+            $("#radio_fijoProductor").attr('disabled', false);
+        }
+        else {
+            $("#radio_porcentajeProductor").attr('disabled', true);
+            $("#radio_fijoProductor").attr('disabled', true);
+            $("#ProductorPorcentaje").val("");
+            $("#ProductorMonto").val("");
+            $("#ProductorPorcentaje").attr("readonly", "readonly");
+            $("#ProductorMonto").attr("readonly", "readonly");
+        }
+    }
+
+    function CalcularProductorMontoFijo()
+    {
+        var suaMonto = parseFloat($("#suaMonto").val());
+        var productorMonto = parseFloat($("#ProductorMonto").val());
+    }
+
     function ComportamientoPut()
     {
          //tomo el idFecha enviado por el action Method
@@ -900,5 +955,6 @@
         RecorreImpuestos("PUT");
         RecorreGastos("PUT");
     }
+
 
 </script>
