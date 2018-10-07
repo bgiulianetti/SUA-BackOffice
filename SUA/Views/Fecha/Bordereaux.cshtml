@@ -112,7 +112,7 @@
 
 
 <div class="main-content">
-    @using (Html.BeginForm("Bordereaux", "Fecha", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Bordereaux", "Fecha", FormMethod.Post, new { enctype = "multipart/form-data", id="form" }))
     {
         if (ViewBag.mensaje == "creado")
         {
@@ -413,7 +413,7 @@
                                 <td>
                                     <br />
                                     <label>SUA Final</label>
-                                    @Html.TextBoxFor(model => model.ProductorPorcentaje, new { @id = "ProductorPorcentaje", @class = "form-control", Style = "width:200px", @placeholder = "$", @readonly = "readonly" })
+                                    @Html.TextBoxFor(model => model.ProductorPorcentaje, new { @id = "SUAMontoFinal", @class = "form-control", Style = "width:200px", @placeholder = "$", @readonly = "readonly" })
                                 </td>
                             </tr>
                         </table>
@@ -491,6 +491,16 @@
 
 <script>
 
+    $(document).ready(function() {
+        $('#form').submit(function () {
+            if ($("#btn_guardar").is(":focus"))
+                return true;
+            else
+                return false;
+        });
+    });
+
+
     if ('@ViewBag.accion' == "Put")
     {
         ComportamientoPut();
@@ -518,7 +528,6 @@
 
     $("#addImpuesto").click(function ()
     {
-
         if ($("#impuestoPorcentaje").val() != "")
         {
             AgregarImpuesto();
@@ -837,8 +846,14 @@
         else if (keyCode == 13)
         {
             event.preventDefault();
-            AgregarEntrada();
-            $("#entradasList").focus();
+            if ($("#entradaCantidad").val() != "" && $("#entradaPrecio").val() != "") {
+                AgregarEntrada();
+                $("#entradasList").focus();
+            }
+            else {
+                alert("Debe completar precio y cantidad poder ingresar una entrada");
+            }
+            
         }
     });
 
@@ -848,8 +863,15 @@
         if (keyCode == 13)
         {
             event.preventDefault();
-            AgregarImpuesto();
-            $("#impuestosList").focus();
+            if ($("#impuestoPorcentaje").val() != "")
+            {
+                AgregarImpuesto();
+                $("#impuestosList").focus();
+            }
+            else
+            {
+                alert("Debe ingresar un porcentaje válido");
+            }
         }
     });
 
@@ -890,9 +912,12 @@
         divisionProductor(this.checked);
     });
 
+    $("#ProductorMonto").bind('input', CalcularProductorMontoFijo);
+
+
     function divisionProductor(checked) {
         if (checked) {
-            $("#ProductorPorcentaje").removeAttr("readonly", "readonly");
+            //$("#ProductorPorcentaje").removeAttr("readonly", "readonly");
             $("#ProductorMonto").removeAttr("readonly", "readonly");
             $("#radio_porcentajeProductor").attr('disabled', false);
             $("#radio_fijoProductor").attr('disabled', false);
@@ -911,7 +936,31 @@
     {
         var suaMonto = parseFloat($("#suaMonto").val());
         var productorMonto = parseFloat($("#ProductorMonto").val());
+        if (productorMonto == NaN)
+        {
+            $("#ProductorPorcentaje").val("0");
+            $("#ProductorMonto").val("0")
+        }
+        else
+        {
+            var productorPorcentaje = productorMonto * 100 / suaMonto;
+            $("#ProductorPorcentaje").val(productorPorcentaje.toFixed(2));
+        }
+
+
+        var suaMontoFinal = suaMonto - productorMonto;
+        $("#SUAMontoFinal").val(suaMontoFinal.toFixed(2));
+
+
     }
+
+    $('#pdf-create-form').on('keyup', function (e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
 
     function ComportamientoPut()
     {
