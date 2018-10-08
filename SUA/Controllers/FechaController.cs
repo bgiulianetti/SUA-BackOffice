@@ -186,7 +186,7 @@ namespace SUA.Controllers
                                        string entradasBruto, string ImpuestosDeduccionesBruto, string ImpuestosDeduccionesTotalDeducir, string ImpuestosDeduccionesNeto,
                                        string ImpuestosDeduccionesCompanyPorcentaje, string ImpuestosDeduccionesCompanyMonto, string ImpuestosDeduccionesTeatroPorcentaje, string ImpuestosDeduccionesTeatroMonto,
                                        string GastosCompanyTotal, string GastosCompanyNeto, string SUAPorcentaje, string SUAMonto, string ShowPorcentaje, string ShowMonto,
-                                       string ProductorMonto, string ProductorPorcentaje, string SUAMontoFinal)
+                                       string ArregloProductor, string ProductorMonto, string ProductorPorcentaje, string SUAMontoFinal)
         {
             ViewBag.titulo = "Bordereaux";
 
@@ -224,6 +224,7 @@ namespace SUA.Controllers
                 bordereaux.ArregloFijo = false;
 
 
+            //bordereaux.ArregloProductor = ArregloProductor;
             if (ProductorMonto == "")
             {
                 bordereaux.ProductorMonto = 0;
@@ -623,14 +624,28 @@ namespace SUA.Controllers
             totales.CompleteRow();
             totales.AddCell(new Phrase("SUA: " + bordereaux.SUAPorcentaje.ToString() + "%", FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
             totales.AddCell(new Phrase("Neto: $" + bordereaux.SUAMonto.ToString(), FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
-            if(bordereaux.ArregloProductor != "")
+
+            if (bordereaux.ArregloProductor != "")
             {
                 totales.AddCell(new Phrase("Productor: " + bordereaux.ProductorPorcentaje.ToString() + "%", FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
                 totales.AddCell(new Phrase("Neto: $" + bordereaux.ProductorMonto.ToString(), FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
                 totales.CompleteRow();
-                totales.AddCell(new Phrase("SUA Total: $" + bordereaux.SUAMontoFinal.ToString(), FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
+                doc.Add(totales);
+
+                doc.Add(new Paragraph(" "));
+
+                var total_final = new PdfPTable(1);
+                total_final.DefaultCell.Padding = 3;
+                total_final.SetWidths(new int[] { 20 });
+                total_final.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
+                total_final.HeaderRows = 0;
+                total_final.DefaultCell.BackgroundColor = new BaseColor(240, 240, 240);
+                total_final.DefaultCell.BorderWidth = 1;
+                total_final.AddCell(new Phrase("SUA Total: $" + bordereaux.SUAMontoFinal.ToString(), FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
+                total_final.CompleteRow();
+                doc.Add(total_final);
             }
-            doc.Add(totales);
+            
         }
         private void AgregaFirmas(Document doc)
         {
