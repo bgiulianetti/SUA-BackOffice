@@ -624,43 +624,8 @@ namespace SUA.Controllers
             totales.CompleteRow();
             totales.AddCell(new Phrase("SUA: " + bordereaux.SUAPorcentaje.ToString() + "%", FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
             totales.AddCell(new Phrase("Neto: $" + bordereaux.SUAMonto.ToString(), FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
-
-            if (bordereaux.ArregloProductor != "")
-            {
-                doc.Add(totales);
-                doc.Add(new Paragraph(" "));
-
-                var total_final = new PdfPTable(2);
-                total_final.DefaultCell.Padding = 3;
-                total_final.SetWidths(new int[] { 10, 10 });
-                total_final.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
-                total_final.HeaderRows = 0;
-                total_final.DefaultCell.BackgroundColor = new BaseColor(240, 240, 240);
-                total_final.DefaultCell.BorderWidth = 1;
-                total_final.AddCell(new Phrase("Productor: " + bordereaux.ProductorPorcentaje.ToString() + "%", FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
-                total_final.AddCell(new Phrase("Neto: $" + bordereaux.ProductorMonto.ToString(), FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
-                total_final.CompleteRow();
-                doc.Add(total_final);
-
-                doc.Add(new Paragraph(" "));
-
-                var total_final1 = new PdfPTable(1);
-                total_final1.DefaultCell.Padding = 3;
-                total_final1.SetWidths(new int[] { 20 });
-                total_final1.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
-                total_final1.HeaderRows = 0;
-                total_final1.DefaultCell.BackgroundColor = new BaseColor(240, 240, 240);
-                total_final1.DefaultCell.BorderWidth = 1;
-                total_final1.AddCell(new Phrase("SUA Total: $" + bordereaux.SUAMontoFinal.ToString(), FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
-                total_final1.CompleteRow();
-                doc.Add(total_final1);
-            }
-            else
-            {
-                totales.CompleteRow();
-                doc.Add(totales);
-            }
-            
+            totales.CompleteRow();
+            doc.Add(totales);
         }
         private void AgregaFirmas(Document doc)
         {

@@ -188,6 +188,7 @@
     <Compile Include="Models\DatosBancarios.cs" />
     <Compile Include="Models\Fecha.cs" />
     <Compile Include="Models\GastosBordereaux.cs" />
+    <Compile Include="Models\GoogleCalendarProperties.cs" />
     <Compile Include="Models\ImpuestosDeduccionesTeatroBorderaux.cs" />
     <Compile Include="Models\InfoSalasVista.cs" />
     <Compile Include="Models\InstagramUserData.cs" />

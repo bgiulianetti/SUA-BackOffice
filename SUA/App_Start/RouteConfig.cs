@@ -31,6 +31,11 @@ namespace SUA
                 defaults: new { controller = "Home", action = "Logout" }
             );
 
+            routes.MapRoute(
+                name: "getCalenars",
+                url: "getCalendars",
+                defaults: new { controller = "Home", action = "GetCalendars" }
+            );
 
             //============================standupero=================================
             routes.MapRoute(

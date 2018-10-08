@@ -118,6 +118,7 @@ namespace SUA.Utilities
             var impuestos = new List<string>
             {
                 "AADET",
+                "AADICAPIF",
                 "Agadu",
                 "Alquiler Teatro",
                 "Argentores",

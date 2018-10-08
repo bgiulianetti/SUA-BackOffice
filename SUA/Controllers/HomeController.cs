@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SUA.Utilities;
+using Newtonsoft.Json;
 
 namespace SUA.Controllers
 {
@@ -53,8 +54,9 @@ namespace SUA.Controllers
                 return RedirectToAction("Login", "Home");
 
             var calendarService = new GoogleCalendarService();
-            ViewBag.CalendarsFullUrl = System.Configuration.ConfigurationManager.AppSettings.Get("CalendarsFullUrl");
+            ViewBag.CalendarsFullUrl = "home/GetShowCalendars";
             ViewBag.Key = calendarService.GetCalendarKey();
+            ViewBag.showCalendars = GetShowCalendarsList();
             ViewBag.titulo = "Inicio";
             return View();
         }
@@ -74,6 +76,64 @@ namespace SUA.Controllers
                 fechasCalendar.Add(calendarFeed);
             }
             return fechasCalendar;
+        }
+
+        [HttpGet]
+        public string GetShowCalendars()
+        {
+            var service = new ShowService();
+            var shows = service.GetShows();
+            var lista = new List<GoogleCalendarProperties>();
+            var listaJson = "";
+            foreach (var show in shows)
+            {
+                lista.Add(
+                    new GoogleCalendarProperties
+                    {
+                        uniqueId = show.UniqueId,
+                        show = show.Nombre,
+                        googleCalendarId = show.GoogleCalendarId,
+                        color = show.BackgroundColorCalendar,
+                        textColor = show.TextColorCalendar
+                    }
+               );
+            }
+            listaJson = JsonConvert.SerializeObject(lista);
+            return listaJson;
+        }
+
+        public List<GoogleCalendarProperties> GetShowCalendarsList()
+        {
+            var service = new ShowService();
+            var shows = service.GetShows();
+            var lista = new List<GoogleCalendarProperties>();
+            foreach (var show in shows)
+            {
+                lista.Add(
+                    new GoogleCalendarProperties
+                    {
+                        uniqueId = show.UniqueId,
+                        show = show.Nombre,
+                        googleCalendarId = show.GoogleCalendarId,
+                        color = show.BackgroundColorCalendar,
+                        textColor = show.TextColorCalendar
+                    }
+               );
+            }
+            return lista;
+        }
+
+
+        public List<string> GetNombresDeShow()
+        {
+            var showService = new ShowService();
+            var shows = showService.GetShows();
+            var lista = new List<string>();
+            foreach (var show in shows)
+            {
+                lista.Add(show.Nombre);
+            }
+            return lista;
         }
 
     }

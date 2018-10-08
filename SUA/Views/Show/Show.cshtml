@@ -90,6 +90,44 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td>
+                                    <label>Color Fondo Calendario</label>
+                                    <select name="BackgroundColorCalendar" class="form-control" id="BackgroundColorCalendar" required>
+                                        <option value="yellow">Amarillo</option>
+                                        <option value="blue">Azul</option>
+                                        <option value="white">Blanco</option>
+                                        <option value="light-blue">Celeste</option>
+                                        <option value="gray">Gris</option>
+                                        <option value="brown">Marrón</option>
+                                        <option value="orange">Naranja</option>
+                                        <option value="black">Negro</option>
+                                        <option value="pink">Rosa</option>
+                                        <option value="green">Verde</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label>Color Texto Calendario</label>
+                                    <select name="TextColorCalendar" class="form-control" id="TextColorCalendar" required>
+                                        <option value="yellow">Amarillo</option>
+                                        <option value="blue">Azul</option>
+                                        <option value="white">Blanco</option>
+                                        <option value="light-blue">Celeste</option>
+                                        <option value="gray">Gris</option>
+                                        <option value="brown">Marrón</option>
+                                        <option value="orange">Naranja</option>
+                                        <option value="black">Negro</option>
+                                        <option value="pink">Rosa</option>
+                                        <option value="green">Verde</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>ID Google Calendar</label>
+                                    @Html.TextBoxFor(model => model.GoogleCalendarId, new { @class = "form-control", Style = "width:100%", @placeholder = "Url", required = "required" })
+                                </td>
+                            </tr>
+                            <tr>
                                 <td colspan="2">
                                     <label>Observaciones </label>
                                     @Html.TextAreaFor(model => model.Observaciones, new { @class = "form-control", Style = "width:100%; height:120px", required = "required" })

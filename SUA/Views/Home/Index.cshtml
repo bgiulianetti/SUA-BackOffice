@@ -22,11 +22,17 @@
                 <h4>Mostrar Show</h4>
 
                 <div class="btn-group" data-toggle="buttons">
+                    @foreach (var show in ViewBag.showCalendars)
+                    {
+                        var uniqueId = "check" +  show.uniqueId;
+                        <label id="201809251121934" title="@show.show" class="btn btn-success active" style="background-color:@show.color">@show.show
+                            <input id="@uniqueId" type="checkbox" autocomplete="off" checked>
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </label>
+                    }
 
-                    <label id="201809251121934" title="Sanata" class="btn btn-success active">
-                        <input id="check201809251121934" type="checkbox" autocomplete="off" checked>
-                        <span class="glyphicon glyphicon-ok"></span>
-                    </label>
+                    <!--
+
                     <label id="201809251401711" title="Nicolas De Tracy" class="btn btn-primary active">
                         <input id="check201809251401711" type="checkbox" autocomplete="off" checked>
                         <span class="glyphicon glyphicon-ok"></span>
@@ -41,7 +47,7 @@
                         <input id="check201810021209749" type="checkbox" autocomplete="off" checked>
                         <span class="glyphicon glyphicon-ok"></span>
                     </label>
-
+                        -->
                 </div>
             </div>
             <div id='calendar'></div>
@@ -54,13 +60,14 @@
 <script>
     $(document).ready(function ()
     {
-        //var calendars = @Html.Raw(Json.Encode(@ViewBag.fechas));
-        getCalendarsAndDrawCalendar("initial");
+        var calendars = @Html.Raw(Json.Encode(@ViewBag.showCalendars));
+        for (var i = 0; i < calendars.length; i++)
+        {
+            var id = "#" + calendars[i].uniqueId;
+            $(id).bind('click', getCalendarsAndDrawCalendar);
+        }
 
-        $("#201809251121934").bind('click', getCalendarsAndDrawCalendar);
-        $("#201809251401711").bind('click', getCalendarsAndDrawCalendar);
-        $("#201809300847352").bind('click', getCalendarsAndDrawCalendar);
-        $("#201810021209749").bind('click', getCalendarsAndDrawCalendar);
+        getCalendarsAndDrawCalendar("initial");
     });
 
 
@@ -69,15 +76,13 @@
     {
         $.get("@ViewBag.CalendarsFullUrl", function (data)
         {
-            if (!$("#check201809251121934")[0].checked)
-                data = DeleteItemArray(data, "201809251121934");
-            if (!$("#check201809251401711")[0].checked)
-                data = DeleteItemArray(data, "201809251401711");
-            if (!$("#check201809300847352")[0].checked)
-                data = DeleteItemArray(data, "201809300847352");
-            if (!$("#check201810021209749")[0].checked)
-                data = DeleteItemArray(data, "201810021209749");
-
+            data = jQuery.parseJSON(data);
+            for (var i = 0; i < data.length; i++)
+            {
+                var id = "#check" + data[i].uniqueId;
+                if (!$(id)[0].checked)
+                    data = DeleteItemArray(data, data[i].show.uniqueId);
+            }
             if (state == "initial")
                 drawCalendar(data);
             else

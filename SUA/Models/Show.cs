@@ -18,6 +18,9 @@ namespace SUA.Models
         public string Observaciones { get; set; }
         public Productor Productor { get; set; }
         public string SiglaBordereaux { get; set; }
+        public string BackgroundColorCalendar { get; set; }
+        public string TextColorCalendar { get; set; }
+        public string GoogleCalendarId { get; set; }
 
         public void SetIdAndFechaAlta()
         {
