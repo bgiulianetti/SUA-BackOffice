@@ -40,6 +40,9 @@ namespace SUA.Servicios
         public Fecha GetUltimaFechaByShowId(string id)
         {
             var fechas = Repository.GetFechasByShowId(id);
+            if (fechas.Count == 0)
+                return null;
+
             var fechasOrdenadas = fechas.OrderBy(f => f.FechaHorario);
             return fechasOrdenadas.Last();
         }
@@ -106,7 +109,7 @@ namespace SUA.Servicios
         }
         public List<Fecha> GetFechasByDateRange(DateTime from, DateTime to)
         {
-            var fechas = Repository.GetFechas();  
+            var fechas = Repository.GetFechas();
             var fechasFiltradas = fechas.Where(f => f.FechaHorario.Date >= from.Date && f.FechaHorario.Date <= to.Date).OrderBy(f => f.FechaHorario.Date);
             return fechasFiltradas.ToList();
         }

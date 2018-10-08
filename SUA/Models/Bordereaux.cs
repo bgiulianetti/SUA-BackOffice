@@ -31,9 +31,10 @@ namespace SUA.Models
         public float ShowPorcentaje { get; set; }
         public float ShowMonto { get; set; }
 
-        public bool ProductorFijo { get; set; }
+        public string ArregloProductor { get; set; }
         public float ProductorPorcentaje { get; set; }
         public float ProductorMonto { get; set; }
+        public float SUAMontoFinal { get; set; }
 
         public DateTime FechaCobro { get; set; }
         public string Forma { get; set; }

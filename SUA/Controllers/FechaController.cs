@@ -170,6 +170,7 @@ namespace SUA.Controllers
             else
             {
                 ViewBag.arregloFijo = fecha.Borederaux.ArregloFijo.ToString().ToLower();
+                ViewBag.arregloProductor = fecha.Borederaux.ArregloProductor;
                 ViewBag.accion = "Put";
                 ViewBag.impuestos = UtilitiesAndStuff.GetImpuestos();
                 ViewBag.gastos = UtilitiesAndStuff.GetGastosCompany();
@@ -184,7 +185,8 @@ namespace SUA.Controllers
         public ActionResult Bordereaux(Bordereaux bordereaux, string accion, string _entradas, string _impuestos, string _gastos, string id, string _arregloFijo,
                                        string entradasBruto, string ImpuestosDeduccionesBruto, string ImpuestosDeduccionesTotalDeducir, string ImpuestosDeduccionesNeto,
                                        string ImpuestosDeduccionesCompanyPorcentaje, string ImpuestosDeduccionesCompanyMonto, string ImpuestosDeduccionesTeatroPorcentaje, string ImpuestosDeduccionesTeatroMonto,
-                                       string GastosCompanyTotal, string GastosCompanyNeto, string SUAPorcentaje, string SUAMonto, string ShowPorcentaje, string ShowMonto)
+                                       string GastosCompanyTotal, string GastosCompanyNeto, string SUAPorcentaje, string SUAMonto, string ShowPorcentaje, string ShowMonto,
+                                       string ProductorMonto, string ProductorPorcentaje, string SUAMontoFinal)
         {
             ViewBag.titulo = "Bordereaux";
 
@@ -215,10 +217,24 @@ namespace SUA.Controllers
             bordereaux.ImpuestosDeduccionesTeatro = GetImpuestos(_impuestos);
             bordereaux.GastosCompany = GetGastos(_gastos);
 
+
             if (_arregloFijo == "si")
                 bordereaux.ArregloFijo = true;
             else
                 bordereaux.ArregloFijo = false;
+
+
+            if (ProductorMonto == "")
+            {
+                bordereaux.ProductorMonto = 0;
+                bordereaux.ProductorPorcentaje = 0;
+            }
+            else
+            {
+                bordereaux.ProductorMonto = float.Parse(ProductorMonto, CultureInfo.InvariantCulture);
+                bordereaux.ProductorPorcentaje = float.Parse(ProductorPorcentaje, CultureInfo.InvariantCulture);
+            }
+            bordereaux.SUAMontoFinal = float.Parse(SUAMontoFinal, CultureInfo.InvariantCulture);
 
             var service = new FechaService();
             var fecha = service.GetFechaById(id);

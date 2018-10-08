@@ -54,9 +54,10 @@
                         <th>&nbsp;Impuestos&nbsp;</th>
                         <th>&nbsp;&nbsp;Gastos&nbsp;&nbsp;</th>
                         <th>&nbsp;&nbsp;Bruto&nbsp;&nbsp;</th>
-                        <th>&nbsp;&nbsp;Neto Sala&nbsp;&nbsp;</th>
-                        <th>&nbsp;&nbsp;Neto Show&nbsp;&nbsp;</th>
-                        <th>&nbsp;&nbsp;Neto SUA&nbsp;&nbsp;</th>
+                        <th>&nbsp;&nbsp;Sala&nbsp;&nbsp;</th>
+                        <th>&nbsp;&nbsp;Show&nbsp;&nbsp;</th>
+                        <th>&nbsp;&nbsp;Productor&nbsp;&nbsp;</th>
+                        <th>&nbsp;&nbsp;SUA&nbsp;&nbsp;</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -70,9 +71,10 @@
                         <th>Impuestos</th>
                         <th>Gastos</th>
                         <th>Bruto</th>
-                        <th>Neto Sala</th>
-                        <th>Neto Show</th>
-                        <th>Neto SUA</th>
+                        <th>Sala</th>
+                        <th>Show</th>
+                        <th>Productor</th>
+                        <th>SUA</th>
                     </tr>
                 </tfoot>
                 <tbody>
@@ -91,7 +93,8 @@
                             <td>$@item.Borederaux.EntradasBruto.ToString().Replace(",", ".")</td>
                             <td>$@item.Borederaux.ImpuestosDeduccionesTeatroMonto.ToString().Replace(",", ".")</td>
                             <td>$@item.Borederaux.ShowMonto.ToString().Replace(",", ".")</td>
-                            <td>$@item.Borederaux.SUAMonto.ToString().Replace(",", ".")</td>
+                            <td>$@item.Borederaux.ProductorMonto.ToString().Replace(",", ".")</td>
+                            <td>$@item.Borederaux.SUAMontoFinal.ToString().Replace(",", ".")</td>
                         </tr>
                     }
                 </tbody>
@@ -137,6 +140,10 @@
                 <td>
                     <label>Neto Show</label>
                     <input class="form-control" id="netoShow" type="text" readonly />
+                </td>
+                <td>
+                    <label>Neto Productor</label>
+                    <input class="form-control" id="netoProductor" type="text" readonly />
                 </td>
                 <td>
                     <label>Neto SUA</label>
@@ -252,9 +259,13 @@
 
     function getMensaje()
     {
-        var mensaje = '\nImpuestos: ' + $("#impuestoTotal").val() + '      ||      Gastos: ' + $("#gastoTotal").val() + '      ||       Bruto: ' +
-            $("#brutoTotal").val() + '      ||      Neto Sala: ' + $("#netoSala").val() + '      ||      Neto Show: ' + $("#netoShow").val() +
-            '      ||      Neto SUA: ' + $("#netoSUA").val();
+        var mensaje = '\nImpuestos: ' + $("#impuestoTotal").val() +
+            '    ||    Gastos: ' + $("#gastoTotal").val() +
+            '    ||    Bruto: ' + $("#brutoTotal").val() +
+            '    ||    Sala: ' + $("#netoSala").val() +
+            '    ||    Show: ' + $("#netoShow").val() +
+            '    ||    Productor: ' + $("#netoProductor").val() +
+            '    ||    SUA: ' + $("#netoSUA").val();
 
         if ($('#filterCheck').prop('checked'))
         {
@@ -337,7 +348,8 @@
         $("#brutoTotal").val("$" + table.column(8).data().sum().toFixed(2));
         $("#netoSala").val("$" + table.column(9).data().sum().toFixed(2));
         $("#netoShow").val("$" + table.column(10).data().sum().toFixed(2));
-        $("#netoSUA").val("$" + table.column(11).data().sum().toFixed(2));
+        $("#netoProductor").val("$" + table.column(11).data().sum().toFixed(2));
+        $("#netoSUA").val("$" + table.column(12).data().sum().toFixed(2));
     }
 
 </script>

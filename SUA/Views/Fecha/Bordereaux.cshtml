@@ -112,7 +112,7 @@
 
 
 <div class="main-content">
-    @using (Html.BeginForm("Bordereaux", "Fecha", FormMethod.Post, new { enctype = "multipart/form-data", id="form" }))
+    @using (Html.BeginForm("Bordereaux", "Fecha", FormMethod.Post, new { enctype = "multipart/form-data", id = "form" }))
     {
         if (ViewBag.mensaje == "creado")
         {
@@ -136,7 +136,7 @@
                                     <select class="form-control" id="entradasList" style="width:200px">
                                         @foreach (var item in ViewBag.entradas)
                                         {
-                                            <option value="@item.Text">@item.Value</option>
+                                        <option value="@item.Text">@item.Value</option>
                                         }
                                     </select>
                                 </td>
@@ -169,13 +169,13 @@
                                     var idCantidad = contador + "-b";
                                     var idPrecio = contador + "-c";
                                     var idTotal = contador + "-d";
-                                    <div id="EntradasAgregadas">
-                                        <input id="@idEntrada" class="form-control-override" value="@item.Nombre" type="text" readonly style="width:200px" />
-                                        <input id="@idCantidad" class="form-control-override" value="@item.Cantidad" type="text" readonly style="width:120px" />
-                                        <input id="@idPrecio" class="form-control-override" value="@item.Precio" type="text" readonly style="width:120px" />
-                                        <input id="@idTotal" class="form-control-override" value="@item.Total" type="text" readonly style="width:120px" />
-                                        <input id="deleteEntrada" class="form-control-button-entrada" value="-" type="button" /><br />
-                                    </div>
+                            <div id="EntradasAgregadas">
+                                <input id="@idEntrada" class="form-control-override" value="@item.Nombre" type="text" readonly style="width:200px" />
+                                <input id="@idCantidad" class="form-control-override" value="@item.Cantidad" type="text" readonly style="width:120px" />
+                                <input id="@idPrecio" class="form-control-override" value="@item.Precio" type="text" readonly style="width:120px" />
+                                <input id="@idTotal" class="form-control-override" value="@item.Total" type="text" readonly style="width:120px" />
+                                <input id="deleteEntrada" class="form-control-button-entrada" value="-" type="button" /><br />
+                            </div>
                                     contador = contador + 1;
                                 }
                             }
@@ -205,7 +205,7 @@
                                     <select class="form-control" id="impuestosList" style="width:200px">
                                         @foreach (var item in ViewBag.impuestos)
                                         {
-                                            <option value="@item.Text">@item.Value</option>
+                                        <option value="@item.Text">@item.Value</option>
                                         }
                                     </select>
                                 </td>
@@ -238,13 +238,13 @@
                                     var idPorcentaje = contador + "-f";
                                     var idMonto = contador + "-g";
                                     var idComentarios = contador + "-h";
-                                    <div id="ImpuestosAgregados">
-                                        <input id="@idImpuesto" class="form-control-override" value="@item.Nombre" type="text" readonly style="width:200px" />
-                                        <input id="@idPorcentaje" class="form-control-override" value='@item.Porcentaje.ToString().Replace(",",".")' type="text" readonly style="width:75px" />
-                                        <input id="@idMonto" class="form-control-override" value='@item.Monto.ToString().Replace(",",".")' type="text" readonly style="width:75px" />
-                                        <input id="@idComentarios" class="form-control-override" value="@item.Comentarios" type="text" readonly style="width:220px" />
-                                        <input id="deleteImpuesto" class="form-control-button-impuesto" value="-" type="button" /><br />
-                                    </div>
+                            <div id="ImpuestosAgregados">
+                                <input id="@idImpuesto" class="form-control-override" value="@item.Nombre" type="text" readonly style="width:200px" />
+                                <input id="@idPorcentaje" class="form-control-override" value='@item.Porcentaje.ToString().Replace(",",".")' type="text" readonly style="width:75px" />
+                                <input id="@idMonto" class="form-control-override" value='@item.Monto.ToString().Replace(",",".")' type="text" readonly style="width:75px" />
+                                <input id="@idComentarios" class="form-control-override" value="@item.Comentarios" type="text" readonly style="width:220px" />
+                                <input id="deleteImpuesto" class="form-control-button-impuesto" value="-" type="button" /><br />
+                            </div>
                                     contador = contador + 1;
                                 }
                             }
@@ -255,7 +255,7 @@
                                 <td>
                                     <br />
                                     <label>Bruto </label>
-                                    @Html.TextBoxFor(model => model.ImpuestosDeduccionesBruto, new { @id = "impuestosDeduccionesBruto", @class = "form-control", Style = "width:200px",  @readonly = "readonly" })
+                                    @Html.TextBoxFor(model => model.ImpuestosDeduccionesBruto, new { @id = "impuestosDeduccionesBruto", @class = "form-control", Style = "width:200px", @readonly = "readonly" })
                                 </td>
                                 <td>
                                     <br />
@@ -277,7 +277,7 @@
                                 <td>
                                     <br />
                                     <label>&nbsp;</label>
-                                    @Html.TextBoxFor(model => model.ImpuestosDeduccionesCompanyMonto, new { @name= "ImpuestosDeduccionesCompanyMonto", @id = "impuestosDeduccionesCompanyMonto", @class = "form-control", Style = "width:200px", @placeholder = "$", @readonly = "readonly" })
+                                    @Html.TextBoxFor(model => model.ImpuestosDeduccionesCompanyMonto, new { @name = "ImpuestosDeduccionesCompanyMonto", @id = "impuestosDeduccionesCompanyMonto", @class = "form-control", Style = "width:200px", @placeholder = "$", @readonly = "readonly" })
                                 </td>
                             </tr>
                             <tr>
@@ -308,7 +308,7 @@
                                     <select class="form-control" id="gastosList" style="width:200px">
                                         @foreach (var item in ViewBag.gastos)
                                         {
-                                            <option value="@item.Text">@item.Value</option>
+                                        <option value="@item.Text">@item.Value</option>
                                         }
                                     </select>
                                 </td>
@@ -337,12 +337,12 @@
                                     var idGasto = contador + "-i";
                                     var idMonto = contador + "-j";
                                     var idDetalle = contador + "-k";
-                                    <div id="GastosAgregados">
-                                        <input id="@idGasto" class="form-control-override" value="@item.Gasto" type="text" readonly style="width:200px" />
-                                        <input id="@idMonto" class="form-control-override" value="@item.Monto.ToString().Replace(",",".")" type="text" readonly style="width:120px" />
-                                        <input id="@idDetalle" class="form-control-override" value="@item.Detalle" type="text" readonly style="width:120px" />
-                                        <input id="deleteGasto" class="form-control-button-gasto" value="-" type="button" /><br />
-                                    </div>
+                            <div id="GastosAgregados">
+                                <input id="@idGasto" class="form-control-override" value="@item.Gasto" type="text" readonly style="width:200px" />
+                                <input id="@idMonto" class="form-control-override" value="@item.Monto.ToString().Replace(",",".")" type="text" readonly style="width:120px" />
+                                <input id="@idDetalle" class="form-control-override" value="@item.Detalle" type="text" readonly style="width:120px" />
+                                <input id="deleteGasto" class="form-control-button-gasto" value="-" type="button" /><br />
+                            </div>
                                     contador = contador + 1;
                                 }
                             }
@@ -399,7 +399,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>                                    
+                                <td>
                                     <label><input id="radio_porcentajeProductor" type="radio" name="radio_productor" value="ArregloFijo">Porcentaje</label>
                                     @Html.TextBoxFor(model => model.ProductorPorcentaje, new { @id = "ProductorPorcentaje", @class = "form-control", Style = "width:200px", @placeholder = "%", @readonly = "readonly" })
                                 </td>
@@ -413,7 +413,7 @@
                                 <td>
                                     <br />
                                     <label>SUA Final</label>
-                                    @Html.TextBoxFor(model => model.ProductorPorcentaje, new { @id = "SUAMontoFinal", @class = "form-control", Style = "width:200px", @placeholder = "$", @readonly = "readonly" })
+                                    @Html.TextBoxFor(model => model.SUAMontoFinal, new { @id = "SUAMontoFinal", @class = "form-control", Style = "width:200px", @placeholder = "$", @readonly = "readonly" })
                                 </td>
                             </tr>
                         </table>
@@ -426,11 +426,11 @@
                                     <label>Fecha de Cobro </label>
                                     @if (ViewBag.accion == "Put")
                                     {
-                                        @Html.TextBoxFor(model => model.FechaCobro, new { @class = "form-control", Style = "width:200px", required = "required", @type = "date", @Value = Model.FechaCobro.ToString("yyyy-MM-dd") })
+                                    @Html.TextBoxFor(model => model.FechaCobro, new { @class = "form-control", Style = "width:200px", required = "required", @type = "date", @Value = Model.FechaCobro.ToString("yyyy-MM-dd") })
                                     }
                                     else
                                     {
-                                        @Html.TextBoxFor(model => model.FechaCobro, new { @class = "form-control", Style = "width:200px", required = "required", @type = "date" })
+                                    @Html.TextBoxFor(model => model.FechaCobro, new { @class = "form-control", Style = "width:200px", required = "required", @type = "date" })
                                     }
 
 
@@ -459,6 +459,7 @@
                         <input name="_impuestos" id="impuestosSeleccionados" class="hidden" data-form="error-box" />
                         <input name="_gastos" id="gastosSeleccionados" class="hidden" data-form="error-box" />
                         <input name="_arregloFijo" id="_arregloFijo" value="no" class="hidden" data-form="error-box" />
+                        <input name="ArregloProductor" id="ArregloProductor" value="@Model.ArregloProductor" class="hidden" data-form="error-box" />
                         <input name="id" id="idFecha" class="hidden" data-form="error-box" />
 
 
@@ -853,7 +854,7 @@
             else {
                 alert("Debe completar precio y cantidad poder ingresar una entrada");
             }
-            
+
         }
     });
 
@@ -914,13 +915,14 @@
 
     $("#ProductorMonto").bind('input', CalcularProductorMontoFijo);
 
+    $("#ProductorPorcentaje").bind('input', CalcularProductorPorcentaje);
 
     function divisionProductor(checked) {
         if (checked) {
-            //$("#ProductorPorcentaje").removeAttr("readonly", "readonly");
             $("#ProductorMonto").removeAttr("readonly", "readonly");
             $("#radio_porcentajeProductor").attr('disabled', false);
             $("#radio_fijoProductor").attr('disabled', false);
+            $("#ArregloProductor").val("fijo");
         }
         else {
             $("#radio_porcentajeProductor").attr('disabled', true);
@@ -929,6 +931,9 @@
             $("#ProductorMonto").val("");
             $("#ProductorPorcentaje").attr("readonly", "readonly");
             $("#ProductorMonto").attr("readonly", "readonly");
+            $("#SUAMontoFinal").val($("#suaMonto").val());
+            $("#radio_fijoProductor").prop("checked", true);
+            $("#ArregloProductor").val("");
         }
     }
 
@@ -936,30 +941,54 @@
     {
         var suaMonto = parseFloat($("#suaMonto").val());
         var productorMonto = parseFloat($("#ProductorMonto").val());
-        if (productorMonto == NaN)
+        if (isNaN(productorMonto))
         {
             $("#ProductorPorcentaje").val("0");
-            $("#ProductorMonto").val("0")
+            $("#SUAMontoFinal").val(suaMonto);
         }
         else
         {
             var productorPorcentaje = productorMonto * 100 / suaMonto;
             $("#ProductorPorcentaje").val(productorPorcentaje.toFixed(2));
+
+            var suaMontoFinal = suaMonto - productorMonto;
+            $("#SUAMontoFinal").val(suaMontoFinal.toFixed(2));
         }
-
-
-        var suaMontoFinal = suaMonto - productorMonto;
-        $("#SUAMontoFinal").val(suaMontoFinal.toFixed(2));
-
-
     }
 
-    $('#pdf-create-form').on('keyup', function (e) {
-        var keyCode = e.keyCode || e.which;
-        if (keyCode === 13) {
-            e.preventDefault();
-            return false;
+    function CalcularProductorPorcentaje()
+    {
+        var suaMonto = parseFloat($("#suaMonto").val());
+        var productorPorcentaje = parseFloat($("#ProductorPorcentaje").val());
+        if (isNaN(productorPorcentaje))
+        {
+            $("#ProductorMonto").val("0");
+            $("#SUAMontoFinal").val(suaMonto);
         }
+        else
+        {
+            var productorMonto = suaMonto * productorPorcentaje / 100;
+            $("#ProductorMonto").val(productorMonto.toFixed(2));
+
+            var suaMontoFinal = suaMonto - productorMonto;
+            $("#SUAMontoFinal").val(suaMontoFinal.toFixed(2));
+        }
+    }
+
+    $('#radio_porcentajeProductor').on('change', function () {
+        $("#ProductorMonto").attr("readonly", "readonly");
+        $("#ProductorPorcentaje").removeAttr("readonly", "readonly");
+        $("#ProductorPorcentaje").val("0");
+        $("#ProductorMonto").val("0");
+        $("#ArregloProductor").val("porcentaje");
+    });
+
+    $('#radio_fijoProductor').on('change', function () {
+        $("#ProductorMonto").removeAttr("readonly", "readonly");
+        $("#ProductorPorcentaje").attr("readonly", "readonly");
+        $("#ProductorPorcentaje").val("0");
+        $("#ProductorMonto").val("0");
+        $("#ArregloProductor").val("fijo");
     });
 
     function ComportamientoPut()
@@ -974,6 +1003,29 @@
         else
             $("#check_arregloFijo").prop("checked", false);
 
+
+        //seteo el check y radiobuttons de arreglo productor
+        var arregloProductor = '@ViewBag.arregloProductor';
+        if (arregloProductor == "")
+        {
+            $("#check_arregloProductor").prop("checked", false);
+            divisionProductor(false);
+        }
+        else if (arregloProductor == "fijo")
+        {
+            $("#check_arregloProductor").prop("checked", true);
+            divisionProductor(true);
+            $("#radio_fijoProductor").prop("checked", true);
+        }
+        else if (arregloProductor == "porcentaje")
+        {
+            $("#check_arregloProductor").prop("checked", true);
+            divisionProductor(true);
+            $("#radio_porcentajeProductor").prop("checked", true);
+        }
+
+
+
         //agrego evento de click a boton 'eliminar entrada' agregado de forma dinamica en el Put
         $(".form-control-button-entrada").click(BorrarEntrada);
 
@@ -982,7 +1034,6 @@
 
         //agrego evento de click a boton 'eliminar gasto' agregado de forma dinamica en el Put
         $(".form-control-button-gasto").click(BorrarGasto);
-
 
 
         //reemplazo las comas por los puntos
@@ -998,6 +1049,9 @@
         $("#suaMonto").val($("#suaMonto").val().replace(",", "."));
         $("#showPorcentaje").val($("#showPorcentaje").val().replace(",", "."));
         $("#showMonto").val($("#showMonto").val().replace(",", "."));
+        $("#ProductorMonto").val($("#ProductorMonto").val().replace(",", "."));
+        $("#ProductorPorcentaje").val($("#ProductorPorcentaje").val().replace(",", "."));
+        $("#SUAMontoFinal").val($("#SUAMontoFinal").val().replace(",", "."));
 
 
         RecorreEntradas("PUT");
