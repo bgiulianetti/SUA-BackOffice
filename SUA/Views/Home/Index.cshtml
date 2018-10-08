@@ -24,9 +24,9 @@
                 <div class="btn-group" data-toggle="buttons">
                     @foreach (var show in ViewBag.showCalendars)
                     {
-                        var uniqueId = "check" +  show.uniqueId;
-                        <label id="201809251121934" title="@show.show" class="btn btn-success active" style="background-color:@show.color">@show.show
-                            <input id="@uniqueId" type="checkbox" autocomplete="off" checked>
+                        var id = "check" + show.uniqueId;
+                        <label id="@show.uniqueId" title="@show.show" class="btn btn-success active">@show.show
+                            <input id="@id" type="checkbox" autocomplete="off" checked>
                             <span class="glyphicon glyphicon-ok"></span>
                         </label>
                     }
@@ -63,8 +63,10 @@
         var calendars = @Html.Raw(Json.Encode(@ViewBag.showCalendars));
         for (var i = 0; i < calendars.length; i++)
         {
-            var id = "#" + calendars[i].uniqueId;
-            $(id).bind('click', getCalendarsAndDrawCalendar);
+            $("#" + calendars[i].uniqueId).bind('click', getCalendarsAndDrawCalendar);
+            $("#" + calendars[i].uniqueId).css("background-color", calendars[i].color);
+            $("#" + calendars[i].uniqueId).css("border-color", calendars[i].color);
+            $("#" + calendars[i].uniqueId).css("color", calendars[i].textColor);
         }
 
         getCalendarsAndDrawCalendar("initial");
@@ -81,7 +83,7 @@
             {
                 var id = "#check" + data[i].uniqueId;
                 if (!$(id)[0].checked)
-                    data = DeleteItemArray(data, data[i].show.uniqueId);
+                    data = DeleteItemArray(data, data[i].uniqueId);
             }
             if (state == "initial")
                 drawCalendar(data);
