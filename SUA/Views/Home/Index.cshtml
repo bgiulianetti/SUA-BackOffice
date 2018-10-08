@@ -79,11 +79,19 @@
         $.get("@ViewBag.CalendarsFullUrl", function (data)
         {
             data = jQuery.parseJSON(data);
-            for (var i = 0; i < data.length; i++)
+            var i = 0;
+            while (i < data.length)
             {
                 var id = "#check" + data[i].uniqueId;
-                if (!$(id)[0].checked)
+                if ($(id)[0].checked == undefined || !$(id)[0].checked)
+                {
                     data = DeleteItemArray(data, data[i].uniqueId);
+                    i = 0;
+                }
+                else
+                {
+                    i++;
+                }
             }
             if (state == "initial")
                 drawCalendar(data);

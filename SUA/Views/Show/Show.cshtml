@@ -92,33 +92,11 @@
                             <tr>
                                 <td>
                                     <label>Color Fondo Calendario</label>
-                                    <select name="BackgroundColorCalendar" class="form-control" id="BackgroundColorCalendar" required>
-                                        <option value="yellow">Amarillo</option>
-                                        <option value="blue">Azul</option>
-                                        <option value="white">Blanco</option>
-                                        <option value="lightblue">Celeste</option>
-                                        <option value="gray">Gris</option>
-                                        <option value="brown">Marrón</option>
-                                        <option value="orange">Naranja</option>
-                                        <option value="black">Negro</option>
-                                        <option value="pink">Rosa</option>
-                                        <option value="green">Verde</option>
-                                    </select>
+                                    @Html.DropDownListFor(model => model.BackgroundColorCalendar, new SelectList(ViewBag.colores, "Text", "Value"), new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                                 <td>
                                     <label>Color Texto Calendario</label>
-                                    <select name="TextColorCalendar" class="form-control" id="TextColorCalendar" required>
-                                        <option value="yellow">Amarillo</option>
-                                        <option value="blue">Azul</option>
-                                        <option value="white">Blanco</option>
-                                        <option value="lightblue">Celeste</option>
-                                        <option value="gray">Gris</option>
-                                        <option value="brown">Marrón</option>
-                                        <option value="orange">Naranja</option>
-                                        <option value="black">Negro</option>
-                                        <option value="pink">Rosa</option>
-                                        <option value="green">Verde</option>
-                                    </select>
+                                    @Html.DropDownListFor(model => model.TextColorCalendar, new SelectList(ViewBag.colores, "Text", "Value"), new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                             </tr>
                             <tr>

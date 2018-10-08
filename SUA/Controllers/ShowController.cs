@@ -1,5 +1,6 @@
 ﻿using SUA.Models;
 using SUA.Servicios;
+using SUA.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace SUA.Controllers
                 return RedirectToAction("Login", "Home");
 
             ViewBag.mensaje = "Get";
-
+            ViewBag.colores = UtilitiesAndStuff.GetColores();
             var productoresService = new ProductorService();
             ViewBag.productores = productoresService.GetProductores();
 
@@ -58,7 +59,7 @@ namespace SUA.Controllers
             show.Integrantes = GetStanduperosListByDnis(_standuperos);
             show.Productor = new ProductorService().GetProductorByDni(_productor);
             show.SiglaBordereaux = show.SiglaBordereaux.ToUpper();
-
+            ViewBag.colores = UtilitiesAndStuff.GetColores();
             var service = new ShowService();
             try
             {

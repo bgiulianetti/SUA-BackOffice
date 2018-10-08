@@ -199,5 +199,25 @@ namespace SUA.Utilities
             return Convert.ToInt32(diasVencidoRedondeado);
         }
 
+        public static List<SelectListItem> GetColores()
+        {
+            var colores = new List<string>
+            {
+                "black",
+                "blue",
+                "brown",
+                "gray",
+                "green",
+                "lightblue",
+                "lightgray",
+                "orange",
+                "pink",
+                "purple",
+                "white",
+                "yellow"
+            };
+            return ConverListToSelectListItem(colores);
+        }
+
     }
 }
