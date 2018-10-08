@@ -224,7 +224,7 @@ namespace SUA.Controllers
                 bordereaux.ArregloFijo = false;
 
 
-            //bordereaux.ArregloProductor = ArregloProductor;
+            bordereaux.ArregloProductor = ArregloProductor;
             if (ProductorMonto == "")
             {
                 bordereaux.ProductorMonto = 0;
@@ -644,6 +644,11 @@ namespace SUA.Controllers
                 total_final.AddCell(new Phrase("SUA Total: $" + bordereaux.SUAMontoFinal.ToString(), FontFactory.GetFont(FontFactory.COURIER_BOLD, 11)));
                 total_final.CompleteRow();
                 doc.Add(total_final);
+            }
+            else
+            {
+                totales.CompleteRow();
+                doc.Add(totales);
             }
             
         }
