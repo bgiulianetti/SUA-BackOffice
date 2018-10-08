@@ -54,9 +54,10 @@
                         <th>&nbsp;Impuestos&nbsp;</th>
                         <th>&nbsp;&nbsp;Gastos&nbsp;&nbsp;</th>
                         <th>&nbsp;&nbsp;Bruto&nbsp;&nbsp;</th>
-                        <th>&nbsp;&nbsp;Sala&nbsp;&nbsp;</th>
-                        <th>&nbsp;&nbsp;Show&nbsp;&nbsp;</th>
+                        <th>&nbsp;&nbsp;Sala neto&nbsp;&nbsp;</th>
+                        <th>&nbsp;&nbsp;Show neto&nbsp;&nbsp;</th>
                         <th>&nbsp;&nbsp;Productor&nbsp;&nbsp;</th>
+                        <th>&nbsp;&nbsp;Productor neto&nbsp;&nbsp;</th>
                         <th>&nbsp;&nbsp;SUA&nbsp;&nbsp;</th>
                     </tr>
                 </thead>
@@ -71,9 +72,10 @@
                         <th>Impuestos</th>
                         <th>Gastos</th>
                         <th>Bruto</th>
-                        <th>Sala</th>
-                        <th>Show</th>
+                        <th>Sala neto</th>
+                        <th>Show neto</th>
                         <th>Productor</th>
+                        <th>Productor neto</th>
                         <th>SUA</th>
                     </tr>
                 </tfoot>
@@ -93,6 +95,7 @@
                             <td>$@item.Borederaux.EntradasBruto.ToString().Replace(",", ".")</td>
                             <td>$@item.Borederaux.ImpuestosDeduccionesTeatroMonto.ToString().Replace(",", ".")</td>
                             <td>$@item.Borederaux.ShowMonto.ToString().Replace(",", ".")</td>
+                            <td>@item.Productor.Nombre @item.Productor.Apellido</td>
                             <td>$@item.Borederaux.ProductorMonto.ToString().Replace(",", ".")</td>
                             <td>$@item.Borederaux.SUAMontoFinal.ToString().Replace(",", ".")</td>
                         </tr>
@@ -233,7 +236,7 @@
         {
             if (contador != 0) {
                 var title = $(this).text();
-                if (title == "Show" || title == "Sala" || title == "Ciudad" || title == "Cantidad Entradas" || title == "Capacidad Total" || title == "Asistencia")
+                if (title == "Show" || title == "Sala" || title == "Ciudad" || title == "Cantidad Entradas" || title == "Capacidad Total" || title == "Asistencia" || title == "Productor")
                 {
                     $(this).html('<input type="text" placeholder="' + title + '" />');
                 }
@@ -348,8 +351,8 @@
         $("#brutoTotal").val("$" + table.column(8).data().sum().toFixed(2));
         $("#netoSala").val("$" + table.column(9).data().sum().toFixed(2));
         $("#netoShow").val("$" + table.column(10).data().sum().toFixed(2));
-        $("#netoProductor").val("$" + table.column(11).data().sum().toFixed(2));
-        $("#netoSUA").val("$" + table.column(12).data().sum().toFixed(2));
+        $("#netoProductor").val("$" + table.column(12).data().sum().toFixed(2));
+        $("#netoSUA").val("$" + table.column(13).data().sum().toFixed(2));
     }
 
 </script>
