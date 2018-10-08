@@ -169,13 +169,13 @@
                                     var idCantidad = contador + "-b";
                                     var idPrecio = contador + "-c";
                                     var idTotal = contador + "-d";
-                            <div id="EntradasAgregadas">
-                                <input id="@idEntrada" class="form-control-override" value="@item.Nombre" type="text" readonly style="width:200px" />
-                                <input id="@idCantidad" class="form-control-override" value="@item.Cantidad" type="text" readonly style="width:120px" />
-                                <input id="@idPrecio" class="form-control-override" value="@item.Precio" type="text" readonly style="width:120px" />
-                                <input id="@idTotal" class="form-control-override" value="@item.Total" type="text" readonly style="width:120px" />
-                                <input id="deleteEntrada" class="form-control-button-entrada" value="-" type="button" /><br />
-                            </div>
+                                    <div id="EntradasAgregadas">
+                                        <input id="@idEntrada" class="form-control-override" value="@item.Nombre" type="text" readonly style="width:200px" />
+                                        <input id="@idCantidad" class="form-control-override" value="@item.Cantidad" type="text" readonly style="width:120px" />
+                                        <input id="@idPrecio" class="form-control-override" value="@item.Precio.ToString().Replace(",", ".")" type="text" readonly style="width:120px" />
+                                        <input id="@idTotal" class="form-control-override" value="@item.Total.ToString().Replace(",", ".")" type="text" readonly style="width:120px" />
+                                        <input id="deleteEntrada" class="form-control-button-entrada" value="-" type="button" /><br />
+                                    </div>
                                     contador = contador + 1;
                                 }
                             }
@@ -622,10 +622,10 @@
 
         if (accion != "PUT")
         {
-            var totalDeducirArreglado = totalDeducir.toString().replace(",", ".");
+            var totalDeducirArreglado = totalDeducir.toFixed(2).replace(",", ".");
             $("#impuestosDeduccionesTotalDeducir").val(totalDeducirArreglado);
 
-            var impuestoDeduccionesNetoArreglado = (parseFloat($("#entradasBruto").val()) - totalDeducir).toString().replace(",", ".");
+            var impuestoDeduccionesNetoArreglado = (parseFloat($("#entradasBruto").val()) - totalDeducir).toFixed(2).replace(",", ".");
             $("#impuestosDeduccionesNeto").val(impuestoDeduccionesNetoArreglado);
         }
 
@@ -1037,6 +1037,9 @@
 
 
         //reemplazo las comas por los puntos
+        $("#entradasBruto").val($("#entradasBruto").val().replace(",", "."));
+        $("#impuestosDeduccionesBruto").val($("#impuestosDeduccionesBruto").val().replace(",", "."));
+
         $("#impuestosDeduccionesTotalDeducir").val($("#impuestosDeduccionesTotalDeducir").val().replace(",", "."));
         $("#impuestosDeduccionesNeto").val($("#impuestosDeduccionesNeto").val().replace(",", "."));
         $("#impuestosDeduccionesCompanyPorcentaje").val($("#impuestosDeduccionesCompanyPorcentaje").val().replace(",", "."));
