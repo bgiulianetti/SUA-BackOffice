@@ -511,6 +511,7 @@
         //tomo el id de la querystring
         $("#idFecha").val(window.location.href.split('=')[1]);
         $("#impuestosDeduccionesTotalDeducir").val("0");
+        $("#GastosCompanyTotal").val("0");
 
         divisionProductor(false);
     }
@@ -810,6 +811,8 @@
         var teatro = (neto - montoCompany).toFixed(2);
         $("#impuestosDeduccionesCompanyMonto").val(montoCompany);
         $("#impuestosDeduccionesTeatroMonto").val(teatro);
+
+        $("#gastosCompanyNeto").val(montoCompany);
     }
 
     function CalcularTeatroMontoFijo()
@@ -820,6 +823,8 @@
         var porcentajeTeatro = porcentajeTeatro.toFixed(2);
         $('#impuestosDeduccionesTeatroPorcentaje').val(porcentajeTeatro);
         $("#impuestosDeduccionesCompanyMonto").val(neto - montoTeatro);
+
+        $("#gastosCompanyNeto").val($("#impuestosDeduccionesCompanyMonto").val());
     }
 
     function CalcularSUAMontoNetoFinal()
@@ -832,6 +837,7 @@
         var show = neto - montoCompany;
         $("#suaMonto").val(montoCompany.toFixed(2));
         $("#showMonto").val(show.toFixed(2));
+        $("#SUAMontoFinal").val(show.toFixed(2));
     }
 
     $("#entradaPrecio").keydown(function (event)
