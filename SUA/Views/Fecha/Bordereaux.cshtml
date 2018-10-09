@@ -1019,7 +1019,7 @@
     {
         if ($('#check_arregloProductor').is(":checked"))
         {
-            if ($('#radio_fijoProductor').is(":selected"))
+            if ($('#radio_fijoProductor').is(":checked"))
             {
                 CalcularProductorMontoFijo();
             }
@@ -1027,6 +1027,10 @@
             {
                 CalcularProductorPorcentaje();
             }
+        }
+        else
+        {
+            $("#SUAMontoFinal").val($("#suaMonto").val());
         }
     }
 
