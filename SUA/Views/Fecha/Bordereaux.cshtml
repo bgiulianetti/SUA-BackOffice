@@ -593,7 +593,6 @@
                 CalcularTeatroSua("fijo");
             else
                 CalcularTeatroSua();
-            RecorreGastos(accion);
             CalcularSUAMontoNetoFinal();
         }
         $("#entradasSeleccionadas").val(entradasString);
@@ -827,7 +826,8 @@
         $("#impuestosDeduccionesCompanyMonto").val(montoCompany);
         $("#impuestosDeduccionesTeatroMonto").val(teatro);
 
-        $("#gastosCompanyNeto").val(montoCompany);
+        var gastos = parseFloat($("#GastosCompanyTotal").val());
+        $("#gastosCompanyNeto").val(montoCompany - gastos);
     }
 
     function CalcularTeatroSua(tipo)
@@ -851,7 +851,10 @@
         $('#impuestosDeduccionesTeatroPorcentaje').val(porcentajeTeatro);
         $("#impuestosDeduccionesCompanyMonto").val(neto - montoTeatro);
 
-        $("#gastosCompanyNeto").val($("#impuestosDeduccionesCompanyMonto").val());
+        var gastos = parseFloat($("#GastosCompanyTotal").val());
+        $("#gastosCompanyNeto").val(parseFloat($("#impuestosDeduccionesCompanyMonto").val()) - gastos);
+
+
     }
 
     function CalcularSUAMontoNetoFinal()
@@ -864,7 +867,7 @@
         var show = neto - montoCompany;
         $("#suaMonto").val(montoCompany.toFixed(2));
         $("#showMonto").val(show.toFixed(2));
-        $("#SUAMontoFinal").val($("#suaMonto").val());
+        CalcularDivisionProductor();
     }
 
     $("#entradaPrecio").keydown(function (event)
@@ -1009,6 +1012,21 @@
 
             var suaMontoFinal = suaMonto - productorMonto;
             $("#SUAMontoFinal").val(suaMontoFinal.toFixed(2));
+        }
+    }
+
+    function CalcularDivisionProductor()
+    {
+        if ($('#check_arregloProductor').is(":checked"))
+        {
+            if ($('#radio_fijoProductor').is(":selected"))
+            {
+                CalcularProductorMontoFijo();
+            }
+            else
+            {
+                CalcularProductorPorcentaje();
+            }
         }
     }
 
