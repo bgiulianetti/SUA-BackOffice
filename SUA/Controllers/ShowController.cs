@@ -22,7 +22,7 @@ namespace SUA.Controllers
             var productoresService = new ProductorService();
             ViewBag.productores = productoresService.GetProductores();
             var salaService = new SalaService();
-            ViewBag.Plazas = salaService.GetCiudadesInSalas();
+            ViewBag.plazas = salaService.GetCiudadesInSalas();
 
             var standuperoService = new StanduperoService();
             var standuperos = standuperoService.GetStanduperos();
@@ -139,8 +139,8 @@ namespace SUA.Controllers
             foreach (var item in repeticiones)
             {
                 var plaza = item.Split('(');
-                var ciudad = plaza[0];
-                var dias = Int32.Parse(plaza[1].Replace(" días", ""));
+                var ciudad = plaza[0].Trim();
+                var dias = Int32.Parse(plaza[1].Replace(" días)", ""));
                 lista.Add(new RepeticionPlazas {
                     Ciudad = ciudad,
                     Dias = dias

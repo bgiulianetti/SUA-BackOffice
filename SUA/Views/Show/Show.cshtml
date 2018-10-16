@@ -84,16 +84,22 @@
                                 <td>
                                     <label>Repetir Plazas</label>
                                     <select class="form-control" id="listaCiudad">
-                                        <option>Ciudad 1</option>
+                                        @foreach (var item in ViewBag.plazas)
+                                        {
+                                            <option>@item</option>
+                                        }
                                     </select>
                                     <input type="number" id="cantidadDias" class="form-control" placeholder="días" min="30" max="365" />
                                     <input type="button" id="agregarRepeticion"  value="Agregar" class="form-control"/>
                                     <select multiple="multiple" class="form-control" id="repeticion" name="repeticion" Style="width:300px; height:124px">
                                         @if (ViewBag.accion == "Put")
                                         {
-                                            foreach (var item in Model.Repeticion)
+                                            if (Model.Repeticion != null)
                                             {
-                                                <option>@item</option>
+                                                foreach (var item in Model.Repeticion)
+                                                {
+                                                    <option>@item.Ciudad (@item.Dias días)</option>
+                                                }
                                             }
                                         }
                                     </select>
