@@ -1099,7 +1099,7 @@ namespace SUA.Repositorios
             }
             return fechas;
         }
-        public List<Fecha> GetFechasByCiudad(string ciudad)
+        public List<Fecha> GetFechasByCiudad(string ciudad, DateTime desde, DateTime hasta)
         {
             if (string.IsNullOrEmpty(ciudad))
                 throw new Exception(FECHA_GET_BY_ID_CIUDAD_INVALID_PARAMETER_EXCEPTION);
@@ -1108,8 +1108,14 @@ namespace SUA.Repositorios
                 .Index(Index)
                 .Type(Index)
                  .Query(q => q
-                    .Match(m => m.Field(f => f.Sala.Direccion.Ciudad).Query(ciudad)))
-                    );
+                    .Match(m => m.Field(f => f.Sala.Direccion.Ciudad).Query(ciudad))
+                    && q.DateRange(r=> r
+                        .Field(f => f.FechaHorario)
+                        .GreaterThan(desde)
+                        .LessThan(hasta)
+                      )
+                 )
+             );
 
             if (response == null)
                 return null;

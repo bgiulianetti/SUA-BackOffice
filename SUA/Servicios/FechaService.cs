@@ -89,24 +89,15 @@ namespace SUA.Servicios
         }
 
 
-        /// //////////////
-
-        public Fecha GetUltimaFechaByCiudad(string ciudad)
+        public List<Fecha> GetFechasByCiudadAndRangoFecha(string ciudad, DateTime desde, DateTime hasta)
         {
-            var fechas = Repository.GetFechasByCiudad(ciudad);
+            var fechas = Repository.GetFechasByCiudad(ciudad, desde, hasta);
             if (fechas.Count > 0)
             {
                 fechas.OrderBy(f => f.FechaHorario);
-                return fechas.Last();
             }
-            return null;
-
+            return fechas;
         }
-
-        /// //////////////
-
-
-
 
         public Fecha GetUltimaFechaBySalaAndShow(string idSala, string idShow)
         {
@@ -129,12 +120,6 @@ namespace SUA.Servicios
                     fechasConBordereaux.Add(item);
             }
             return fechasConBordereaux;
-        }
-        public List<Fecha> GetFechasByDateRange(DateTime from, DateTime to)
-        {
-            var fechas = Repository.GetFechas();
-            var fechasFiltradas = fechas.Where(f => f.FechaHorario.Date >= from.Date && f.FechaHorario.Date <= to.Date).OrderBy(f => f.FechaHorario.Date);
-            return fechasFiltradas.ToList();
         }
     }
 }

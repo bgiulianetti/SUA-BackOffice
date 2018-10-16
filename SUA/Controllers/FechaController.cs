@@ -290,6 +290,19 @@ namespace SUA.Controllers
             return View();
         }
 
+        [HttpGet]
+        public string GetAntesDespuesFechas(string idSala, DateTime fecha)
+        {
+            var salaService = new SalaService();
+            var ciudad = salaService.GetSalaById(idSala).Direccion.Ciudad;
+
+            var fechaService = new FechaService();
+            var desde = fecha.AddDays(-20);
+            var hasta = fecha.AddDays(20);
+            var fechas = fechaService.GetFechasByCiudadAndRangoFecha(ciudad, desde, hasta);
+            return JsonConvert.SerializeObject(fechas);
+        }
+
         public ActionResult DeleteFecha(string id)
         {
             var service = new FechaService();
@@ -389,18 +402,6 @@ namespace SUA.Controllers
 
 
             client.Send(mm);
-
-        }
-
-        [HttpGet]
-        public string GetFechasByDateRange(DateTime from, DateTime to)
-        {
-            if (from == null && to == null)
-                return "";
-
-            var service = new FechaService();
-            var fechas = service.GetFechasByDateRange(from, to);
-            return JsonConvert.SerializeObject(fechas);
 
         }
 

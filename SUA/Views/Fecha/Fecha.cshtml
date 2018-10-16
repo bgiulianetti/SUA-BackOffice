@@ -63,8 +63,18 @@
                                 <td>
                                     <input id="filterSala" type="text" placeholder="Buscar Sala" class="form-control" style="width:100%" />
                                     <select name="salasList" multiple="multiple" class="form-control" id="salasList" Style="width:350px; height:400px" required></select>
+                                </td>
+                                <td>
+                                    <label class="form-control">Fechas 20 días antes y 20 días después</label>
+                                    <select  multiple="multiple" class="form-control" id="antesDespues" Style="width:300px; height:400px"></select>
+                                </td>
+                            </tr>
+                        </table>
 
-                                    <br />
+                        <hr style="color: #8dd9f7">
+                        <table>
+                            <tr>
+                                <td>
                                     <label>Productores</label>
                                     <select name="productoresList" class="form-control" id="productoresList" Style="width:300px" required>
                                         @foreach (var item in ViewBag.productores)
@@ -72,14 +82,6 @@
                                             <option value="@item.Dni">@item.Nombre @item.Apellido</option>
                                         }
                                     </select>
-
-                                </td>
-                                <td>
-                                    <label id="">[Fechas 20 días antes]</label><br />
-                                    <select  multiple="multiple" class="form-control" id="antes" Style="width:300px; height:150px"></select>
-                                    <br />
-                                    <label>[Fechas 20 días después]</label><br />
-                                    <select  multiple="multiple" class="form-control" id="despues" Style="width:300px; height:150px"></select>
                                 </td>
                             </tr>
                         </table>
@@ -150,12 +152,12 @@
             url: '/fecha/GetSalasConVencimiento?idShow=' + idShow + '&fechaProximoShow=' + fechaHorario,
             type: 'GET',
             accepts: 'application/Json',
-            success:  PopularListaSalas,
+            success:  popularListaSalas,
             error: function () { }
         });
     });
 
-    function PopularListaSalas(data)
+    function popularListaSalas(data)
     {
         $("#salasList").empty();
         var salas = JSON.parse(data);
@@ -194,86 +196,34 @@
 
     $('#salasList').change(function ()
     {
-        /*
         var idSala = $("#salasList option:selected").val();
         var idShow = $("#showsList option:selected").val();
 
-        //muestro info del sala y show elegido
         $.ajax({
-            url: '/fecha/GetUltimaFechaByShowAndSala?idShow=' + idShow + '&idSala=' + idSala ,
+            url: '/fecha/GetAntesDespuesFechas?idSala=' + idSala + '&fecha=' + $("#fechaHorario").val(),
             type: 'GET',
             accepts: 'application/Json',
-            success: MostrarInfoSalaYShow,
+            success: mostrarAntesDespues,
             error: function () { console.log("ERROR: No se puede obtener informacion de la ultima fecha en la sala seleccionada");}
         });
 
-        //Obtengo ultima fecha de la sala
-        $.ajax({
-            url: '/fecha/GetUltimaFechaBySala?idSala=' + idSala,
-            type: 'GET',
-            accepts: 'application/Json',
-            success: MostrarInfoSala,
-            error: function () { console.log("ERROR: No se puede obtener informacion de la ultima fecha según show y sala"); }
-        });
-
-        //Obtengo vencimiento Sala
-        $.ajax({
-            url: '/fecha/CalcularVencimiento?idSala=' + idSala,
-            type: 'GET',
-            accepts: 'application/Json',
-            success: MostrarVencimientoSala,
-            error: function () { console.log("ERROR: No se puede obtener el vencimiento de la sala seleccionada");}
-        });
-        */
     });
 
 
-    function MostrarInfoSalaYShow(data)
+    function mostrarAntesDespues(data)
     {
-        var fecha = JSON.parse(data);
-        if (fecha == null)
-            $("#lblFechaUtimoShowEspecifico").text("-----");
-        else
-            $("#lblFechaUtimoShowEspecifico").text(fecha.FechaHorario.replace("T", " "));
-    }
-
-    function MostrarInfoSala(data)
-    {
-        var fecha = JSON.parse(data);
-        if (fecha == null)
+        var fechas = JSON.parse(data);
+        if (fechas != undefined && fechas != null)
         {
-            $("#lblUltimoShowGeneral").text("Ningún show presentado");
-            $("#lblFechaUltimoShowGeneral").text("");
-        }
-        else
-        {
-            var show = fecha.Show._Show + " - " + fecha.Show.Nombre
-            $("#lblUltimoShowGeneral").text(show);
-            $("#lblFechaUltimoShowGeneral").text(fecha.FechaHorario.replace("T", " "));
-        }
-
-    }
-
-    function MostrarVencimientoSala(data)
-    {
-        if (data != "")
-        {
-            if (data.indexOf('-') > -1) {
-                $("#lblVencimientoSalaTitulo").text("Vencimiento");
-                $("#lblDiasVencidos").text(data.replace("-", "") + " días");
-            }
-            else {
-                $("#lblVencimientoSalaTitulo").text("Plaza Vencida");
-                $("#lblDiasVencidos").text(data + " días");
+            for (var i = 0; i < fechas.length; i++)
+            {
+                $("#antesDespues").append('<option>' + fechas[i].FechaHorario + ' - ' + fechas[i].Show._Show + '</option>');
             }
         }
-        else
-        {
-            $("#lblVencimientoSalaTitulo").text("");
-            $("#lblDiasVencidos").text("");
-        }
 
     }
+
+ 
 
 </script>
 
