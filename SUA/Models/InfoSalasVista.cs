@@ -29,11 +29,7 @@ namespace SUA.Models
             get { return (DateTime.Now - UltimaFechaRealizadaEnLaSala).TotalDays; }
             protected set { }
         }
-        public int DiferenciaEnDiasVencimiento
-        {
-            get { return UtilitiesAndStuff.CalcularVencimiento(UltimaFechaRealizadaEnLaSala, SalaRepeticionEnDias); }
-            protected set { }
-        }
+        public int DiferenciaEnDiasVencimiento { get; set; }
 
     }
 }

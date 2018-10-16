@@ -41,11 +41,11 @@
                                     <label>Fecha</label>
                                     @if (ViewBag.accion == "Post")
                                     {
-                                        @Html.TextBoxFor(model => model.FechaHorario, new { @class = "form-control", Style = "width:300px", required = "required", @type = "datetime-local" })
+                                        @Html.TextBoxFor(model => model.FechaHorario, new { @id = "fechaHorario", @class = "form-control", Style = "width:300px", required = "required", @type = "datetime-local" })
                                     }
                                     else
                                     {
-                                        @Html.TextBoxFor(model => model.FechaHorario, new { @class = "form-control", Style = "width:300px", required = "required", @type = "datetime-local", @Value = Model.FechaHorario.ToString("yyyy-MM-ddTHH:mm") })
+                                        @Html.TextBoxFor(model => model.FechaHorario, new { @id = "fechaHorario", @class = "form-control", Style = "width:300px", required = "required", @type = "datetime-local", @Value = Model.FechaHorario.ToString("yyyy-MM-ddTHH:mm") })
                                     }
                                 </td>
                             </tr>
@@ -59,10 +59,6 @@
                                 <td>
                                     <input id="filterSala" type="text" placeholder="Buscar Sala" class="form-control" style="width:100%" />
                                     <select name="salasList" multiple="multiple" class="form-control" id="salasList" Style="width:350px; height:400px" required>
-                                        @foreach (var item in ViewBag.salas)
-                                        {
-                                            <option value="@item.UniqueId">@item.Nombre - @item.Direccion.Localidad</option>
-                                        }
                                     </select>
 
                                     <br />
@@ -78,19 +74,7 @@
                                 <td>
                                     <div id="antesDespues" style="width:250px; height:400px">
                                         <label id="lblUltimoShowEspecifico">[Fechas 20 días antes]</label><br />
-                                        @foreach (var item in ViewBag.antes)
-                                        {
-                                            <label>@item.Show</label>
-                                            <label>@item.Fecha.ToString("dd-MM-yyyy")</label>
-                                            <br />
-                                        }
-                                        <label id="lblUltimoShowEspecifico">[Fechas 20 días despues]</label><br />
-                                        @foreach (var item in ViewBag.despues)
-                                        {
-                                            <label>@item.Show</label>
-                                            <label>@item.Fecha.ToString("dd-MM-yyyy")</label>
-                                            <br />
-                                        }
+
                                     </div>
                                 </td>
                             </tr>
@@ -117,10 +101,13 @@
 <script>
 
 
-    $(document).ready(function () {
-        $("#filterSala").on("keyup", function () {
+    $(document).ready(function ()
+    {
+        $("#filterSala").on("keyup", function ()
+        {
             var value = $(this).val().toLowerCase();
-            $("#salasList option").filter(function () {
+            $("#salasList option").filter(function ()
+            {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
@@ -150,33 +137,48 @@
         $('#productoresList option[value="' + "@ViewBag.productor" + '"]').attr("selected", "selected");
     }
 
-    //inicializo campos
-    $("#lblUltimoShowEspecifico").text($("#showsList option:selected").text());
-    $("#lblFechaUtimoShowEspecifico").text("-----");
-
-
     //muestro info del show elegido
-    $('#showsList').change(function ()
+    $('#fechaHorario').change(function ()
     {
-        var val = $("#showsList option:selected").val();
+        var fechaHorario = $("#fechaHorario").val();
+        var idShow = $("#showsList option:selected").val();
         $.ajax({
-            url: '/fecha/GetUltimaFechaByShow?id=' + val,
+            url: '/fecha/GetSalasConVencimiento?idShow=' + idShow + '&fechaProximoShow=' + fechaHorario,
             type: 'GET',
             accepts: 'application/Json',
-            success: function (data) {
-                var fecha = JSON.parse(data);
-                $("#lblUtimoShow").text(fecha.FechaHorario.replace("T", " "));
-                $("#lblSalaUltimoShow").text(fecha.Sala.Nombre);
-            },
+            success:  PopularListaSalas,
             error: function () { }
         });
-
-        //muestro el titulo del show seleccionado en la parte de salas
-        var showSeleccionado = $("#showsList option:selected").text();
-        $("#lblUltimoShowEspecifico").text(showSeleccionado);
-        $("#lblFechaUtimoShowEspecifico").text("-----");
-
     });
+
+    function PopularListaSalas(data)
+    {
+        var salas = JSON.parse(data);
+        for (var i = 0; i < salas.length; i++)
+        {
+            var backgroundcolor;
+            var placeholder = salas[i].RepeticionEnDias;
+            if (salas[i].RepeticionEnDias <= 0)
+            {
+                backgroundcolor = "red";
+                
+            }
+            else if (salas[i].RepeticionEnDias > 0 && salas[i].RepeticionEnDias < 30)
+            {
+                backgroundcolor = "yellow";
+            }
+            else if (salas[i].RepeticionEnDias > 30 && salas[i].RepeticionEnDias < 365)
+            {
+                backgroundcolor = "lightgreen";
+            }
+            else
+            {
+                backgroundcolor = "grey";
+                placeholder = "";
+            }
+            $("#salasList").append('<option value="' + sala[i].UniqueId + '" placeholder="' + placeholder + '" style="color:white; background-color:' + backgroundcolor + '">' + salas[i].Nombre + ' - ' + salas[i].Direccion.Ciudad + '</option>');
+        }
+    }
 
 
     $('#salasList').change(function ()

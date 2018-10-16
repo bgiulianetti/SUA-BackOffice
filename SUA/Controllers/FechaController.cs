@@ -114,7 +114,7 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
-        public string GetSalasConVencimiento(string idShow, DateTime fechaHorario)
+        public string GetSalasConVencimiento(string idShow, DateTime fechaProximoShow)
         {
             var showService = new ShowService();
             var repeticiones = showService.GetShowById(idShow).Repeticion;
@@ -127,13 +127,13 @@ namespace SUA.Controllers
 
             foreach (var sala in salas)
             {
-                var repeticionPlaza = GetRepeticionPlaza(idShow, salas, repeticiones);
+                var repeticionPlaza = GetRepeticionPlaza(idShow, sala, repeticiones);
                 if (repeticionPlaza != null)
                 {
                     var fecha = GetUltimaFechaByShowAndSala(idShow, sala.UniqueId);
-                    if(fecha != null)
+                    if (fecha != null)
                     {
-                        sala.RepeticionEnDias = UtilitiesAndStuff.CalcularVencimiento(fechaHorario, repeticionPlaza.Dias);
+                        sala.RepeticionEnDias = UtilitiesAndStuff.CalcularVencimiento(fecha.FechaHorario, fechaProximoShow, repeticionPlaza.Dias);
                     }
                     else
                     {
@@ -145,26 +145,24 @@ namespace SUA.Controllers
                     sala.RepeticionEnDias = 10000;
                 }
             }
-            return JsonConvert.SerializeObject(salas);
+            var salaOrdenadas = salas.OrderBy(o => o.RepeticionEnDias).ToList();
+            return JsonConvert.SerializeObject(salaOrdenadas);
         }
 
-        private RepeticionPlazas GetRepeticionPlaza(string idShow, List<Sala> salas, List<RepeticionPlazas> repeticiones)
+        private RepeticionPlazas GetRepeticionPlaza(string idShow, Sala sala, List<RepeticionPlazas> repeticiones)
         {
             RepeticionPlazas repeticionPlaza = null;
-            foreach (var sala in salas)
-            {
-                foreach (var repeticion in repeticiones)
-                {
-                    if (repeticion.Ciudad == sala.Direccion.Ciudad)
-                        repeticionPlaza = repeticion;
-                }
 
+            foreach (var repeticion in repeticiones)
+            {
+                if (repeticion.Ciudad == sala.Direccion.Ciudad)
+                    repeticionPlaza = repeticion;
             }
             return repeticionPlaza;
         }
 
         [HttpGet]
-        public ActionResult Bordereaux (string id)
+        public ActionResult Bordereaux(string id)
         {
             if (Request.Cookies["session"] == null)
                 return RedirectToAction("Login", "Home");
@@ -174,7 +172,7 @@ namespace SUA.Controllers
 
             var fechaService = new FechaService();
             var fecha = fechaService.GetFechaById(id);
-            if(fecha.Borederaux == null)
+            if (fecha.Borederaux == null)
             {
                 ViewBag.arregloFijo = "false";
                 ViewBag.accion = "Post";
@@ -209,7 +207,7 @@ namespace SUA.Controllers
             bordereaux.ImpuestosDeduccionesBruto = float.Parse(ImpuestosDeduccionesBruto, CultureInfo.InvariantCulture);
             bordereaux.ImpuestosDeduccionesTotalDeducir = float.Parse(ImpuestosDeduccionesTotalDeducir, CultureInfo.InvariantCulture);
             bordereaux.ImpuestosDeduccionesNeto = float.Parse(ImpuestosDeduccionesNeto, CultureInfo.InvariantCulture);
-            if(ImpuestosDeduccionesCompanyPorcentaje != "")
+            if (ImpuestosDeduccionesCompanyPorcentaje != "")
             {
                 bordereaux.ImpuestosDeduccionesCompanyPorcentaje = float.Parse(ImpuestosDeduccionesCompanyPorcentaje, CultureInfo.InvariantCulture);
             }
@@ -284,11 +282,11 @@ namespace SUA.Controllers
                 var fechas = service.GetFechasConBordereaux();
                 ViewBag.fechas = fechas;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewBag.menasje = ex.Message;
             }
-            
+
             return View();
         }
 
@@ -314,7 +312,8 @@ namespace SUA.Controllers
             foreach (var item in lista)
             {
                 var entradaString = item.Split('-');
-                entradas.Add(new EntradasBorderaux {
+                entradas.Add(new EntradasBorderaux
+                {
                     Nombre = entradaString[0],
                     Cantidad = Int32.Parse(entradaString[1]),
                     Precio = float.Parse(entradaString[2], CultureInfo.InvariantCulture),
@@ -359,7 +358,7 @@ namespace SUA.Controllers
             foreach (var item in gastosList)
             {
                 var gasto = item.Split('-');
-                gastos.Add(new GastosBordereaux {Gasto = gasto[0], Monto = float.Parse(gasto[1], CultureInfo.InvariantCulture), Detalle = gasto[2] });
+                gastos.Add(new GastosBordereaux { Gasto = gasto[0], Monto = float.Parse(gasto[1], CultureInfo.InvariantCulture), Detalle = gasto[2] });
             }
             return gastos;
         }
@@ -506,7 +505,7 @@ namespace SUA.Controllers
             totales.DefaultCell.Padding = 3;
             totales.SetWidths(new int[] { 10, 10 });
             totales.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            totales.HeaderRows = 0;         
+            totales.HeaderRows = 0;
             totales.DefaultCell.BorderWidth = .2f;
             totales.AddCell(new Phrase("Total: " + bordereaux.EntradasTotal.ToString(), FontFactory.GetFont(FontFactory.COURIER_BOLD, 10)));
             totales.AddCell(new Phrase("Bruto: $" + bordereaux.EntradasBruto.ToString(), FontFactory.GetFont(FontFactory.COURIER_BOLD, 10)));

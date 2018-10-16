@@ -191,10 +191,10 @@ namespace SUA.Utilities
             return ConverListToSelectListItem(gastos);
         }
 
-        public static int CalcularVencimiento(DateTime fecha, int repeticionEnDias)
+        public static int CalcularVencimiento(DateTime fechaUltimoShow, DateTime fechaProximoShow, int repeticionEnDias)
         {
-            var fechaVencimiento = fecha.AddDays(repeticionEnDias);
-            double diasVencido = (DateTime.Now - fechaVencimiento).TotalDays;
+            var fechaVencimiento = fechaUltimoShow.AddDays(repeticionEnDias);
+            double diasVencido = (fechaProximoShow - fechaVencimiento).TotalDays;
             var diasVencidoRedondeado = Math.Round(diasVencido, MidpointRounding.AwayFromZero);
             return Convert.ToInt32(diasVencidoRedondeado);
         }
