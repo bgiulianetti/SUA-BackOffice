@@ -62,8 +62,7 @@
                             <tr>
                                 <td>
                                     <input id="filterSala" type="text" placeholder="Buscar Sala" class="form-control" style="width:100%" />
-                                    <select name="salasList" multiple="multiple" class="form-control" id="salasList" Style="width:350px; height:400px" required>
-                                    </select>
+                                    <select name="salasList" multiple="multiple" class="form-control" id="salasList" Style="width:350px; height:400px" required></select>
 
                                     <br />
                                     <label>Productores</label>
@@ -76,10 +75,11 @@
 
                                 </td>
                                 <td>
-                                    <div id="antesDespues" style="width:250px; height:400px">
-                                        <label id="lblUltimoShowEspecifico">[Fechas 20 días antes]</label><br />
-
-                                    </div>
+                                    <label id="">[Fechas 20 días antes]</label><br />
+                                    <select  multiple="multiple" class="form-control" id="antes" Style="width:300px; height:150px"></select>
+                                    <br />
+                                    <label>[Fechas 20 días después]</label><br />
+                                    <select  multiple="multiple" class="form-control" id="despues" Style="width:300px; height:150px"></select>
                                 </td>
                             </tr>
                         </table>
