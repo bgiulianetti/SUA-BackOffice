@@ -53,12 +53,13 @@ namespace SUA.Controllers
         }
 
         [HttpPost]
-        public ActionResult Show(Show show, string accion, string _standuperos, string _productor)
+        public ActionResult Show(Show show, string accion, string _standuperos, string _productor, string _plazasRepetir)
         {
             ViewBag.titulo = "Crear Show";
             show.Integrantes = GetStanduperosListByDnis(_standuperos);
             show.Productor = new ProductorService().GetProductorByDni(_productor);
             show.SiglaBordereaux = show.SiglaBordereaux.ToUpper();
+            show.Repeticion = GenerateRepeticionPlazas(_plazasRepetir);
             ViewBag.colores = UtilitiesAndStuff.GetColores();
             var service = new ShowService();
             try
@@ -128,6 +129,23 @@ namespace SUA.Controllers
                 standuperos.Add(standuperoService.GetStanduperoByDni(item));
             }
             return standuperos;
+        }
+
+        private List<RepeticionPlazas> GenerateRepeticionPlazas(string repeticion)
+        {
+            var lista = new List<RepeticionPlazas>();
+            var repeticiones = repeticion.Split('-');
+            foreach (var item in repeticiones)
+            {
+                var plaza = item.Split('(');
+                var ciudad = plaza[0];
+                var dias = Int32.Parse(plaza[1].Replace(" días", ""));
+                lista.Add(new RepeticionPlazas {
+                    Ciudad = ciudad,
+                    Dias = dias
+                });
+            }
+            return lista;
         }
     }
 }

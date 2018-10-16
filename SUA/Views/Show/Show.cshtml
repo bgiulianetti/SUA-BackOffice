@@ -82,10 +82,11 @@
                         <table>
                             <tr>
                                 <td>
+                                    <label>Repetir Plazas</label>
                                     <select class="form-control" id="listaCiudad">
                                         <option>Ciudad 1</option>
                                     </select>
-                                    <input type="number" id="cantidadDias" class="form-control" placeholder="dias" min="30" max="365" />
+                                    <input type="number" id="cantidadDias" class="form-control" placeholder="días" min="30" max="365" />
                                     <input type="button" id="agregarRepeticion"  value="Agregar" class="form-control"/>
                                     <select multiple="multiple" class="form-control" id="repeticion" name="repeticion" Style="width:300px; height:124px">
                                         @if (ViewBag.accion == "Put")
@@ -147,6 +148,7 @@
                         <input name="accion" class="hidden" value="@ViewBag.accion" />
                         <input id="_standuperos" name="_standuperos" class="hidden" />
                         <input id="_productor" name="_productor" class="hidden" />
+                        <input id="_plazasRepetir" name="_plazasRepetir" class="hidden" />
                         @Html.TextBoxFor(model => model.UniqueId, new { @class = "hidden" })
 
 
@@ -234,12 +236,13 @@
         if ($("#cantidadDias").val() != "" && parseInt($("#cantidadDias").val()) > 0 && parseInt($("#cantidadDias").val()) <= 365 )
         {
             $("#repeticion").append('<option>' + $("#listaCiudad").val() + ' (' + $("#cantidadDias").val() + ' días)</option>');
+            $("#cantidadDias").val("");
+            generateReptirPlazasList();
         }
         else
         {
             alert("Debe seleccionar la cantidad de días a repetir la plaza");
         }
-
     });
 
     $("#borrarRepeticion").click(function (event) {
@@ -251,7 +254,25 @@
             $("#repeticion option:selected").remove();
             generateImpuestosHiddenList();
         }
+        generateReptirPlazasList();
     });
+
+
+    function generateReptirPlazasList()
+    {
+        var list = $("#repeticion");
+        var i = 0;
+        var _plaza = "";
+        while (list[0].children[i] != undefined)
+        {
+            if (_plaza == "")
+                _plaza = list[0].children[i].value;
+            else
+                _plaza = _plaza + "-" + list[0].children[i].value;
+            i++;
+        }
+        $("#_plazasRepetir").val(_plaza);
+    }
 
 
 </script>
