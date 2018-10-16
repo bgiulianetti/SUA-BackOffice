@@ -21,7 +21,8 @@ namespace SUA.Controllers
             ViewBag.colores = UtilitiesAndStuff.GetColores();
             var productoresService = new ProductorService();
             ViewBag.productores = productoresService.GetProductores();
-
+            var salaService = new SalaService();
+            ViewBag.Plazas = salaService.GetCiudadesInSalas();
 
             var standuperoService = new StanduperoService();
             var standuperos = standuperoService.GetStanduperos();

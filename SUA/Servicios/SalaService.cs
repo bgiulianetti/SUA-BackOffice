@@ -51,5 +51,9 @@ namespace SUA.Servicios
         {
             Repository.DeleteSala(id);
         }
+        public List<string> GetCiudadesInSalas()
+        {
+            return Repository.GetCiudadesInSalas();
+        }
     }
 }

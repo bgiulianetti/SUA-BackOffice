@@ -884,7 +884,36 @@ namespace SUA.Repositorios
             if (!response.IsValid)
                 throw new Exception(SALA_DELETE_NOT_DELETED_EXCEPTION);
         }
+        public List<string> GetCiudadesInSalas()
+        {
+            var response = Client.Search<Sala>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Source(sr => sr
+                .Includes(i => i
+                    .Field(fi => fi
+                        .Direccion.Ciudad)
+                        )
+                      )
+                );
+        
+            if (response == null)
+                return null;
 
+            if (!response.IsValid)
+                throw new Exception(FECHA_GET_BY_ID_CIUDAD_INVALID_SEARCH_EXCEPTION);
+
+            var ciudades = new List<string>();
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                {
+                    if(!ciudades.Contains(item.Direccion.Ciudad))
+                        ciudades.Add(item.Direccion.Ciudad);
+                }
+            }
+            return ciudades;
+        }
 
 
 
@@ -1044,7 +1073,6 @@ namespace SUA.Repositorios
             }
             return fechas;
         }
-
         public List<Fecha> GetFechasByIdSala(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -1071,8 +1099,6 @@ namespace SUA.Repositorios
             }
             return fechas;
         }
-
-
         public List<Fecha> GetFechasByCiudad(string ciudad)
         {
             if (string.IsNullOrEmpty(ciudad))
@@ -1099,8 +1125,6 @@ namespace SUA.Repositorios
             }
             return fechas;
         }
-
-
         public Fecha GetFechaBySalaAndFechaAndHorario(string idSala, DateTime fechaYHorario)
         {
             if (string.IsNullOrEmpty(idSala) || fechaYHorario == null)
