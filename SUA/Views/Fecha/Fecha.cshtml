@@ -30,15 +30,14 @@
                             <tr>
                                 <td>
                                     <label>Show </label>
-                                    <select name="showsList" class="form-control" id="showsList" Style="width:300px" required>
+                                    <select name="showsList" class="form-control" id="showsList" Style="width:350px" required>
                                         @foreach (var item in ViewBag.shows)
                                         {
                                             <option value="@item.UniqueId">@item._Show - @item.Nombre</option>
                                         }
                                     </select>
-
-
-                                    <br />
+                                </td>
+                                <td>
                                     <label>Fecha</label>
                                     @if (ViewBag.accion == "Post")
                                     {
@@ -48,16 +47,6 @@
                                     {
                                         @Html.TextBoxFor(model => model.FechaHorario, new { @class = "form-control", Style = "width:300px", required = "required", @type = "datetime-local", @Value = Model.FechaHorario.ToString("yyyy-MM-ddTHH:mm") })
                                     }
-
-
-
-                                </td>
-                                <td style=" border:1px solid #598a42; width:300px;">
-                                    <label>Ultimo Show</label><br />
-                                    <label id="lblUtimoShow" style="font-weight: normal;"></label>
-                                    <hr style="color: #8dd9f7">
-                                    <label>Sala</label><br />
-                                    <label id="lblSalaUltimoShow" style="font-weight: normal;"></label>
                                 </td>
                             </tr>
 
@@ -69,7 +58,7 @@
                             <tr>
                                 <td>
                                     <input id="filterSala" type="text" placeholder="Buscar Sala" class="form-control" style="width:100%" />
-                                    <select name="salasList" multiple="multiple" class="form-control" id="salasList" Style="width:300px; height:200px" required>
+                                    <select name="salasList" multiple="multiple" class="form-control" id="salasList" Style="width:350px; height:400px" required>
                                         @foreach (var item in ViewBag.salas)
                                         {
                                             <option value="@item.UniqueId">@item.Nombre - @item.Direccion.Localidad</option>
@@ -86,16 +75,23 @@
                                     </select>
 
                                 </td>
-                                <td style=" border:1px solid #598a42; width:300px; height:100px; border-radius: 40px;">
-                                    <label id="lblUltimoShowEspecifico">[seleccione show]</label><br />
-                                    <label id="lblFechaUtimoShowEspecifico" style="font-weight: normal;"></label>
-                                    <hr style="color: #8dd9f7">
-                                    <label>Ultimo show presentado</label><br />
-                                    <label id="lblUltimoShowGeneral" style="font-weight: normal;">[seleccione sala]</label><br />
-                                    <label id="lblFechaUltimoShowGeneral" style="font-weight: normal;"></label>
-                                    <hr style="color: #8dd9f7">
-                                    <label id="lblVencimientoSalaTitulo">[seleccione sala]</label><br />
-                                    <label id="lblDiasVencidos" style="font-weight: normal;"></label>
+                                <td>
+                                    <div id="antesDespues" style="width:250px; height:400px">
+                                        <label id="lblUltimoShowEspecifico">[Fechas 20 días antes]</label><br />
+                                        @foreach (var item in ViewBag.antes)
+                                        {
+                                            <label>@item.Show</label>
+                                            <label>@item.Fecha.ToString("dd-MM-yyyy")</label>
+                                            <br />
+                                        }
+                                        <label id="lblUltimoShowEspecifico">[Fechas 20 días despues]</label><br />
+                                        @foreach (var item in ViewBag.despues)
+                                        {
+                                            <label>@item.Show</label>
+                                            <label>@item.Fecha.ToString("dd-MM-yyyy")</label>
+                                            <br />
+                                        }
+                                    </div>
                                 </td>
                             </tr>
                         </table>
