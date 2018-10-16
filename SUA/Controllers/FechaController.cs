@@ -26,7 +26,7 @@ namespace SUA.Controllers
                 return RedirectToAction("Login", "Home");
 
             ViewBag.mensaje = "Get";
-            ViewBag.salas = new SalaService().GetSalas();
+            //ViewBag.salas = new SalaService().GetSalas();
             ViewBag.shows = new ShowService().GetShows();
             ViewBag.productores = new ProductorService().GetProductores();
 
@@ -105,23 +105,62 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
-        public string CalcularVencimiento(string idSala)
+        public Fecha GetUltimaFechaByShowAndSala(string idShow, string idSala)
         {
-            if (idSala == "")
-                return "";
+            var service = new FechaService();
+            var fecha = service.GetUltimaFechaBySalaAndShow(idSala, idShow);
+            return fecha;
+            //return JsonConvert.SerializeObject(fecha);
+        }
+
+        [HttpGet]
+        public string GetSalasConVencimiento(string idShow, DateTime fechaHorario)
+        {
+            var showService = new ShowService();
+            var repeticiones = showService.GetShowById(idShow).Repeticion;
 
             var salaService = new SalaService();
-            var sala = salaService.GetSalaById(idSala);
-            if (sala == null)
-                return "";
+            var salas = salaService.GetSalas();
 
             var fechaService = new FechaService();
-            var fecha = fechaService.GetUltimaFechaBySalaId(idSala);
-            if (fecha == null)
-                return "";
+            var fechas = fechaService.GetFechasByShowId(idShow);
 
-            var vencimiento = UtilitiesAndStuff.CalcularVencimiento(fecha.FechaHorario, sala.RepeticionEnDias);
-            return vencimiento.ToString();
+            foreach (var sala in salas)
+            {
+                var repeticionPlaza = GetRepeticionPlaza(idShow, salas, repeticiones);
+                if (repeticionPlaza != null)
+                {
+                    var fecha = GetUltimaFechaByShowAndSala(idShow, sala.UniqueId);
+                    if(fecha != null)
+                    {
+                        sala.RepeticionEnDias = UtilitiesAndStuff.CalcularVencimiento(fechaHorario, repeticionPlaza.Dias);
+                    }
+                    else
+                    {
+                        sala.RepeticionEnDias = 10000;
+                    }
+                }
+                else
+                {
+                    sala.RepeticionEnDias = 10000;
+                }
+            }
+            return JsonConvert.SerializeObject(salas);
+        }
+
+        private RepeticionPlazas GetRepeticionPlaza(string idShow, List<Sala> salas, List<RepeticionPlazas> repeticiones)
+        {
+            RepeticionPlazas repeticionPlaza = null;
+            foreach (var sala in salas)
+            {
+                foreach (var repeticion in repeticiones)
+                {
+                    if (repeticion.Ciudad == sala.Direccion.Ciudad)
+                        repeticionPlaza = repeticion;
+                }
+
+            }
+            return repeticionPlaza;
         }
 
         [HttpGet]
