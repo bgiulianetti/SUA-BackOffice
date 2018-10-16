@@ -37,6 +37,7 @@ namespace SUA.Servicios
         {
             return Repository.GetFechasByShowId(id);
         }
+
         public Fecha GetUltimaFechaByShowId(string id)
         {
             var fechas = Repository.GetFechasByShowId(id);
@@ -46,6 +47,7 @@ namespace SUA.Servicios
             var fechasOrdenadas = fechas.OrderBy(f => f.FechaHorario);
             return fechasOrdenadas.Last();
         }
+
         public List<Fecha> GetFechasByProvincia(string nombreProvincia)
         {
             return Repository.GetFechasByProvincia(nombreProvincia);
@@ -85,6 +87,27 @@ namespace SUA.Servicios
             return null;
 
         }
+
+
+        /// //////////////
+
+        public Fecha GetUltimaFechaByCiudad(string ciudad)
+        {
+            var fechas = Repository.GetFechasByCiudad(ciudad);
+            if (fechas.Count > 0)
+            {
+                fechas.OrderBy(f => f.FechaHorario);
+                return fechas.Last();
+            }
+            return null;
+
+        }
+
+        /// //////////////
+
+
+
+
         public Fecha GetUltimaFechaBySalaAndShow(string idSala, string idShow)
         {
             var fechas = Repository.GetFechasByIdSala(idSala);

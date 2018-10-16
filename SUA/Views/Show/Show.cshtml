@@ -63,18 +63,6 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2">
-                                    <label>Rider </label>
-                                    @Html.TextAreaFor(model => model.Rider, new { @class = "form-control", Style = "width:100%; height: 130px", required = "required" })
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <label>Camarin </label>
-                                    @Html.TextBoxFor(model => model.Camarin, new { @class = "form-control", Style = "width:100%", required = "required" })
-                                </td>
-                            </tr>
-                            <tr>
                                 <td>
                                     <label>Productor</label>
                                     <select name="productorList" class="form-control" id="productorList" required>
@@ -89,6 +77,52 @@
                                     @Html.TextBoxFor(model => model.SiglaBordereaux, new { @class = "form-control", Style = "width:100%", @placeholder = "mayuscula o minuscula", required = "required" })
                                 </td>
                             </tr>
+                        </table>
+                        <hr style="color: #8dd9f7">
+                        <table>
+                            <tr>
+                                <td>
+                                    <select class="form-control" id="listaCiudad">
+                                        <option>Ciudad 1</option>
+                                    </select>
+                                    <input type="number" id="cantidadDias" class="form-control" placeholder="dias" min="30" max="365" />
+                                    <input type="button" id="agregarRepeticion"  value="Agregar" class="form-control"/>
+                                    <select multiple="multiple" class="form-control" id="repeticion" name="repeticion" Style="width:300px; height:124px">
+                                        @if (ViewBag.accion == "Put")
+                                        {
+                                            foreach (var item in Model.Repeticion)
+                                            {
+                                                <option>@item</option>
+                                            }
+                                        }
+                                    </select>
+                                    <input type="button" value="Borarr" class="form-control" id="borrarRepeticion" />
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="color: #8dd9f7">
+                        <table>
+                            <tr>
+                                <td colspan="2">
+                                    <label>Rider </label>
+                                    @Html.TextAreaFor(model => model.Rider, new { @class = "form-control", Style = "width:100%; height: 130px", required = "required" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <label>Camarin </label>
+                                    @Html.TextBoxFor(model => model.Camarin, new { @class = "form-control", Style = "width:100%", required = "required" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <label>Observaciones </label>
+                                    @Html.TextAreaFor(model => model.Observaciones, new { @class = "form-control", Style = "width:100%; height:120px", required = "required" })
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="color: #8dd9f7">
+                        <table>
                             <tr>
                                 <td>
                                     <label>Color Fondo Calendario</label>
@@ -105,19 +139,16 @@
                                     @Html.TextBoxFor(model => model.GoogleCalendarId, new { @class = "form-control", Style = "width:100%", @placeholder = "Url", required = "required" })
                                 </td>
                             </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <label>Observaciones </label>
-                                    @Html.TextAreaFor(model => model.Observaciones, new { @class = "form-control", Style = "width:100%; height:120px", required = "required" })
-                                </td>
-                            </tr>
+
                         </table>
+                        <hr style="color: #8dd9f7">
+
 
                         <input name="accion" class="hidden" value="@ViewBag.accion" />
                         <input id="_standuperos" name="_standuperos" class="hidden" />
                         <input id="_productor" name="_productor" class="hidden" />
-                        @Html.TextBoxFor(model => model.UniqueId, new { @class = "hidden"})
-                        
+                        @Html.TextBoxFor(model => model.UniqueId, new { @class = "hidden" })
+
 
                         <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
                     </form>
@@ -197,5 +228,30 @@
     $("#productorList").change(function () {
         $("#_productor").val($("#productorList option:selected").val());
     });
+
+    $("#agregarRepeticion").click(function (event) {
+
+        if ($("#cantidadDias").val() != "" && parseInt($("#cantidadDias").val()) > 0 && parseInt($("#cantidadDias").val()) <= 365 )
+        {
+            $("#repeticion").append('<option>' + $("#listaCiudad").val() + ' (' + $("#cantidadDias").val() + ' días)</option>');
+        }
+        else
+        {
+            alert("Debe seleccionar la cantidad de días a repetir la plaza");
+        }
+
+    });
+
+    $("#borrarRepeticion").click(function (event) {
+        var seleccion = $("#repeticion option:selected");
+        if (seleccion.val() == undefined) {
+            alert("Debe seleccionar una plaza");
+        }
+        else {
+            $("#repeticion option:selected").remove();
+            generateImpuestosHiddenList();
+        }
+    });
+
 
 </script>

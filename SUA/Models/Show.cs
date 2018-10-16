@@ -21,6 +21,8 @@ namespace SUA.Models
         public string BackgroundColorCalendar { get; set; }
         public string TextColorCalendar { get; set; }
         public string GoogleCalendarId { get; set; }
+        public List<RepeticionPlazas> Repeticion  { get; set; }
+
 
         public void SetIdAndFechaAlta()
         {
