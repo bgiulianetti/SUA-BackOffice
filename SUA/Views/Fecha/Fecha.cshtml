@@ -48,6 +48,10 @@
                                         @Html.TextBoxFor(model => model.FechaHorario, new { @id = "fechaHorario", @class = "form-control", Style = "width:300px", required = "required", @type = "datetime-local", @Value = Model.FechaHorario.ToString("yyyy-MM-ddTHH:mm") })
                                     }
                                 </td>
+                                <td>
+                                    <label>&nbsp;</label><br />
+                                    <input class="form-control" id="verSalasButton" type="button" value=">>" />
+                                </td>
                             </tr>
 
                         </table>
@@ -138,7 +142,7 @@
     }
 
     //muestro info del show elegido
-    $('#fechaHorario').change(function ()
+    $('#verSalasButton').click(function ()
     {
         var fechaHorario = $("#fechaHorario").val();
         var idShow = $("#showsList option:selected").val();
@@ -153,36 +157,44 @@
 
     function PopularListaSalas(data)
     {
+        $("#salasList").empty();
         var salas = JSON.parse(data);
+        var diasVencidos;
         for (var i = 0; i < salas.length; i++)
         {
             var backgroundcolor;
             var placeholder = salas[i].RepeticionEnDias;
-            if (salas[i].RepeticionEnDias <= 0)
+            if (salas[i].RepeticionEnDias > 0)
             {
                 backgroundcolor = "red";
-                
+                diasVencidos = salas[i].RepeticionEnDias + " días vencida";
             }
-            else if (salas[i].RepeticionEnDias > 0 && salas[i].RepeticionEnDias < 30)
+            else if (salas[i].RepeticionEnDias < 0 && salas[i].RepeticionEnDias > -30)
             {
-                backgroundcolor = "yellow";
+                backgroundcolor = "orange";
+                var cantDias = salas[i].RepeticionEnDias.toString().replace("-", "");
+                diasVencidos = "vence en " + cantDias + " días";
             }
-            else if (salas[i].RepeticionEnDias > 30 && salas[i].RepeticionEnDias < 365)
+            else if (salas[i].RepeticionEnDias > -30 && salas[i].RepeticionEnDias > -365)
             {
                 backgroundcolor = "lightgreen";
+                var cantDias = salas[i].RepeticionEnDias.replace("-", "");
+                diasVencidos = "vence en " + cantDias + " días";
             }
             else
             {
                 backgroundcolor = "grey";
                 placeholder = "";
+                diasVencidos = "-";
             }
-            $("#salasList").append('<option value="' + sala[i].UniqueId + '" placeholder="' + placeholder + '" style="color:white; background-color:' + backgroundcolor + '">' + salas[i].Nombre + ' - ' + salas[i].Direccion.Ciudad + '</option>');
+            $("#salasList").append('<option value="' + salas[i].UniqueId + '" placeholder="' + placeholder + '" style="color:white; background-color:' + backgroundcolor + '">' + salas[i].Nombre + ' - ' + salas[i].Direccion.Ciudad + ' (' + diasVencidos + ')</option>');
         }
     }
 
 
     $('#salasList').change(function ()
     {
+        /*
         var idSala = $("#salasList option:selected").val();
         var idShow = $("#showsList option:selected").val();
 
@@ -212,6 +224,7 @@
             success: MostrarVencimientoSala,
             error: function () { console.log("ERROR: No se puede obtener el vencimiento de la sala seleccionada");}
         });
+        */
     });
 
 

@@ -185,6 +185,9 @@
         //selecciono ultimo item de standuperosSeleccionados
         $("#standuperosSeleccionados option:last").attr("selected", "selected");
         generateStanduperosHiddenList();
+
+        //seteo la repeticiones de plazas en hidden field
+        generateReptirPlazasList();
     }
 
     $("#agregar").click(function (event) {

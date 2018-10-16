@@ -115,7 +115,7 @@ namespace SUA.Servicios
             if (fechasPorShowEspecifico != null)
             {
                 fechas.OrderBy(f => f.FechaHorario);
-                return fechas.First();
+                return fechas.Last();
             }
             return null;
         }

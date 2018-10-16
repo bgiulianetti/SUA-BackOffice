@@ -250,7 +250,7 @@ namespace SUA.TestProject
         public void CheckVencimiento()
         {
             var fecha = new DateTime(2018, 08, 12);
-            var diasVencido = UtilitiesAndStuff.CalcularVencimiento(fecha, 60);
+            var diasVencido = UtilitiesAndStuff.CalcularVencimiento(fecha, DateTime.Now, 60);
         }
 
 

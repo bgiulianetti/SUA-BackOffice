@@ -137,15 +137,15 @@ namespace SUA.Controllers
                     }
                     else
                     {
-                        sala.RepeticionEnDias = 10000;
+                        sala.RepeticionEnDias = -10000;
                     }
                 }
                 else
                 {
-                    sala.RepeticionEnDias = 10000;
+                    sala.RepeticionEnDias = -10000;
                 }
             }
-            var salaOrdenadas = salas.OrderBy(o => o.RepeticionEnDias).ToList();
+            var salaOrdenadas = salas.OrderByDescending(o => o.RepeticionEnDias).ToList();
             return JsonConvert.SerializeObject(salaOrdenadas);
         }
 
