@@ -10,7 +10,7 @@
 </style>
 
 <div class="main-content">
-    @using (Html.BeginForm("User", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Usuario", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         if (ViewBag.mensaje == "creado")
         {
@@ -44,7 +44,7 @@
                                 </td>
                                 <td>
                                     <label>Usuario Maestro</label>
-                                    @Html.DropDownListFor(model => model.UserMaster, new SelectList(ViewBag.estados, "Text", "Value"), new { @class = "form-control", Style = "width:300px" })
+                                    @Html.DropDownListFor(model => model.UserMaster, new SelectList(ViewBag.estados, "Text", "Value"), new { @id="userMaster", @class = "form-control", Style = "width:300px" })
                                 </td>
                             </tr>
                          </table>
@@ -53,19 +53,19 @@
                             <tr>    
                                 <td>
                                     <label>Crear Fechas</label>
-                                    @Html.DropDownListFor(model => model.CrearFechas, new SelectList(ViewBag.estados, "Text", "Value"), new { @class = "form-control", Style = "width:130px" })
+                                    @Html.DropDownListFor(model => model.CrearFechas, new SelectList(ViewBag.estados, "Text", "Value"), new { @id = "crearFechas", @class = "form-control", Style = "width:130px" })
                                 </td>
                                 <td>
                                     <label>Carga Bordereaux</label>
-                                    @Html.DropDownListFor(model => model.CargaBordereaux, new SelectList(ViewBag.estados, "Text", "Value"), new { @class = "form-control", Style = "width:130px" })
+                                    @Html.DropDownListFor(model => model.CargaBordereaux, new SelectList(ViewBag.estados, "Text", "Value"), new { @id = "cargarBordereaux", @class = "form-control", Style = "width:130px" })
                                 </td>
                                 <td>
                                     <label>Carga Salas</label>
-                                    @Html.DropDownListFor(model => model.CargaSalas, new SelectList(ViewBag.estados, "Text", "Value"), new { @class = "form-control", Style = "width:130px" })
+                                    @Html.DropDownListFor(model => model.CargaSalas, new SelectList(ViewBag.estados, "Text", "Value"), new { @id = "cargaSalas", @class = "form-control", Style = "width:130px" })
                                 </td>
                                 <td>
                                     <label>Ver/Descargar Bordereaux</label>
-                                    @Html.DropDownListFor(model => model.VeBordereaux, new SelectList(ViewBag.estados, "Text", "Value"), new { @class = "form-control", Style = "width:130px" })
+                                    @Html.DropDownListFor(model => model.VeBordereaux, new SelectList(ViewBag.estados, "Text", "Value"), new { @id = "veBordereaux", @class = "form-control", Style = "width:130px" })
                                 </td>
                             </tr>
                         </table>
@@ -83,23 +83,12 @@
                             </tr>
                         </table>
                         <hr style="color: #8dd9f7">
-                        <table>
-                            <tr>
-                                <td>
-                                    <label>Cambiar Contraseña al siguiente login</label>
-                                    @Html.DropDownListFor(model => model.MustChangePasswordAtNextLogin, new SelectList(ViewBag.estados, "Text", "Value"), new { @class = "form-control", Style = "width:300px" })
-                                </td>
-                                <td>
-                                    <label>Bloquear Usuario</label>
-                                    @Html.DropDownListFor(model => model.Blocked, new SelectList(ViewBag.estados, "Text", "Value"), new { @class = "form-control", Style = "width:300px" })
-                                </td>
-                            </tr>
-                        </table>
+
                         <table>
                             <tr>
                                 <td>
                                     <label>Shows </label>
-                                    <select multiple="multiple" class="form-control" id="shows">
+                                    <select style="width:300px" multiple="multiple" class="form-control" id="shows">
                                         @foreach (var item in ViewBag.shows)
                                         {
                                             <option value="@item.UniqueId">@item._Show</option>
@@ -109,7 +98,7 @@
                                 </td>
                                 <td>
                                     <label>Shows Asignados</label>
-                                    <select multiple="multiple" class="form-control" id="standuperosSeleccionados" name="showsAsignados" required>
+                                    <select style="width:300px" multiple="multiple" class="form-control" id="showsAsignados" name="showsAsignados">
                                         @if (ViewBag.accion == "Put")
                                         {
                                             foreach (var item in Model.ShowsAsignados)
@@ -122,9 +111,8 @@
                                 </td>
                             </tr>
                         </table>
-
-
                         <hr style="color: #8dd9f7">
+
                         <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
                         <input id="_shows" name="_shows" class="hidden" />
                         <input name="copiarFacturacion" id="hiddenCopiarFacturacion" class="hidden" value="" data-form="error-box" />
@@ -149,6 +137,26 @@
         generateShowsHiddenList();
     }
 
+
+    $("#userMaster").change(function (event) {
+        var seleccion = $("#userMaster option:selected");
+        if (seleccion.val() == "si")
+        {
+            $("#crearFechas").prop("disabled", true);
+            $("#cargarBordereaux").prop("disabled", true);
+            $("#cargaSalas").prop("disabled", true);
+            $("#veBordereaux").prop("disabled", true);
+        }
+        else
+        {
+            $("#crearFechas").prop("disabled", false);
+            $("#cargarBordereaux").prop("disabled", false);
+            $("#cargaSalas").prop("disabled", false);
+            $("#veBordereaux").prop("disabled", false);
+        }
+
+    });
+
     $("#agregar").click(function (event) {
         var seleccion = $("#shows option:selected");
         if (seleccion.val() == undefined)
@@ -165,7 +173,7 @@
     $("#borrar").click(function (event) {
         var seleccion = $("#showsAsignados option:selected");
         if (seleccion.val() == undefined)
-            alert("Debe seleccionar un standupero");
+            alert("Debe seleccionar un show");
         else
         {
             $("#shows").append('<option value="' + seleccion.val() + '">' + seleccion.html() + '</option>');

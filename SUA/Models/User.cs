@@ -11,15 +11,15 @@ namespace SUA.Models
         public string UniqueId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public int MailRecover { get; set; }
-        public bool CrearFechas { get; set; }
-        public bool CargaBordereaux { get; set; }
-        public bool CargaSalas { get; set; }
-        public bool VeBordereaux { get; set; }
+        public string MailRecover { get; set; }
+        public string CrearFechas { get; set; }
+        public string CargaBordereaux { get; set; }
+        public string CargaSalas { get; set; }
+        public string VeBordereaux { get; set; }
         public List<Show> ShowsAsignados { get; set; }
-        public bool UserMaster { get; set; }
-        public bool MustChangePasswordAtNextLogin { get; set; }
-        public bool Blocked { get; set; }
+        public string UserMaster { get; set; }
+        public string MustChangePasswordAtNextLogin { get; set; }
+        public string Blocked { get; set; }
 
         public void SetId()
         {

@@ -22,6 +22,7 @@ namespace SUA.Controllers
 
             var showService = new ShowService();
             var shows = showService.GetShows();
+            ViewBag.userMaster = "no";
 
             if (string.IsNullOrEmpty(id))
             {
@@ -33,6 +34,9 @@ namespace SUA.Controllers
             {
                 var userService = new UserService();
                 var user = userService.GetUserById(id);
+
+                if (user.UserMaster == "si")
+                    ViewBag.userMaster = "si";
 
                 foreach (var item in user.ShowsAsignados)
                 {
