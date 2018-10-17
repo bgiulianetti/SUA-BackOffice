@@ -212,12 +212,13 @@
 
     function mostrarAntesDespues(data)
     {
+        $("#antesDespues").empty();
         var fechas = JSON.parse(data);
         if (fechas != undefined && fechas != null)
         {
             for (var i = 0; i < fechas.length; i++)
             {
-                $("#antesDespues").append('<option>' + fechas[i].FechaHorario + ' - ' + fechas[i].Show._Show + '</option>');
+                $("#antesDespues").append('<option>' + fechas[i].FechaHorario.toString().split('T')[0] + ' - ' + fechas[i].Show._Show + '</option>');
             }
         }
 
