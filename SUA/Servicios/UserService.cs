@@ -19,7 +19,6 @@ namespace SUA.Servicios
             Repository = new ESRepositorio(settings, ESRepositorio.ContentType.user.ToString());
         }
 
-
         public List<UserModel> GetUsers()
         {
             return Repository.GetUsuarios();
@@ -60,7 +59,8 @@ namespace SUA.Servicios
 
             if (user.Password != password)
                 return null;
-
+            user.LastLogin = DateTime.Now;
+            Repository.UpdateUser(user);
             return user;
 
         }

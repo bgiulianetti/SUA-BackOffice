@@ -18,6 +18,7 @@ namespace SUA.Controllers
                 return RedirectToAction("Login", "Home");
 
             ViewBag.estados = UtilitiesAndStuff.GetEstados();
+            ViewBag.permisos = UtilitiesAndStuff.GetPermisos();
             ViewBag.mensaje = "Get";
 
             var showService = new ShowService();

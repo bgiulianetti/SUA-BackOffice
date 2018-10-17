@@ -51,20 +51,44 @@
                         <table id="tableProperties">
                             <tr>    
                                 <td>
-                                    <label>Crear Fechas</label>
-                                    @Html.DropDownListFor(model => model.CrearFechas, new SelectList(ViewBag.estados, "Text", "Value"), new { @id = "crearFechas", @class = "form-control", Style = "width:130px" })
+                                    <label>Sanduperos</label>
+                                    @Html.DropDownListFor(model => model.Standuperos, new SelectList(ViewBag.permisos, "Text", "Value"), new { @id = "cargarBordereaux", @class = "form-control", Style = "width:130px" })
                                 </td>
                                 <td>
-                                    <label>Carga Bordereaux</label>
-                                    @Html.DropDownListFor(model => model.CargaBordereaux, new SelectList(ViewBag.estados, "Text", "Value"), new { @id = "cargarBordereaux", @class = "form-control", Style = "width:130px" })
+                                    <label>Productores</label>
+                                    @Html.DropDownListFor(model => model.Productores, new SelectList(ViewBag.permisos, "Text", "Value"), new { @id = "cargaSalas", @class = "form-control", Style = "width:130px" })
                                 </td>
                                 <td>
-                                    <label>Carga Salas</label>
-                                    @Html.DropDownListFor(model => model.CargaSalas, new SelectList(ViewBag.estados, "Text", "Value"), new { @id = "cargaSalas", @class = "form-control", Style = "width:130px" })
+                                    <label>Shows</label>
+                                    @Html.DropDownListFor(model => model.Shows, new SelectList(ViewBag.permisos, "Text", "Value"), new { @id = "crearFechas", @class = "form-control", Style = "width:130px" })
+                                </td>
+                             </tr>
+                            <tr>
+                                <td>
+                                    <label>Fechas</label>
+                                    @Html.DropDownListFor(model => model.Fechas, new SelectList(ViewBag.permisos, "Text", "Value"), new { @id = "cargarBordereaux", @class = "form-control", Style = "width:130px" })
                                 </td>
                                 <td>
-                                    <label>Ver/Descargar Bordereaux</label>
-                                    @Html.DropDownListFor(model => model.VeBordereaux, new SelectList(ViewBag.estados, "Text", "Value"), new { @id = "veBordereaux", @class = "form-control", Style = "width:130px" })
+                                    <label>Bordereaux</label>
+                                    @Html.DropDownListFor(model => model.Bordereaux, new SelectList(ViewBag.permisos, "Text", "Value"), new { @id = "cargarBordereaux", @class = "form-control", Style = "width:130px" })
+                                </td>
+                                <td>
+                                    <label>Reportes</label>
+                                    @Html.DropDownListFor(model => model.Reportes, new SelectList(ViewBag.estados, "Text", "Value"), new { @id = "cargarBordereaux", @class = "form-control", Style = "width:130px" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Salas</label>
+                                    @Html.DropDownListFor(model => model.Salas, new SelectList(ViewBag.permisos, "Text", "Value"), new { @id = "crearFechas", @class = "form-control", Style = "width:130px" })
+                                </td>
+                                <td>
+                                    <label>Hoteles</label>
+                                    @Html.DropDownListFor(model => model.Hoteles, new SelectList(ViewBag.permisos, "Text", "Value"), new { @id = "crearFechas", @class = "form-control", Style = "width:130px" })
+                                </td>
+                                <td>
+                                    <label>Restaurantes</label>
+                                    @Html.DropDownListFor(model => model.Restaurantes, new SelectList(ViewBag.permisos, "Text", "Value"), new { @id = "crearFechas", @class = "form-control", Style = "width:130px" })
                                 </td>
                             </tr>
                         </table>

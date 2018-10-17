@@ -22,6 +22,16 @@ namespace SUA.Utilities
             return ConverListToSelectListItem(estados);
         }
 
+        public static List<SelectListItem> GetPermisos()
+        {
+            var permisos = new List<string>
+            {
+                "Lectura",
+                "Escritura"
+            };
+            return ConverListToSelectListItem(permisos);
+        }
+
         public static List<SelectListItem> GetProvincias()
         {
             var provincias = new List<string>

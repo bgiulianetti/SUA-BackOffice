@@ -12,10 +12,15 @@ namespace SUA.Models
         public string Username { get; set; }
         public string Password { get; set; }
         public string MailRecover { get; set; }
-        public string CrearFechas { get; set; }
-        public string CargaBordereaux { get; set; }
-        public string CargaSalas { get; set; }
-        public string VeBordereaux { get; set; }
+        public string Salas { get; set; }
+        public string Standuperos { get; set; }
+        public string Productores { get; set; }
+        public string Shows { get; set; }
+        public string Fechas { get; set; }
+        public string Bordereaux { get; set; }
+        public string Restaurantes { get; set; }
+        public string Hoteles { get; set; }
+        public string Reportes { get; set; }
         public List<Show> ShowsAsignados { get; set; }
         public string UserMaster { get; set; }
         public string MustChangePasswordAtNextLogin { get; set; }

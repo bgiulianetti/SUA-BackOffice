@@ -15,7 +15,8 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            if (Request.Cookies["session"] != null)
+            var user = Session["user"] as UserModel;
+            if (user != null)
                 return RedirectToAction("Index", "Home");
 
             ViewBag.mensaje = "";
@@ -34,8 +35,6 @@ namespace SUA.Controllers
             else
             {
                 System.Web.HttpContext.Current.Session["user"] = user;
-               var test = System.Web.HttpContext.Current.Session["user"] as UserModel;
-
                 return RedirectToAction("Index", "Home");
             }
             return View();
@@ -44,8 +43,7 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult Logout()
         {
-            Response.Cookies["session"].Value = null;
-            Response.Cookies["session"].Expires = DateTime.Now.AddDays(-1);
+            Session["user"] = null;
             Session.Abandon();
             return RedirectToAction("Login", "Home");
         }
@@ -53,7 +51,8 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            if (Request.Cookies["session"] == null)
+            var user = Session["user"] as UserModel;
+            if (user == null)
                 return RedirectToAction("Login", "Home");
 
             var calendarService = new GoogleCalendarService();
