@@ -14,7 +14,7 @@ namespace SUA.Models
         public bool CrearFechas { get; set; }
         public bool CargaBordereaux { get; set; }
         public bool CargaSalas { get; set; }
-        public bool VerBordereaux { get; set; }
+        public bool VeBordereaux { get; set; }
         public List<string> ElencosAsignados { get; set; }
         public bool UserMaster { get; set; }
         public bool MustChangePasswordAtNextLogin { get; set; }

@@ -121,6 +121,23 @@ namespace SUA
                 defaults: new { controller = "Fecha", action = "FechasCerradas", id = UrlParameter.Optional }
             );
 
+
+            //============================Usuario========================================
+            routes.MapRoute(
+                name: "User",
+                url: "user",
+                defaults: new { controller = "User", action = "User" }
+            );
+
+            routes.MapRoute(
+                name: "Users",
+                url: "users",
+                defaults: new { controller = "Users", action = "Users" }
+            );
+
+
+
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

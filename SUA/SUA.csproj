@@ -174,6 +174,7 @@
     <Compile Include="Controllers\SalaController.cs" />
     <Compile Include="Controllers\ShowController.cs" />
     <Compile Include="Controllers\StanduperoController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Extension\HtmlHelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -193,6 +194,7 @@
     <Compile Include="Models\InfoSalasVista.cs" />
     <Compile Include="Models\InstagramUserData.cs" />
     <Compile Include="Models\InstagramUserInfoResponse.cs" />
+    <Compile Include="Models\Log.cs" />
     <Compile Include="Models\Persona.cs" />
     <Compile Include="Models\Productor.cs" />
     <Compile Include="Models\PruebaSonidoEnsayo.cs" />
@@ -211,6 +213,7 @@
     <Compile Include="Servicios\SalaService.cs" />
     <Compile Include="Servicios\ShowService.cs" />
     <Compile Include="Servicios\StanduperoService.cs" />
+    <Compile Include="Servicios\UserService.cs" />
     <Compile Include="Utilities\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -442,6 +445,7 @@
     <Content Include="Views\Fecha\Bordereaux.cshtml" />
     <Content Include="Views\Fecha\FechasCerradas.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\User\User.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
