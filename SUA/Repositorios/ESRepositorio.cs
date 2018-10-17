@@ -1357,6 +1357,32 @@ namespace SUA.Repositorios
             }
             return user;
         }
+        public UserModel GetUserByEmail(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+                throw new Exception(USER_GET_BY_NOMBRE_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<UserModel>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q
+                    .Match(m => m.Field(f => f.MailRecover).Query(email)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(USER_GET_BY_NOMBRE_INVALID_SEARCH_EXCEPTION);
+
+            UserModel user = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    user = item;
+            }
+            return user;
+        }
         public void AddUser(UserModel user)
         {
             if (user == null)
@@ -1371,6 +1397,10 @@ namespace SUA.Repositorios
 
             var userObtenidaPorNombre = GetUserByNombre(user.Username);
             if (userObtenidaPorNombre != null)
+                throw new Exception(USER_CREATE_ALREADY_EXISTS_EXCEPTION);
+
+            var userObtenidaPorEmail = GetUserByEmail(user.MailRecover);
+            if (userObtenidaPorEmail != null)
                 throw new Exception(USER_CREATE_ALREADY_EXISTS_EXCEPTION);
 
             var response = Client.IndexAsync(user, i => i

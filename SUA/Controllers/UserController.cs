@@ -5,6 +5,8 @@ using SUA.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -101,17 +103,34 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult Recover()
         {
+            ViewBag.mensaje = "";
             return View();
         }
 
         [HttpPost]
         public ActionResult Recover(string email)
         {
+            if (email == "")
+            {
+                ViewBag.mensaje = "El email no es válido";
+                return View();
+            }
+
+            var service = new UserService();
+            var user = service.GetUserByEmail(email);
+            if(user == null)
+            {
+                ViewBag.mensaje = "El email no existe";
+                return View();
+            }
+            else
+            {
+                user.Password = UtilitiesAndStuff.GenerateUniqueId();
+                user.MustChangePasswordAtNextLogin = "si";
+            }
+
             return View();
         }
-
-
-
 
         private List<Show> GetShowsByIds(string _shows)
         {
@@ -126,6 +145,35 @@ namespace SUA.Controllers
                 shows.Add(showService.GetShowById(item));
             }
             return shows;
+        }
+
+        public void SendRecoverEmail(UserModel user)
+        {
+            SmtpClient client = new SmtpClient();
+            client.Port = 587;
+            client.Host = "smtp.gmail.com";
+            client.EnableSsl = true;
+            client.Timeout = 10000;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new System.Net.NetworkCredential("sua.backoffice@gmail.com", "Sua20181c");
+
+
+            string body = "Hola " + user.Username + "!" + Environment.NewLine + 
+                          "Se ha recibido la solicitud para un cambio de contraseña de tu cuenta" + Environment.NewLine +
+                          "contraseña: " + user.Password + Environment.NewLine + Environment.NewLine + 
+                          "Se le solicitará que cambie la contraseña al siguiente login." + Environment.NewLine + Environment.NewLine + 
+                          "Saludos del equipo de SUA!";
+
+            MailMessage mm = new MailMessage("sua.backoffice@gmail.com", user.MailRecover, "SUA BackOffice - Recuperar Contraseña", body);
+
+
+            mm.BodyEncoding = UTF8Encoding.UTF8;
+            mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+
+
+            client.Send(mm);
+
         }
 
     }

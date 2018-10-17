@@ -139,9 +139,9 @@
                     <img src="~/assets/img/sua-logo.png" alt="Educatina Logo" class="img-responsive logo" style="width:250px">
                     <input name="username" type="text" placeholder="email de recuperación" />
                     <button>Recuperar</button>
-                    @if (ViewBag.mensaje == "fail")
+                    @if (ViewBag.mensaje != "")
                     {
-                        <p class="message">El email no es válido</p>
+                        <p class="message">@ViewBag.mensaje</p>
                     }
                 </form>
             </div>

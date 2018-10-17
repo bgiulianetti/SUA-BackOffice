@@ -373,35 +373,6 @@ namespace SUA.Controllers
             return gastos;
         }
 
-        public void SendEmail(Fecha fecha)
-        {
-            SmtpClient client = new SmtpClient();
-            client.Port = 587;
-            client.Host = "smtp.gmail.com";
-            client.EnableSsl = true;
-            client.Timeout = 10000;
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
-            client.Credentials = new System.Net.NetworkCredential("notificacion.ypf@gmail.com", "NotificacionYpf2018");
-
-
-
-            string body = "Se ha subido un nuevo archivo PDF.";
-
-            MailMessage mm = new MailMessage("notificacion.ypf@gmail.com", "destinatario", "Actualizacion de PDF - [BO YPF]", body);
-
-            //var attachment1 = new System.Net.Mail.Attachment(pdf);
-            //mm.Attachments.Add(attachment1);
-
-
-            mm.BodyEncoding = UTF8Encoding.UTF8;
-            mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
-
-
-            client.Send(mm);
-
-        }
-
         [HttpGet]
         public void PrintBordereaux(string id)
         {

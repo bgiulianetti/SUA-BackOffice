@@ -31,6 +31,10 @@ namespace SUA.Servicios
         {
             return Repository.GetUserByNombre(nombre);
         }
+        public UserModel GetUserByEmail(string email)
+        {
+            return Repository.GetUserByEmail(email);
+        }
         public void AddUser(UserModel user)
         {
             Repository.AddUser(user);
