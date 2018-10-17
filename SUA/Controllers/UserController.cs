@@ -98,6 +98,21 @@ namespace SUA.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult Recover()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Recover(string email)
+        {
+            return View();
+        }
+
+
+
+
         private List<Show> GetShowsByIds(string _shows)
         {
             var shows = new List<Show>();

@@ -135,6 +135,12 @@ namespace SUA
                 defaults: new { controller = "User", action = "Usuarios" }
             );
 
+            routes.MapRoute(
+                name: "Recover",
+                url: "recover",
+                defaults: new { controller = "User", action = "Recover" }
+            );
+
 
 
 

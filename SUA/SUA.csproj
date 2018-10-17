@@ -448,6 +448,7 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\User\Usuario.cshtml" />
     <Content Include="Views\User\Usuarios.cshtml" />
+    <Content Include="Views\User\Recover.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
