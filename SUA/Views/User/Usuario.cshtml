@@ -14,11 +14,11 @@
     {
         if (ViewBag.mensaje == "creado")
         {
-            <label>El usuario ha sido cargado con éxito. Puede verlo cargado en el <a href="@Url.RouteUrl("User")">Listado de usuarios</a></label>
+            <label>El usuario ha sido cargado con éxito. Puede verlo cargado en el <a href="@Url.RouteUrl("Users")">Listado de usuarios</a></label>
         }
         else if (ViewBag.mensaje == "actualizado")
         {
-            <label>El usuario ha sido actualizado con éxito. Puede ver los cambios en el <a href="@Url.RouteUrl("User")">Listado de usuarios</a></label>
+            <label>El usuario ha sido actualizado con éxito. Puede ver los cambios en el <a href="@Url.RouteUrl("Users")">Listado de usuarios</a></label>
         }
         else if (ViewBag.mensaje == "Get")
         {
@@ -114,6 +114,7 @@
 
                         <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
                         <input id="_shows" name="_shows" class="hidden" />
+                        @Html.TextBoxFor(model => model.UniqueId, new { @class = "hidden" })
                         <input name="copiarFacturacion" id="hiddenCopiarFacturacion" class="hidden" value="" data-form="error-box" />
                         <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
                     </form>
