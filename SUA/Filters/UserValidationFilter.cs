@@ -18,98 +18,105 @@ namespace SUA.Filters
             var user = System.Web.HttpContext.Current.Session["user"] as UserModel;
             if (user == null)
                 filterContext.Result = new RedirectResult("/login");
-
-            if(user.UserMaster == "no")
+            else
             {
-                if (controller == "Home" && action == "Login")
+                if (user.UserMaster == "no")
                 {
-                    filterContext.Result = new RedirectResult("/inicio");
-                }
-                else if (controller == "Fecha" && action == "Fecha")
-                {
-                    if (user.Fechas == "Lectura")
+                    if (controller == "Home" && action == "Login")
                     {
                         filterContext.Result = new RedirectResult("/inicio");
                     }
-                }
-                else if (controller == "Fecha" && action == "Bordereaux")
-                {
-                    if (user.Bordereaux == "Lectura")
+                    else if (controller == "Fecha" && action == "Fecha")
                     {
-                        filterContext.Result = new RedirectResult("/inicio");
+                        if (user.Fechas == "Lectura")
+                        {
+                            filterContext.Result = new RedirectResult("/inicio");
+                        }
                     }
-                }
-                else if (controller == "Fecha" && action == "DeleteFecha")
-                {
-                    if (user.Fechas == "Lectura")
+                    else if (controller == "Fecha" && action == "Bordereaux")
                     {
-                        filterContext.Result = new RedirectResult("/fechas");
+                        if (user.Bordereaux == "Lectura")
+                        {
+                            filterContext.Result = new RedirectResult("/inicio");
+                        }
                     }
-                }
-                else if (controller == "Productor" && action == "Productor")
-                {
-                    if (user.Productores == "Lectura")
+                    else if (controller == "Fecha" && action == "DeleteFecha")
                     {
-                        filterContext.Result = new RedirectResult("/inicio");
+                        if (user.Fechas == "Lectura")
+                        {
+                            filterContext.Result = new RedirectResult("/fechas");
+                        }
                     }
-                }
-                else if (controller == "Productor" && action == "DeleteProductor")
-                {
-                    if (user.Productores == "Lectura")
+                    else if (controller == "Productor" && action == "Productor")
                     {
-                        filterContext.Result = new RedirectResult("/productores");
+                        if (user.Productores == "Lectura")
+                        {
+                            filterContext.Result = new RedirectResult("/inicio");
+                        }
                     }
-                }
-                else if (controller == "Sala" && action == "Sala")
-                {
-                    if (user.Salas == "Lectura")
+                    else if (controller == "Productor" && action == "DeleteProductor")
                     {
-                        filterContext.Result = new RedirectResult("/inicio");
+                        if (user.Productores == "Lectura")
+                        {
+                            filterContext.Result = new RedirectResult("/productores");
+                        }
                     }
-                }
-                else if (controller == "Sala" && action == "DeleteSala")
-                {
-                    if (user.Salas == "Lectura")
+                    else if (controller == "Sala" && action == "Sala")
                     {
-                        filterContext.Result = new RedirectResult("/salas");
+                        if (user.Salas == "Lectura")
+                        {
+                            filterContext.Result = new RedirectResult("/inicio");
+                        }
                     }
-                }
-                else if (controller == "Show" && action == "Show")
-                {
-                    if (user.Shows == "Lectura")
+                    else if (controller == "Sala" && action == "DeleteSala")
                     {
-                        filterContext.Result = new RedirectResult("/inicio");
+                        if (user.Salas == "Lectura")
+                        {
+                            filterContext.Result = new RedirectResult("/salas");
+                        }
                     }
-                }
-                else if (controller == "Show" && action == "DeleteShow")
-                {
-                    if (user.Shows == "Lectura")
+                    else if (controller == "Show" && action == "Show")
                     {
-                        filterContext.Result = new RedirectResult("/shows");
+                        if (user.Shows == "Lectura")
+                        {
+                            filterContext.Result = new RedirectResult("/inicio");
+                        }
                     }
-                }
-                else if (controller == "Standupero" && action == "Standupero")
-                {
-                    if (user.Shows == "Lectura")
+                    else if (controller == "Show" && action == "DeleteShow")
                     {
-                        filterContext.Result = new RedirectResult("/inicio");
+                        if (user.Shows == "Lectura")
+                        {
+                            filterContext.Result = new RedirectResult("/shows");
+                        }
                     }
-                }
-                else if (controller == "Standupero" && action == "DeleteStandupero")
-                {
-                    if (user.Shows == "Lectura")
+                    else if (controller == "Standupero" && action == "Standupero")
                     {
-                        filterContext.Result = new RedirectResult("/standuperos");
+                        if (user.Shows == "Lectura")
+                        {
+                            filterContext.Result = new RedirectResult("/inicio");
+                        }
                     }
-                }
-                else if (controller == "User" && action == "Usuario")
-                {
-                    if (user.Shows == "Lectura")
+                    else if (controller == "Standupero" && action == "DeleteStandupero")
+                    {
+                        if (user.Shows == "Lectura")
+                        {
+                            filterContext.Result = new RedirectResult("/standuperos");
+                        }
+                    }
+                    else if (controller == "User" && action == "Usuario")
+                    {
+                        if (user.Shows == "Lectura")
+                        {
+                            filterContext.Result = new RedirectResult("/inicio");
+                        }
+                    }
+                    else if (controller == "User" && action == "Usuarios")
                     {
                         filterContext.Result = new RedirectResult("/inicio");
                     }
                 }
             }
+
         }
     }
 }
