@@ -139,6 +139,7 @@
                         <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
                         <input id="_shows" name="_shows" class="hidden" />
                         @Html.TextBoxFor(model => model.UniqueId, new { @class = "hidden" })
+                        @Html.TextBoxFor(model => model.LastLogin, new { @class = "hidden" })
                         <input name="copiarFacturacion" id="hiddenCopiarFacturacion" class="hidden" value="" data-form="error-box" />
                         <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
                     </form>

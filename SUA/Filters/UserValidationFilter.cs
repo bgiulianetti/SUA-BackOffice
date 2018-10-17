@@ -37,7 +37,7 @@ namespace SUA.Filters
                     {
                         if (user.Bordereaux == "Lectura")
                         {
-                            filterContext.Result = new RedirectResult("/inicio");
+                            filterContext.Result = new RedirectResult("/fechas");
                         }
                     }
                     else if (controller == "Fecha" && action == "DeleteFecha")

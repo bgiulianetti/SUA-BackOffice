@@ -22,26 +22,39 @@
                 <thead>
                     <tr>
                         <th></th>
+                        <th>Ultimo Login</th>
                         <th>Username</th>
                         <th>Email</th>
                         <th>UserMaster</th>
-                        <th>Crea Fechas</th>
-                        <th>Carga Bordereaux</th>
-                        <th>Carga Salas</th>
-                        <th>Ve Bordereaux</th>
+                        <th>Standuperos</th>
+                        <th>Productores</th>
+                        <th>Shows</th>
+                        <th>Fechas</th>
+                        <th>Bordereaux</th>
+                        <th>Reportes</th>
+                        <th>Salas</th>
+                        <th>Hoteles</th>
+                        <th>Restaurantes</th>
                         <th>Bloqueado</th>
+
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
                         <th></th>
-                        <th>username</th>
+                        <th>Ultimo Login</th>
+                        <th>Username</th>
                         <th>Email</th>
                         <th>UserMaster</th>
-                        <th>Crea Fechas</th>
-                        <th>Carga Bordereaux</th>
-                        <th>Carga Salas</th>
-                        <th>Ve Bordereaux</th>
+                        <th>Standuperos</th>
+                        <th>Productores</th>
+                        <th>Shows</th>
+                        <th>Fechas</th>
+                        <th>Bordereaux</th>
+                        <th>Reportes</th>
+                        <th>Salas</th>
+                        <th>Hoteles</th>
+                        <th>Restaurantes</th>
                         <th>Bloqueado</th>
                     </tr>
                 </tfoot>
@@ -52,13 +65,19 @@
                             <td>
                                 @Html.ActionImage("Usuario", "User", new { id = item.UniqueId }, "~/assets/img/edit_icon.png")
                             </td>
+                            <td>@item.LastLogin</td>
                             <td>@item.Username</td>
                             <td>@item.MailRecover</td>
                             <td>@item.UserMaster</td>
-                            <td>@item.CrearFechas</td>
-                            <td>@item.CargaBordereaux</td>
-                            <td>@item.CargaSalas</td>
-                            <td>@item.VeBordereaux</td>
+                            <td>@item.Standuperos</td>
+                            <td>@item.Productores</td>
+                            <td>@item.Shows</td>
+                            <td>@item.Fechas</td>
+                            <td>@item.Bordereaux</td>
+                            <td>@item.Reportes</td>
+                            <td>@item.Salas</td>
+                            <td>@item.Hoteles</td>
+                            <td>@item.Restaurantes</td>
                             <td>@item.Blocked</td>
                         </tr>
                     }
@@ -90,16 +109,9 @@
     $(document).ready(function () {
         var tableSalas = $('#table_users').DataTable({
             responsive: true,
-            dom: 'l<B>ftip',
-            buttons: [
-                { extend: 'excelHtml5', title: "Salas", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/') },
-                'csvHtml5',
-                { extend: 'pdf', title: "Listado de Salas", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/'), orientation: 'landscape' }
-            ],
             'columnDefs': [{ "targets": 0, "className": "text-center" }]
         });
 
-        AplicarFiltrosEnFooter();
         AcomodaDOM();
     });
 
@@ -112,29 +124,5 @@
         $("#botones").append($(".dataTables_length"));
     }
 
-    function AplicarFiltrosEnFooter() {
-        var contador = 0;
-        $('#table_users tfoot th').each(function () {
-            if (contador != 0) {
-                var title = $(this).text();
-                $(this).html('<input type="text" placeholder="' + title + '" />');
-            }
-            contador++;
-        });
-
-        // Apply the search
-        var table = $('#table_users').DataTable();
-        table.columns().every(function ()
-        {
-            var that = this;
-            $('input', this.footer()).on('keyup change', function ()
-            {
-                if (that.search() !== this.value)
-                    that.search(this.value).draw();
-            });
-
-
-        });
-    }
 
 </script>
