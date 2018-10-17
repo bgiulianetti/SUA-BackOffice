@@ -1,6 +1,7 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Newtonsoft.Json;
+using SUA.Filters;
 using SUA.Models;
 using SUA.Servicios;
 using SUA.Utilities;
@@ -20,6 +21,7 @@ namespace SUA.Controllers
     public class FechaController : Controller
     {
         [HttpGet]
+        [UserValidationFilter]
         public ActionResult Fecha(string id)
         {
             if (Request.Cookies["session"] == null)

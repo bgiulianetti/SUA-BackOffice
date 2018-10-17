@@ -176,6 +176,7 @@
     <Compile Include="Controllers\StanduperoController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Extension\HtmlHelperExtensions.cs" />
+    <Compile Include="Filters\UserValidationFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

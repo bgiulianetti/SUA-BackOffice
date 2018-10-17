@@ -7,18 +7,16 @@ using System.Web;
 using System.Web.Mvc;
 using SUA.Utilities;
 using Newtonsoft.Json;
+using SUA.Filters;
 
 namespace SUA.Controllers
 {
     public class HomeController : Controller
     {
         [HttpGet]
+        [UserValidationFilter]
         public ActionResult Login()
         {
-            var user = Session["user"] as UserModel;
-            if (user != null)
-                return RedirectToAction("Index", "Home");
-
             ViewBag.mensaje = "";
             return View();
         }
@@ -49,12 +47,9 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
+        [UserValidationFilter]
         public ActionResult Index()
         {
-            var user = Session["user"] as UserModel;
-            if (user == null)
-                return RedirectToAction("Login", "Home");
-
             var calendarService = new GoogleCalendarService();
             ViewBag.CalendarsFullUrl = "home/GetShowCalendars";
             ViewBag.Key = calendarService.GetCalendarKey();
