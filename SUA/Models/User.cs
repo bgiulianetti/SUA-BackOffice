@@ -7,6 +7,7 @@ namespace SUA.Models
 {
     public class UserModel
     {
+        public string UniqueId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public int MailRecover { get; set; }
@@ -17,5 +18,6 @@ namespace SUA.Models
         public List<string> ElencosAsignados { get; set; }
         public bool UserMaster { get; set; }
         public bool MustChangePasswordAtNextLogin { get; set; }
+        public bool Blocked { get; set; }
     }
 }

@@ -108,7 +108,7 @@ namespace SUA.Repositorios
 
         //Fecha
         public const string INVALID_FECHA_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch al querer obtener todas las fechas";
-        public const string FECHA_GET_ALL_EXCEPTION = "Falla al querer obtener todos las fechas";
+        public const string FECHA_GET_ALL_EXCEPTION = "Falla al querer obtener todas las fechas";
         public const string FECHA_GET_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para obtener una fehca por id debe pasar un id válido";
         public const string FECHA_GET_BY_ID_INVALID_SEARCH_EXCEPTION = "Error al querer buscar una fecha por id";
         public const string FECHA_GET_BY_NOMBRE_SHOW_INVALID_PARAMETER_EXCEPTION = "Para obtener fehcas por nombre de show debe pasar un nombre de show válido";
@@ -136,6 +136,32 @@ namespace SUA.Repositorios
         public const string FECHA_DELETE_NOT_DELETED_EXCEPTION = "Falla al querer borrar una fecha";
 
 
+
+        //User
+        public const string INVALID_USER_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch al querer obtener todos los usuarios";
+        public const string USER_GET_ALL_EXCEPTION = "Falla al querer obtener todos los usuarios";
+        public const string USER_GET_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para obtener un usuario por id debe pasar un id válido";
+        public const string USER_GET_BY_ID_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un usuario por id";
+        public const string USER_GET_BY_NOMBRE_INVALID_PARAMETER_EXCEPTION = "Para obtener un usuario por nombre debe pasar un nombre válido";
+        public const string USER_GET_BY_NOMBRE_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un usuario por nombre";
+        public const string USER_CREATE_INVALID_PARAMETER_EXCEPTION = "Para agregar un usuario debe pasar un usuario válido";
+        public const string USER_CREATE_ALREADY_EXISTS_EXCEPTION = "Para agregar un usuario debe pasar un usuario que no exista previamente";
+        public const string USER_CREATE_NOT_CREATED_EXCEPTION = "Falla al querer crear un usuario nuevo";
+        public const string USER_GET_INNERID_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para obtener un usuario innerId por id debe pasar un id válido";
+        public const string USER_GET_INNERID_BY_ID_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un usuario innerId por id";
+        public const string USER_UPDATE_INVALID_PARAMETER_EXCEPTION = "Para editar un usuario debe pasar un usuario válido";
+        public const string USER_UPDATE_NOT_EXISTS_EXCEPTION = "Para editar un usuario debe pasar un usuario que exista previamente";
+        public const string USER_UPDATE_NOT_UPDATED_EXCEPTION = "Falla al querer editar un usuario";
+        public const string USER_DELETE_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para borrar un usuario por id debe pasar un id válido";
+        public const string USER_DELETE_NOT_EXISTS_EXCEPTION = "Para borrar un usuario debe pasar un usuario que exista previamente";
+        public const string USER_DELETE_NOT_DELETED_EXCEPTION = "Falla al querer borrar un usuario";
+
+
+        //Logs
+        public const string INVALID_LOG_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch al querer obtener todos los logs";
+        public const string LOG_GET_ALL_EXCEPTION = "Falla al querer obtener todos los logs";
+        public const string LOG_CREATE_INVALID_PARAMETER_EXCEPTION = "Para agregar un log debe pasar un log válido";
+        public const string LOG_CREATE_NOT_CREATED_EXCEPTION = "Falla al querer crear un log nuevo";
 
         protected ElasticClient Client { get; set; }
         protected string Index { get; set; }
@@ -918,6 +944,8 @@ namespace SUA.Repositorios
 
 
 
+
+
         /*-------------------Fecha-------------------*/
 
         public List<Fecha> GetFechas()
@@ -1249,6 +1277,218 @@ namespace SUA.Repositorios
 
 
 
+
+
+
+        /*-------------------Usuarios-------------------*/
+
+        public List<UserModel> GetUsuarios()
+        {
+            var response = Client.Search<UserModel>(s => s
+                   .Index(Index)
+                   .Type(Index)
+                   .From(0)
+                   .Size(GetCount(Index))
+                  );
+
+            if (response == null)
+                throw new Exception(INVALID_USER_ES_CONNECTION_EXCEPTION);
+
+            if (!response.IsValid)
+                throw new Exception(USER_GET_ALL_EXCEPTION);
+
+            var users = new List<UserModel>();
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    users.Add(item);
+            }
+            return users;
+        }
+        public UserModel GetUserById(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(USER_GET_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<UserModel>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q
+                    .Match(m => m.Field(f => f.UniqueId).Query(id)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(USER_GET_BY_ID_INVALID_SEARCH_EXCEPTION);
+
+            UserModel user = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    user = item;
+            }
+            return user;
+        }
+        public UserModel GetUserByNombre(string nombre)
+        {
+            if (string.IsNullOrEmpty(nombre))
+                throw new Exception(USER_GET_BY_NOMBRE_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<UserModel>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q.Term("username", nombre))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(USER_GET_BY_NOMBRE_INVALID_SEARCH_EXCEPTION);
+
+            UserModel user = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    user = item;
+            }
+            return user;
+        }
+        public void AddUser(UserModel user)
+        {
+            if (user == null)
+                throw new Exception(USER_CREATE_INVALID_PARAMETER_EXCEPTION);
+
+            if (!IndexExists())
+                CreateIndex();
+
+            var resultado = GetSalaById(user.UniqueId);
+            if (resultado != null)
+                throw new Exception(USER_CREATE_ALREADY_EXISTS_EXCEPTION);
+
+            var userObtenidaPorNombre = GetUserByNombre(user.Username);
+            if (userObtenidaPorNombre != null)
+                throw new Exception(USER_CREATE_ALREADY_EXISTS_EXCEPTION);
+
+            var response = Client.IndexAsync(user, i => i
+              .Index(Index)
+              .Type(Index)
+              .Refresh(Refresh.True)
+              ).Result;
+
+            if (!response.IsValid)
+                throw new Exception(USER_CREATE_NOT_CREATED_EXCEPTION);
+        }
+        public string GetUserInnerIdById(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(USER_GET_INNERID_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<UserModel>(s => s
+                    .Index(Index)
+                    .Type(Index)
+                    .Query(q => q.Term("uniqueId", id))
+                  );
+
+            string innerId = null;
+            if (response == null)
+                return innerId;
+
+            if (!response.IsValid)
+                throw new Exception(USER_GET_INNERID_BY_ID_INVALID_SEARCH_EXCEPTION);
+
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Hits)
+                    innerId = item.Id;
+            }
+            return innerId;
+        }
+        public void UpdateUser(UserModel user)
+        {
+            if (user == null)
+                throw new Exception(USER_UPDATE_INVALID_PARAMETER_EXCEPTION);
+
+            var innerId = GetUserInnerIdById(user.UniqueId);
+            if (innerId == null)
+                throw new Exception(USER_UPDATE_NOT_EXISTS_EXCEPTION);
+
+            var result = Client.Index(user, i => i
+                            .Index(Index)
+                            .Type(Index)
+                            .Id(innerId)
+                            .Refresh(Refresh.True));
+
+            if (!result.IsValid)
+                throw new Exception(USER_UPDATE_NOT_UPDATED_EXCEPTION);
+        }
+        public void DeleteUser(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(USER_DELETE_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
+            var innerId = GetUserInnerIdById(id);
+            if (innerId == null)
+                throw new Exception(USER_DELETE_NOT_EXISTS_EXCEPTION);
+
+            var response = Client.Delete<UserModel>(innerId, d => d
+                                                    .Index(Index)
+                                                    .Type(Index)
+                                                    .Refresh(Refresh.True)
+                                                    );
+            if (!response.IsValid)
+                throw new Exception(USER_DELETE_NOT_DELETED_EXCEPTION);
+        }
+
+
+
+        /*-------------------Logs-------------------*/
+        public List<Log> GetLogs()
+        {
+            var response = Client.Search<Log>(s => s
+                   .Index(Index)
+                   .Type(Index)
+                   .From(0)
+                   .Size(GetCount(Index))
+                  );
+
+            if (response == null)
+                throw new Exception(INVALID_LOG_ES_CONNECTION_EXCEPTION);
+
+            if (!response.IsValid)
+                throw new Exception(LOG_GET_ALL_EXCEPTION);
+
+            var logs = new List<Log>();
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    logs.Add(item);
+            }
+            return logs;
+        }
+        public void AddLog(Log log)
+        {
+            if (log == null)
+                throw new Exception(LOG_CREATE_INVALID_PARAMETER_EXCEPTION);
+
+            if (!IndexExists())
+                CreateIndex();
+
+
+            var response = Client.IndexAsync(log, i => i
+              .Index(Index)
+              .Type(Index)
+              .Refresh(Refresh.True)
+              ).Result;
+
+            if (!response.IsValid)
+                throw new Exception(LOG_CREATE_NOT_CREATED_EXCEPTION);
+        }
+
+
+
         /*---------Metodos genericos------------------*/
 
         public int GetCount(string tipo)
@@ -1295,7 +1535,9 @@ namespace SUA.Repositorios
             show,
             sala,
             productor,
-            fecha
+            fecha,
+            user,
+            log
         }
     }
 }
