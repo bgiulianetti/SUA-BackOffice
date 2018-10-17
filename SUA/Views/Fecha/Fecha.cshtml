@@ -166,21 +166,21 @@
         {
             var backgroundcolor;
             var placeholder = salas[i].RepeticionEnDias;
-            if (salas[i].RepeticionEnDias > 0)
+            if (salas[i].RepeticionEnDias >= 0)
             {
                 backgroundcolor = "red";
                 diasVencidos = salas[i].RepeticionEnDias + " días vencida";
             }
-            else if (salas[i].RepeticionEnDias < 0 && salas[i].RepeticionEnDias > -30)
+            else if (salas[i].RepeticionEnDias < 0 && salas[i].RepeticionEnDias >= -30)
             {
                 backgroundcolor = "orange";
                 var cantDias = salas[i].RepeticionEnDias.toString().replace("-", "");
                 diasVencidos = "vence en " + cantDias + " días";
             }
-            else if (salas[i].RepeticionEnDias > -30 && salas[i].RepeticionEnDias > -365)
+            else if (salas[i].RepeticionEnDias < -30 && salas[i].RepeticionEnDias > -365)
             {
                 backgroundcolor = "lightgreen";
-                var cantDias = salas[i].RepeticionEnDias.replace("-", "");
+                var cantDias = salas[i].RepeticionEnDias.toString().replace("-", "");
                 diasVencidos = "vence en " + cantDias + " días";
             }
             else
