@@ -25,15 +25,18 @@ namespace SUA.Controllers
         [HttpPost]
         public ActionResult Login(string username, string password)
         {
-            if (username.ToString() == "sua-user" && password == "sua2018")
+            var service = new UserService();
+            var user = service.ValidateCredentials(username, password);
+            if(user == null)
             {
-                Response.Cookies["session"].Value = username;
-                Response.Cookies["session"].Expires = DateTime.Now.AddDays(5);
-                return RedirectToAction("Index", "Home");
+                ViewBag.mensaje = "fail";
             }
             else
             {
-                ViewBag.mensaje = "fail";
+                System.Web.HttpContext.Current.Session["user"] = user;
+               var test = System.Web.HttpContext.Current.Session["user"] as UserModel;
+
+                return RedirectToAction("Index", "Home");
             }
             return View();
         }
@@ -122,7 +125,6 @@ namespace SUA.Controllers
             }
             return lista;
         }
-
 
         public List<string> GetNombresDeShow()
         {

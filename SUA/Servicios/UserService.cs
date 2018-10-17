@@ -48,5 +48,21 @@ namespace SUA.Servicios
         {
             Repository.DeleteUser(id);
         }
+        public UserModel ValidateCredentials(string username, string password)
+        {
+            if (username == "" && password == "")
+                return null;
+
+            var service = new UserService();
+            var user = service.GetUserByNombre(username);
+            if (user == null)
+                return null;
+
+            if (user.Password != password)
+                return null;
+
+            return user;
+
+        }
     }
 }

@@ -1339,7 +1339,8 @@ namespace SUA.Repositorios
             var response = Client.Search<UserModel>(s => s
                 .Index(Index)
                 .Type(Index)
-                .Query(q => q.Term("username", nombre))
+                .Query(q => q
+                    .Match(m => m.Field(f => f.Username).Query(nombre)))
                     );
 
             if (response == null)
