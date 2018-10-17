@@ -1,4 +1,5 @@
-﻿using SUA.Models;
+﻿using SUA.Filters;
+using SUA.Models;
 using SUA.Servicios;
 using SUA.Utilities;
 using System;
@@ -12,6 +13,7 @@ namespace SUA.Controllers
     public class ProductorController : Controller
     {
         [HttpGet]
+        [UserValidationFilter]
         public ActionResult Productor(string dni)
         {
             if (Request.Cookies["session"] == null)
@@ -73,11 +75,9 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
+        [UserValidationFilter]
         public ActionResult Productores()
         {
-            if (Request.Cookies["session"] == null)
-                return RedirectToAction("Login", "Home");
-
             ViewBag.titulo = "Productores";
             var service = new ProductorService();
             try
@@ -93,6 +93,7 @@ namespace SUA.Controllers
             return View();
         }
 
+        [UserValidationFilter]
         public ActionResult DeleteProductor(string dni)
         {
             var service = new ProductorService();

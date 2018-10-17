@@ -14,9 +14,12 @@ namespace SUA.Controllers
     public class HomeController : Controller
     {
         [HttpGet]
-        [UserValidationFilter]
         public ActionResult Login()
         {
+            var user = Session["user"] as UserModel;
+            if (user != null)
+                return RedirectToAction("Index", "Home");
+
             ViewBag.mensaje = "";
             return View();
         }

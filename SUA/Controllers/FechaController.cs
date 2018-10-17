@@ -24,9 +24,6 @@ namespace SUA.Controllers
         [UserValidationFilter]
         public ActionResult Fecha(string id)
         {
-            if (Request.Cookies["session"] == null)
-                return RedirectToAction("Login", "Home");
-
             ViewBag.mensaje = "Get";
             //ViewBag.salas = new SalaService().GetSalas();
             ViewBag.shows = new ShowService().GetShows();
@@ -86,11 +83,9 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
+        [UserValidationFilter]
         public ActionResult Fechas()
         {
-            if (Request.Cookies["session"] == null)
-                return RedirectToAction("Login", "Home");
-
             ViewBag.titulo = "Fechas";
             var service = new FechaService();
             try
@@ -164,6 +159,7 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
+        [UserValidationFilter]
         public ActionResult Bordereaux(string id)
         {
             if (Request.Cookies["session"] == null)
@@ -271,11 +267,9 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
+        [UserValidationFilter]
         public ActionResult FechasCerradas()
         {
-            if (Request.Cookies["session"] == null)
-                return RedirectToAction("Login", "Home");
-
             ViewBag.titulo = "Fechas Cerradas";
             try
             {
@@ -305,6 +299,7 @@ namespace SUA.Controllers
             return JsonConvert.SerializeObject(fechas);
         }
 
+        [UserValidationFilter]
         public ActionResult DeleteFecha(string id)
         {
             var service = new FechaService();

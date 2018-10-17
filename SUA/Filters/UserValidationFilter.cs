@@ -17,21 +17,62 @@ namespace SUA.Filters
 
             var user = System.Web.HttpContext.Current.Session["user"] as UserModel;
             if (user == null)
-            {
-                if(controller != "Home" && action != "Login")
-                    filterContext.Result = new RedirectResult("/login");
-            }
+                filterContext.Result = new RedirectResult("/login");
 
-
-            if(controller == "Home" && action=="Login")
+            if(user.UserMaster == "no")
             {
-                filterContext.Result = new RedirectResult("/inicio");
-            }
-            else if(controller == "Feecha" && action == "Fecha")
-            {
-                if(user.Fechas == "Lectura")
+                if (controller == "Home" && action == "Login")
                 {
                     filterContext.Result = new RedirectResult("/inicio");
+                }
+                else if (controller == "Fecha" && action == "Fecha")
+                {
+                    if (user.Fechas == "Lectura")
+                    {
+                        filterContext.Result = new RedirectResult("/inicio");
+                    }
+                }
+                else if (controller == "Fecha" && action == "Bordereaux")
+                {
+                    if (user.Bordereaux == "Lectura")
+                    {
+                        filterContext.Result = new RedirectResult("/inicio");
+                    }
+                }
+                else if (controller == "Fecha" && action == "DeleteFecha")
+                {
+                    if (user.Fechas == "Lectura")
+                    {
+                        filterContext.Result = new RedirectResult("/fechas");
+                    }
+                }
+                else if (controller == "Productor" && action == "Productor")
+                {
+                    if (user.Productores == "Lectura")
+                    {
+                        filterContext.Result = new RedirectResult("/inicio");
+                    }
+                }
+                else if (controller == "Productor" && action == "DeleteProductor")
+                {
+                    if (user.Productores == "Lectura")
+                    {
+                        filterContext.Result = new RedirectResult("/productores");
+                    }
+                }
+                else if (controller == "Sala" && action == "Sala")
+                {
+                    if (user.Salas == "Lectura")
+                    {
+                        filterContext.Result = new RedirectResult("/inicio");
+                    }
+                }
+                else if (controller == "Sala" && action == "DeleteSala")
+                {
+                    if (user.Salas == "Lectura")
+                    {
+                        filterContext.Result = new RedirectResult("/salas");
+                    }
                 }
             }
         }

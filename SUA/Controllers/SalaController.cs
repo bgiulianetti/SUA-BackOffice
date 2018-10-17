@@ -1,4 +1,5 @@
-﻿using SUA.Models;
+﻿using SUA.Filters;
+using SUA.Models;
 using SUA.Servicios;
 using SUA.Utilities;
 using System;
@@ -12,11 +13,9 @@ namespace SUA.Controllers
     public class SalaController : Controller
     {
         [HttpGet]
+        [UserValidationFilter]
         public ActionResult Sala(string id)
         {
-            if (Request.Cookies["session"] == null)
-                return RedirectToAction("Login", "Home");
-
             ViewBag.mensaje = "Get";
             ViewBag.provincias = UtilitiesAndStuff.GetProvincias();
             ViewBag.paises = UtilitiesAndStuff.GetPaises();
@@ -68,11 +67,9 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
+        [UserValidationFilter]
         public ActionResult Salas()
         {
-            if (Request.Cookies["session"] == null)
-                return RedirectToAction("Login", "Home");
-
             ViewBag.titulo = "Salas";
             var service = new SalaService();
             try
@@ -88,6 +85,7 @@ namespace SUA.Controllers
             return View();
         }
 
+        [UserValidationFilter]
         public ActionResult DeleteSala(string id)
         {
             var service = new SalaService();
