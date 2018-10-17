@@ -132,7 +132,7 @@ namespace SUA
             routes.MapRoute(
                 name: "Users",
                 url: "users",
-                defaults: new { controller = "Users", action = "Usuarios" }
+                defaults: new { controller = "User", action = "Usuarios" }
             );
 
 

@@ -446,6 +446,7 @@
     <Content Include="Views\Fecha\FechasCerradas.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\User\Usuario.cshtml" />
+    <Content Include="Views\User\Usuarios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1504,6 +1504,8 @@ namespace SUA.Repositorios
                 response = Client.Count<Fecha>(c => c.Index(Index).Type(Index));
             else if (tipo == "show")
                 response = Client.Count<Show>(c => c.Index(Index).Type(Index));
+            else if (tipo == "user")
+                response = Client.Count<UserModel>(c => c.Index(Index).Type(Index));
             return (int)response.Count;
         }
         public void DeleteIndex()

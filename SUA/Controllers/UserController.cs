@@ -79,6 +79,26 @@ namespace SUA.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult Usuarios()
+        {
+            if (Request.Cookies["session"] == null)
+                return RedirectToAction("Login", "Home");
+
+            ViewBag.titulo = "Usuarios";
+            var service = new UserService();
+            try
+            {
+                var users = service.GetUsers();
+                ViewBag.users = users;
+                ViewBag.mensaje = "listar";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.mensaje = ex.Message;
+            }
+            return View();
+        }
 
         private List<Show> GetShowsByIds(string _shows)
         {

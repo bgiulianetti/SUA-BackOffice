@@ -48,8 +48,7 @@
                                 </td>
                             </tr>
                          </table>
-                        <hr style="color: #8dd9f7">
-                        <table>
+                        <table id="tableProperties">
                             <tr>    
                                 <td>
                                     <label>Crear Fechas</label>
@@ -136,26 +135,6 @@
     {
         generateShowsHiddenList();
     }
-
-
-    $("#userMaster").change(function (event) {
-        var seleccion = $("#userMaster option:selected");
-        if (seleccion.val() == "si")
-        {
-            $("#crearFechas").prop("disabled", true);
-            $("#cargarBordereaux").prop("disabled", true);
-            $("#cargaSalas").prop("disabled", true);
-            $("#veBordereaux").prop("disabled", true);
-        }
-        else
-        {
-            $("#crearFechas").prop("disabled", false);
-            $("#cargarBordereaux").prop("disabled", false);
-            $("#cargaSalas").prop("disabled", false);
-            $("#veBordereaux").prop("disabled", false);
-        }
-
-    });
 
     $("#agregar").click(function (event) {
         var seleccion = $("#shows option:selected");

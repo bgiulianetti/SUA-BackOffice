@@ -20,6 +20,7 @@ namespace SUA.Models
         public string UserMaster { get; set; }
         public string MustChangePasswordAtNextLogin { get; set; }
         public string Blocked { get; set; }
+        public DateTime LastLogin { get; set; }
 
         public void SetId()
         {
