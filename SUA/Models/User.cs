@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SUA.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,9 +16,14 @@ namespace SUA.Models
         public bool CargaBordereaux { get; set; }
         public bool CargaSalas { get; set; }
         public bool VeBordereaux { get; set; }
-        public List<string> ElencosAsignados { get; set; }
+        public List<Show> ShowsAsignados { get; set; }
         public bool UserMaster { get; set; }
         public bool MustChangePasswordAtNextLogin { get; set; }
         public bool Blocked { get; set; }
+
+        public void SetId()
+        {
+            UniqueId = UtilitiesAndStuff.GenerateUniqueId();
+        }
     }
 }

@@ -445,7 +445,7 @@
     <Content Include="Views\Fecha\Bordereaux.cshtml" />
     <Content Include="Views\Fecha\FechasCerradas.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\User\User.cshtml" />
+    <Content Include="Views\User\Usuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

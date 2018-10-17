@@ -10,6 +10,16 @@ namespace SUA.Utilities
 {
     public static class UtilitiesAndStuff
     {
+        public static List<SelectListItem> GetEstados()
+        {
+            var estados = new List<string>
+            {
+                "si",
+                "no"
+            };
+            return ConverListToSelectListItem(estados);
+        }
+
         public static List<SelectListItem> GetProvincias()
         {
             var provincias = new List<string>

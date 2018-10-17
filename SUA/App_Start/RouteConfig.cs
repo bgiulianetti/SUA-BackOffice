@@ -126,13 +126,13 @@ namespace SUA
             routes.MapRoute(
                 name: "User",
                 url: "user",
-                defaults: new { controller = "User", action = "User" }
+                defaults: new { controller = "User", action = "Usuario" }
             );
 
             routes.MapRoute(
                 name: "Users",
                 url: "users",
-                defaults: new { controller = "Users", action = "Users" }
+                defaults: new { controller = "Users", action = "Usuarios" }
             );
 
 
