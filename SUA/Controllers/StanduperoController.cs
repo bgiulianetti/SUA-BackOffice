@@ -1,4 +1,5 @@
-﻿using SUA.Models;
+﻿using SUA.Filters;
+using SUA.Models;
 using SUA.Servicios;
 using SUA.Utilities;
 using System;
@@ -12,11 +13,9 @@ namespace SUA.Controllers
     public class StanduperoController : Controller
     {
         [HttpGet]
+        [UserValidationFilter]
         public ActionResult Standupero(string dni)
         {
-            if (Request.Cookies["session"] == null)
-                return RedirectToAction("Login", "Home");
-
             ViewBag.mensaje = "Get";
             ViewBag.bancos = UtilitiesAndStuff.GetBancos();
             ViewBag.provincias = UtilitiesAndStuff.GetProvincias();
@@ -74,11 +73,9 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
+        [UserValidationFilter]
         public ActionResult Standuperos()
         {
-            if (Request.Cookies["session"] == null)
-                return RedirectToAction("Login", "Home");
-
             ViewBag.titulo = "Standuperos";
             var service = new StanduperoService();
             try
@@ -94,6 +91,7 @@ namespace SUA.Controllers
             return View();
         }
 
+        [UserValidationFilter]
         public ActionResult DeleteStandupero(string dni)
         {
             var service = new StanduperoService();

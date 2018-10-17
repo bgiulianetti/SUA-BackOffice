@@ -1,4 +1,5 @@
-﻿using SUA.Models;
+﻿using SUA.Filters;
+using SUA.Models;
 using SUA.Servicios;
 using SUA.Utilities;
 using System;
@@ -12,11 +13,9 @@ namespace SUA.Controllers
     public class UserController : Controller
     {
         [HttpGet]
+        [UserValidationFilter]
         public ActionResult Usuario(string id)
         {
-            if (Request.Cookies["session"] == null)
-                return RedirectToAction("Login", "Home");
-
             ViewBag.estados = UtilitiesAndStuff.GetEstados();
             ViewBag.permisos = UtilitiesAndStuff.GetPermisos();
             ViewBag.mensaje = "Get";
@@ -81,11 +80,9 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
+        [UserValidationFilter]
         public ActionResult Usuarios()
         {
-            if (Request.Cookies["session"] == null)
-                return RedirectToAction("Login", "Home");
-
             ViewBag.titulo = "Usuarios";
             var service = new UserService();
             try
@@ -115,7 +112,6 @@ namespace SUA.Controllers
             }
             return shows;
         }
-
 
     }
 }

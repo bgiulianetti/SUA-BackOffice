@@ -74,6 +74,41 @@ namespace SUA.Filters
                         filterContext.Result = new RedirectResult("/salas");
                     }
                 }
+                else if (controller == "Show" && action == "Show")
+                {
+                    if (user.Shows == "Lectura")
+                    {
+                        filterContext.Result = new RedirectResult("/inicio");
+                    }
+                }
+                else if (controller == "Show" && action == "DeleteShow")
+                {
+                    if (user.Shows == "Lectura")
+                    {
+                        filterContext.Result = new RedirectResult("/shows");
+                    }
+                }
+                else if (controller == "Standupero" && action == "Standupero")
+                {
+                    if (user.Shows == "Lectura")
+                    {
+                        filterContext.Result = new RedirectResult("/inicio");
+                    }
+                }
+                else if (controller == "Standupero" && action == "DeleteStandupero")
+                {
+                    if (user.Shows == "Lectura")
+                    {
+                        filterContext.Result = new RedirectResult("/standuperos");
+                    }
+                }
+                else if (controller == "User" && action == "Usuario")
+                {
+                    if (user.Shows == "Lectura")
+                    {
+                        filterContext.Result = new RedirectResult("/inicio");
+                    }
+                }
             }
         }
     }

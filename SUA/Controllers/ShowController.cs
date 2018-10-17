@@ -1,4 +1,5 @@
-﻿using SUA.Models;
+﻿using SUA.Filters;
+using SUA.Models;
 using SUA.Servicios;
 using SUA.Utilities;
 using System;
@@ -12,11 +13,9 @@ namespace SUA.Controllers
     public class ShowController : Controller
     {
         [HttpGet]
+        [UserValidationFilter]
         public ActionResult Show(string id)
         {
-            if (Request.Cookies["session"] == null)
-                return RedirectToAction("Login", "Home");
-
             ViewBag.mensaje = "Get";
             ViewBag.colores = UtilitiesAndStuff.GetColores();
             var productoresService = new ProductorService();
@@ -86,11 +85,9 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
+        [UserValidationFilter]
         public ActionResult Shows()
         {
-            if (Request.Cookies["session"] == null)
-                return RedirectToAction("Login", "Home");
-
             ViewBag.titulo = "Shows";
             var service = new ShowService();
             try
@@ -106,6 +103,7 @@ namespace SUA.Controllers
             return View();
         }
 
+        [UserValidationFilter]
         public ActionResult DeleteShow(string id)
         {
             var service = new ShowService();
