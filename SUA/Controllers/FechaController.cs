@@ -25,7 +25,7 @@ namespace SUA.Controllers
         public ActionResult Fecha(string id)
         {
             ViewBag.mensaje = "Get";
-            //ViewBag.salas = new SalaService().GetSalas();
+            ViewBag.salas = new SalaService().GetSalas();
             ViewBag.shows = new ShowService().GetShows();
             ViewBag.productores = new ProductorService().GetProductores();
 

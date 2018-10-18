@@ -23,7 +23,22 @@ namespace SUA.Servicios
 
         public List<Fecha> GetFechas()
         {
-            return Repository.GetFechas();
+            var fechas = Repository.GetFechas();
+            var user = System.Web.HttpContext.Current.Session["user"] as UserModel;
+            if(user.ShowsAsignados.Count > 0)
+            {
+                var fechasFiltradas = new List<Fecha>();
+                foreach (var item in fechas)
+                {
+                    if (user.ShowsAsignados.Contains(item.Show))
+                        fechasFiltradas.Add(item);
+                }
+                return fechasFiltradas;
+            }
+            else
+            {
+                return fechas;
+            }
         }
         public Fecha GetFechaById(string id)
         {
@@ -119,7 +134,23 @@ namespace SUA.Servicios
                 if (item.Borederaux != null)
                     fechasConBordereaux.Add(item);
             }
-            return fechasConBordereaux;
+
+            //filtro las fechas por los shows que tienen asignados los usuarios
+            var user = System.Web.HttpContext.Current.Session["user"] as UserModel;
+            if (user.ShowsAsignados.Count > 0)
+            {
+                var fechasFiltradas = new List<Fecha>();
+                foreach (var item in fechasConBordereaux)
+                {
+                    if (user.ShowsAsignados.Contains(item.Show))
+                        fechasFiltradas.Add(item);
+                }
+                return fechasFiltradas;
+            }
+            else
+            {
+                return fechasConBordereaux;
+            }
         }
     }
 }

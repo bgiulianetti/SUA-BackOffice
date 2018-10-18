@@ -159,8 +159,6 @@ namespace SUA.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-
-
         private List<Show> GetShowsByIds(string _shows)
         {
             var shows = new List<Show>();

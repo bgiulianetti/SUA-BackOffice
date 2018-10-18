@@ -62,7 +62,15 @@
                             <tr>
                                 <td>
                                     <input id="filterSala" type="text" placeholder="Buscar Sala" class="form-control" style="width:100%" />
-                                    <select name="salasList" multiple="multiple" class="form-control" id="salasList" Style="width:350px; height:400px" required></select>
+                                    <select name="salasList" multiple="multiple" class="form-control" id="salasList" Style="width:350px; height:400px" required>
+                                        @if (ViewBag.accion == "Put")
+                                        {
+                                            @foreach (var item in ViewBag.salas)
+                                            {
+                                                <option value="@item.UniqueId">@item.Nombre</option>
+                                            }
+                                        }
+                                    </select>
                                 </td>
                                 <td>
                                     <label class="form-control">Fechas 20 días antes y 20 días después</label>
