@@ -165,15 +165,15 @@ namespace SUA.Repositorios
 
 
 
-        //Hoteles
+        //Hotel
         public const string INVALID_HOTEL_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch al querer obtener todos los hoteles";
         public const string HOTEL_GET_ALL_EXCEPTION = "Falla al querer obtener todos los hoteles";
         public const string HOTEL_GET_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para obtener un hotel por id debe pasar un id válido";
         public const string HOTEL_GET_BY_ID_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un hotel por id";
         public const string HOTEL_GET_BY_NOMBRE_INVALID_PARAMETER_EXCEPTION = "Para obtener un hotel por nombre debe pasar un nombre válido";
         public const string HOTEL_GET_BY_NOMBRE_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un hotel por nombre";
-        public const string HOTEL_GET_INNERID_BY_DNI_INVALID_PARAMETER_EXCEPTION = "Para obtener un hotel innerId por dni debe pasar un dni válido";
-        public const string HOTEL_GET_INNERID_BY_DNI_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un hotel innerId por dni";
+        public const string HOTEL_GET_INNERID_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para obtener un hotel innerId por id debe pasar un id válido";
+        public const string HOTEL_GET_INNERID_BY_ID_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un hotel innerId por id";
         public const string HOTEL_CREATE_INVALID_PARAMETER_EXCEPTION = "Para agregar un hotel debe pasar un hotel válido";
         public const string HOTEL_CREATE_ALREADY_EXISTS_EXCEPTION = "Para agregar un hotel debe pasar un hotel que no exista previamente";
         public const string HOTEL_CREATE_NOT_CREATED_EXCEPTION = "Falla al querer crear un hotel nuevo";
@@ -183,6 +183,26 @@ namespace SUA.Repositorios
         public const string HOTEL_DELETE_INVALID_PARAMETER_EXCEPTION = "Para borrar un hotel por id debe pasar un id válido";
         public const string HOTEL_DELETE_NOT_EXISTS_EXCEPTION = "Para borrar un hotel debe pasar un hotel que exista previamente";
         public const string HOTEL_DELETE_NOT_DELETED_EXCEPTION = "Falla al querer borrar un hotel";
+
+
+        //Restaurante
+        public const string INVALID_RESTAURANTE_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch al querer obtener todos los restaurantes";
+        public const string RESTAURANTE_GET_ALL_EXCEPTION = "Falla al querer obtener todos los restaurantes";
+        public const string RESTAURANTE_GET_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para obtener un restaurante por id debe pasar un id válido";
+        public const string RESTAURANTE_GET_BY_ID_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un restaurante por id";
+        public const string RESTAURANTE_GET_BY_NOMBRE_INVALID_PARAMETER_EXCEPTION = "Para obtener un restaurante por nombre debe pasar un nombre válido";
+        public const string RESTAURANTE_GET_BY_NOMBRE_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un restaurante por nombre";
+        public const string RESTAURANTE_GET_INNERID_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para obtener un restaurante innerId por id debe pasar un id válido";
+        public const string RESTAURANTE_GET_INNERID_BY_ID_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un restaurante innerId por id";
+        public const string RESTAURANTE_CREATE_INVALID_PARAMETER_EXCEPTION = "Para agregar un restaurante debe pasar un restaurante válido";
+        public const string RESTAURANTE_CREATE_ALREADY_EXISTS_EXCEPTION = "Para agregar un restaurante debe pasar un restaurante que no exista previamente";
+        public const string RESTAURANTE_CREATE_NOT_CREATED_EXCEPTION = "Falla al querer crear un restaurante nuevo";
+        public const string RESTAURANTE_UPDATE_INVALID_PARAMETER_EXCEPTION = "Para editar un restaurante debe pasar un restaurante válido";
+        public const string RESTAURANTE_UPDATE_NOT_EXISTS_EXCEPTION = "Para editar un restaurante debe pasar un restaurante que exista previamente";
+        public const string RESTAURANTE_UPDATE_NOT_UPDATED_EXCEPTION = "Falla al querer editar un hotel";
+        public const string RESTAURANTE_DELETE_INVALID_PARAMETER_EXCEPTION = "Para borrar un restaurante por id debe pasar un id válido";
+        public const string RESTAURANTE_DELETE_NOT_EXISTS_EXCEPTION = "Para borrar un restaurante debe pasar un restaurante que exista previamente";
+        public const string RESTAURANTE_DELETE_NOT_DELETED_EXCEPTION = "Falla al querer borrar un hotel";
 
 
 
@@ -1571,7 +1591,7 @@ namespace SUA.Repositorios
             }
             return hoteles;
         }
-        public Hotel GetHotelyId(string id)
+        public Hotel GetHotelById(string id)
         {
             if (string.IsNullOrEmpty(id))
                 throw new Exception(HOTEL_GET_BY_ID_INVALID_PARAMETER_EXCEPTION);
@@ -1626,7 +1646,7 @@ namespace SUA.Repositorios
         public string GetHotelInnerIdById(string id)
         {
             if (string.IsNullOrEmpty(id))
-                throw new Exception(HOTEL_GET_INNERID_BY_DNI_INVALID_PARAMETER_EXCEPTION);
+                throw new Exception(HOTEL_GET_INNERID_BY_ID_INVALID_PARAMETER_EXCEPTION);
 
             var response = Client.Search<Hotel>(s => s
                .Index(Index)
@@ -1640,7 +1660,7 @@ namespace SUA.Repositorios
                 return innerId;
 
             if (!response.IsValid)
-                throw new Exception(HOTEL_GET_INNERID_BY_DNI_INVALID_SEARCH_EXCEPTION);
+                throw new Exception(HOTEL_GET_INNERID_BY_ID_INVALID_SEARCH_EXCEPTION);
 
             if (response.Total > 0)
             {
@@ -1704,6 +1724,167 @@ namespace SUA.Repositorios
                                                         );
             if (!response.IsValid)
                 throw new Exception(HOTEL_DELETE_NOT_DELETED_EXCEPTION);
+        }
+
+
+
+        /*-------------------Restaurantes-------------------*/
+        public List<Restaurante> GetRestaurantes()
+        {
+            var response = Client.Search<Restaurante>(s => s
+                   .Index(Index)
+                   .Type(Index)
+                   .From(0)
+                   .Size(GetCount(Index))
+                  );
+
+            if (response == null)
+                throw new Exception(INVALID_RESTAURANTE_ES_CONNECTION_EXCEPTION);
+
+            if (!response.IsValid)
+                throw new Exception(RESTAURANTE_GET_ALL_EXCEPTION);
+
+            var restaurantes = new List<Restaurante>();
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    restaurantes.Add(item);
+            }
+            return restaurantes;
+        }
+        public Restaurante GetRestauranteById(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(RESTAURANTE_GET_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Restaurante>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q
+                    .Match(m => m.Field(f => f.UniqueId).Query(id)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(RESTAURANTE_GET_BY_ID_INVALID_SEARCH_EXCEPTION);
+
+            Restaurante restaurante = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    restaurante = item;
+            }
+            return restaurante;
+        }
+        public Restaurante GetRestauranteByNombre(string nombre)
+        {
+            if (string.IsNullOrEmpty(nombre))
+                throw new Exception(RESTAURANTE_GET_BY_NOMBRE_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Restaurante>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q
+                    .Match(m => m.Field(f => f.Nombre).Query(nombre)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(RESTAURANTE_GET_BY_NOMBRE_INVALID_SEARCH_EXCEPTION);
+
+            Restaurante restaurante = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    restaurante = item;
+            }
+            return restaurante;
+        }
+        public string GetRestauranteInnerIdById(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(RESTAURANTE_GET_INNERID_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Restaurante>(s => s
+               .Index(Index)
+               .Type(Index)
+               .Query(q => q
+                   .Match(m => m.Field(f => f.UniqueId).Query(id)))
+                   );
+
+            string innerId = null;
+            if (response == null)
+                return innerId;
+
+            if (!response.IsValid)
+                throw new Exception(RESTAURANTE_GET_INNERID_BY_ID_INVALID_SEARCH_EXCEPTION);
+
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Hits)
+                    innerId = item.Id;
+            }
+            return innerId;
+        }
+        public void AddRestaurante(Restaurante restaurante)
+        {
+            if (restaurante == null)
+                throw new Exception(RESTAURANTE_CREATE_INVALID_PARAMETER_EXCEPTION);
+
+            if (!IndexExists())
+                CreateIndex();
+
+            var resultado = GetRestauranteByNombre(restaurante.Nombre);
+            if (resultado != null)
+                throw new Exception(RESTAURANTE_CREATE_ALREADY_EXISTS_EXCEPTION);
+
+            var response = Client.IndexAsync(restaurante, i => i
+              .Index(Index)
+              .Type(Index)
+              .Refresh(Refresh.True)
+              ).Result;
+
+            if (!response.IsValid)
+                throw new Exception(RESTAURANTE_CREATE_NOT_CREATED_EXCEPTION);
+        }
+        public void UpdateRestaurante(Restaurante restaurante)
+        {
+            if (restaurante == null)
+                throw new Exception(RESTAURANTE_UPDATE_INVALID_PARAMETER_EXCEPTION);
+
+            var innerId = GetRestauranteInnerIdById(restaurante.UniqueId);
+            if (innerId == null)
+                throw new Exception(RESTAURANTE_UPDATE_NOT_EXISTS_EXCEPTION);
+
+            var result = Client.Index(restaurante, i => i
+                            .Index(Index)
+                            .Type(Index)
+                            .Id(innerId)
+                            .Refresh(Refresh.True));
+
+            if (!result.IsValid)
+                throw new Exception(RESTAURANTE_UPDATE_NOT_UPDATED_EXCEPTION);
+        }
+        public void DeleteRestaurante(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(RESTAURANTE_DELETE_INVALID_PARAMETER_EXCEPTION);
+
+            var innerId = GetRestauranteInnerIdById(id);
+            if (innerId == null)
+                throw new Exception(RESTAURANTE_DELETE_NOT_EXISTS_EXCEPTION);
+
+            var response = Client.Delete<Restaurante>(innerId, d => d
+                                                        .Index(Index)
+                                                        .Type(Index)
+                                                        .Refresh(Refresh.True)
+                                                        );
+            if (!response.IsValid)
+                throw new Exception(RESTAURANTE_DELETE_NOT_DELETED_EXCEPTION);
         }
 
 
