@@ -163,6 +163,32 @@ namespace SUA.Repositorios
         public const string LOG_CREATE_INVALID_PARAMETER_EXCEPTION = "Para agregar un log debe pasar un log válido";
         public const string LOG_CREATE_NOT_CREATED_EXCEPTION = "Falla al querer crear un log nuevo";
 
+
+
+        //Hoteles
+        public const string INVALID_HOTEL_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch al querer obtener todos los hoteles";
+        public const string HOTEL_GET_ALL_EXCEPTION = "Falla al querer obtener todos los hoteles";
+        public const string HOTEL_GET_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para obtener un hotel por id debe pasar un id válido";
+        public const string HOTEL_GET_BY_ID_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un hotel por id";
+        public const string HOTEL_GET_BY_NOMBRE_INVALID_PARAMETER_EXCEPTION = "Para obtener un hotel por nombre debe pasar un nombre válido";
+        public const string HOTEL_GET_BY_NOMBRE_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un hotel por nombre";
+        public const string HOTEL_GET_INNERID_BY_DNI_INVALID_PARAMETER_EXCEPTION = "Para obtener un hotel innerId por dni debe pasar un dni válido";
+        public const string HOTEL_GET_INNERID_BY_DNI_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un hotel innerId por dni";
+        public const string HOTEL_CREATE_INVALID_PARAMETER_EXCEPTION = "Para agregar un hotel debe pasar un hotel válido";
+        public const string HOTEL_CREATE_ALREADY_EXISTS_EXCEPTION = "Para agregar un hotel debe pasar un hotel que no exista previamente";
+        public const string HOTEL_CREATE_NOT_CREATED_EXCEPTION = "Falla al querer crear un hotel nuevo";
+        public const string HOTEL_UPDATE_INVALID_PARAMETER_EXCEPTION = "Para editar un hotel debe pasar un hotel válido";
+        public const string HOTEL_UPDATE_NOT_EXISTS_EXCEPTION = "Para editar un hotel debe pasar un hotel que exista previamente";
+        public const string HOTEL_UPDATE_NOT_UPDATED_EXCEPTION = "Falla al querer editar un hotel";
+        public const string HOTEL_DELETE_INVALID_PARAMETER_EXCEPTION = "Para borrar un hotel por id debe pasar un id válido";
+        public const string HOTEL_DELETE_NOT_EXISTS_EXCEPTION = "Para borrar un hotel debe pasar un hotel que exista previamente";
+        public const string HOTEL_DELETE_NOT_DELETED_EXCEPTION = "Falla al querer borrar un hotel";
+
+
+
+
+
+
         protected ElasticClient Client { get; set; }
         protected string Index { get; set; }
 
@@ -1520,6 +1546,167 @@ namespace SUA.Repositorios
 
 
 
+
+        /*-------------------Hoteles-------------------*/
+        public List<Hotel> GetHoteles()
+        {
+            var response = Client.Search<Hotel>(s => s
+                   .Index(Index)
+                   .Type(Index)
+                   .From(0)
+                   .Size(GetCount(Index))
+                  );
+
+            if (response == null)
+                throw new Exception(INVALID_HOTEL_ES_CONNECTION_EXCEPTION);
+
+            if (!response.IsValid)
+                throw new Exception(HOTEL_GET_ALL_EXCEPTION);
+
+            var hoteles = new List<Hotel>();
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    hoteles.Add(item);
+            }
+            return hoteles;
+        }
+        public Hotel GetHotelyId(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(HOTEL_GET_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Hotel>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q
+                    .Match(m => m.Field(f => f.UniqueId).Query(id)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(HOTEL_GET_BY_ID_INVALID_SEARCH_EXCEPTION);
+
+            Hotel hotel = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    hotel = item;
+            }
+            return hotel;
+        }
+        public Hotel GetHotelByNombre(string nombre)
+        {
+            if (string.IsNullOrEmpty(nombre))
+                throw new Exception(HOTEL_GET_BY_NOMBRE_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Hotel>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q
+                    .Match(m => m.Field(f => f.Nombre).Query(nombre)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(HOTEL_GET_BY_NOMBRE_INVALID_SEARCH_EXCEPTION);
+
+            Hotel hotel = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    hotel = item;
+            }
+            return hotel;
+        }
+        public string GetHotelInnerIdById(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(HOTEL_GET_INNERID_BY_DNI_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Hotel>(s => s
+               .Index(Index)
+               .Type(Index)
+               .Query(q => q
+                   .Match(m => m.Field(f => f.UniqueId).Query(id)))
+                   );
+
+            string innerId = null;
+            if (response == null)
+                return innerId;
+
+            if (!response.IsValid)
+                throw new Exception(HOTEL_GET_INNERID_BY_DNI_INVALID_SEARCH_EXCEPTION);
+
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Hits)
+                    innerId = item.Id;
+            }
+            return innerId;
+        }
+        public void AddHotel(Hotel hotel)
+        {
+            if (hotel == null)
+                throw new Exception(HOTEL_CREATE_INVALID_PARAMETER_EXCEPTION);
+
+            if (!IndexExists())
+                CreateIndex();
+
+            var resultado = GetHotelByNombre(hotel.Nombre);
+            if (resultado != null)
+                throw new Exception(HOTEL_CREATE_ALREADY_EXISTS_EXCEPTION);
+
+            var response = Client.IndexAsync(hotel, i => i
+              .Index(Index)
+              .Type(Index)
+              .Refresh(Refresh.True)
+              ).Result;
+
+            if (!response.IsValid)
+                throw new Exception(HOTEL_CREATE_NOT_CREATED_EXCEPTION);
+        }
+        public void UpdateHotel(Hotel hotel)
+        {
+            if (hotel == null)
+                throw new Exception(HOTEL_UPDATE_INVALID_PARAMETER_EXCEPTION);
+
+            var innerId = GetHotelInnerIdById(hotel.UniqueId);
+            if (innerId == null)
+                throw new Exception(HOTEL_UPDATE_NOT_EXISTS_EXCEPTION);
+
+            var result = Client.Index(hotel, i => i
+                            .Index(Index)
+                            .Type(Index)
+                            .Id(innerId)
+                            .Refresh(Refresh.True));
+
+            if (!result.IsValid)
+                throw new Exception(HOTEL_UPDATE_NOT_UPDATED_EXCEPTION);
+        }
+        public void DeleteHotel(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(HOTEL_DELETE_INVALID_PARAMETER_EXCEPTION);
+
+            var innerId = GetHotelInnerIdById(id);
+            if (innerId == null)
+                throw new Exception(HOTEL_DELETE_NOT_EXISTS_EXCEPTION);
+
+            var response = Client.Delete<Hotel>(innerId, d => d
+                                                        .Index(Index)
+                                                        .Type(Index)
+                                                        .Refresh(Refresh.True)
+                                                        );
+            if (!response.IsValid)
+                throw new Exception(HOTEL_DELETE_NOT_DELETED_EXCEPTION);
+        }
+
+
         /*---------Metodos genericos------------------*/
 
         public int GetCount(string tipo)
@@ -1539,6 +1726,10 @@ namespace SUA.Repositorios
                 response = Client.Count<UserModel>(c => c.Index(Index).Type(Index));
             else if (tipo == "log")
                 response = Client.Count<Log>(c => c.Index(Index).Type(Index));
+            else if (tipo == "hotel")
+                response = Client.Count<Hotel>(c => c.Index(Index).Type(Index));
+            else if (tipo == "restaurante")
+                response = Client.Count<Restaurante>(c => c.Index(Index).Type(Index));
             return (int)response.Count;
         }
         public void DeleteIndex()
@@ -1572,7 +1763,9 @@ namespace SUA.Repositorios
             productor,
             fecha,
             user,
-            log
+            log,
+            hotel,
+            restaurante
         }
     }
 }

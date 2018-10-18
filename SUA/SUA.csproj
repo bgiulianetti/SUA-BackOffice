@@ -192,6 +192,7 @@
     <Compile Include="Models\Fecha.cs" />
     <Compile Include="Models\GastosBordereaux.cs" />
     <Compile Include="Models\GoogleCalendarProperties.cs" />
+    <Compile Include="Models\Hotel.cs" />
     <Compile Include="Models\ImpuestosDeduccionesTeatroBorderaux.cs" />
     <Compile Include="Models\InfoSalasVista.cs" />
     <Compile Include="Models\InstagramUserData.cs" />
@@ -201,6 +202,7 @@
     <Compile Include="Models\Productor.cs" />
     <Compile Include="Models\PruebaSonidoEnsayo.cs" />
     <Compile Include="Models\RepeticionPlazas.cs" />
+    <Compile Include="Models\Restaurante.cs" />
     <Compile Include="Models\Ubicacion.cs" />
     <Compile Include="Models\Sala.cs" />
     <Compile Include="Models\Show.cs" />

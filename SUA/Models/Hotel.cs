@@ -7,6 +7,7 @@ namespace SUA.Models
 {
     public class Hotel
     {
+        public string UniqueId { get; set; }
         public string Nombre { get; set; }
         public Ubicacion Direccion { get; set; }
         public string Telefono { get; set; }
