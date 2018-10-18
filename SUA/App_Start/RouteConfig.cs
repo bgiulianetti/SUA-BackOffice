@@ -150,9 +150,9 @@ namespace SUA
             //==============================Logs========================================
 
             routes.MapRoute(
-                name: "Logs",
-                url: "logs",
-                defaults: new { controller = "Log", action = "Logs" }
+                name: "Historial",
+                url: "historial",
+                defaults: new { controller = "Historial", action = "Historial" }
             );
 
 
