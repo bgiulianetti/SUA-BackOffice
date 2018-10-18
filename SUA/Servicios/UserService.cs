@@ -1,8 +1,11 @@
-﻿using SUA.Models;
+﻿using Newtonsoft.Json;
+using SUA.Models;
 using SUA.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web;
 
 namespace SUA.Servicios
@@ -63,10 +66,35 @@ namespace SUA.Servicios
 
             if (user.Password != password)
                 return null;
+
+            if (user.Blocked == "si")
+                return null;
+
             user.LastLogin = DateTime.Now;
             Repository.UpdateUser(user);
             return user;
 
         }
+
+        public EmailCredentials GetEmailCredentials()
+        {
+            var Client = new HttpClient();
+            Client.BaseAddress = new Uri(System.Configuration.ConfigurationManager.AppSettings.Get("Calendar.BaseUrl"));
+            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var response = Client.GetAsync(System.Configuration.ConfigurationManager.AppSettings.Get("EmailCredentials")).Result;
+            var responseJson = response.Content.ReadAsStringAsync().Result;
+            var credentials = JsonConvert.DeserializeObject<EmailCredentials>(responseJson);
+            return credentials;
+
+        }
+
+
+    }
+
+    public class EmailCredentials
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }

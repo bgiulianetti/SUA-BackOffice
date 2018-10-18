@@ -35,6 +35,10 @@ namespace SUA.Controllers
             }
             else
             {
+                if(user.MustChangePasswordAtNextLogin == "si")
+                {
+                    return RedirectToAction("SetNewPassword", "User", new { id = user.UniqueId});
+                }
                 System.Web.HttpContext.Current.Session["user"] = user;
                 return RedirectToAction("Index", "Home");
             }
