@@ -40,7 +40,7 @@ namespace SUA.Controllers
                     return RedirectToAction("SetNewPassword", "User", new { id = user.UniqueId});
                 }
                 System.Web.HttpContext.Current.Session["user"] = user;
-                new LogService().FormatAndSaveLog("Login", "Login", JsonConvert.SerializeObject(user));
+                new LogService().FormatAndSaveLog("Login", "Login", "");
                 return RedirectToAction("Index", "Home");
             }
             return View();

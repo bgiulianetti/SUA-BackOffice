@@ -422,7 +422,7 @@ namespace SUA.Controllers
 
             Response.Redirect(fileName);
 
-            new LogService().FormatAndSaveLog("Bordereaux", "Imprimir", JsonConvert.SerializeObject(fecha));
+            new LogService().FormatAndSaveLog("Bordereaux", "Imprimir", fecha.UniqueId);
 
         }
 
