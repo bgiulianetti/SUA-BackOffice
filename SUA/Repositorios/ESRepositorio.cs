@@ -1391,7 +1391,7 @@ namespace SUA.Repositorios
             if (!IndexExists())
                 CreateIndex();
 
-            var resultado = GetSalaById(user.UniqueId);
+            var resultado = GetUserById(user.UniqueId);
             if (resultado != null)
                 throw new Exception(USER_CREATE_ALREADY_EXISTS_EXCEPTION);
 

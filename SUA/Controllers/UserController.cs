@@ -217,5 +217,33 @@ namespace SUA.Controllers
             client.Send(mm);
         }
 
+        public ActionResult InicializarUserMaster()
+        {
+            var user = new UserModel
+            {
+                Blocked = "no",
+                Bordereaux = "Escritura",
+                Fechas = "Escritura",
+                Hoteles = "Escritura",
+                LastLogin = DateTime.Now,
+                MailRecover = "diego@standupargentina.com.ar",
+                MustChangePasswordAtNextLogin = "no",
+                Password = "Sua2018",
+                Productores = "Escritura",
+                Reportes = "Escritura",
+                Restaurantes = "Escritura",
+                Salas = "Escritura",
+                Shows = "Escritura",
+                ShowsAsignados = new List<Show>(),
+                Standuperos = "Escritura",
+                UniqueId = UtilitiesAndStuff.GenerateUniqueId(),
+                UserMaster = "si",
+                Username = "sua-user"
+            };
+            var service = new UserService();
+            service.AddUser(user);
+            return View();
+        }
+
     }
 }
