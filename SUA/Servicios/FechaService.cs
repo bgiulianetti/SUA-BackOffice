@@ -25,20 +25,28 @@ namespace SUA.Servicios
         {
             var fechas = Repository.GetFechas();
             var user = System.Web.HttpContext.Current.Session["user"] as UserModel;
-            if(user.ShowsAsignados.Count > 0)
+            if(user.UserMaster == "no")
             {
-                var fechasFiltradas = new List<Fecha>();
-                foreach (var item in fechas)
+                if(user.ShowsAsignados.Count > 0)
                 {
-                    if (user.ShowsAsignados.Contains(item.Show))
-                        fechasFiltradas.Add(item);
+                    var fechasFiltradas = new List<Fecha>();
+                    foreach (var item in fechas)
+                    {
+                        if (user.ShowsAsignados.Contains(item.Show))
+                            fechasFiltradas.Add(item);
+                    }
+                    return fechasFiltradas;
                 }
-                return fechasFiltradas;
+                else
+                {
+                    return fechas;
+                }
             }
             else
             {
                 return fechas;
             }
+
         }
         public Fecha GetFechaById(string id)
         {
@@ -52,7 +60,6 @@ namespace SUA.Servicios
         {
             return Repository.GetFechasByShowId(id);
         }
-
         public Fecha GetUltimaFechaByShowId(string id)
         {
             var fechas = Repository.GetFechasByShowId(id);
@@ -62,7 +69,6 @@ namespace SUA.Servicios
             var fechasOrdenadas = fechas.OrderBy(f => f.FechaHorario);
             return fechasOrdenadas.Last();
         }
-
         public List<Fecha> GetFechasByProvincia(string nombreProvincia)
         {
             return Repository.GetFechasByProvincia(nombreProvincia);
@@ -102,8 +108,6 @@ namespace SUA.Servicios
             return null;
 
         }
-
-
         public List<Fecha> GetFechasByCiudadAndRangoFecha(string ciudad, DateTime desde, DateTime hasta)
         {
             var fechas = Repository.GetFechasByCiudad(ciudad, desde, hasta);
@@ -113,7 +117,6 @@ namespace SUA.Servicios
             }
             return fechas;
         }
-
         public Fecha GetUltimaFechaBySalaAndShow(string idSala, string idShow)
         {
             var fechas = Repository.GetFechasByIdSala(idSala);
@@ -137,20 +140,28 @@ namespace SUA.Servicios
 
             //filtro las fechas por los shows que tienen asignados los usuarios
             var user = System.Web.HttpContext.Current.Session["user"] as UserModel;
-            if (user.ShowsAsignados.Count > 0)
+            if(user.UserMaster == "no")
             {
-                var fechasFiltradas = new List<Fecha>();
-                foreach (var item in fechasConBordereaux)
+                if (user.ShowsAsignados.Count > 0)
                 {
-                    if (user.ShowsAsignados.Contains(item.Show))
-                        fechasFiltradas.Add(item);
+                    var fechasFiltradas = new List<Fecha>();
+                    foreach (var item in fechasConBordereaux)
+                    {
+                        if (user.ShowsAsignados.Contains(item.Show))
+                            fechasFiltradas.Add(item);
+                    }
+                    return fechasFiltradas;
                 }
-                return fechasFiltradas;
+                else
+                {
+                    return fechasConBordereaux;
+                }
             }
             else
             {
                 return fechasConBordereaux;
             }
+
         }
     }
 }
