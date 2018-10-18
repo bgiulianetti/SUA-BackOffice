@@ -36,6 +36,15 @@ namespace SUA.Controllers
             {
                 var userService = new UserService();
                 var user = userService.GetUserById(id);
+                if(user.Username == "sua-user")
+                {
+                    var userLogueado = System.Web.HttpContext.Current.Session["user"] as UserModel;
+                    if(userLogueado.Username != "sua-user")
+                    {
+                        return RedirectToAction("Usuarios", "User");
+                    }
+                }
+
 
                 if (user.UserMaster == "si")
                     ViewBag.userMaster = "si";
