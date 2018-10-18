@@ -75,7 +75,6 @@ namespace SUA.Servicios
             return user;
 
         }
-
         public EmailCredentials GetEmailCredentials()
         {
             var Client = new HttpClient();
@@ -88,7 +87,6 @@ namespace SUA.Servicios
             return credentials;
 
         }
-
     }
 
     public class EmailCredentials

@@ -1,4 +1,5 @@
-﻿using SUA.Filters;
+﻿using Newtonsoft.Json;
+using SUA.Filters;
 using SUA.Models;
 using SUA.Servicios;
 using SUA.Utilities;
@@ -59,12 +60,14 @@ namespace SUA.Controllers
                 {
                     service.AddProductor(productor);
                     ViewBag.mensaje = "creado";
+                    new LogService().FormatAndSaveLog("Productor", "Crear", JsonConvert.SerializeObject(productor));
                 }
 
                 else if (string.Equals(accion, "Put"))
                 {
                     service.UpdateProductor(productor);
                     ViewBag.mensaje = "actualizado";
+                    new LogService().FormatAndSaveLog("Productor", "Editar", JsonConvert.SerializeObject(productor));
                 }
             }
             catch (Exception ex)
@@ -85,6 +88,7 @@ namespace SUA.Controllers
                 var productores = service.GetProductores();
                 ViewBag.productores = productores;
                 ViewBag.mensaje = "listar";
+                new LogService().FormatAndSaveLog("Productor", "Listar", "");
             }
             catch (Exception ex)
             {
@@ -99,7 +103,9 @@ namespace SUA.Controllers
             var service = new ProductorService();
             try
             {
+                var productor = service.GetProductorByDni(dni);
                 service.DeleteProductor(dni);
+                new LogService().FormatAndSaveLog("Productor", "Borrar", JsonConvert.SerializeObject(productor));
             }
             catch/* (Exception ex)*/
             {

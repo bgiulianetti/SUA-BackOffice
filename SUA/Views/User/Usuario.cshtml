@@ -30,7 +30,7 @@
                             <tr>
                                 <td>
                                     <label>Nombre de usuario </label>
-                                    @Html.TextBoxFor(model => model.Username, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.TextBoxFor(model => model.Username, new {@id="id_username", @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                                 <td>
                                     <label>Contraseña </label>
@@ -159,6 +159,11 @@
     var accion = "@ViewBag.accion";
     if (accion == "Put")
     {
+        var username = "@ViewBag.Username";
+        if (username == "sua-user")
+        {
+            $("#id_username").attr("readonly", true);
+        }
         generateShowsHiddenList();
     }
 

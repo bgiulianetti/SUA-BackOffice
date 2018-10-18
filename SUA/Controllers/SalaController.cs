@@ -1,4 +1,5 @@
-﻿using SUA.Filters;
+﻿using Newtonsoft.Json;
+using SUA.Filters;
 using SUA.Models;
 using SUA.Servicios;
 using SUA.Utilities;
@@ -52,11 +53,13 @@ namespace SUA.Controllers
                     sala.SetIdAndFechaAlta();
                     service.AddSala(sala);
                     ViewBag.mensaje = "creado";
+                    new LogService().FormatAndSaveLog("Sala", "Crear", JsonConvert.SerializeObject(sala));
                 }
                 else if (string.Equals(accion, "Put"))
                 {
                     service.UpdateSala(sala);
                     ViewBag.mensaje = "actualizado";
+                    new LogService().FormatAndSaveLog("Sala", "Editar", JsonConvert.SerializeObject(sala));
                 }
             }
             catch (Exception ex)
@@ -77,6 +80,7 @@ namespace SUA.Controllers
                 var salas = service.GetSalas();
                 ViewBag.salas = salas;
                 ViewBag.mensaje = "listar";
+                new LogService().FormatAndSaveLog("Sala", "Listar", "");
             }
             catch (Exception ex)
             {
@@ -91,7 +95,9 @@ namespace SUA.Controllers
             var service = new SalaService();
             try
             {
+                var sala = service.GetSalaById(id);
                 service.DeleteSala(id);
+                new LogService().FormatAndSaveLog("Sala", "Borrar", JsonConvert.SerializeObject(sala));
             }
             catch /*(Exception ex)*/
             {

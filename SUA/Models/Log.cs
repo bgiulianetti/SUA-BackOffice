@@ -9,6 +9,7 @@ namespace SUA.Models
     {
         public DateTime Fecha { get; set; }
         public string Username { get; set; }
+        public string Pantalla { get; set; }
         public string Accion { get; set; }
         public string Informacion { get; set; }
     }

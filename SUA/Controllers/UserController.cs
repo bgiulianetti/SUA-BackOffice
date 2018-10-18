@@ -1,4 +1,5 @@
-﻿using SUA.Filters;
+﻿using Newtonsoft.Json;
+using SUA.Filters;
 using SUA.Models;
 using SUA.Servicios;
 using SUA.Utilities;
@@ -55,6 +56,7 @@ namespace SUA.Controllers
                         shows.Remove(item);
                 }
 
+                ViewBag.username = user.Username;
                 ViewBag.shows = shows;
                 ViewBag.accion = "Put";
                 ViewBag.titulo = "Editar Usuario";
@@ -79,11 +81,20 @@ namespace SUA.Controllers
                     user.SetId();
                     service.AddUser(user);
                     ViewBag.mensaje = "creado";
+
+                    var userCopia = user;
+                    userCopia.Password = "xxxxx";
+                    new LogService().FormatAndSaveLog("Usuario", "Crear", JsonConvert.SerializeObject(userCopia));
                 }
                 else if (string.Equals(accion, "Put"))
                 {
                     service.UpdateUser(user);
                     ViewBag.mensaje = "actualizado";
+
+                    var userCopia = user;
+                    userCopia.Password = "xxxxx";
+                    new LogService().FormatAndSaveLog("Usuario", "Editar", JsonConvert.SerializeObject(userCopia));
+
                 }
                 var userLogueado = System.Web.HttpContext.Current.Session["user"] as UserModel;
                 if (user.Username == userLogueado.Username)

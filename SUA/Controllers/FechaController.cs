@@ -64,6 +64,7 @@ namespace SUA.Controllers
                     fecha.SetIdAndFechaAlta();
                     service.AddFecha(fecha);
                     ViewBag.mensaje = "creado";
+                    new LogService().FormatAndSaveLog("Fecha", "Crear", JsonConvert.SerializeObject(fecha));
                 }
                 else if (string.Equals(accion, "Put"))
                 {
@@ -73,6 +74,8 @@ namespace SUA.Controllers
 
                     service.UpdateFecha(fecha);
                     ViewBag.mensaje = "actualizado";
+
+                    new LogService().FormatAndSaveLog("Fecha", "Editar", JsonConvert.SerializeObject(fecha));
                 }
             }
             catch (Exception ex)
@@ -93,6 +96,7 @@ namespace SUA.Controllers
                 var fechas = service.GetFechas();
                 ViewBag.fechas = fechas;
                 ViewBag.mensaje = "listar";
+                new LogService().FormatAndSaveLog("Fecha", "Listar", "");
             }
             catch (Exception ex)
             {
@@ -253,9 +257,15 @@ namespace SUA.Controllers
             try
             {
                 if (fecha.Borederaux != null)
+                {
                     ViewBag.mensaje = "creado";
+                    new LogService().FormatAndSaveLog("Bordereaux", "Crear", JsonConvert.SerializeObject(fecha));
+                }
                 else
+                {
                     ViewBag.mensaje = "actualizado";
+                    new LogService().FormatAndSaveLog("Bordereaux", "Editar", JsonConvert.SerializeObject(fecha));
+                }
                 fecha.Borederaux = bordereaux;
                 service.UpdateFecha(fecha);
             }
@@ -277,6 +287,7 @@ namespace SUA.Controllers
                 var service = new FechaService();
                 var fechas = service.GetFechasConBordereaux();
                 ViewBag.fechas = fechas;
+                new LogService().FormatAndSaveLog("Fecha", "Fechas Cerradas", "");
             }
             catch (Exception ex)
             {
@@ -305,7 +316,9 @@ namespace SUA.Controllers
             var service = new FechaService();
             try
             {
+                var fecha = service.GetFechaById(id);
                 service.DeleteFecha(id);
+                new LogService().FormatAndSaveLog("Fecha", "Borrar", JsonConvert.SerializeObject(fecha));
             }
             catch /*(Exception ex)*/
             {
@@ -408,6 +421,8 @@ namespace SUA.Controllers
             //return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
 
             Response.Redirect(fileName);
+
+            new LogService().FormatAndSaveLog("Bordereaux", "Imprimir", JsonConvert.SerializeObject(fecha));
 
         }
 
@@ -628,5 +643,6 @@ namespace SUA.Controllers
             totales.CompleteRow();
             doc.Add(totales);
         }
+
     }
 }

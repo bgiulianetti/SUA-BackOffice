@@ -1,4 +1,5 @@
-﻿using SUA.Filters;
+﻿using Newtonsoft.Json;
+using SUA.Filters;
 using SUA.Models;
 using SUA.Servicios;
 using SUA.Utilities;
@@ -69,12 +70,14 @@ namespace SUA.Controllers
                     show.SetIdAndFechaAlta();
                     service.AddShow(show);
                     ViewBag.mensaje = "creado";
+                    new LogService().FormatAndSaveLog("Show", "Crear", JsonConvert.SerializeObject(show));
                 }
                 else if (string.Equals(accion, "Put"))
                 {
                     service.UpdateShow(show);
                     ViewBag.mensaje = "actualizado";
                     ViewBag.productor = show.Productor.Dni;
+                    new LogService().FormatAndSaveLog("Show", "Editar", JsonConvert.SerializeObject(show));
                 }
             }
             catch (Exception ex)
@@ -95,6 +98,7 @@ namespace SUA.Controllers
                 var shows = service.GetShows();
                 ViewBag.shows = shows;
                 ViewBag.mensaje = "listar";
+                new LogService().FormatAndSaveLog("Show", "Listar", "");
             }
             catch (Exception ex)
             {
@@ -109,7 +113,9 @@ namespace SUA.Controllers
             var service = new ShowService();
             try
             {
+                var show = service.GetShowById(id);
                 service.DeleteShow(id);
+                new LogService().FormatAndSaveLog("Show", "Borrar", JsonConvert.SerializeObject(show));
             }
             catch /*(Exception ex)*/
             {

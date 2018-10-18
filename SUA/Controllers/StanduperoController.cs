@@ -1,4 +1,5 @@
-﻿using SUA.Filters;
+﻿using Newtonsoft.Json;
+using SUA.Filters;
 using SUA.Models;
 using SUA.Servicios;
 using SUA.Utilities;
@@ -57,12 +58,14 @@ namespace SUA.Controllers
                 {
                     service.AddStandupero(standupero);
                     ViewBag.mensaje = "creado";
+                    new LogService().FormatAndSaveLog("Standupero", "Crear", JsonConvert.SerializeObject(standupero));
                 }
 
                 else if (string.Equals(accion, "Put"))
                 {
                     service.UpdateStandupero(standupero);
                     ViewBag.mensaje = "actualizado";
+                    new LogService().FormatAndSaveLog("Standupero", "Editar", JsonConvert.SerializeObject(standupero));
                 }
             }
             catch (Exception ex)
@@ -83,6 +86,7 @@ namespace SUA.Controllers
                 var standuperos = service.GetStanduperos();
                 ViewBag.standuperos = standuperos;
                 ViewBag.mensaje = "listar";
+                new LogService().FormatAndSaveLog("Standupero", "Listar", "");
             }
             catch (Exception ex)
             {
@@ -97,7 +101,9 @@ namespace SUA.Controllers
             var service = new StanduperoService();
             try
             {
+                var standupero = service.GetStanduperoByDni(dni);
                 service.DeleteStandupero(dni);
+                new LogService().FormatAndSaveLog("Standupero", "Borrar", JsonConvert.SerializeObject(standupero));
             }
             catch /*(Exception ex)*/
             {
