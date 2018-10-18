@@ -1,4 +1,5 @@
-﻿using SUA.Servicios;
+﻿using SUA.Filters;
+using SUA.Servicios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace SUA.Controllers
 {
     public class HistorialController : Controller
     {
+        [HttpGet]
+        [UserValidationFilter]
         public ActionResult Historial()
         {
             ViewBag.titulo = "Logs";
