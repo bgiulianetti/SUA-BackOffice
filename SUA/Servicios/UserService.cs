@@ -60,7 +60,7 @@ namespace SUA.Servicios
                 return null;
 
             var service = new UserService();
-            var user = service.GetUserByNombre(username);
+            var user = service.GetUserByNombre(username.ToLower());
             if (user == null)
                 return null;
 
@@ -88,7 +88,6 @@ namespace SUA.Servicios
             return credentials;
 
         }
-
 
     }
 

@@ -59,9 +59,12 @@ namespace SUA.Controllers
         {
             ViewBag.titulo = "Crear Show";
             user.ShowsAsignados = GetShowsByIds(_shows);
+            user.Username = user.Username.ToLower();
             var service = new UserService();
             try
             {
+                if (user.Username == "sua-user")
+                    user.UserMaster = "si";
                 if (string.Equals(accion, "Post"))
                 {
                     user.SetId();
@@ -72,6 +75,11 @@ namespace SUA.Controllers
                 {
                     service.UpdateUser(user);
                     ViewBag.mensaje = "actualizado";
+                }
+                var userLogueado = System.Web.HttpContext.Current.Session["user"] as UserModel;
+                if (user.Username == userLogueado.Username)
+                {
+                    System.Web.HttpContext.Current.Session["user"] = user;
                 }
             }
             catch (Exception ex)
