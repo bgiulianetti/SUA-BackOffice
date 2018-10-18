@@ -110,7 +110,7 @@ namespace SUA.Controllers
         [HttpPost]
         public ActionResult Recover(string email)
         {
-            if (email == "")
+            if (email.Replace(" ", "") == "")
             {
                 ViewBag.mensaje = "El email no es válido";
                 return View();
@@ -127,6 +127,8 @@ namespace SUA.Controllers
             {
                 user.Password = UtilitiesAndStuff.GenerateUniqueId();
                 user.MustChangePasswordAtNextLogin = "si";
+                service.UpdateUser(user);
+                SendRecoverEmail(user);
                 ViewBag.mensaje = "Se ha enviado la contraseña a su casilla de correo";
             }
             return View();
@@ -145,8 +147,16 @@ namespace SUA.Controllers
             if(password.Replace(" ", "") == "")
             {
                 ViewBag.id = id;
+                return View();
             }
-            return View();
+            var service = new UserService();
+            var user = service.GetUserById(id);
+            user.Password = password;
+            user.MustChangePasswordAtNextLogin = "no";
+            user.LastLogin = DateTime.Now;
+            service.UpdateUser(user);
+            System.Web.HttpContext.Current.Session["user"] = user;
+            return RedirectToAction("Index", "Home");
         }
 
 

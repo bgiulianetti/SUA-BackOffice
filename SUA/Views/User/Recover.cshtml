@@ -137,7 +137,9 @@
             <div class="form">
                 <form class="login-form">
                     <img src="~/assets/img/sua-logo.png" alt="Educatina Logo" class="img-responsive logo" style="width:250px">
-                    <input name="username" type="text" placeholder="email de recuperación" />
+                    <br />
+                    <br />
+                    <input name="email" type="email" placeholder="Email de recuperación" required/>
                     <button>Recuperar</button>
                     @if (ViewBag.mensaje != "")
                     {
