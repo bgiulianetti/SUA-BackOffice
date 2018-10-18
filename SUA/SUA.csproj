@@ -170,6 +170,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\FechaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\ProductorController.cs" />
     <Compile Include="Controllers\SalaController.cs" />
     <Compile Include="Controllers\ShowController.cs" />
@@ -451,6 +452,7 @@
     <Content Include="Views\User\Usuarios.cshtml" />
     <Content Include="Views\User\Recover.cshtml" />
     <Content Include="Views\User\SetNewPassword.cshtml" />
+    <Content Include="Views\Log\Logs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

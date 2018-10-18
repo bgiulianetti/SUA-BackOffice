@@ -114,6 +114,10 @@ namespace SUA.Filters
                     {
                         filterContext.Result = new RedirectResult("/inicio");
                     }
+                    else if (controller == "Log" && action == "Logs")
+                    {
+                        filterContext.Result = new RedirectResult("/inicio");
+                    }
                 }
             }
 

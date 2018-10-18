@@ -147,7 +147,13 @@ namespace SUA
                 defaults: new { controller = "User", action = "SetNewPassword" }
             );
 
+            //==============================Logs========================================
 
+            routes.MapRoute(
+                name: "Logs",
+                url: "logs",
+                defaults: new { controller = "Log", action = "Logs" }
+            );
 
 
             routes.MapRoute(
