@@ -7,9 +7,9 @@ using System.Web.Mvc;
 
 namespace SUA.Controllers
 {
-    public class LogController : Controller
+    public class HistorialController : Controller
     {
-        public ActionResult Logs()
+        public ActionResult Historial()
         {
             ViewBag.titulo = "Logs";
             try
