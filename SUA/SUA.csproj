@@ -171,6 +171,7 @@
     <Compile Include="Controllers\FechaController.cs" />
     <Compile Include="Controllers\HistorialController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HotelController.cs" />
     <Compile Include="Controllers\ProductorController.cs" />
     <Compile Include="Controllers\SalaController.cs" />
     <Compile Include="Controllers\ShowController.cs" />
@@ -213,8 +214,10 @@
     <Compile Include="Repositorios\ESRepositorio.cs" />
     <Compile Include="Servicios\CalendarService.cs" />
     <Compile Include="Servicios\FechaService.cs" />
+    <Compile Include="Servicios\HotelService.cs" />
     <Compile Include="Servicios\LogService.cs" />
     <Compile Include="Servicios\ProductorService.cs" />
+    <Compile Include="Servicios\RestauranteService.cs" />
     <Compile Include="Servicios\SalaService.cs" />
     <Compile Include="Servicios\ShowService.cs" />
     <Compile Include="Servicios\StanduperoService.cs" />
@@ -458,6 +461,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Hotel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff">
