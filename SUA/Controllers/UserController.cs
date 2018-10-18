@@ -189,10 +189,10 @@ namespace SUA.Controllers
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.UseDefaultCredentials = false;
             client.Credentials = new System.Net.NetworkCredential(credenciales.Email, credenciales.Password);
-            string body = "Hola " + user.Username + "!" + Environment.NewLine + 
-                          "Se ha recibido la solicitud para un cambio de contraseña de tu cuenta" + Environment.NewLine +
-                          "Contraseña: " + user.Password + Environment.NewLine + Environment.NewLine + 
-                          "Se le solicitará que cambie la contraseña al siguiente login." + Environment.NewLine +
+            string body = "Hola " + user.Username + "!" + Environment.NewLine + Environment.NewLine +
+                          "Se ha recibido la solicitud para un cambio de contraseña de tu cuenta." + Environment.NewLine +
+                          "Contraseña: " + user.Password + Environment.NewLine +
+                          "Se le solicitará que la cambie al siguiente login." + Environment.NewLine +
                           "Puede acceder al BackOffice desde la siguiente url: " + System.Configuration.ConfigurationManager.AppSettings.Get("MyUrl") + "/login" + Environment.NewLine  +Environment.NewLine +
                           "Saludos del equipo de SUA!";
 
