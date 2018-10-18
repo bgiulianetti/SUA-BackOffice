@@ -458,10 +458,10 @@
     <Content Include="Views\User\Recover.cshtml" />
     <Content Include="Views\User\SetNewPassword.cshtml" />
     <Content Include="Views\Historial\Historial.cshtml" />
+    <Content Include="Views\Hotel\Hotel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Hotel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff">

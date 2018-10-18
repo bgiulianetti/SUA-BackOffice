@@ -156,6 +156,23 @@ namespace SUA
             );
 
 
+
+            //============================Hotel=======================================
+            routes.MapRoute(
+                name: "Hotel",
+                url: "hotel",
+                defaults: new { controller = "Hotel", action = "Hotel" }
+            );
+
+            routes.MapRoute(
+                name: "Hoteles",
+                url: "hoteles",
+                defaults: new { controller = "Hotel", action = "Hoteles" }
+            );
+
+
+
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

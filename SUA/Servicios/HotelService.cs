@@ -19,7 +19,7 @@ namespace SUA.Servicios
             Repository = new ESRepositorio(settings, ESRepositorio.ContentType.hotel.ToString());
         }
 
-        public List<Hotel> GetHotel()
+        public List<Hotel> GetHoteles()
         {
             return Repository.GetHoteles();
         }

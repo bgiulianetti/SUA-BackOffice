@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SUA.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -23,5 +24,11 @@ namespace SUA.Models
         public string ContactoEmail { get; set; }
         public string ContactoWhatsApp { get; set; }
         public string UltimosCanjes { get; set; }
+
+
+        public void SetId()
+        {
+            UniqueId = UtilitiesAndStuff.GenerateUniqueId();
+        }
     }
 }
