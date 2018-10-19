@@ -28,21 +28,30 @@ namespace SUA.Controllers
         public ActionResult Login(string username, string password)
         {
             var service = new UserService();
-            var user = service.ValidateCredentials(username, password);
-            if(user == null)
+            
+            try
             {
-                ViewBag.mensaje = "fail";
-            }
-            else
-            {
-                if(user.MustChangePasswordAtNextLogin == "si")
+                var user = service.ValidateCredentials(username, password);
+                if (user == null)
                 {
-                    return RedirectToAction("SetNewPassword", "User", new { id = user.UniqueId});
+                    ViewBag.mensaje = "fail";
                 }
-                System.Web.HttpContext.Current.Session["user"] = user;
-                new LogService().FormatAndSaveLog("Login", "Login", "");
-                return RedirectToAction("Index", "Home");
+                else
+                {
+                    if(user.MustChangePasswordAtNextLogin == "si")
+                    {
+                        return RedirectToAction("SetNewPassword", "User", new { id = user.UniqueId});
+                    }
+                    System.Web.HttpContext.Current.Session["user"] = user;
+                    new LogService().FormatAndSaveLog("Login", "Login", "");
+                    return RedirectToAction("Index", "Home");
+                }
             }
+            catch(Exception ex)
+            {
+                ViewBag.mensaje = ex.Message;
+            }
+
             return View();
         }
 
