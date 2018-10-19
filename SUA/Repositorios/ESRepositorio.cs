@@ -1435,19 +1435,23 @@ namespace SUA.Repositorios
                 throw new Exception(USER_CREATE_INVALID_PARAMETER_EXCEPTION);
 
             if (!IndexExists())
+            {
                 CreateIndex();
+            }
+            else
+            {
+                var resultado = GetUserById(user.UniqueId);
+                if (resultado != null)
+                    throw new Exception(USER_CREATE_ALREADY_EXISTS_EXCEPTION);
 
-            var resultado = GetUserById(user.UniqueId);
-            if (resultado != null)
-                throw new Exception(USER_CREATE_ALREADY_EXISTS_EXCEPTION);
+                var userObtenidaPorNombre = GetUserByNombre(user.Username);
+                if (userObtenidaPorNombre != null)
+                    throw new Exception(USER_CREATE_ALREADY_EXISTS_EXCEPTION);
 
-            var userObtenidaPorNombre = GetUserByNombre(user.Username);
-            if (userObtenidaPorNombre != null)
-                throw new Exception(USER_CREATE_ALREADY_EXISTS_EXCEPTION);
-
-            var userObtenidaPorEmail = GetUserByEmail(user.MailRecover);
-            if (userObtenidaPorEmail != null)
-                throw new Exception(USER_CREATE_ALREADY_EXISTS_EXCEPTION);
+                var userObtenidaPorEmail = GetUserByEmail(user.MailRecover);
+                if (userObtenidaPorEmail != null)
+                    throw new Exception(USER_CREATE_ALREADY_EXISTS_EXCEPTION);
+            }
 
             var response = Client.IndexAsync(user, i => i
               .Index(Index)
