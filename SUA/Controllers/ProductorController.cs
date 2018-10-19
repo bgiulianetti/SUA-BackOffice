@@ -17,9 +17,6 @@ namespace SUA.Controllers
         [UserValidationFilter]
         public ActionResult Productor(string dni)
         {
-            if (Request.Cookies["session"] == null)
-                return RedirectToAction("Login", "Home");
-
             ViewBag.mensaje = "Get";
             ViewBag.bancos = UtilitiesAndStuff.GetBancos();
             ViewBag.provincias = UtilitiesAndStuff.GetProvincias();
