@@ -252,8 +252,18 @@ namespace SUA.Controllers
                 Username = "sua-user"
             };
             var service = new UserService();
-            service.AddUser(user);
-            return View();
+            try
+            {
+                service.AddUser(user);
+                System.Web.HttpContext.Current.Session["user"] = user;
+                new LogService().FormatAndSaveLog("Login", "Login", "");
+                return RedirectToAction("Index", "Home");
+            }
+            catch
+            {
+                return RedirectToAction("Index", "Home", new { error = "falla" });
+            }
+
         }
 
     }
