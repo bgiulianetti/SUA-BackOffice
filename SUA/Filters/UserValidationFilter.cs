@@ -30,7 +30,7 @@ namespace SUA.Filters
                     {
                         if (user.Fechas == "Lectura")
                         {
-                            filterContext.Result = new RedirectResult("/inicio");
+                            filterContext.Result = new RedirectResult("/fechas");
                         }
                     }
                     else if (controller == "Fecha" && action == "Bordereaux")
@@ -51,7 +51,7 @@ namespace SUA.Filters
                     {
                         if (user.Productores == "Lectura")
                         {
-                            filterContext.Result = new RedirectResult("/inicio");
+                            filterContext.Result = new RedirectResult("/productores");
                         }
                     }
                     else if (controller == "Productor" && action == "DeleteProductor")
@@ -65,7 +65,7 @@ namespace SUA.Filters
                     {
                         if (user.Salas == "Lectura")
                         {
-                            filterContext.Result = new RedirectResult("/inicio");
+                            filterContext.Result = new RedirectResult("/salas");
                         }
                     }
                     else if (controller == "Sala" && action == "DeleteSala")
@@ -79,7 +79,7 @@ namespace SUA.Filters
                     {
                         if (user.Shows == "Lectura")
                         {
-                            filterContext.Result = new RedirectResult("/inicio");
+                            filterContext.Result = new RedirectResult("/shows");
                         }
                     }
                     else if (controller == "Show" && action == "DeleteShow")
@@ -93,7 +93,7 @@ namespace SUA.Filters
                     {
                         if (user.Standuperos == "Lectura")
                         {
-                            filterContext.Result = new RedirectResult("/inicio");
+                            filterContext.Result = new RedirectResult("/standuperos");
                         }
                     }
                     else if (controller == "Standupero" && action == "DeleteStandupero")
@@ -102,6 +102,10 @@ namespace SUA.Filters
                         {
                             filterContext.Result = new RedirectResult("/standuperos");
                         }
+                    }
+                    else if (controller == "User" && action == "Usuario")
+                    {
+                        filterContext.Result = new RedirectResult("/inicio");
                     }
                     else if (controller == "User" && action == "Usuarios")
                     {
