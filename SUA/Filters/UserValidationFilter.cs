@@ -122,7 +122,7 @@ namespace SUA.Filters
                     {
                         if (user.Hoteles == "Lectura")
                         {
-                            filterContext.Result = new RedirectResult("/inicio");
+                            filterContext.Result = new RedirectResult("/hoteles");
                         }
                     }
                     else if (controller == "Restaurante" && action == "Restaurante")
@@ -136,7 +136,7 @@ namespace SUA.Filters
                     {
                         if (user.Restaurantes == "Lectura")
                         {
-                            filterContext.Result = new RedirectResult("/inicio");
+                            filterContext.Result = new RedirectResult("/restaurantes");
                         }
                     }
                 }
