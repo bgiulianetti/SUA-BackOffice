@@ -3,9 +3,9 @@
     {
         <table style="border-spacing: 20px">
             <tr>
-                <td  style="width:200px;">
-                    <a href="@Url.RouteUrl("Hotel")">
-                        <input type="button" value="Crear Hotel" class="form-control" style="width:120px" />
+                <td style="width:200px;">
+                    <a href="@Url.RouteUrl("Restaurante")">
+                        <input type="button" value="Crear Restaurante" class="form-control" style="width:120px" />
                     </a>
                 </td>
                 <td>
@@ -23,7 +23,7 @@
 
         <div style="width: 100%; overflow-x: auto;  white-space: nowrap;">
 
-            <table id="table_hoteles" class="display compact hover nowrap">
+            <table id="table_restaurantes" class="display compact hover nowrap">
                 <thead>
                     <tr>
                         <th></th>
@@ -49,18 +49,18 @@
                     </tr>
                 </tfoot>
                 <tbody>
-                    @foreach (var item in ViewBag.hoteles)
+                    @foreach (var item in ViewBag.restaurantes)
                     {
                         <tr>
                             <td>
-                                @Html.ActionImage("DeleteRestaurante", "Restaurante", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
-                                @Html.ActionImage("Restaurante", "Restaurante", new { id = item.UniqueId }, "~/assets/img/edit_icon.png")
+                                @Html.ActionImage("DeleteHotel", "Hotel", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
+                                @Html.ActionImage("Hotel", "Hotel", new { id = item.UniqueId }, "~/assets/img/edit_icon.png")
                             </td>
                             <td>@item.Nombre</td>
                             <td>@item.Direccion.Direccion</td>
                             <td>@item.Direccion.Ciudad</td>
                             <td>@item.Telefono</td>
-                            <td>@item.ContactoNombre</td>
+                            <td>@item.Contacto</td>
                             <td>@item.Email</td>
                             <td>@item.Arreglo</td>
                         </tr>
@@ -90,13 +90,13 @@
 <script>
 
     $(document).ready(function () {
-        var tableSalas = $('#table_hoteles').DataTable({
+        var tableSalas = $('#table_restaurantes').DataTable({
             responsive: true,
             dom: 'l<B>ftip',
             buttons: [
-                { extend: 'excelHtml5', title: "Hoteles", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/') },
+                { extend: 'excelHtml5', title: "Restaurantes", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/') },
                 'csvHtml5',
-                { extend: 'pdf', title: "Listado de Hoteles", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/'), orientation: 'landscape' }
+                { extend: 'pdf', title: "Listado de Restaurantes", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/'), orientation: 'landscape' }
             ],
             'columnDefs': [{ "targets": 0, "className": "text-center" }]
         });
@@ -106,17 +106,17 @@
     });
 
     function AcomodaDOM() {
-        $('#table_hoteles_filter').hide();
+        $('#table_restaurantes_filter').hide();
         $("#divCapacidad").append($("#SearchContainer"));
-        $("#info").append($("#table_hoteles_info"));
-        $("#table_hoteles_paginate").hide();
+        $("#info").append($("#table_restaurantes_info"));
+        $("#table_restaurantes_paginate").hide();
         $("#entries").append($(".dt-buttons"));
         $("#botones").append($(".dataTables_length"));
     }
 
     function AplicarFiltrosEnFooter() {
         var contador = 0;
-        $('#table_hoteles tfoot th').each(function () {
+        $('#table_restaurantes tfoot th').each(function () {
             if (contador != 0) {
                 var title = $(this).text();
                 $(this).html('<input type="text" placeholder="' + title + '" />');
@@ -126,7 +126,7 @@
 
 
         // Apply the search
-        var table = $('#table_hoteles').DataTable();
+        var table = $('#table_restaurantes').DataTable();
         table.columns().every(function () {
             var that = this;
             $('input', this.footer()).on('keyup change', function () {

@@ -179,8 +179,8 @@ namespace SUA
             );
 
             routes.MapRoute(
-                name: "Restaurante",
-                url: "restaurante",
+                name: "Restaurantes",
+                url: "restaurantes",
                 defaults: new { controller = "Restaurante", action = "Restaurantes" }
             );
 

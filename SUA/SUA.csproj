@@ -462,6 +462,7 @@
     <Content Include="Views\Hotel\Hotel.cshtml" />
     <Content Include="Views\Hotel\Hoteles.cshtml" />
     <Content Include="Views\Restaurante\Restaurante.cshtml" />
+    <Content Include="Views\Restaurante\Restaurantes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
