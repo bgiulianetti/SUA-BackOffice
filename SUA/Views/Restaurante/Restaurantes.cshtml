@@ -5,7 +5,7 @@
             <tr>
                 <td style="width:200px;">
                     <a href="@Url.RouteUrl("Restaurante")">
-                        <input type="button" value="Crear Restaurante" class="form-control" style="width:120px" />
+                        <input type="button" value="Crear Restaurante" class="form-control" style="width:160px" />
                     </a>
                 </td>
                 <td>
@@ -53,8 +53,8 @@
                     {
                         <tr>
                             <td>
-                                @Html.ActionImage("DeleteHotel", "Hotel", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
-                                @Html.ActionImage("Hotel", "Hotel", new { id = item.UniqueId }, "~/assets/img/edit_icon.png")
+                                @Html.ActionImage("DeleteRestaurante", "Restaurante", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
+                                @Html.ActionImage("Restaurante", "Restaurante", new { id = item.UniqueId }, "~/assets/img/edit_icon.png")
                             </td>
                             <td>@item.Nombre</td>
                             <td>@item.Direccion.Direccion</td>

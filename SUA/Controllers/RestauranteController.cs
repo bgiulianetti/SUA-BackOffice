@@ -99,7 +99,7 @@ namespace SUA.Controllers
             {
                 //loguear mensaje o mandar pagina de error
             }
-            return RedirectToAction("Hoteles", "Hotel");
+            return RedirectToAction("Restaurantes", "Restaurante");
         }
     }
 }
