@@ -92,7 +92,7 @@ namespace SUA.Controllers
             {
                 var hotel = service.GetHotelById(id);
                 service.DeleteHotel(id);
-                new LogService().FormatAndSaveLog("Sala", "Borrar", JsonConvert.SerializeObject(hotel));
+                new LogService().FormatAndSaveLog("Hotel", "Borrar", JsonConvert.SerializeObject(hotel));
             }
             catch /*(Exception ex)*/
             {

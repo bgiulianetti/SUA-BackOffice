@@ -84,5 +84,22 @@ namespace SUA.Controllers
             }
             return View();
         }
+
+        [UserValidationFilter]
+        public ActionResult DeleteRestaurante(string id)
+        {
+            var service = new RestauranteService();
+            try
+            {
+                var restaurante = service.GetRestauranteById(id);
+                service.DeleteRestaurante(id);
+                new LogService().FormatAndSaveLog("Restaurante", "Borrar", JsonConvert.SerializeObject(restaurante));
+            }
+            catch /*(Exception ex)*/
+            {
+                //loguear mensaje o mandar pagina de error
+            }
+            return RedirectToAction("Hoteles", "Hotel");
+        }
     }
 }
