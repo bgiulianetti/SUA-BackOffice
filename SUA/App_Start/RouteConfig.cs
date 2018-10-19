@@ -171,6 +171,19 @@ namespace SUA
             );
 
 
+            //============================Restaurante=======================================
+            routes.MapRoute(
+                name: "Restaurante",
+                url: "restaurante",
+                defaults: new { controller = "Restaurante", action = "Restaurante" }
+            );
+
+            routes.MapRoute(
+                name: "Restaurante",
+                url: "restaurante",
+                defaults: new { controller = "Restaurante", action = "Restaurantes" }
+            );
+
 
 
             routes.MapRoute(

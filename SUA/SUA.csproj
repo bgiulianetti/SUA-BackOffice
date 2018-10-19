@@ -173,6 +173,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HotelController.cs" />
     <Compile Include="Controllers\ProductorController.cs" />
+    <Compile Include="Controllers\RestauranteController.cs" />
     <Compile Include="Controllers\SalaController.cs" />
     <Compile Include="Controllers\ShowController.cs" />
     <Compile Include="Controllers\StanduperoController.cs" />
@@ -460,6 +461,7 @@
     <Content Include="Views\Historial\Historial.cshtml" />
     <Content Include="Views\Hotel\Hotel.cshtml" />
     <Content Include="Views\Hotel\Hoteles.cshtml" />
+    <Content Include="Views\Restaurante\Restaurante.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SUA.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,5 +16,10 @@ namespace SUA.Models
         public string WhatsApp { get; set; }
         public string Instagram { get; set; }
         public string Arreglo { get; set; }
+
+        public void SetId()
+        {
+            UniqueId = UtilitiesAndStuff.GenerateUniqueId();
+        }
     }
 }

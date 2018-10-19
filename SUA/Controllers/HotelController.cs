@@ -40,9 +40,7 @@ namespace SUA.Controllers
         public ActionResult Hotel(Hotel hotel, string accion)
         {
             ViewBag.titulo = "Crear Hotel";
-
             hotel.Direccion.Provincia = hotel.Direccion.Provincia.Replace("@", " ");
-
             var service = new HotelService();
             try
             {
