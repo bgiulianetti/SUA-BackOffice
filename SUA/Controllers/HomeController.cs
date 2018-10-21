@@ -14,12 +14,9 @@ namespace SUA.Controllers
     public class HomeController : Controller
     {
         [HttpGet]
+        [UserValidationFilter]
         public ActionResult Login()
         {
-            var user = Session["user"] as UserModel;
-            if (user != null)
-                return RedirectToAction("Index", "Home");
-
             ViewBag.mensaje = "";
             return View();
         }
@@ -42,7 +39,9 @@ namespace SUA.Controllers
                     {
                         return RedirectToAction("SetNewPassword", "User", new { id = user.UniqueId});
                     }
-                    System.Web.HttpContext.Current.Session["user"] = user;
+
+                    Response.Cookies["session"].Value = username;
+                    //Response.Cookies["session"].Expires = DateTime.Now.AddDays(5);
                     new LogService().FormatAndSaveLog("Login", "Login", "");
                     return RedirectToAction("Index", "Home");
                 }

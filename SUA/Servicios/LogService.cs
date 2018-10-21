@@ -31,14 +31,13 @@ namespace SUA.Servicios
 
         public void FormatAndSaveLog(string pantalla, string accion, string informacion)
         {
-            var user = System.Web.HttpContext.Current.Session["user"] as UserModel;
             var log = new Log
             {
                 Accion = accion,
                 Fecha = DateTime.Now,
                 Informacion = informacion,
                 Pantalla = pantalla,
-                Username = user.Username
+                Username = HttpContext.Current.Request.Cookies.Get("session").Value
             };
             AddLog(log);
         }

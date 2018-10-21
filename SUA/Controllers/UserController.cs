@@ -255,7 +255,7 @@ namespace SUA.Controllers
             try
             {
                 service.AddUser(user);
-                System.Web.HttpContext.Current.Session["user"] = user;
+                Response.Cookies["session"].Value = user.Username;
                 new LogService().FormatAndSaveLog("Login", "Login", "");
                 return RedirectToAction("Index", "Home");
             }
