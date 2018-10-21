@@ -56,8 +56,8 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult Logout()
         {
-            Session["user"] = null;
-            Session.Abandon();
+            Response.Cookies["session"].Value = null;
+            Response.Cookies["session"].Expires = DateTime.Now.AddDays(-1);
             return RedirectToAction("Login", "Home");
         }
 
