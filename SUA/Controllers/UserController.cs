@@ -39,8 +39,8 @@ namespace SUA.Controllers
                 var user = userService.GetUserById(id);
                 if(user.Username == "sua-user")
                 {
-                    var userLogueado = System.Web.HttpContext.Current.Session["user"] as UserModel;
-                    if(userLogueado.Username != "sua-user")
+                    var userLogueado = Request.Cookies["session"].Value;
+                    if(userLogueado != "sua-user")
                     {
                         return RedirectToAction("Usuarios", "User");
                     }
@@ -95,11 +95,6 @@ namespace SUA.Controllers
                     userCopia.Password = "xxxxx";
                     new LogService().FormatAndSaveLog("Usuario", "Editar", JsonConvert.SerializeObject(userCopia));
 
-                }
-                var userLogueado = System.Web.HttpContext.Current.Session["user"] as UserModel;
-                if (user.Username == userLogueado.Username)
-                {
-                    System.Web.HttpContext.Current.Session["user"] = user;
                 }
             }
             catch (Exception ex)

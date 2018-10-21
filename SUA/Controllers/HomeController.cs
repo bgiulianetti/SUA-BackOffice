@@ -41,7 +41,6 @@ namespace SUA.Controllers
                     }
 
                     Response.Cookies["session"].Value = username;
-                    //Response.Cookies["session"].Expires = DateTime.Now.AddDays(5);
                     new LogService().FormatAndSaveLog("Login", "Login", "");
                     return RedirectToAction("Index", "Home");
                 }

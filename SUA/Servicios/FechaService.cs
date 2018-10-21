@@ -24,8 +24,11 @@ namespace SUA.Servicios
         public List<Fecha> GetFechas()
         {
             var fechas = Repository.GetFechas();
-            var user = System.Web.HttpContext.Current.Session["user"] as UserModel;
-            if(user.UserMaster == "no")
+            var session = HttpContext.Current.Request.Cookies.Get("session");
+            var service = new UserService();
+            var user = service.GetUserByNombre(session.Value);
+            
+            if (user.UserMaster == "no")
             {
                 if(user.ShowsAsignados.Count > 0)
                 {
@@ -139,8 +142,10 @@ namespace SUA.Servicios
             }
 
             //filtro las fechas por los shows que tienen asignados los usuarios
-            var user = System.Web.HttpContext.Current.Session["user"] as UserModel;
-            if(user.UserMaster == "no")
+            var session = HttpContext.Current.Request.Cookies.Get("session");
+            var service = new UserService();
+            var user = service.GetUserByNombre(session.Value);
+            if (user.UserMaster == "no")
             {
                 if (user.ShowsAsignados.Count > 0)
                 {
