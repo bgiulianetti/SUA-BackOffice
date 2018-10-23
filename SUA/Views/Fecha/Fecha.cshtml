@@ -169,9 +169,10 @@
     {
         $("#salasList").empty();
         var salas = JSON.parse(data);
-        var diasVencidos;
+        
+        //var diasVencidos;
         for (var i = 0; i < salas.length; i++)
-        {
+        {/*
             var backgroundcolor;
             var placeholder = salas[i].RepeticionEnDias;
             if (salas[i].RepeticionEnDias >= 0)
@@ -197,7 +198,9 @@
                 placeholder = "";
                 diasVencidos = "-";
             }
-            $("#salasList").append('<option value="' + salas[i].UniqueId + '" placeholder="' + placeholder + '" style="color:white; background-color:' + backgroundcolor + '">' + salas[i].Nombre + ' - ' + salas[i].Direccion.Ciudad + ' (' + diasVencidos + ')</option>');
+            //$("#salasList").append('<option value="' + salas[i].UniqueId + '" placeholder="' + placeholder + '" style="color:white; background-color:' + backgroundcolor + '">' + salas[i].Nombre + ' - ' + salas[i].Direccion.Ciudad + ' (' + diasVencidos + ')</option>');
+        */
+            $("#salasList").append('<option value="' + salas[i].UniqueId + '">' + salas[i].Nombre + ' - ' + salas[i].Direccion.Ciudad +  '</option>');
         }
     }
 

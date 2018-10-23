@@ -117,37 +117,43 @@ namespace SUA.Controllers
         [HttpGet]
         public string GetSalasConVencimiento(string idShow, DateTime fechaProximoShow)
         {
-            var showService = new ShowService();
-            var repeticiones = showService.GetShowById(idShow).Repeticion;
-
             var salaService = new SalaService();
             var salas = salaService.GetSalas();
-
-            var fechaService = new FechaService();
-            var fechas = fechaService.GetFechasByShowId(idShow);
-
-            foreach (var sala in salas)
+            /*
+            try
             {
-                var repeticionPlaza = GetRepeticionPlaza(idShow, sala, repeticiones);
-                if (repeticionPlaza != null)
+                var fechaService = new FechaService();
+                var fechas = fechaService.GetFechasByShowId(idShow);
+
+                foreach (var sala in salas)
                 {
-                    var fecha = GetUltimaFechaByShowAndSala(idShow, sala.UniqueId);
-                    if (fecha != null)
+                    var repeticionPlaza = GetRepeticionPlaza(idShow, sala, repeticiones);
+                    if (repeticionPlaza != null)
                     {
-                        sala.RepeticionEnDias = UtilitiesAndStuff.CalcularVencimiento(fecha.FechaHorario, fechaProximoShow, repeticionPlaza.Dias);
+                        var fecha = GetUltimaFechaByShowAndSala(idShow, sala.UniqueId);
+                        if (fecha != null)
+                        {
+                            sala.RepeticionEnDias = UtilitiesAndStuff.CalcularVencimiento(fecha.FechaHorario, fechaProximoShow, repeticionPlaza.Dias);
+                        }
+                        else
+                        {
+                            sala.RepeticionEnDias = -10000;
+                        }
                     }
                     else
                     {
                         sala.RepeticionEnDias = -10000;
                     }
                 }
-                else
-                {
-                    sala.RepeticionEnDias = -10000;
-                }
+                var salaOrdenadas = salas.OrderByDescending(o => o.RepeticionEnDias).ToList();
+                return JsonConvert.SerializeObject(salaOrdenadas);
             }
-            var salaOrdenadas = salas.OrderByDescending(o => o.RepeticionEnDias).ToList();
-            return JsonConvert.SerializeObject(salaOrdenadas);
+            catch
+            {*/
+                var salaOrdenadas = salas.OrderBy(o => o.Nombre).ToList();
+                return JsonConvert.SerializeObject(salaOrdenadas);
+            //}
+
         }
 
         private RepeticionPlazas GetRepeticionPlaza(string idShow, Sala sala, List<RepeticionPlazas> repeticiones)
