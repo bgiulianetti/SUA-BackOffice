@@ -21,7 +21,31 @@ namespace SUA.Servicios
 
         public List<Show> GetShows()
         {
-            return Repository.GetShows();
+            var shows = Repository.GetShows();
+            var session = HttpContext.Current.Request.Cookies.Get("session");
+            var service = new UserService();
+            var user = service.GetUserByNombre(session.Value);
+            if(user.UserMaster == "no")
+            {
+                if (user.ShowsAsignados.Count > 0)
+                {
+                    var showFiltrados = new List<Show>();
+                    foreach (var item in shows)
+                    {
+                        if (user.ShowsAsignados.Contains(item))
+                            showFiltrados.Add(item);
+                    }
+                    return showFiltrados;
+                }
+                else
+                {
+                    return new List<Show>();
+                }
+            }
+            else
+            {
+                return shows;
+            }
         }
 
         public Show GetShowByNombre(string nombre)
