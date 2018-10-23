@@ -26,6 +26,7 @@ namespace SUA.Utilities
         {
             var permisos = new List<string>
             {
+                "Prohibido",
                 "Lectura",
                 "Escritura"
             };
