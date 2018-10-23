@@ -139,12 +139,20 @@
                     <img src="~/assets/img/sua-logo.png" alt="Educatina Logo" class="img-responsive logo" style="width:250px">
                     <br />
                     <br />
-                    <input name="email" type="email" placeholder="Email de recuperación" required/>
-                    <button>Recuperar</button>
-                    @if (ViewBag.mensaje != "")
+                    @if (ViewBag.mensaje == "Se ha enviado la contraseña a su casilla de correo")
                     {
                         <p class="message">@ViewBag.mensaje</p>
+                        <p class="message">Ir a <a href="@Url.RouteUrl("Login")">Login</a> para poder ingresar con la nueva contraseña</p>
                     }
+                    else
+                    {
+                        <input name="email" type="email" placeholder="Email de recuperación" required />
+                        <button>Recuperar</button>
+                        if (ViewBag.mensaje != "")
+                        {
+                            <p class="message">@ViewBag.mensaje</p>
+                        }
+                }
                 </form>
             </div>
         }

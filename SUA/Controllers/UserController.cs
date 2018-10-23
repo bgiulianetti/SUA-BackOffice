@@ -178,7 +178,7 @@ namespace SUA.Controllers
             user.MustChangePasswordAtNextLogin = "no";
             user.LastLogin = DateTime.Now;
             service.UpdateUser(user);
-            System.Web.HttpContext.Current.Session["user"] = user;
+            Response.Cookies["session"].Value = user.Username;
             return RedirectToAction("Index", "Home");
         }
 
