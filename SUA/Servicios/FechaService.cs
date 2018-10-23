@@ -42,7 +42,7 @@ namespace SUA.Servicios
                 }
                 else
                 {
-                    return fechas;
+                    return new List<Fecha>();
                 }
             }
             else
@@ -159,7 +159,7 @@ namespace SUA.Servicios
                 }
                 else
                 {
-                    return fechasConBordereaux;
+                    return new List<Fecha>();
                 }
             }
             else
