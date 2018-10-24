@@ -1414,7 +1414,7 @@ namespace SUA.Repositorios
                 .Index(Index)
                 .Type(Index)
                 .Query(q => q
-                    .Match(m => m.Field(f => f.MailRecover).Query(email)))
+                    .Match(m => m.Field("mailRecover").Query(email)))
                     );
 
             if (response == null)
