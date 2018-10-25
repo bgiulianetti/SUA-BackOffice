@@ -1401,7 +1401,8 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    user = item;
+                    if(item.Username == nombre)
+                        user = item;
             }
             return user;
         }
@@ -1414,7 +1415,7 @@ namespace SUA.Repositorios
                 .Index(Index)
                 .Type(Index)
                 .Query(q => q
-                    .Match(m => m.Field("mailRecover").Query(email)))
+                    .Match(m => m.Field(f=>f.MailRecover).Query(email)))
                     );
 
             if (response == null)
@@ -1427,7 +1428,10 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    user = item;
+                {
+                    if(item.MailRecover == email)
+                        user = item;
+                }
             }
             return user;
         }
