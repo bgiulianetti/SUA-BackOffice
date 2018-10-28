@@ -48,6 +48,11 @@ namespace SUA.Servicios
             }
         }
 
+        public List<Show> GetShowsForBackUp()
+        {
+            return Repository.GetShows();
+        }
+
         public Show GetShowByNombre(string nombre)
         {
             return Repository.GetShowByNombre(nombre);

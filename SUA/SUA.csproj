@@ -389,6 +389,15 @@
     <Content Include="assets\js\plugins\pikaday\pikaday.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="BackUp\2018-10-28_fechas.txt" />
+    <Content Include="BackUp\2018-10-28_hoteles.txt" />
+    <Content Include="BackUp\2018-10-28_logs.txt" />
+    <Content Include="BackUp\2018-10-28_productores.txt" />
+    <Content Include="BackUp\2018-10-28_restaurantes.txt" />
+    <Content Include="BackUp\2018-10-28_salas.txt" />
+    <Content Include="BackUp\2018-10-28_shows.txt" />
+    <Content Include="BackUp\2018-10-28_standuperos.txt" />
+    <Content Include="BackUp\2018-10-28_usuarios.txt" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -463,10 +472,10 @@
     <Content Include="Views\Hotel\Hoteles.cshtml" />
     <Content Include="Views\Restaurante\Restaurante.cshtml" />
     <Content Include="Views\Restaurante\Restaurantes.cshtml" />
+    <Content Include="Views\Home\GenerateBackup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="BackUp\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff">

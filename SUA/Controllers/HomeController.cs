@@ -147,25 +147,35 @@ namespace SUA.Controllers
             return lista;
         }
 
-
         [HttpGet]
-        public void GenerateBackup()
+        public ActionResult GenerateBackup()
         {
-            var entidades = new Dictionary<string, string>();
-            entidades.Add("standuperos", JsonConvert.SerializeObject(new StanduperoService().GetStanduperos()));
-            entidades.Add("productores", JsonConvert.SerializeObject(new ProductorService().GetProductores()));
-            entidades.Add("shows", JsonConvert.SerializeObject(new ShowService().GetShows()));
-            entidades.Add("fechas", JsonConvert.SerializeObject(new FechaService().GetFechas()));
-            entidades.Add("usuarios", JsonConvert.SerializeObject(new UserService().GetUsers()));
-            entidades.Add("salas", JsonConvert.SerializeObject(new SalaService().GetSalas()));
-            entidades.Add("restaurantes", JsonConvert.SerializeObject(new RestauranteService().GetRestaurantes()));
-            entidades.Add("logs", JsonConvert.SerializeObject(new LogService().GetLogs()));
-            entidades.Add("hoteles", JsonConvert.SerializeObject(new HotelService().GetHoteles()));
 
-            foreach (var entidad in entidades)
+            var entidades = new Dictionary<string, string>();
+            try
             {
-                System.IO.File.WriteAllText(Server.MapPath("~/BackUp/" + DateTime.Now.ToString("yyyy-MM-dd") + "_" + entidad.Key + ".txt"), entidad.Value);
+                entidades.Add("standuperos", JsonConvert.SerializeObject(new StanduperoService().GetStanduperos()));
+                entidades.Add("productores", JsonConvert.SerializeObject(new ProductorService().GetProductores()));
+                entidades.Add("shows", JsonConvert.SerializeObject(new ShowService().GetShowsForBackUp()));
+                entidades.Add("fechas", JsonConvert.SerializeObject(new FechaService().GetFechasForBackUp()));
+                entidades.Add("usuarios", JsonConvert.SerializeObject(new UserService().GetUsers()));
+                entidades.Add("salas", JsonConvert.SerializeObject(new SalaService().GetSalas()));
+                entidades.Add("restaurantes", JsonConvert.SerializeObject(new RestauranteService().GetRestaurantes()));
+                entidades.Add("logs", JsonConvert.SerializeObject(new LogService().GetLogs()));
+                entidades.Add("hoteles", JsonConvert.SerializeObject(new HotelService().GetHoteles()));
+
+                foreach (var entidad in entidades)
+                {
+                    System.IO.File.WriteAllText(Server.MapPath("~/BackUp/" + DateTime.Now.ToString("yyyy-MM-dd") + "_" + entidad.Key + ".txt"), entidad.Value);
+                }
+                ViewBag.mensaje = "Backup Generado con éxito";
             }
+            catch(Exception ex)
+            {
+                ViewBag.mensaje = ex.Message;
+            }
+
+            return View();
         }
 
     }

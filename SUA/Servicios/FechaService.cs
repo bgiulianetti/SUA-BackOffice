@@ -51,6 +51,10 @@ namespace SUA.Servicios
             }
 
         }
+        public List<Fecha> GetFechasForBackUp()
+        {
+            return Repository.GetFechas();
+        }
         public Fecha GetFechaById(string id)
         {
             return Repository.GetFechaById(id);
