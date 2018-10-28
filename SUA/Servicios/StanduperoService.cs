@@ -47,6 +47,11 @@ namespace SUA.Servicios
             Repository.AddStandupero(standupero);
         }
 
+        public void AddBulkStandupero(List<Standupero> standuperos)
+        {
+            Repository.AddBulkStandupero(standuperos);
+        }
+
         public void UpdateStandupero(Standupero standupero)
         {
             Repository.UpdateStandupero(standupero);

@@ -178,5 +178,26 @@ namespace SUA.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult GenerateRestore(string date)
+        {
+            var entidades = new List<string> { "standuperos", "productores", "shows" , "fechas", "usuarios", "salas", "restaurantes", "logs", "hoteles"};
+            try
+            {
+                foreach (var entidad in entidades)
+                {
+                    var json = System.IO.File.ReadAllText(Server.MapPath("~/BackUp/" + date + "_" + entidad + ".txt"));
+
+                }
+                ViewBag.mensaje = "Backup Generado con éxito";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.mensaje = ex.Message;
+            }
+
+            return View();
+        }
+
     }
 }

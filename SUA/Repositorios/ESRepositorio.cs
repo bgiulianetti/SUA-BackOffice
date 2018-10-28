@@ -345,6 +345,16 @@ namespace SUA.Repositorios
             if (!response.IsValid)
                 throw new Exception(STANDUPERO_CREATE_NOT_CREATED_EXCEPTION);
         }
+        public void AddBulkStandupero(List<Standupero> standuperos)
+        {
+            if (!IndexExists())
+                CreateIndex();
+
+            var response = Client.IndexManyAsync(standuperos, Index, Index).Result;
+
+            if (!response.IsValid)
+                throw new Exception(STANDUPERO_CREATE_NOT_CREATED_EXCEPTION);
+        }
         public void UpdateStandupero(Standupero standupero)
         {
             if (standupero == null)
