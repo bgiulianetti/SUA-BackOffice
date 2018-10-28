@@ -190,12 +190,56 @@ namespace SUA.Controllers
                     if(entidad == "standuperos")
                     {
                         var standuperos = JsonConvert.DeserializeObject<Standupero[]>(json);
-                        new StanduperoService().AddBulkStandupero(standuperos.ToList());
+                        if(standuperos.Length > 0)
+                            new StanduperoService().AddBulkStandupero(standuperos.ToList());
                     }
                     else if (entidad == "productores")
                     {
                         var productores = JsonConvert.DeserializeObject<Productor[]>(json);
-                        new ProductorService().AddBulkStandupero(productores.ToList());
+                        if (productores.Length > 0)
+                            new ProductorService().AddBulkProductor(productores.ToList());
+                    }
+                    else if (entidad == "shows")
+                    {
+                        var shows = JsonConvert.DeserializeObject<Show[]>(json);
+                        if (shows.Length > 0)
+                            new ShowService().AddBulkShow(shows.ToList());
+                    }
+                    else if (entidad == "fechas")
+                    {
+                        var fechas = JsonConvert.DeserializeObject<Fecha[]>(json);
+                        if (fechas.Length > 0)
+                            new FechaService().AddBulkFecha(fechas.ToList());
+                    }
+                    else if (entidad == "usuarios")
+                    {
+                        var usuarios = JsonConvert.DeserializeObject<UserModel[]>(json);
+                        if (usuarios.Length > 0)
+                            new UserService().AddBulkUser(usuarios.ToList());
+                    }
+                    else if (entidad == "salas")
+                    {
+                        var salas = JsonConvert.DeserializeObject<Sala[]>(json);
+                        if (salas.Length > 0)
+                            new SalaService().AddBulkSala(salas.ToList());
+                    }
+                    else if (entidad == "restaurantes")
+                    {
+                        var restaurantes = JsonConvert.DeserializeObject<Restaurante[]>(json);
+                        if (restaurantes.Length > 0)
+                            new RestauranteService().AddBulkRestaurante(restaurantes.ToList());
+                    }
+                    else if (entidad == "logs")
+                    {
+                        var logs = JsonConvert.DeserializeObject<Log[]>(json);
+                        if (logs.Length > 0)
+                            new LogService().AddBulkLog(logs.ToList());
+                    }
+                    else if (entidad == "hoteles")
+                    {
+                        var hoteles = JsonConvert.DeserializeObject<Hotel[]>(json);
+                        if (hoteles.Length > 0)
+                            new HotelService().AddBulkHotel(hoteles.ToList());
                     }
                 }
                 ViewBag.mensaje = "Backup Generado con éxito";
