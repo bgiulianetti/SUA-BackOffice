@@ -214,12 +214,12 @@ namespace SUA.Utilities
             return ConverListToSelectListItem(gastos);
         }
 
-        public static int CalcularVencimiento(DateTime fechaUltimoShow, DateTime fechaProximoShow, int repeticionEnDias)
+        public static int CalcularRepeticion(DateTime fechaUltimoShow, DateTime fechaProximoShow, int repeticionEnDias)
         {
-            var fechaVencimiento = fechaUltimoShow.AddDays(repeticionEnDias);
-            double diasVencido = (fechaProximoShow - fechaVencimiento).TotalDays;
-            var diasVencidoRedondeado = Math.Round(diasVencido, MidpointRounding.AwayFromZero);
-            return Convert.ToInt32(diasVencidoRedondeado);
+            var FechaRepeticion = fechaUltimoShow.AddDays(repeticionEnDias);
+            var distanciaEnDias = (fechaProximoShow - FechaRepeticion).TotalDays;
+            var distanciaPorcentaje = distanciaEnDias * 100 / repeticionEnDias;
+            return Convert.ToInt32(distanciaPorcentaje);
         }
 
         public static List<SelectListItem> GetColores()

@@ -122,14 +122,10 @@ namespace SUA.Servicios
         }
         public Fecha GetUltimaFechaBySalaAndShow(string idSala, string idShow)
         {
-            var fechas = Repository.GetFechasByIdSala(idSala);
-            var fechasPorShowEspecifico = fechas.Find(f => f.Show.UniqueId == idShow);
-            if (fechasPorShowEspecifico != null)
-            {
-                fechas.OrderBy(f => f.FechaHorario);
-                return fechas.Last();
-            }
-            return null;
+            var fechas = Repository.GetFechasByIdSalaAndIdShow(idSala, idShow);
+            if(fechas != null)
+                fechas = fechas.OrderBy(f => f.FechaHorario).ToList();
+            return fechas.Last();
         }
         public List<Fecha> GetFechasConBordereaux()
         {
