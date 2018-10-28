@@ -42,6 +42,10 @@ namespace SUA.Servicios
         {
             Repository.AddUser(user);
         }
+        public void AddBulkUser(List<UserModel> users)
+        {
+            Repository.AddBulkUser(users);
+        }
         public void UpdateUser(UserModel user)
         {
             Repository.UpdateUser(user);

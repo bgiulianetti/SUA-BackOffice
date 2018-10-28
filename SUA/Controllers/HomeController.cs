@@ -187,7 +187,16 @@ namespace SUA.Controllers
                 foreach (var entidad in entidades)
                 {
                     var json = System.IO.File.ReadAllText(Server.MapPath("~/BackUp/" + date + "_" + entidad + ".txt"));
-
+                    if(entidad == "standuperos")
+                    {
+                        var standuperos = JsonConvert.DeserializeObject<Standupero[]>(json);
+                        new StanduperoService().AddBulkStandupero(standuperos.ToList());
+                    }
+                    else if (entidad == "productores")
+                    {
+                        var productores = JsonConvert.DeserializeObject<Productor[]>(json);
+                        new ProductorService().AddBulkStandupero(productores.ToList());
+                    }
                 }
                 ViewBag.mensaje = "Backup Generado con éxito";
             }

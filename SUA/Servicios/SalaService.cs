@@ -39,6 +39,10 @@ namespace SUA.Servicios
         {
             Repository.AddSala(sala);
         }
+        public void AddBulkSala(List<Sala> salas)
+        {
+            Repository.AddBulkSala(salas);
+        }
         public void UpdateSala(Sala sala)
         {
             Repository.UpdateSala(sala);

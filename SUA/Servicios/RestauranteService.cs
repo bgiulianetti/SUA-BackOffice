@@ -35,6 +35,10 @@ namespace SUA.Servicios
         {
             Repository.AddRestaurante(restaurante);
         }
+        public void AddBulkRestaurante(List<Restaurante> restaurantes)
+        {
+            Repository.AddBulkRestaurante(restaurantes);
+        }
         public void UpdateRestaurante(Restaurante restaurante)
         {
             Repository.UpdateRestaurante(restaurante);

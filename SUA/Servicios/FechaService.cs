@@ -92,6 +92,10 @@ namespace SUA.Servicios
         {
             Repository.AddFecha(fecha);
         }
+        public void AddBulkFecha(List<Fecha> fechas)
+        {
+            Repository.AddBulkFecha(fechas);
+        }
         public void UpdateFecha(Fecha fecha)
         {
             Repository.UpdateFecha(fecha);

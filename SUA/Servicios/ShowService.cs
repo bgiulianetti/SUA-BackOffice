@@ -78,6 +78,11 @@ namespace SUA.Servicios
             Repository.AddShow(show);
         }
 
+        public void AddBulkShow(List<Show> shows)
+        {
+            Repository.AddBulkShow(shows);
+        }
+
         public void UpdateShow(Show show)
         {
             Repository.UpdateShow(show);

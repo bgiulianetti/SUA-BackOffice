@@ -44,6 +44,11 @@ namespace SUA.Servicios
             Repository.AddProductor(productor);
         }
 
+        public void AddBulkProductor(List<Productor> productores)
+        {
+            Repository.AddBulkProductor(productores);
+        }
+
         public void UpdateProductor(Productor productor)
         {
             Repository.UpdateProductor(productor);

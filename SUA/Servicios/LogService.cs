@@ -29,6 +29,11 @@ namespace SUA.Servicios
             Repository.AddLog(log);
         }
 
+        public void AddBulkLog(List<Log> logs)
+        {
+            Repository.AddBulkLog(logs);
+        }
+
         public void FormatAndSaveLog(string pantalla, string accion, string informacion)
         {
             var log = new Log

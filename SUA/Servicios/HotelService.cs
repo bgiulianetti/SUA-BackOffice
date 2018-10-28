@@ -35,6 +35,10 @@ namespace SUA.Servicios
         {
             Repository.AddHotel(hotel);
         }
+        public void AddBulkHotel(List<Hotel> hoteles)
+        {
+            Repository.AddBulkHotel(hoteles);
+        }
         public void UpdateHotel(Hotel hotel)
         {
             Repository.UpdateHotel(hotel);

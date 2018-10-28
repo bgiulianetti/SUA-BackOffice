@@ -547,6 +547,16 @@ namespace SUA.Repositorios
             if (!response.IsValid)
                 throw new Exception(PRODUCTOR_CREATE_NOT_CREATED_EXCEPTION);
         }
+        public void AddBulkProductor(List<Productor> productores)
+        {
+            if (!IndexExists())
+                CreateIndex();
+
+            var response = Client.IndexManyAsync(productores, Index, Index).Result;
+
+            if (!response.IsValid)
+                throw new Exception(PRODUCTOR_CREATE_NOT_CREATED_EXCEPTION);
+        }
         public void UpdateProductor(Productor productor)
         {
             if (productor == null)
@@ -682,6 +692,16 @@ namespace SUA.Repositorios
               .Type(Index)
               .Refresh(Refresh.True)
               ).Result;
+
+            if (!response.IsValid)
+                throw new Exception(SHOW_CREATE_NOT_CREATED_EXCEPTION);
+        }
+        public void AddBulkShow(List<Show> shows)
+        {
+            if (!IndexExists())
+                CreateIndex();
+
+            var response = Client.IndexManyAsync(shows, Index, Index).Result;
 
             if (!response.IsValid)
                 throw new Exception(SHOW_CREATE_NOT_CREATED_EXCEPTION);
@@ -902,6 +922,16 @@ namespace SUA.Repositorios
               .Type(Index)
               .Refresh(Refresh.True)
               ).Result;
+
+            if (!response.IsValid)
+                throw new Exception(SALA_CREATE_NOT_CREATED_EXCEPTION);
+        }
+        public void AddBulkSala(List<Sala> salas)
+        {
+            if (!IndexExists())
+                CreateIndex();
+
+            var response = Client.IndexManyAsync(salas, Index, Index).Result;
 
             if (!response.IsValid)
                 throw new Exception(SALA_CREATE_NOT_CREATED_EXCEPTION);
@@ -1302,6 +1332,16 @@ namespace SUA.Repositorios
             if (!response.IsValid)
                 throw new Exception(FECHA_CREATE_NOT_CREATED_EXCEPTION);
         }
+        public void AddBulkFecha(List<Fecha> fechas)
+        {
+            if (!IndexExists())
+                CreateIndex();
+
+            var response = Client.IndexManyAsync(fechas, Index, Index).Result;
+
+            if (!response.IsValid)
+                throw new Exception(FECHA_CREATE_NOT_CREATED_EXCEPTION);
+        }
         public void UpdateFecha(Fecha fecha)
         {
             if (fecha == null)
@@ -1508,6 +1548,16 @@ namespace SUA.Repositorios
             if (!response.IsValid)
                 throw new Exception(USER_CREATE_NOT_CREATED_EXCEPTION);
         }
+        public void AddBulkUser(List<UserModel> usuarios)
+        {
+            if (!IndexExists())
+                CreateIndex();
+
+            var response = Client.IndexManyAsync(usuarios, Index, Index).Result;
+
+            if (!response.IsValid)
+                throw new Exception(USER_CREATE_NOT_CREATED_EXCEPTION);
+        }
         public string GetUserInnerIdById(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -1613,7 +1663,16 @@ namespace SUA.Repositorios
             if (!response.IsValid)
                 throw new Exception(LOG_CREATE_NOT_CREATED_EXCEPTION);
         }
+        public void AddBulkLog(List<Log> logs)
+        {
+            if (!IndexExists())
+                CreateIndex();
 
+            var response = Client.IndexManyAsync(logs, Index, Index).Result;
+
+            if (!response.IsValid)
+                throw new Exception(LOG_CREATE_NOT_CREATED_EXCEPTION);
+        }
 
 
 
@@ -1736,6 +1795,16 @@ namespace SUA.Repositorios
               .Type(Index)
               .Refresh(Refresh.True)
               ).Result;
+
+            if (!response.IsValid)
+                throw new Exception(HOTEL_CREATE_NOT_CREATED_EXCEPTION);
+        }
+        public void AddBulkHotel(List<Hotel> hoteles)
+        {
+            if (!IndexExists())
+                CreateIndex();
+
+            var response = Client.IndexManyAsync(hoteles, Index, Index).Result;
 
             if (!response.IsValid)
                 throw new Exception(HOTEL_CREATE_NOT_CREATED_EXCEPTION);
@@ -1897,6 +1966,16 @@ namespace SUA.Repositorios
               .Type(Index)
               .Refresh(Refresh.True)
               ).Result;
+
+            if (!response.IsValid)
+                throw new Exception(RESTAURANTE_CREATE_NOT_CREATED_EXCEPTION);
+        }
+        public void AddBulkRestaurante(List<Restaurante> restaurantes)
+        {
+            if (!IndexExists())
+                CreateIndex();
+
+            var response = Client.IndexManyAsync(restaurantes, Index, Index).Result;
 
             if (!response.IsValid)
                 throw new Exception(RESTAURANTE_CREATE_NOT_CREATED_EXCEPTION);
