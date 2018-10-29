@@ -31,6 +31,7 @@
                         <th></th>
                         <th>Show</th>
                         <th>Sala</th>
+                        <th>Ciudad</th>
                         <th>Provincia</th>
                         <th>Fecha</th>
                         <th>Productor</th>
@@ -41,6 +42,7 @@
                         <th></th>
                         <th>Show</th>
                         <th>Sala</th>
+                        <th>Ciudad</th>
                         <th>Provincia</th>
                         <th>Fecha</th>
                         <th>Productor</th>
@@ -70,6 +72,7 @@
                             </td>
                             <td>@item.Show._Show - @item.Show.Nombre</td>
                             <td>@item.Sala.Nombre</td>
+                            <td>@item.Sala.Direccion.Ciudad</td>
                             <td>@item.Sala.Direccion.Provincia</td>
                             <td>@item.FechaHorario</td>
                             <td>@item.Productor.Nombre @item.Productor.Apellido</td>
@@ -140,6 +143,5 @@
         $("#info").append($("#table_fechas_info"));
         $("#table_fechas_paginate").hide();
     });
-
 
 </script>

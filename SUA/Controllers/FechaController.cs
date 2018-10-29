@@ -129,11 +129,14 @@ namespace SUA.Controllers
                     sala.RepeticionEnDias = 10000;
                     foreach (var repeticion in repeticiones)
                     {
-                        if(repeticion.Ciudad == sala.Direccion.Ciudad)
+                        if(repeticion.Ciudad.Trim() == sala.Direccion.Ciudad.Trim())
                         {
                             var ultimaFecha = fechaService.GetUltimaFechaBySalaAndShow(sala.UniqueId, idShow);
-                            var porcentajeDiferencia = UtilitiesAndStuff.CalcularRepeticion(new DateTime(2018, 10, 01), new DateTime(2018, 11, 01), 45);
-                            sala.RepeticionEnDias = porcentajeDiferencia;
+                            if(ultimaFecha != null)
+                            {
+                                var porcentajeDiferencia = UtilitiesAndStuff.CalcularRepeticion(ultimaFecha.FechaHorario, fechaProximoShow, 45);
+                                sala.RepeticionEnDias = porcentajeDiferencia;
+                            }
                         }
                     }
                 }

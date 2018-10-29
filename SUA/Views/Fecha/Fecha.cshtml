@@ -41,7 +41,7 @@
                                     <label>Fecha</label>
                                     @if (ViewBag.accion == "Post")
                                     {
-                                        @Html.TextBoxFor(model => model.FechaHorario, new { @id = "fechaHorario", @class = "form-control", Style = "width:300px", required = "required", @type = "datetime-local" })
+                                        @Html.TextBoxFor(model => model.FechaHorario, new { @id = "fechaHorario", @class = "form-control", Style = "width:300px", required = "required", @type = "datetime-local", @Value = DateTime.Now.ToString("yyyy-MM-ddTHH:mm") })
                                     }
                                     else
                                     {
@@ -150,6 +150,10 @@
         $('#salasList option[value="' + "@ViewBag.sala" + '"]').attr("selected", "selected");
         $('#productoresList option[value="' + "@ViewBag.productor" + '"]').attr("selected", "selected");
     }
+    else
+    {
+        $("#verSalasButton").trigger("click");
+    }
 
     //muestro info del show elegido
     $('#verSalasButton').click(function ()
@@ -157,7 +161,7 @@
         var fechaHorario = $("#fechaHorario").val();
         var idShow = $("#showsList option:selected").val();
         $.ajax({
-            url: '/fecha/GetSalasConVencimiento?idShow=' + idShow + '&fechaProximoShow=' + fechaHorario,
+            url: '/fecha/GetSalasConRepeticiones?idShow=' + idShow + '&fechaProximoShow=' + fechaHorario,
             type: 'GET',
             accepts: 'application/Json',
             success:  popularListaSalas,
