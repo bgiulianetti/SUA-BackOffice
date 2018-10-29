@@ -118,8 +118,11 @@ namespace SUA.Controllers
         public string GetSalasConRepeticiones(string idShow, DateTime fechaProximoShow)
         {
             var salas = new SalaService().GetSalas();
+            return JsonConvert.SerializeObject(salas);
+            /*
             try
             {
+                
                 var fechaService = new FechaService();
                 var fechas = fechaService.GetFechasByShowId(idShow);
                 var repeticiones = new ShowService().GetShowById(idShow).Repeticion;
@@ -140,6 +143,7 @@ namespace SUA.Controllers
                         }
                     }
                 }
+                
                 var salaOrdenadas = salas.OrderByDescending(o => o.RepeticionEnDias).ToList();
                 return JsonConvert.SerializeObject(salaOrdenadas);
             }
@@ -148,7 +152,7 @@ namespace SUA.Controllers
                 var salaOrdenadas = salas.OrderBy(o => o.Nombre).ToList();
                 return JsonConvert.SerializeObject(salaOrdenadas);
             }
-
+            */
         }
 
         private RepeticionPlazas GetRepeticionPlaza(string idShow, Sala sala, List<RepeticionPlazas> repeticiones)
