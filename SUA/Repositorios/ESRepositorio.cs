@@ -1748,7 +1748,8 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    hotel = item;
+                    if(item.Nombre == nombre)
+                        hotel = item;
             }
             return hotel;
         }
@@ -1919,7 +1920,8 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    restaurante = item;
+                    if(item.Nombre == nombre)
+                        restaurante = item;
             }
             return restaurante;
         }
