@@ -118,11 +118,12 @@ namespace SUA.Controllers
         public string GetSalasConRepeticiones(string idShow, DateTime fechaProximoShow)
         {
             var salas = new SalaService().GetSalas();
-            return JsonConvert.SerializeObject(salas);
+            var salaOrdenadas = salas.OrderByDescending(o => o.RepeticionEnDias).ToList();
+            return JsonConvert.SerializeObject(salaOrdenadas);
             /*
             try
             {
-                
+
                 var fechaService = new FechaService();
                 var fechas = fechaService.GetFechasByShowId(idShow);
                 var repeticiones = new ShowService().GetShowById(idShow).Repeticion;
@@ -132,10 +133,10 @@ namespace SUA.Controllers
                     sala.RepeticionEnDias = 10000;
                     foreach (var repeticion in repeticiones)
                     {
-                        if(repeticion.Ciudad.Trim() == sala.Direccion.Ciudad.Trim())
+                        if (repeticion.Ciudad.Trim() == sala.Direccion.Ciudad.Trim())
                         {
                             var ultimaFecha = fechaService.GetUltimaFechaBySalaAndShow(sala.UniqueId, idShow);
-                            if(ultimaFecha != null)
+                            if (ultimaFecha != null && fechaProximoShow > ultimaFecha.FechaHorario)
                             {
                                 var porcentajeDiferencia = UtilitiesAndStuff.CalcularRepeticion(ultimaFecha.FechaHorario, fechaProximoShow, 45);
                                 sala.RepeticionEnDias = porcentajeDiferencia;
@@ -143,7 +144,7 @@ namespace SUA.Controllers
                         }
                     }
                 }
-                
+
                 var salaOrdenadas = salas.OrderByDescending(o => o.RepeticionEnDias).ToList();
                 return JsonConvert.SerializeObject(salaOrdenadas);
             }
@@ -151,8 +152,7 @@ namespace SUA.Controllers
             {
                 var salaOrdenadas = salas.OrderBy(o => o.Nombre).ToList();
                 return JsonConvert.SerializeObject(salaOrdenadas);
-            }
-            */
+            }*/
         }
 
         private RepeticionPlazas GetRepeticionPlaza(string idShow, Sala sala, List<RepeticionPlazas> repeticiones)

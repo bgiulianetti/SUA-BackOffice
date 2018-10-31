@@ -1241,7 +1241,8 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    fechas.Add(item);
+                    if(item.Sala.UniqueId == idSala && item.Show.UniqueId == idShow)
+                        fechas.Add(item);
             }
             return fechas;
         }

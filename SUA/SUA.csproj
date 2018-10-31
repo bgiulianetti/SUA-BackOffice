@@ -464,6 +464,7 @@
     <Content Include="Views\Restaurante\Restaurante.cshtml" />
     <Content Include="Views\Restaurante\Restaurantes.cshtml" />
     <Content Include="Views\Home\GenerateBackup.cshtml" />
+    <Content Include="Views\Home\VotarCiudad.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
