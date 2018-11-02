@@ -9,8 +9,36 @@ namespace SUA.Controllers
     public class VotarCiudadController : Controller
     {
         [HttpGet]
-        public ActionResult Votar(string show)
+        public ActionResult Votar(string id)
         {
+            ViewBag.mensaje = "";
+            var show = id.ToLower().Trim();
+            if (show == "sanata")
+            {
+                ViewBag.image = "sanata.png";
+                ViewBag.show = "Sanata Stand Up";
+            }
+            else if (show == "nicolasdetracy")
+            {
+                ViewBag.image = "nicolasdetracy.png";
+                ViewBag.show = "Nicolas de Tracy";
+            }
+            else if (show == "lailaygonzo")
+            {
+                ViewBag.image = "lailaygonzo.png";
+                ViewBag.show = "Laila y Gonzo";
+            }
+            else if (show == "elinnombrable")
+            {
+                ViewBag.image = "elinnombrable.png";
+                ViewBag.show = "El Innombrable";
+            }
+            else
+            {
+                ViewBag.mensaje = "show_inválido";
+                ViewBag.show = "";
+                ViewBag.image = "";
+            }
             return View();
         }
 
