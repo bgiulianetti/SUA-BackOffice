@@ -10,6 +10,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="~/assets/votacion/assets/css/main.css" />
     <noscript><link rel="stylesheet" href="~/assets/votacion/assets/css/noscript.css" /></noscript>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            var ciudades = @Html.Raw(Json.Encode(@ViewBag.ciudades));
+              $("#ciudad").autocomplete({
+                  source: ciudades
+              });
+          });
+    </script>
 </head>
 <body class="is-preload">
 
@@ -33,21 +45,7 @@
                         <input type="tel" name="tel" id="tel" placeholder="tel" />
                     </div>
                     <div class="field">
-                        <select name="ciudad" id="ciudad">
-                            <option value="">Ciudad</option>
-                            <option value="sales">Sales</option>
-                            <option value="tech">Tech Support</option>
-                            <option value="null">/dev/null</option>
-                        </select>
-
-                        <datalist value="hola" id="browsers">
-                            <option value="Chrome">
-                            <option value="Firefox">
-                            <option value="Internet Explorer">
-                            <option value="Opera">
-                            <option value="Safari">
-                            <option value="Microsoft Edge">
-                        </datalist>
+                        <input name="ciudad" id="ciudad" type="text"/>
                     </div>
                     <div class="field">
                         <textarea name="message" id="message" placeholder="mensaje" rows="4"></textarea>

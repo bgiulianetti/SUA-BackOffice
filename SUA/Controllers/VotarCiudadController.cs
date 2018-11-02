@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SUA.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,7 @@ namespace SUA.Controllers
         public ActionResult Votar(string id)
         {
             ViewBag.mensaje = "";
+            ViewBag.ciudades = GetCiudadesParaMostrar();
             var show = id.ToLower().Trim();
             if (show == "sanata")
             {
@@ -46,6 +48,17 @@ namespace SUA.Controllers
         public ActionResult Votar()
         {
             return View();
+        }
+
+        private List<string> GetCiudadesParaMostrar()
+        {
+            var ciudades = new List<string>();
+            var ciudadesFull = UtilitiesAndStuff.GetCiudades();
+            foreach (var item in ciudadesFull)
+            {
+                ciudades.Add(item.Nombre + " - " + item.Pais);
+            }
+            return ciudades;
         }
 
     }
