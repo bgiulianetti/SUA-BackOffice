@@ -434,10 +434,10 @@ namespace SUA.Utilities
             ciudades.Add(new Ciudad("Ciudad del Este", "Alto Paraná", "Paraguay", "299255"));
             ciudades.Add(new Ciudad("Luque", "Central", "Paraguay", "272808"));
             ciudades.Add(new Ciudad("San Lorenzo", "Central", "Paraguay", "256008"));
-            ciudades.Add(new Ciudad("Arequipa", "Arequipa", "Perú", "1008290"));
-            ciudades.Add(new Ciudad("Callao", "Callao", "Perú", "994494"));
-            ciudades.Add(new Ciudad("Lima", "Lima", "Perú", "9562280"));
-            ciudades.Add(new Ciudad("Trujillo", "La Libertad", "Perú", "919899"));
+            ciudades.Add(new Ciudad("Arequipa", "Arequipa", "Peru", "1008290"));
+            ciudades.Add(new Ciudad("Callao", "Callao", "Peru", "994494"));
+            ciudades.Add(new Ciudad("Lima", "Lima", "Peru", "9562280"));
+            ciudades.Add(new Ciudad("Trujillo", "La Libertad", "Peru", "919899"));
             ciudades.Add(new Ciudad("MaldonadoNota 2​", "Maldonado", "Uruguay", "86782"));
             ciudades.Add(new Ciudad("Montevideo", "Montevideo", "Uruguay", "1305082"));
             ciudades.Add(new Ciudad("PaysandúNota 1​", "Paysandú", "Uruguay", "90690"));

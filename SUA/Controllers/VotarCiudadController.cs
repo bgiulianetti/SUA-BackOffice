@@ -1,4 +1,5 @@
-﻿using SUA.Utilities;
+﻿using SUA.Models;
+using SUA.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +46,7 @@ namespace SUA.Controllers
         }
 
         [HttpPost]
-        public ActionResult Votar()
+        public ActionResult Votar(Votacion votacion, string ip)
         {
             return View();
         }
