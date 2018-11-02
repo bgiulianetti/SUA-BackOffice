@@ -252,12 +252,5 @@ namespace SUA.Controllers
             return View();
         }
 
-
-        [HttpGet]
-        public ActionResult VotarCiudad()
-        {
-            return View();
-        }
-
     }
 }
