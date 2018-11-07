@@ -184,6 +184,22 @@ namespace SUA
                 defaults: new { controller = "Restaurante", action = "Restaurantes" }
             );
 
+            //============================Votacion=======================================
+
+            routes.MapRoute(
+                name: "Votar",
+                url: "votar/{id}",
+                defaults: new { controller = "Votar", action = "Votar", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Votaciones",
+                url: "votaciones",
+                defaults: new { controller = "Votar", action = "Votaciones" }
+            );
+
+
+
 
 
             routes.MapRoute(

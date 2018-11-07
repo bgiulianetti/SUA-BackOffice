@@ -179,7 +179,7 @@
     <Compile Include="Controllers\ShowController.cs" />
     <Compile Include="Controllers\StanduperoController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\VotarCiudadController.cs" />
+    <Compile Include="Controllers\VotarController.cs" />
     <Compile Include="Extension\HtmlHelperExtensions.cs" />
     <Compile Include="Filters\UserValidationFilter.cs" />
     <Compile Include="Global.asax.cs">
