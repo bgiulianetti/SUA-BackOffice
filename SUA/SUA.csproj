@@ -579,7 +579,7 @@
     <Content Include="Views\Restaurante\Restaurante.cshtml" />
     <Content Include="Views\Restaurante\Restaurantes.cshtml" />
     <Content Include="Views\Home\GenerateBackup.cshtml" />
-    <Content Include="Views\VotarCiudad\Votar.cshtml" />
+    <Content Include="Views\Votar\Votar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
