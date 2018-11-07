@@ -26,7 +26,6 @@
 
     <!-- Wrapper -->
     <div id="wrapper">
-
         <section id="main">
             <header>
                 <span class="avatar"><img src="~/assets/votacion/images/@ViewBag.image" .jpg alt="" /></span>
@@ -37,51 +36,51 @@
                     <p style="color:deeppink">@ViewBag.mensaje</p>
                 }
             </header>
+            @if (ViewBag.mensaje != "Esta url no existe :(")
+            {
+                <table style="width:100%">
+                    <thead>
+                        <tr>
+                            <th><strong>Votos</strong></th>
+                            <th><strong>Ciudad</strong></th>
+                        </tr>
+                    </thead>
 
-            <table style="width:100%">
-                <thead>
-                    <tr>
-                        <th><strong>Votos</strong></th>
-                        <th><strong>Ciudad</strong></th>
-                    </tr>
-                </thead>
+                    @foreach (var item in ViewBag.ranking)
+                    {
+                        <tr>
+                            <td style="text-align:center">@item.VotesCount</td>
+                            <td style="text-align:center">@item.Ciudad.Nombre</td>
+                        </tr>
+                    }
+                </table>
+            }
+                <br />
+                <br />
+                <footer>
+                    <ul class="icons">
+                        <li><a href="https://twitter.com/StandupAR" class="fa-twitter">Twitter</a></li>
+                        <li><a href="https://www.instagram.com/standupargentina/" class="fa-instagram">Instagram</a></li>
+                        <li><a href="https://www.facebook.com/standuparg/" class="fa-facebook">Facebook</a></li>
+                    </ul>
+                </footer>
+            </section>
 
-                @foreach (var item in ViewBag.ranking)
-                {
-                    <tr>
-                        <td style="text-align:center">@item.VotesCount</td>
-                        <td style="text-align:center">@item.Ciudad.Nombre</td>
-                    </tr>
-                }
-                
-            </table>
-
-            <br />
-            <br />
-            <footer>
-                <ul class="icons">
-                    <li><a href="https://twitter.com/StandupAR" class="fa-twitter">Twitter</a></li>
-                    <li><a href="https://www.instagram.com/standupargentina/" class="fa-instagram">Instagram</a></li>
-                    <li><a href="https://www.facebook.com/standuparg/" class="fa-facebook">Facebook</a></li>
+            <footer id="footer">
+                <ul class="copyright">
+                    <li>&copy; Stand Up Argentina</li>
                 </ul>
             </footer>
-        </section>
 
-        <footer id="footer">
-            <ul class="copyright">
-                <li>&copy; Stand Up Argentina</li>
-            </ul>
-        </footer>
+        </div>
 
-    </div>
+        <!-- Scripts -->
+        <script>
+            if ('addEventListener' in window) {
+                window.addEventListener('load', function () { document.body.className = document.body.className.replace(/\bis-preload\b/, ''); });
+                document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
+            }
+        </script>
 
-    <!-- Scripts -->
-    <script>
-        if ('addEventListener' in window) {
-            window.addEventListener('load', function () { document.body.className = document.body.className.replace(/\bis-preload\b/, ''); });
-            document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
-        }
-    </script>
-
-</body>
+    </body>
 </html>
