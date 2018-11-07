@@ -206,6 +206,14 @@ namespace SUA
 
 
 
+            //============================Ciudad=======================================
+
+            routes.MapRoute(
+                name: "Ciudades",
+                url: "ciudades",
+                defaults: new { controller = "Ciudad", action = "Ciudades", id = UrlParameter.Optional }
+            );
+
 
 
             routes.MapRoute(

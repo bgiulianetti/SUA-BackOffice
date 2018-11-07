@@ -1,0 +1,116 @@
+﻿<div id="container" class="main-content" style="padding:50px;  width: 100%;">
+
+    <table style="border-spacing: 20px">
+        <tr>
+            <td>
+                <div id="entries" style="width:200px"></div>
+            </td>
+            <td>
+                <div id="botones" style="width:200px; padding-top:5px"></div>
+            </td>
+            <td>
+                <div id="busqueda" style="width:200px"></div>
+            </td>
+        </tr>
+    </table>
+        <hr style="color: #8dd9f7">
+        <div style="width: 100%; overflow-x: auto;  white-space: nowrap;">
+
+            <table id="table_restaurantes" class="display compact hover nowrap">
+                <thead>
+                    <tr>
+                        <th>Ciudad</th>
+                        <th>Estado/Provincia</th>
+                        <th>País</th>
+                        <th>Población</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Ciudad</th>
+                        <th>Estado/Provincia</th>
+                        <th>País</th>
+                        <th>Población</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in ViewBag.ciudades)
+                    {
+                        <tr>
+                            <td>@item.Nombre</td>
+                            <td>@item.Estado</td>
+                            <td>@item.Pais</td>
+                            <td>@item.Poblacion</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <hr style="color: #8dd9f7">
+        <table style="border-spacing: 20px">
+            <tr>
+                <td>
+                    <div id="info" style="width:200px"></div>
+                </td>
+                <td>
+                    <div id="paginado" style="width:200px"></div>
+                </td>
+            </tr>
+        </table>
+
+</div>
+<script>
+
+    $(document).ready(function () {
+        var tableSalas = $('#table_restaurantes').DataTable({
+            responsive: true,
+            dom: 'l<B>ftip',
+            buttons: [
+                { extend: 'excelHtml5', title: "Restaurantes", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/') },
+                'csvHtml5',
+                { extend: 'pdf', title: "Listado de Restaurantes", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/'), orientation: 'landscape' }
+            ],
+            'columnDefs': [{ "targets": 0, "className": "text-center" }]
+        });
+
+        AplicarFiltrosEnFooter();
+        AcomodaDOM();
+    });
+
+    function AcomodaDOM() {
+        $('#table_restaurantes_filter').hide();
+        $("#divCapacidad").append($("#SearchContainer"));
+        $("#info").append($("#table_restaurantes_info"));
+        //$("#table_restaurantes_paginate").hide();
+        $("#entries").append($(".dt-buttons"));
+        $("#botones").append($(".dataTables_length"));
+    }
+
+    function AplicarFiltrosEnFooter() {
+        var contador = 0;
+        $('#table_restaurantes tfoot th').each(function () {
+            //if (contador != 0)
+            //{
+                var title = $(this).text();
+                $(this).html('<input type="text" placeholder="' + title + '" />');
+            //}
+            //contador++;
+        });
+
+
+        // Apply the search
+        var table = $('#table_restaurantes').DataTable();
+        table.columns().every(function () {
+            var that = this;
+            $('input', this.footer()).on('keyup change', function () {
+                if (that.search() !== this.value)
+                    that.search(this.value).draw();
+            });
+
+
+        });
+    }
+
+
+</script>

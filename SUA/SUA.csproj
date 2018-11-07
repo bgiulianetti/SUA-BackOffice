@@ -168,6 +168,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CiudadController.cs" />
     <Compile Include="Controllers\DataBaseController.cs" />
     <Compile Include="Controllers\FechaController.cs" />
     <Compile Include="Controllers\HistorialController.cs" />
@@ -583,6 +584,7 @@
     <Content Include="Views\Home\GenerateBackup.cshtml" />
     <Content Include="Views\Votar\Votar.cshtml" />
     <Content Include="Views\Votar\Ranking.cshtml" />
+    <Content Include="Views\Ciudad\Ciudades.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
