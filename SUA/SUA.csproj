@@ -227,6 +227,7 @@
     <Compile Include="Servicios\ShowService.cs" />
     <Compile Include="Servicios\StanduperoService.cs" />
     <Compile Include="Servicios\UserService.cs" />
+    <Compile Include="Servicios\VotacionService.cs" />
     <Compile Include="Utilities\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>

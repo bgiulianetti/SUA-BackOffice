@@ -12,7 +12,7 @@ namespace SUA.Models
         public string Show { get; set; }
         public DateTime Fecha { get; set; }
         public string Telefono { get; set; }
-        public string Mensaje { get; set; }
+        public string Email { get; set; }
         public Ciudad Ciudad { get; set; }
     }
 }

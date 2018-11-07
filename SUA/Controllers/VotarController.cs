@@ -1,4 +1,6 @@
-﻿using SUA.Models;
+﻿using Newtonsoft.Json;
+using SUA.Models;
+using SUA.Servicios;
 using SUA.Utilities;
 using System;
 using System.Collections.Generic;
@@ -48,6 +50,21 @@ namespace SUA.Controllers
         [HttpPost]
         public ActionResult Votar(Votacion votacion, string ip)
         {
+            ViewBag.titulo = "Vota tu ciudad";
+            var service = new VotacionService();
+            try
+            {
+
+                votacion.Ip = ip;
+                service.AddVotacion(votacion);
+                ViewBag.mensaje = "creado";
+                new LogService().FormatAndSaveLog("Restaurante", "Crear", JsonConvert.SerializeObject(votacion));
+
+            }
+            catch (Exception ex)
+            {
+                ViewBag.mensaje = ex.Message;
+            }
             return View();
         }
 
