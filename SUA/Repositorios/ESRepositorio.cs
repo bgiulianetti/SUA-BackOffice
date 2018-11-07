@@ -209,9 +209,13 @@ namespace SUA.Repositorios
         public const string INVALID_VOTACION_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch al querer obtener todas las votaciones";
         public const string VOTACION_GET_ALL_EXCEPTION = "Falla al querer obtener todas las votaciones";
         public const string VOTACION_GET_BY_IP_INVALID_PARAMETER_EXCEPTION = "Para obtener una votacion por ip debe pasar un ip válido";
+        public const string VOTACION_GET_BY_SHOW_INVALID_PARAMETER_EXCEPTION = "Para obtener votaciones por show debe pasar un show válido";
+        public const string VOTACION_GET_BY_SHOW_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un votaciones por show";
         public const string VOTACION_CREATE_INVALID_PARAMETER_EXCEPTION = "Para agregar una votacion debe pasar una votacion válida";
         public const string VOTACION_CANT_MAX_EXCEPTION = "Ya tenemos registrado tu voto!";
         public const string VOTACION_CREATE_NOT_CREATED_EXCEPTION = "Falla al querer crear una votación nueva";
+        
+
 
         protected ElasticClient Client { get; set; }
         protected string Index { get; set; }
@@ -1014,7 +1018,7 @@ namespace SUA.Repositorios
                         )
                       )
                 );
-        
+
             if (response == null)
                 return null;
 
@@ -1026,7 +1030,7 @@ namespace SUA.Repositorios
             {
                 foreach (var item in response.Documents)
                 {
-                    if(!ciudades.Contains(item.Direccion.Ciudad))
+                    if (!ciudades.Contains(item.Direccion.Ciudad))
                         ciudades.Add(item.Direccion.Ciudad);
                 }
             }
@@ -1230,7 +1234,7 @@ namespace SUA.Repositorios
                 .Query(q => q
                     .Match(m => m
                         .Field(f => f.Sala.UniqueId).Query(idSala)
-                        .Field(f=> f.Show.UniqueId).Query(idShow)
+                        .Field(f => f.Show.UniqueId).Query(idShow)
                         )
                      )
                 );
@@ -1245,7 +1249,7 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    if(item.Sala.UniqueId == idSala && item.Show.UniqueId == idShow)
+                    if (item.Sala.UniqueId == idSala && item.Show.UniqueId == idShow)
                         fechas.Add(item);
             }
             return fechas;
@@ -1260,7 +1264,7 @@ namespace SUA.Repositorios
                 .Type(Index)
                  .Query(q => q
                     .Match(m => m.Field(f => f.Sala.Direccion.Ciudad).Query(ciudad))
-                    && q.DateRange(r=> r
+                    && q.DateRange(r => r
                         .Field(f => f.FechaHorario)
                         .GreaterThan(desde)
                         .LessThan(hasta)
@@ -1486,7 +1490,7 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    if(item.Username == nombre)
+                    if (item.Username == nombre)
                         user = item;
             }
             return user;
@@ -1500,7 +1504,7 @@ namespace SUA.Repositorios
                 .Index(Index)
                 .Type(Index)
                 .Query(q => q
-                    .Match(m => m.Field(f=>f.MailRecover).Query(email)))
+                    .Match(m => m.Field(f => f.MailRecover).Query(email)))
                     );
 
             if (response == null)
@@ -1514,7 +1518,7 @@ namespace SUA.Repositorios
             {
                 foreach (var item in response.Documents)
                 {
-                    if(item.MailRecover == email)
+                    if (item.MailRecover == email)
                         user = item;
                 }
             }
@@ -1753,7 +1757,7 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    if(item.Nombre == nombre)
+                    if (item.Nombre == nombre)
                         hotel = item;
             }
             return hotel;
@@ -1925,7 +1929,7 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    if(item.Nombre == nombre)
+                    if (item.Nombre == nombre)
                         restaurante = item;
             }
             return restaurante;
@@ -2049,6 +2053,33 @@ namespace SUA.Repositorios
             }
             return votaciones;
         }
+        public List<Votacion> GetVotacionesByShow(string show)
+        {
+            if (string.IsNullOrEmpty(show))
+                throw new Exception(VOTACION_GET_BY_SHOW_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Votacion>(s => s
+                   .Index(Index)
+                   .Type(Index)
+                   .Query(q => q
+                    .Match(m => m.Field(f => f.Show).Query(show)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(VOTACION_GET_BY_SHOW_INVALID_SEARCH_EXCEPTION);
+
+            var votaciones = new List<Votacion>();
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    if (show == item.Show)
+                        votaciones.Add(item);
+            }
+            return votaciones;
+        }
         public List<Votacion> GetVotacionesByIpAndShow(string ip, string show)
         {
             if (string.IsNullOrEmpty(ip))
@@ -2069,7 +2100,7 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    if(ip == item.Ip && show == item.Show)
+                    if (ip == item.Ip && show == item.Show)
                         votaciones.Add(item);
             }
             return votaciones;
@@ -2081,11 +2112,11 @@ namespace SUA.Repositorios
 
             if (!IndexExists())
                 CreateIndex();
-
+            /*
             var votaciones = GetVotacionesByIpAndShow(votacion.Ip, votacion.Show);
             if (votaciones != null && votaciones.Count >= 3)
                 throw new Exception(VOTACION_CANT_MAX_EXCEPTION);
-
+*/
             var response = Client.IndexAsync(votacion, i => i
               .Index(Index)
               .Type(Index)

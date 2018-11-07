@@ -28,5 +28,33 @@ namespace SUA.Servicios
         {
             Repository.AddVotacion(votacion);
         }
+
+        public void GetVotacionesByShow(string show)
+        {
+            Repository.GetVotacionesByShow(show);
+        }
+
+        public List<RankingRecord> GetRankingByShow(string show)
+        {
+            var ranking = new List<RankingRecord>();
+            var votaciones = Repository.GetVotacionesByShow(show);
+            var votacionesOrdenadas = votaciones.OrderBy(f => f.Ciudad.Nombre);
+            foreach (var votacion in votaciones)
+            {
+                var CiudadObtenida = ranking.Find(f => f.Ciudad.Nombre == votacion.Ciudad.Nombre);
+                if(CiudadObtenida != null)
+                {
+                    var index = ranking.FindIndex(c => c.Ciudad.Nombre == votacion.Ciudad.Nombre);
+                    ranking[index] = new RankingRecord { Ciudad = CiudadObtenida.Ciudad, VotesCount = CiudadObtenida.VotesCount + 1 };
+                }
+                else
+                {
+                    var record = new RankingRecord { Ciudad = votacion.Ciudad, VotesCount = 1};
+                    ranking.Add(record);
+                }
+            }
+            var rankingOrdenado = ranking.OrderByDescending(f=>f.VotesCount).ToList();
+            return rankingOrdenado;
+        }
     }
 }

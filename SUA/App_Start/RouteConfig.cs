@@ -193,6 +193,12 @@ namespace SUA
             );
 
             routes.MapRoute(
+                name: "Ranking",
+                url: "ranking",
+                defaults: new { controller = "Votar", action = "Ranking", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Votaciones",
                 url: "votaciones",
                 defaults: new { controller = "Votar", action = "Votaciones" }

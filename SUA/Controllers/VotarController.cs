@@ -94,8 +94,11 @@ namespace SUA.Controllers
             {
                 votacion.Ciudad = ciudadObtenida;
                 votacion.Fecha = DateTime.Now;
+                if (votacion.Notificaciones == null)
+                    votacion.Notificaciones = "off";
                 service.AddVotacion(votacion);
                 ViewBag.mensaje = "creado";
+                return RedirectToAction("Ranking", new { show = fileNameShow });
             }
             catch (Exception ex)
             {
@@ -104,10 +107,43 @@ namespace SUA.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ActionResult Votaciones()
+        public ActionResult Ranking(string show)
         {
-
+            var showNombreCorrecto = "";
+            if (show == "sanata")
+            {
+                ViewBag.image = "sanata.png";
+                ViewBag.show = "Sanata Stand Up";
+                showNombreCorrecto = "Sanata Stand Up";
+            }
+            else if (show == "nicolasdetracy")
+            {
+                ViewBag.image = "nicolasdetracy.png";
+                ViewBag.show = "Nicolas de Tracy";
+                showNombreCorrecto = "Nicolas de Tracy";
+            }
+            else if (show == "lailaygonzo")
+            {
+                ViewBag.image = "lailaygonzo.png";
+                ViewBag.show = "Laila y Gonzo";
+                showNombreCorrecto = "Laila y Gonzo";
+            }
+            else if (show == "elinnombrable")
+            {
+                ViewBag.image = "elinnombrable.png";
+                ViewBag.show = "El Innombrable";
+                showNombreCorrecto = "El Innombrable";
+            }
+            else
+            {
+                ViewBag.mensaje = "Esta url no existe :(";
+                ViewBag.show = "";
+                ViewBag.image = "";
+                return View();
+            }
+            var service = new VotacionService();
+            var ranking = service.GetRankingByShow(showNombreCorrecto);
+            ViewBag.ranking = ranking;
             return View();
         }
 

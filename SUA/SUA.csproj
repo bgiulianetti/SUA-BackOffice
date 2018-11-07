@@ -206,6 +206,7 @@
     <Compile Include="Models\Persona.cs" />
     <Compile Include="Models\Productor.cs" />
     <Compile Include="Models\PruebaSonidoEnsayo.cs" />
+    <Compile Include="Models\RankingRecord.cs" />
     <Compile Include="Models\RepeticionPlazas.cs" />
     <Compile Include="Models\Restaurante.cs" />
     <Compile Include="Models\Ubicacion.cs" />
@@ -581,6 +582,7 @@
     <Content Include="Views\Restaurante\Restaurantes.cshtml" />
     <Content Include="Views\Home\GenerateBackup.cshtml" />
     <Content Include="Views\Votar\Votar.cshtml" />
+    <Content Include="Views\Votar\Ranking.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

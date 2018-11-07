@@ -245,6 +245,7 @@ namespace SUA.Utilities
         public static List<Ciudad> GetCiudades()
         {
             var ciudades = new List<Ciudad>();
+            ciudades.Add(new Ciudad("Avellaneda", "Buenos Aires", "Argentina", "342677"));
             ciudades.Add(new Ciudad("Azul", "Buenos Aires", "Argentina", "53054"));
             ciudades.Add(new Ciudad("Bahía Blanca", "Buenos Aires", "Argentina", "299101"));
             ciudades.Add(new Ciudad("Banda del Río Salí", "Tucumán", "Argentina", "64591"));
