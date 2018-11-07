@@ -258,9 +258,9 @@ namespace SUA.Utilities
             ciudades.Add(new Ciudad("Bernal", "Buenos Aires", "Argentina", "109914"));
             ciudades.Add(new Ciudad("Bosques", "Buenos Aires", "Argentina", "51663"));
             ciudades.Add(new Ciudad("Boulogne Sur Mer", "Buenos Aires", "Argentina", "73496"));
-            ciudades.Add(new Ciudad("Buenos Aires", "Ciudad Autónoma de Buenos Aires", "Argentina", "2890151"));
             ciudades.Add(new Ciudad("Burzaco", "Buenos Aires", "Argentina", "86113"));
             ciudades.Add(new Ciudad("Campana", "Buenos Aires", "Argentina", "94461"));
+            ciudades.Add(new Ciudad("Capital Federal", "Buenos Aires", "Argentina", "2890151"));
             ciudades.Add(new Ciudad("Caseros", "Buenos Aires", "Argentina", "95785"));
             ciudades.Add(new Ciudad("Castelar", "Buenos Aires", "Argentina", "104019"));
             ciudades.Add(new Ciudad("Chimbas", "San Juan", "Argentina", "73210"));

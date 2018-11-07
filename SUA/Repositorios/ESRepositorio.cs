@@ -210,7 +210,7 @@ namespace SUA.Repositorios
         public const string VOTACION_GET_ALL_EXCEPTION = "Falla al querer obtener todas las votaciones";
         public const string VOTACION_GET_BY_IP_INVALID_PARAMETER_EXCEPTION = "Para obtener una votacion por ip debe pasar un ip válido";
         public const string VOTACION_CREATE_INVALID_PARAMETER_EXCEPTION = "Para agregar una votacion debe pasar una votacion válida";
-        public const string VOTACION_CANT_MAX_EXCEPTION = "votacion_cant_max";
+        public const string VOTACION_CANT_MAX_EXCEPTION = "Ya tenemos registrado tu voto!";
         public const string VOTACION_CREATE_NOT_CREATED_EXCEPTION = "Falla al querer crear una votación nueva";
 
         protected ElasticClient Client { get; set; }
@@ -2049,7 +2049,7 @@ namespace SUA.Repositorios
             }
             return votaciones;
         }
-        public List<Votacion> GetVotacionesByIp(string ip)
+        public List<Votacion> GetVotacionesByIpAndShow(string ip, string show)
         {
             if (string.IsNullOrEmpty(ip))
                 throw new Exception(SHOW_GET_BY_ID_INVALID_PARAMETER_EXCEPTION);
@@ -2069,7 +2069,7 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    if(ip == item.Ip)
+                    if(ip == item.Ip && show == item.Show)
                         votaciones.Add(item);
             }
             return votaciones;
@@ -2082,7 +2082,7 @@ namespace SUA.Repositorios
             if (!IndexExists())
                 CreateIndex();
 
-            var votaciones = GetVotacionesByIp(votacion.Ip);
+            var votaciones = GetVotacionesByIpAndShow(votacion.Ip, votacion.Show);
             if (votaciones != null && votaciones.Count >= 3)
                 throw new Exception(VOTACION_CANT_MAX_EXCEPTION);
 

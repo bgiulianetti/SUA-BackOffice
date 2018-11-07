@@ -30,51 +30,59 @@
 
 
 
-    <section id="main">
-        <header>
-            <span class="avatar"><img src="~/assets/votacion/images/@ViewBag.image" .jpg alt="" /></span>
-            <h1>@ViewBag.show</h1>
-            <p>Votá tu ciudad!!</p>
-        </header>
+        <section id="main">
+            <header>
+                <span class="avatar"><img src="~/assets/votacion/images/@ViewBag.image" .jpg alt="" /></span>
+                <h1>@ViewBag.show</h1>
+                <p>Votá tu ciudad!!</p>
+                @if (ViewBag.mensaje != "")
+                {
+                    <p style="color:deeppink">@ViewBag.mensaje</p>
+                }
+            </header>
+            @using (Html.BeginForm("Votar", "Votar", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                if (ViewBag.mensaje != "Esta url no existe :(")
+                {
+                    <div class="fields">
+                        <div class="field">
+                            <input name="ciudad" id="ciudad" type="text" placeholder="ciudad" required />
+                        </div>
+                        <div class="field">
+                            <input type="text" name="Nombre" id="name" placeholder="nombre" />
+                        </div>
+                        <div class="field">
+                            <input type="tel" name="Telefono" id="tel" placeholder="tel" style="height:2.75em" />
+                        </div>
+                        <div class="field">
+                            <input type="email" name="Email" id="email" placeholder="email" />
+                        </div>
 
-        <form method="post" action="#">
-            <div class="fields">
-                <div class="field">
-                    <input name="ciudad" id="ciudad" type="text" placeholder="ciudad" />
-                </div>
-                <div class="field">
-                    <input type="text" name="name" id="name" placeholder="nombre" />
-                </div>
-                <div class="field">
-                    <input type="tel" name="tel" id="tel" placeholder="tel" style="height:2.75em" />
-                </div>
-                <div class="field">
-                    <input type="email" name="email" id="email" placeholder="email" />
-                </div>
 
-
-                <div class="field">
-                    <input type="checkbox" id="human" name="human" /><label for="human">Recibir notificaciones</label>
-                </div>
-
-            </div>
-            <ul class="actions special">
-                <li><a href="#" class="button">VOTAR</a></li>
-            </ul>
-        </form>
-        <hr />
-        <footer>
-            <ul class="icons">
-                <li><a href="#" class="fa-twitter">Twitter</a></li>
-                <li><a href="#" class="fa-instagram">Instagram</a></li>
-                <li><a href="#" class="fa-facebook">Facebook</a></li>
-            </ul>
-        </footer>
-    </section>
+                        <div class="field">
+                            <input type="checkbox" id="human" name="Notificaciones" /><label for="human">Recibir notificaciones</label>
+                        </div>
+                    </div>
+                    <ul class="actions special">
+                        <li><input type="submit" class="button" value="VOTAR" /></li>
+                    </ul>
+                    <input name="Show" value="@ViewBag.show" style="visibility:hidden; position:absolute" />
+                    <input type="text" name="Ip" id="Ip" style="visibility:hidden; position:absolute"" />
+                    <input type="text" value="@ViewBag.fileNameShow" name="fileNameShow" id="fileNameShow" style="visibility:hidden; position:absolute"" />
+                }
+            }
+            <footer>
+                <ul class="icons">
+                    <li><a href="https://twitter.com/StandupAR" class="fa-twitter">Twitter</a></li>
+                    <li><a href="https://www.instagram.com/standupargentina/" class="fa-instagram">Instagram</a></li>
+                    <li><a href="https://www.facebook.com/standuparg/" class="fa-facebook">Facebook</a></li>
+                </ul>
+            </footer>
+        </section>
 
         <footer id="footer">
             <ul class="copyright">
-                <li>&copy; Stand Up Argentina</li>  
+                <li>&copy; Stand Up Argentina</li>
             </ul>
         </footer>
 
@@ -82,11 +90,20 @@
 
     <!-- Scripts -->
     <script>
-				if ('addEventListener' in window) {
-					window.addEventListener('load', function() { document.body.className = document.body.className.replace(/\bis-preload\b/, ''); });
-					document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
-				}
+        if ('addEventListener' in window) {
+            window.addEventListener('load', function () { document.body.className = document.body.className.replace(/\bis-preload\b/, ''); });
+            document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
+        }
     </script>
 
 </body>
 </html>
+<script>
+
+        $(document).ready(function () {
+            $.get("https://api.ipify.org?format=json", function (data) {
+                $("#Ip").val(data.ip);
+            });
+        });
+
+</script>
