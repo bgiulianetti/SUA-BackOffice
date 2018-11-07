@@ -54,7 +54,7 @@ namespace SUA.Servicios
                 }
             }
             var rankingOrdenado = ranking.OrderByDescending(f=>f.VotesCount).ToList();
-            return rankingOrdenado;
+            return rankingOrdenado.Take(100).ToList();
         }
     }
 }

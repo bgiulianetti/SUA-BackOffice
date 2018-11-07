@@ -27,6 +27,7 @@ namespace SUA.Controllers
                 entidades.Add("restaurantes", JsonConvert.SerializeObject(new RestauranteService().GetRestaurantes()));
                 entidades.Add("logs", JsonConvert.SerializeObject(new LogService().GetLogs()));
                 entidades.Add("hoteles", JsonConvert.SerializeObject(new HotelService().GetHoteles()));
+                entidades.Add("votaciones", JsonConvert.SerializeObject(new VotacionService().GetVotaciones()));
 
                 foreach (var entidad in entidades)
                 {

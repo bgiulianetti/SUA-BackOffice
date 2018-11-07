@@ -585,11 +585,11 @@
     <Content Include="Views\Votar\Votar.cshtml" />
     <Content Include="Views\Votar\Ranking.cshtml" />
     <Content Include="Views\Ciudad\Ciudades.cshtml" />
+    <Content Include="Views\DataBase\Backup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="BackUp\" />
-    <Folder Include="Views\DataBase\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff">
