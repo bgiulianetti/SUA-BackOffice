@@ -205,9 +205,13 @@ namespace SUA.Repositorios
         public const string RESTAURANTE_DELETE_NOT_DELETED_EXCEPTION = "Falla al querer borrar un hotel";
 
 
-
-
-
+        //Votacion
+        public const string INVALID_VOTACION_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch al querer obtener todas las votaciones";
+        public const string VOTACION_GET_ALL_EXCEPTION = "Falla al querer obtener todas las votaciones";
+        public const string VOTACION_GET_BY_IP_INVALID_PARAMETER_EXCEPTION = "Para obtener una votacion por ip debe pasar un ip válido";
+        public const string VOTACION_CREATE_INVALID_PARAMETER_EXCEPTION = "Para agregar una votacion debe pasar una votacion válida";
+        public const string VOTACION_CANT_MAX_EXCEPTION = "votacion_cant_max";
+        public const string VOTACION_CREATE_NOT_CREATED_EXCEPTION = "Falla al querer crear una votación nueva";
 
         protected ElasticClient Client { get; set; }
         protected string Index { get; set; }
@@ -2020,6 +2024,78 @@ namespace SUA.Repositorios
         }
 
 
+        /*-------------------Votacion-------------------*/
+
+        public List<Votacion> GetVotaciones()
+        {
+            var response = Client.Search<Votacion>(s => s
+                   .Index(Index)
+                   .Type(Index)
+                   .From(0)
+                   .Size(GetCount(Index))
+                  );
+
+            if (response == null)
+                throw new Exception(INVALID_VOTACION_ES_CONNECTION_EXCEPTION);
+
+            if (!response.IsValid)
+                throw new Exception(FECHA_GET_ALL_EXCEPTION);
+
+            var votaciones = new List<Votacion>();
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    votaciones.Add(item);
+            }
+            return votaciones;
+        }
+        public List<Votacion> GetVotacionesByIp(string ip)
+        {
+            if (string.IsNullOrEmpty(ip))
+                throw new Exception(SHOW_GET_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Votacion>(s => s
+                   .Index(Index)
+                   .Type(Index)
+                   .Query(q => q.Term("ip", ip)));
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(SHOW_GET_BY_ID_INVALID_SEARCH_EXCEPTION);
+
+            var votaciones = new List<Votacion>();
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    if(ip == item.Ip)
+                        votaciones.Add(item);
+            }
+            return votaciones;
+        }
+        public void AddVotacion(Votacion votacion)
+        {
+            if (votacion == null)
+                throw new Exception(VOTACION_CREATE_INVALID_PARAMETER_EXCEPTION);
+
+            if (!IndexExists())
+                CreateIndex();
+
+            var votaciones = GetVotacionesByIp(votacion.Ip);
+            if (votaciones != null && votaciones.Count >= 3)
+                throw new Exception(VOTACION_CANT_MAX_EXCEPTION);
+
+            var response = Client.IndexAsync(votacion, i => i
+              .Index(Index)
+              .Type(Index)
+              .Refresh(Refresh.True)
+              ).Result;
+
+            if (!response.IsValid)
+                throw new Exception(VOTACION_CREATE_NOT_CREATED_EXCEPTION);
+        }
+
         /*---------Metodos genericos------------------*/
 
         public int GetCount(string tipo)
@@ -2042,6 +2118,8 @@ namespace SUA.Repositorios
             else if (tipo == "hotel")
                 response = Client.Count<Hotel>(c => c.Index(Index).Type(Index));
             else if (tipo == "restaurante")
+                response = Client.Count<Restaurante>(c => c.Index(Index).Type(Index));
+            else if (tipo == "votacion")
                 response = Client.Count<Restaurante>(c => c.Index(Index).Type(Index));
             return (int)response.Count;
         }
@@ -2078,7 +2156,8 @@ namespace SUA.Repositorios
             user,
             log,
             hotel,
-            restaurante
+            restaurante,
+            votacion
         }
     }
 }

@@ -294,7 +294,7 @@ namespace SUA.Utilities
             ciudades.Add(new Ciudad("Ezeiza", "Buenos Aires", "Argentina", "93247"));
             ciudades.Add(new Ciudad("Ezpeleta", "Buenos Aires", "Argentina", "72557"));
             ciudades.Add(new Ciudad("Florencio Varela", "Buenos Aires", "Argentina", "120678"));
-            ciudades.Add(new Ciudad("Florida (no es ciudad sino barrio)", "Buenos Aires", "Argentina", "75891"));
+            ciudades.Add(new Ciudad("Florida", "Buenos Aires", "Argentina", "75891"));
             ciudades.Add(new Ciudad("General Pico", "La Pampa", "Argentina", "52414"));
             ciudades.Add(new Ciudad("General Roca", "Río Negro", "Argentina", "69602"));
             ciudades.Add(new Ciudad("General Rodríguez", "Buenos Aires", "Argentina", "63317"));
@@ -336,7 +336,7 @@ namespace SUA.Utilities
             ciudades.Add(new Ciudad("Necochea", "Buenos Aires", "Argentina", "65459"));
             ciudades.Add(new Ciudad("Oberá", "Misiones", "Argentina", "51681"));
             ciudades.Add(new Ciudad("Olavarría", "Buenos Aires", "Argentina", "83738"));
-            ciudades.Add(new Ciudad("Olivos (no es ciudad sino barrio)", "Buenos Aires", "Argentina", "75527"));
+            ciudades.Add(new Ciudad("Olivos", "Buenos Aires", "Argentina", "75527"));
             ciudades.Add(new Ciudad("Palpalá", "Jujuy", "Argentina", "45077"));
             ciudades.Add(new Ciudad("Paraná", "Entre Ríos", "Argentina", "247863"));
             ciudades.Add(new Ciudad("Pergamino", "Buenos Aires", "Argentina", "104985"));
@@ -353,7 +353,7 @@ namespace SUA.Utilities
             ciudades.Add(new Ciudad("Ramos Mejía", "Buenos Aires", "Argentina", "98547"));
             ciudades.Add(new Ciudad("Rawson", "Chubut", "Argentina", "31787"));
             ciudades.Add(new Ciudad("Reconquista", "Santa Fe", "Argentina", "66187"));
-            ciudades.Add(new Ciudad("Remedios de Escalada (Partido de Lanús)", "Buenos Aires", "Argentina", "81465"));
+            ciudades.Add(new Ciudad("Remedios de Escalada", "Buenos Aires", "Argentina", "81465"));
             ciudades.Add(new Ciudad("Resistencia", "Chaco", "Argentina", "290723"));
             ciudades.Add(new Ciudad("Río Gallegos", "Santa Cruz", "Argentina", "95796"));
             ciudades.Add(new Ciudad("Río Grande", "Tierra del Fuego", "Argentina", "52786"));

@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace SUA.Controllers
 {
-    public class VotarCiudadController : Controller
+    public class VotarController : Controller
     {
         [HttpGet]
         public ActionResult Votar(string id)
@@ -48,6 +48,13 @@ namespace SUA.Controllers
         [HttpPost]
         public ActionResult Votar(Votacion votacion, string ip)
         {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Votaciones()
+        {
+
             return View();
         }
 
