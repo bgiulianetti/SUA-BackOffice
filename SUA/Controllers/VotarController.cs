@@ -56,22 +56,22 @@ namespace SUA.Controllers
             ViewBag.fileNameShow = fileNameShow;
             if (fileNameShow == "sanata")
             {
-                ViewBag.image = "sanata.png";
+                ViewBag.image = "sanata.jpeg";
                 ViewBag.show = "Sanata Stand Up";
             }
             else if (fileNameShow == "nicolasdetracy")
             {
-                ViewBag.image = "nicolasdetracy.png";
+                ViewBag.image = "nicolasdetracy.jpeg";
                 ViewBag.show = "Nicolas de Tracy";
             }
             else if (fileNameShow == "lailaygonzo")
             {
-                ViewBag.image = "lailaygonzo.png";
+                ViewBag.image = "lailaygonzo.jpeg";
                 ViewBag.show = "Laila y Gonzo";
             }
             else if (fileNameShow == "elinnombrable")
             {
-                ViewBag.image = "elinnombrable.png";
+                ViewBag.image = "elinnombrable.jpeg";
                 ViewBag.show = "El Innombrable";
             }
             else
