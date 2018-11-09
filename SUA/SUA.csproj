@@ -428,16 +428,16 @@
     <Content Include="assets\votacion\images\bg.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="assets\votacion\images\elinnombrable.jpeg">
+    <Content Include="assets\votacion\images\elinnombrable.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="assets\votacion\images\lailaygonzo.jpeg">
+    <Content Include="assets\votacion\images\lailaygonzo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="assets\votacion\images\nicolasdetracy.jpeg">
+    <Content Include="assets\votacion\images\nicolasdetracy.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="assets\votacion\images\sanata.jpeg">
+    <Content Include="assets\votacion\images\sanata.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="BackUp\2018-10-29_fechas.txt">

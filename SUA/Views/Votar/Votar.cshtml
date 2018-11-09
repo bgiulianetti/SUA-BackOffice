@@ -33,8 +33,9 @@
         <section id="main">
             <header>
                 <span class="avatar"><img src="~/assets/votacion/images/@ViewBag.image" .jpg alt="" /></span>
-                <h1>@ViewBag.show</h1>
-                <p>Votá tu ciudad!!</p>
+
+                <h1 style="color:@ViewBag.color; font-weight:bold" >@ViewBag.show</h1>
+                <p>¡Votá tu ciudad!</p>
                 @if (ViewBag.mensaje != "")
                 {
                     <p style="color:deeppink">@ViewBag.mensaje</p>
@@ -58,23 +59,22 @@
                             <input type="email" name="Email" id="email" placeholder="email" required />
                         </div>
 
-
-                        <div class="field">
+                        <div class="field" style="text-align:left; letter-spacing:2px">
+                            <br />
                             <input type="checkbox" id="human" name="Notificaciones" /><label for="human">Quiero que me avisen cuando vengan a mi ciudad</label>
                         </div>
 
-                        <div class="field">
-                            <label>¿Te interesa que te enviemos descuentos para este u otros shows en tu ciudad?</label>
-                            <input type="radio" id="robot_yes" name="robot" /><label for="robot_yes">Si</label>
-                            <input type="radio" id="robot_no" name="robot" /><label for="robot_no">No</label>
+                        <div class="field" style="text-align:left; letter-spacing:2px">
+                            <input type="checkbox" id="descuentos" name="descuentos" /><label for="descuentos">Quiero recibir descuentos para este u otros shows en mi ciudad</label>
                         </div>
+
                     </div>
                     <ul class="actions special">
-                        <li><input type="submit" class="button" value="VOTAR" /></li>
+                        <li><input type="submit" class="button" style="background-color:@ViewBag.color; color:#ffffff; width:100%" value="VOTAR" /></li>
                     </ul>
                     <input name="Show" value="@ViewBag.show" style="visibility:hidden; position:absolute" />
-                    <input type="text" name="Ip" id="Ip" style="visibility:hidden; position:absolute"" />
-                    <input type="text" value="@ViewBag.fileNameShow" name="fileNameShow" id="fileNameShow" style="visibility:hidden; position:absolute"" />
+                    <input type="text" name="Ip" id="Ip" style="visibility:hidden; position:absolute" />
+                    <input type="text" value="@ViewBag.fileNameShow" name="fileNameShow" id="fileNameShow" style="visibility:hidden; position:absolute" />
                 }
             }
             <footer>
