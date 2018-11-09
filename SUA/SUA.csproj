@@ -84,6 +84,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -220,6 +224,7 @@
     <Compile Include="Repositorios\ESSettings.cs" />
     <Compile Include="Repositorios\ESRepositorio.cs" />
     <Compile Include="Servicios\CalendarService.cs" />
+    <Compile Include="Servicios\EmailService.cs" />
     <Compile Include="Servicios\FechaService.cs" />
     <Compile Include="Servicios\HotelService.cs" />
     <Compile Include="Servicios\LogService.cs" />
@@ -423,16 +428,16 @@
     <Content Include="assets\votacion\images\bg.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="assets\votacion\images\elinnombrable.PNG">
+    <Content Include="assets\votacion\images\elinnombrable.jpeg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="assets\votacion\images\lailaygonzo.PNG">
+    <Content Include="assets\votacion\images\lailaygonzo.jpeg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="assets\votacion\images\nicolasdetracy.PNG">
+    <Content Include="assets\votacion\images\nicolasdetracy.jpeg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="assets\votacion\images\sanata.PNG">
+    <Content Include="assets\votacion\images\sanata.jpeg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\bootstrap.css" />

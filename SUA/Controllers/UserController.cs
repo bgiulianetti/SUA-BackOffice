@@ -199,28 +199,16 @@ namespace SUA.Controllers
 
         public void SendRecoverEmail(UserModel user)
         {
-            var userService = new UserService();
-            var credenciales = userService.GetEmailCredentials();
-
-            var client = new SmtpClient();
-            client.Port = 587;
-            client.Host = "smtp.gmail.com";
-            client.EnableSsl = true;
-            client.Timeout = 10000;
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
-            client.Credentials = new System.Net.NetworkCredential(credenciales.Email, credenciales.Password);
-            string body = "Hola " + user.Username + "!" + Environment.NewLine + Environment.NewLine +
+            var emailService = new EmailService();
+            string emailBody = "Hola " + user.Username + "!" + Environment.NewLine + Environment.NewLine +
                           "Se ha recibido la solicitud para un cambio de contraseña de tu cuenta." + Environment.NewLine +
                           "Contraseña: " + user.Password + Environment.NewLine +
                           "Se le solicitará que la cambie al siguiente login." + Environment.NewLine +
-                          "Puede acceder al BackOffice desde la siguiente url: " + System.Configuration.ConfigurationManager.AppSettings.Get("MyUrl") + "/login" + Environment.NewLine  +Environment.NewLine +
+                          "Puede acceder al BackOffice desde la siguiente url: " + 
+                          System.Configuration.ConfigurationManager.AppSettings.Get("MyUrl") + "/login" + 
+                          Environment.NewLine + Environment.NewLine +
                           "Saludos del equipo de SUA!";
-
-            var mm = new MailMessage(credenciales.Email, user.MailRecover, "SUA BackOffice - Recuperar Contraseña", body);
-            mm.BodyEncoding = UTF8Encoding.UTF8;
-            mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
-            client.Send(mm);
+            emailService.SendEmail(user.MailRecover, "SUA BackOffice - Recuperar Contraseña", emailBody);
         }
 
         public ActionResult InicializarUserMaster()

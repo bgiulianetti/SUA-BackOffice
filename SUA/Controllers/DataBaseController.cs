@@ -18,6 +18,7 @@ namespace SUA.Controllers
             var entidades = new Dictionary<string, string>();
             try
             {
+                var fileNameList = new List<string>();
                 entidades.Add("standuperos", JsonConvert.SerializeObject(new StanduperoService().GetStanduperos()));
                 entidades.Add("productores", JsonConvert.SerializeObject(new ProductorService().GetProductores()));
                 entidades.Add("shows", JsonConvert.SerializeObject(new ShowService().GetShowsForBackUp()));
@@ -29,10 +30,16 @@ namespace SUA.Controllers
                 entidades.Add("hoteles", JsonConvert.SerializeObject(new HotelService().GetHoteles()));
                 entidades.Add("votaciones", JsonConvert.SerializeObject(new VotacionService().GetVotaciones()));
 
+                var directory = "";
+                directory = "~/BackUp/" + DateTime.Now.ToString("yyyy-MM-dd");
+                System.IO.Directory.CreateDirectory(Server.MapPath(directory));
                 foreach (var entidad in entidades)
                 {
-                    System.IO.File.WriteAllText(Server.MapPath("~/BackUp/" + DateTime.Now.ToString("yyyy-MM-dd") + "_" + entidad.Key + ".txt"), entidad.Value);
+                    var fileNameFullPath = Server.MapPath(directory + "/" + DateTime.Now.ToString("yyyy-MM-dd") + "_" + entidad.Key + ".txt");
+                    System.IO.File.WriteAllText(fileNameFullPath, entidad.Value);
+                    fileNameList.Add(fileNameFullPath);
                 }
+                SendBackupFiles(fileNameList, Server.MapPath(directory));
                 ViewBag.mensaje = "Backup Generado con éxito";
             }
             catch (Exception ex)
@@ -115,6 +122,17 @@ namespace SUA.Controllers
             }
 
             return View();
+        }
+
+        private void SendBackupFiles(List<string> backUpFiles, string locationBackUp)
+        {
+            var userService = new UserService();
+            var email = userService.GetUserByNombre("sua-user").MailRecover;
+            var emailService = new EmailService();
+
+            var subject = "SUA BackOffice - BackUp " + DateTime.Now.ToString("yyyy-MM-dd");
+            var emailBody = "BackUp completo de la base de datos al " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            emailService.SendEmail(/*email*/ "bruno.giulianetti@gmail.com", subject, emailBody, backUpFiles, false, locationBackUp);
         }
     }
 }
