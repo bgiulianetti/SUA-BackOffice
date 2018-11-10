@@ -1,6 +1,7 @@
 ﻿
 @{
     Layout = null;
+    var ranking = 0;
 }
 <html>
 <head>
@@ -41,18 +42,22 @@
                 <table style="width:100%">
                     <thead>
                         <tr>
-                            <th><strong>Votos</strong></th>
-                            <th><strong>Ciudad</strong></th>
+                            <th style="font-weight:900">Ranking</th>
+                            <th style="font-weight:900">Votos</th>
+                            <th style="font-weight:900">Ciudad</th>
                         </tr>
                     </thead>
-
-                    @foreach (var item in ViewBag.ranking)
-                    {
-                        <tr>
-                            <td style="text-align:center">@item.VotesCount.ToString("N1")%</td>
-                            <td style="text-align:center">@item.Ciudad.Nombre</td>
-                        </tr>
-                    }
+                    <tbody>
+                        @foreach (var item in ViewBag.ranking)
+                        {
+                            ranking = ranking + 1;
+                            <tr>
+                                <td style="text-align:center">@ranking</td>
+                                <td style="text-align:center">@item.VotesCount.ToString("N1")%</td>
+                                <td style="text-align:center">@item.Ciudad.Nombre</td>
+                            </tr>
+                        }
+                    </tbody>
                 </table>
             }
                 <br />

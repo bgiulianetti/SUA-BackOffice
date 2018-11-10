@@ -2080,6 +2080,60 @@ namespace SUA.Repositorios
             }
             return votaciones;
         }
+        public Votacion GetVotacionesByEmail(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+                throw new Exception(VOTACION_GET_BY_SHOW_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Votacion>(s => s
+                   .Index(Index)
+                   .Type(Index)
+                   .Query(q => q
+                    .Match(m => m.Field(f => f.Email).Query(email)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(VOTACION_GET_BY_SHOW_INVALID_SEARCH_EXCEPTION);
+
+            Votacion votacion = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    if (email == item.Email)
+                        votacion = item;
+            }
+            return votacion;
+        }
+        public Votacion GetVotacionesByTel(string tel)
+        {
+            if (string.IsNullOrEmpty(tel))
+                throw new Exception(VOTACION_GET_BY_SHOW_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Votacion>(s => s
+                   .Index(Index)
+                   .Type(Index)
+                   .Query(q => q
+                    .Match(m => m.Field(f => f.Telefono).Query(tel)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(VOTACION_GET_BY_SHOW_INVALID_SEARCH_EXCEPTION);
+
+            Votacion votacion = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    if (tel == item.Telefono)
+                        votacion = item;
+            }
+            return votacion;
+        }
         public List<Votacion> GetVotacionesByIpAndShow(string ip, string show)
         {
             if (string.IsNullOrEmpty(ip))
@@ -2115,6 +2169,14 @@ namespace SUA.Repositorios
 
             var votaciones = GetVotacionesByIpAndShow(votacion.Ip, votacion.Show);
             if (votaciones != null && votaciones.Count >= 3)
+                throw new Exception(VOTACION_CANT_MAX_EXCEPTION);
+
+            var votacionObtenida = GetVotacionesByEmail(votacion.Email);
+            if(votacionObtenida != null)
+                throw new Exception(VOTACION_CANT_MAX_EXCEPTION);
+
+            var votacionObtenidaTel = GetVotacionesByTel(votacion.Telefono);
+            if(votacionObtenidaTel != null)
                 throw new Exception(VOTACION_CANT_MAX_EXCEPTION);
 
             var response = Client.IndexAsync(votacion, i => i
