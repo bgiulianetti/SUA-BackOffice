@@ -170,7 +170,8 @@ namespace SUA.Controllers
         {
             var ciudades = new List<string>();
             var ciudadesFull = UtilitiesAndStuff.GetCiudades();
-            foreach (var item in ciudadesFull)
+            var ciudadesFullOrdenadas = ciudadesFull.OrderBy(f => f.Nombre);
+            foreach (var item in ciudadesFullOrdenadas)
             {
                 if (item.Pais == "Argentina")
                     ciudades.Add(item.Nombre + " - " + item.Estado);

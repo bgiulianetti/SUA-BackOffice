@@ -447,7 +447,7 @@ namespace SUA.Utilities
             ciudades.Add(new Ciudad("Balcarce","Buenos Aires","Argentina","38376"));
             ciudades.Add(new Ciudad("Cosquin - Santa Maria de Punilla - Bialet Masse","Cordoba","Argentina","37273"));
             ciudades.Add(new Ciudad("Nueve de Julio","Buenos Aires","Argentina","36494"));
-            ciudades.Add(new Ciudad("La Falda - Huerta Grande - Valle Hermoso 13​","Cordoba","Argentina","35821"));
+            ciudades.Add(new Ciudad("La Falda - Huerta Grande - Valle Hermoso","Cordoba","Argentina","35821"));
             ciudades.Add(new Ciudad("Casilda","Santa Fe","Argentina","35058"));
             ciudades.Add(new Ciudad("Curuzu Cuatia","Corrientes","Argentina","34470"));
             ciudades.Add(new Ciudad("Bell Ville","Cordoba","Argentina","34439"));
@@ -458,7 +458,7 @@ namespace SUA.Utilities
             ciudades.Add(new Ciudad("Trenque Lauquen","Buenos Aires","Argentina","33442"));
             ciudades.Add(new Ciudad("Bragado","Buenos Aires","Argentina","33222"));
             ciudades.Add(new Ciudad("Centenario","Neuquen","Argentina","32928"));
-            ciudades.Add(new Ciudad("Aguilares20​","Tucuman","Argentina","32908"));
+            ciudades.Add(new Ciudad("Aguilares","Tucuman","Argentina","32908"));
             ciudades.Add(new Ciudad("Villaguay","Entre Rios","Argentina","32881"));
             ciudades.Add(new Ciudad("Chajari","Entre Rios","Argentina","32734"));
             ciudades.Add(new Ciudad("Esquel","Chubut","Argentina","32343"));
@@ -474,18 +474,18 @@ namespace SUA.Utilities
             ciudades.Add(new Ciudad("Cañuelas", "Buenos Aires", "Argentina", "29974"));
             ciudades.Add(new Ciudad("General Alvear​", "Mendoza", "Argentina", "29909"));
             ciudades.Add(new Ciudad("Lobos", "Buenos Aires", "Argentina", "29868"));
-            ciudades.Add(new Ciudad("Miramar - El Marquesado 11​", "Buenos Aires", "Argentina", "29629"));
+            ciudades.Add(new Ciudad("Miramar - El Marquesado", "Buenos Aires", "Argentina", "29629"));
             ciudades.Add(new Ciudad("Villa Gesell", "Buenos Aires", "Argentina", "29593"));
             ciudades.Add(new Ciudad("Cañada de Gomez", "Santa Fe", "Argentina", "29205"));
             ciudades.Add(new Ciudad("Bella Vista", "Corrientes", "Argentina", "29071"));
             ciudades.Add(new Ciudad("Tunuyan", "Mendoza", "Argentina", "28859"));
             ciudades.Add(new Ciudad("Baradero", "Buenos Aires", "Argentina", "28537"));
-            ciudades.Add(new Ciudad("Mar de Ajo - San Bernardo 10​", "Buenos Aires", "Argentina", "28466"));
+            ciudades.Add(new Ciudad("Mar de Ajo - San Bernardo​", "Buenos Aires", "Argentina", "28466"));
             ciudades.Add(new Ciudad("Metan", "Salta", "Argentina", "28295"));
             ciudades.Add(new Ciudad("Caucete", "San Juan", "Argentina", "28222"));
             ciudades.Add(new Ciudad("General Jose de San Martin", "Chaco", "Argentina", "28124"));
             ciudades.Add(new Ciudad("Lincoln", "Buenos Aires", "Argentina", "28051"));
-            ciudades.Add(new Ciudad("San Martin de los Andes 12​11​", "Neuquen", "Argentina", "27956"));
+            ciudades.Add(new Ciudad("San Martin de los Andes", "Neuquen", "Argentina", "27956"));
             ciudades.Add(new Ciudad("Salto", "Buenos Aires", "Argentina", "27466"));
             ciudades.Add(new Ciudad("Castelli", "Chaco", "Argentina", "27201"));
             ciudades.Add(new Ciudad("Marcos Juarez", "Cordoba", "Argentina", "27004"));
@@ -495,7 +495,7 @@ namespace SUA.Utilities
             ciudades.Add(new Ciudad("Arrecifes", "Buenos Aires", "Argentina", "26400"));
             ciudades.Add(new Ciudad("San Carlos de Bolivar", "Buenos Aires", "Argentina", "26242"));
             ciudades.Add(new Ciudad("Dolores", "Buenos Aires", "Argentina", "25940"));
-            ciudades.Add(new Ciudad("Pinamar 13​8​", "Buenos Aires", "Argentina", "25397"));
+            ciudades.Add(new Ciudad("Pinamar​", "Buenos Aires", "Argentina", "25397"));
             ciudades.Add(new Ciudad("Rawson", "Chubut", "Argentina", "24616"));
             ciudades.Add(new Ciudad("Quitilipi", "Chaco", "Argentina", "24517"));
             ciudades.Add(new Ciudad("La Paz", "Entre Rios", "Argentina", "24307"));
@@ -536,7 +536,7 @@ namespace SUA.Utilities
             ciudades.Add(new Ciudad("Pirane", "Formosa", "Argentina", "20335"));
             ciudades.Add(new Ciudad("Coronel Pringles", "Buenos Aires", "Argentina", "20263"));
             ciudades.Add(new Ciudad("Brandsen", "Buenos Aires", "Argentina", "19877"));
-            ciudades.Add(new Ciudad("Delfin Gallo - Colombres - La Florida10​", "Tucuman", "Argentina", "19873"));
+            ciudades.Add(new Ciudad("Delfin Gallo - Colombres - La Florida​", "Tucuman", "Argentina", "19873"));
             ciudades.Add(new Ciudad("San Antonio de Areco", "Buenos Aires", "Argentina", "19768"));
             ciudades.Add(new Ciudad("Rojas", "Buenos Aires", "Argentina", "19766"));
             ciudades.Add(new Ciudad("Firmat", "Santa Fe", "Argentina", "19757"));
@@ -621,7 +621,7 @@ namespace SUA.Utilities
             ciudades.Add(new Ciudad("Carmen de Areco", "Buenos Aires", "Argentina", "12775"));
             ciudades.Add(new Ciudad("San Salvador", "Entre Rios", "Argentina", "12733"));
             ciudades.Add(new Ciudad("Rauch", "Buenos Aires", "Argentina", "12705"));
-            ciudades.Add(new Ciudad("San Carlos Centro - San Carlos Sud8​", "Santa Fe", "Argentina", "12644"));
+            ciudades.Add(new Ciudad("San Carlos Centro - San Carlos Sud​", "Santa Fe", "Argentina", "12644"));
             ciudades.Add(new Ciudad("Junin de los Andes", "Neuquen", "Argentina", "12621"));
             ciudades.Add(new Ciudad("Andalgala", "Catamarca", "Argentina", "12600"));
             ciudades.Add(new Ciudad("Monte Quemado", "Santiago del Estero", "Argentina", "12543"));
