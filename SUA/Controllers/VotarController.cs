@@ -106,6 +106,10 @@ namespace SUA.Controllers
                 votacion.Fecha = DateTime.Now;
                 if (votacion.Notificaciones == null)
                     votacion.Notificaciones = "off";
+
+                if (votacion.Descuentos == null)
+                    votacion.Descuentos = "off";
+
                 service.AddVotacion(votacion);
                 ViewBag.mensaje = "creado";
                 return RedirectToAction("Ranking", new { show = fileNameShow });
@@ -125,30 +129,35 @@ namespace SUA.Controllers
                 ViewBag.image = "sanata.png";
                 ViewBag.show = "Sanata Stand Up";
                 showNombreCorrecto = "Sanata Stand Up";
+                ViewBag.color = "#1cadc3";
             }
             else if (show == "nicolasdetracy")
             {
                 ViewBag.image = "nicolasdetracy.png";
                 ViewBag.show = "Nicolas de Tracy";
                 showNombreCorrecto = "Nicolas de Tracy";
+                ViewBag.color = "brown";
             }
             else if (show == "lailaygonzo")
             {
                 ViewBag.image = "lailaygonzo.png";
                 ViewBag.show = "Laila y Gonzo";
                 showNombreCorrecto = "Laila y Gonzo";
+                ViewBag.color = "#b10959";
             }
             else if (show == "elinnombrable")
             {
                 ViewBag.image = "elinnombrable.png";
                 ViewBag.show = "El Innombrable";
                 showNombreCorrecto = "El Innombrable";
+                ViewBag.color = "#b10959";
             }
             else
             {
                 ViewBag.mensaje = "Esta url no existe :(";
                 ViewBag.show = "";
                 ViewBag.image = "";
+                ViewBag.color = "black";
                 return View();
             }
             var service = new VotacionService();

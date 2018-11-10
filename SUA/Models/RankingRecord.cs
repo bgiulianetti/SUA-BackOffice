@@ -8,6 +8,6 @@ namespace SUA.Models
     public class RankingRecord
     {
         public Ciudad Ciudad { get; set; }
-        public Int64 VotesCount { get; set; }
+        public double VotesCount { get; set; }
     }
 }

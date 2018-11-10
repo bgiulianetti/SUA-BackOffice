@@ -15,5 +15,6 @@ namespace SUA.Models
         public string Email { get; set; }
         public Ciudad Ciudad { get; set; }
         public string Notificaciones { get; set; }
+        public string Descuentos { get; set; }
     }
 }

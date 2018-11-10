@@ -29,7 +29,7 @@
         <section id="main">
             <header>
                 <span class="avatar"><img src="~/assets/votacion/images/@ViewBag.image" .jpg alt="" /></span>
-                <h1><strong>@ViewBag.show</strong></h1>
+                <h1 style="color:@ViewBag.color">@ViewBag.show</h1>
                 <h2>Ranking de Ciudades</h2>
                 @if (ViewBag.mensaje != "")
                 {
@@ -49,7 +49,7 @@
                     @foreach (var item in ViewBag.ranking)
                     {
                         <tr>
-                            <td style="text-align:center">@item.VotesCount</td>
+                            <td style="text-align:center">@item.VotesCount.ToString("N1")%</td>
                             <td style="text-align:center">@item.Ciudad.Nombre</td>
                         </tr>
                     }
