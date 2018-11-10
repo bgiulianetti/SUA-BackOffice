@@ -132,7 +132,7 @@ namespace SUA.Controllers
 
             var subject = "SUA BackOffice - BackUp " + DateTime.Now.ToString("yyyy-MM-dd");
             var emailBody = "BackUp completo de la base de datos al " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            emailService.SendEmail(/*email*/ "bruno.giulianetti@gmail.com", subject, emailBody, backUpFiles, false, locationBackUp);
+            emailService.SendEmail(email, subject, emailBody, backUpFiles, false, locationBackUp);
         }
     }
 }
