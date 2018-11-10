@@ -2103,7 +2103,10 @@ namespace SUA.Repositorios
             {
                 foreach (var item in response.Documents)
                     if (email == item.Email)
+                    {
                         votacion = item;
+                        break;
+                    }
             }
             return votacion;
         }
@@ -2130,7 +2133,10 @@ namespace SUA.Repositorios
             {
                 foreach (var item in response.Documents)
                     if (tel == item.Telefono)
+                    {
                         votacion = item;
+                        break;
+                    }
             }
             return votacion;
         }
