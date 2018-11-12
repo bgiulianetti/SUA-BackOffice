@@ -2061,9 +2061,11 @@ namespace SUA.Repositorios
             var response = Client.Search<Votacion>(s => s
                    .Index(Index)
                    .Type(Index)
+                   .From(0)
+                   .Size(GetCount(Index))
                    .Query(q => q
-                    .Match(m => m.Field(f => f.Show).Query(show)))
-                    );
+                   .Match(m => m.Field(f => f.Show).Query(show)))
+                   );
 
             if (response == null)
                 return null;
@@ -2172,7 +2174,7 @@ namespace SUA.Repositorios
 
             if (!IndexExists())
                 CreateIndex();
-
+            /*
             var votaciones = GetVotacionesByIpAndShow(votacion.Ip, votacion.Show);
             if (votaciones != null && votaciones.Count >= 3)
                 throw new Exception(VOTACION_CANT_MAX_EXCEPTION);
@@ -2184,7 +2186,7 @@ namespace SUA.Repositorios
             var votacionObtenidaTel = GetVotacionesByTel(votacion.Telefono);
             if(votacionObtenidaTel != null)
                 throw new Exception(VOTACION_CANT_MAX_EXCEPTION);
-
+*/
             var response = Client.IndexAsync(votacion, i => i
               .Index(Index)
               .Type(Index)

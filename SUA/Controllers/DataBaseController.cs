@@ -12,7 +12,7 @@ namespace SUA.Controllers
     public class DataBaseController : Controller
     {
         [HttpGet]
-        public ActionResult Backup()
+        public ActionResult Backup(string id)
         {
 
             var entidades = new Dictionary<string, string>();
@@ -39,7 +39,7 @@ namespace SUA.Controllers
                     System.IO.File.WriteAllText(fileNameFullPath, entidad.Value);
                     fileNameList.Add(fileNameFullPath);
                 }
-                SendBackupFiles(fileNameList, Server.MapPath(directory));
+                SendBackupFiles(fileNameList, Server.MapPath(directory), id);
                 ViewBag.mensaje = "Backup Generado con éxito";
             }
             catch (Exception ex)
@@ -124,10 +124,14 @@ namespace SUA.Controllers
             return View();
         }
 
-        private void SendBackupFiles(List<string> backUpFiles, string locationBackUp)
+        private void SendBackupFiles(List<string> backUpFiles, string locationBackUp, string destinatario)
         {
             var userService = new UserService();
-            var email = userService.GetUserByNombre("sua-user").MailRecover;
+            var email = "";
+            if (destinatario == "yo")
+                email = "bruno.giulinetti@gmail.com";
+            else
+                email = userService.GetUserByNombre("sua-user").MailRecover;
             var emailService = new EmailService();
 
             var subject = "SUA BackOffice - BackUp " + DateTime.Now.ToString("yyyy-MM-dd");
