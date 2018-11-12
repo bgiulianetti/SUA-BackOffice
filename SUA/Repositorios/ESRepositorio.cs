@@ -2174,7 +2174,7 @@ namespace SUA.Repositorios
 
             if (!IndexExists())
                 CreateIndex();
-            /*
+
             var votaciones = GetVotacionesByIpAndShow(votacion.Ip, votacion.Show);
             if (votaciones != null && votaciones.Count >= 3)
                 throw new Exception(VOTACION_CANT_MAX_EXCEPTION);
@@ -2186,7 +2186,7 @@ namespace SUA.Repositorios
             var votacionObtenidaTel = GetVotacionesByTel(votacion.Telefono);
             if(votacionObtenidaTel != null)
                 throw new Exception(VOTACION_CANT_MAX_EXCEPTION);
-*/
+
             var response = Client.IndexAsync(votacion, i => i
               .Index(Index)
               .Type(Index)
@@ -2196,7 +2196,16 @@ namespace SUA.Repositorios
             if (!response.IsValid)
                 throw new Exception(VOTACION_CREATE_NOT_CREATED_EXCEPTION);
         }
+        public void AddBulkVotacion(List<Votacion> votaciones)
+        {
+            if (!IndexExists())
+                CreateIndex();
 
+            var response = Client.IndexManyAsync(votaciones, Index, Index).Result;
+
+            if (!response.IsValid)
+                throw new Exception(VOTACION_CREATE_NOT_CREATED_EXCEPTION);
+        }
         /*---------Metodos genericos------------------*/
 
         public int GetCount(string tipo)

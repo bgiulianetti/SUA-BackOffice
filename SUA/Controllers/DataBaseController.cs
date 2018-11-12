@@ -53,12 +53,12 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult Restore(string date)
         {
-            var entidades = new List<string> { "standuperos", "productores", "shows", "fechas", "usuarios", "salas", "restaurantes", "logs", "hoteles" };
+            var entidades = new List<string> { "standuperos", "productores", "shows", "fechas", "usuarios", "salas", "restaurantes", "logs", "hoteles", "votaciones" };
             try
             {
                 foreach (var entidad in entidades)
                 {
-                    var json = System.IO.File.ReadAllText(Server.MapPath("~/BackUp/" + date + "_" + entidad + ".txt"));
+                    var json = System.IO.File.ReadAllText(Server.MapPath("~/BackUp/" + date + "/" + date + "_" + entidad + ".txt"));
                     if (entidad == "standuperos")
                     {
                         var standuperos = JsonConvert.DeserializeObject<Standupero[]>(json);
@@ -112,6 +112,12 @@ namespace SUA.Controllers
                         var hoteles = JsonConvert.DeserializeObject<Hotel[]>(json);
                         if (hoteles.Length > 0)
                             new HotelService().AddBulkHotel(hoteles.ToList());
+                    }
+                    else if (entidad == "votaciones")
+                    {
+                        var votaciones = JsonConvert.DeserializeObject<Votacion[]>(json);
+                        if (votaciones.Length > 0)
+                            new VotacionService().AddBulkVotacion(votaciones.ToList());
                     }
                 }
                 ViewBag.mensaje = "Backup Generado con éxito";

@@ -368,6 +368,7 @@ namespace SUA.Utilities
             ciudades.Add(new Ciudad("San Isidro", "Buenos Aires", "Argentina", "292878"));
             ciudades.Add(new Ciudad("San Justo", "Buenos Aires", "Argentina", "105274"));
             ciudades.Add(new Ciudad("San Martin", "Mendoza", "Argentina", "49491"));
+            ciudades.Add(new Ciudad("San Martin", "Buenos Aires", "Argentina", "49491"));
             ciudades.Add(new Ciudad("San Miguel", "Buenos Aires", "Argentina", "157532"));
             ciudades.Add(new Ciudad("San Miguel de Tucuman", "Tucuman", "Argentina", "694327"));
             ciudades.Add(new Ciudad("San Nicolas de los Arroyos", "Buenos Aires", "Argentina", "125408"));
@@ -380,6 +381,7 @@ namespace SUA.Utilities
             ciudades.Add(new Ciudad("Tandil", "Buenos Aires", "Argentina", "101010"));
             ciudades.Add(new Ciudad("Tartagal", "Salta", "Argentina", "55508"));
             ciudades.Add(new Ciudad("Temperley", "Buenos Aires", "Argentina", "111660"));
+            ciudades.Add(new Ciudad("Tigre", "Buenos Aires", "Argentina", "380709"));
             ciudades.Add(new Ciudad("Trelew", "Chubut", "Argentina", "103656"));
             ciudades.Add(new Ciudad("Tres Arroyos", "Buenos Aires", "Argentina", "45986"));
             ciudades.Add(new Ciudad("Trujui", "Buenos Aires", "Argentina", "94608"));

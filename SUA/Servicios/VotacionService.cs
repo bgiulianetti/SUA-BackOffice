@@ -29,6 +29,11 @@ namespace SUA.Servicios
             Repository.AddVotacion(votacion);
         }
 
+        public void AddBulkVotacion(List<Votacion> votaciones)
+        {
+            Repository.AddBulkVotacion(votaciones);
+        }
+
         public void GetVotacionesByShow(string show)
         {
             Repository.GetVotacionesByShow(show);
