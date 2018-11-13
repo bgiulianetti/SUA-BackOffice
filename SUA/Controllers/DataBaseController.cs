@@ -51,8 +51,9 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
-        public ActionResult Restore(string date)
+        public ActionResult Restore(string id)
         {
+            var date = id;
             var entidades = new List<string> { "standuperos", "productores", "shows", "fechas", "usuarios", "salas", "restaurantes", "logs", "hoteles", "votaciones" };
             try
             {
@@ -135,7 +136,7 @@ namespace SUA.Controllers
             var userService = new UserService();
             var email = "";
             if (destinatario == "yo")
-                email = "bruno.giulinetti@gmail.com";
+                email = "bruno.giulianetti@gmail.com";
             else
                 email = userService.GetUserByNombre("sua-user").MailRecover;
             var emailService = new EmailService();

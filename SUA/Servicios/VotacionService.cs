@@ -39,11 +39,10 @@ namespace SUA.Servicios
             Repository.GetVotacionesByShow(show);
         }
 
-        public List<RankingRecord> GetRankingByShow(string show)
+        public List<RankingRecord> GetRankingByShow(string show, string full)
         {
             var ranking = new List<RankingRecord>();
             var votaciones = Repository.GetVotacionesByShow(show);
-            //var votacionesOrdenadas = votaciones.OrderBy(f => f.Ciudad.Nombre);
             foreach (var votacion in votaciones)
             {
                 var CiudadObtenida = ranking.Find(f => f.Ciudad.Nombre == votacion.Ciudad.Nombre);
@@ -63,7 +62,11 @@ namespace SUA.Servicios
                 registro.VotesCount = registro.VotesCount * 100 / votaciones.Count;
             }
             var rankingOrdenado = ranking.OrderByDescending(f=>f.VotesCount).ToList();
-            return rankingOrdenado.Take(100).ToList();
+
+            if (full == "full")
+                return rankingOrdenado;
+            else
+                return rankingOrdenado.Take(100).ToList();
         }
     }
 }

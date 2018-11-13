@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SUA.Filters;
 using SUA.Models;
 using SUA.Servicios;
 using SUA.Utilities;
@@ -121,7 +122,8 @@ namespace SUA.Controllers
             return View();
         }
 
-        public ActionResult Ranking(string show)
+        [HttpGet]
+        public ActionResult Ranking(string show, string listado)
         {
             var showNombreCorrecto = "";
             if (show == "sanata")
@@ -161,8 +163,27 @@ namespace SUA.Controllers
                 return View();
             }
             var service = new VotacionService();
-            var ranking = service.GetRankingByShow(showNombreCorrecto);
+            var ranking = service.GetRankingByShow(showNombreCorrecto, listado);
             ViewBag.ranking = ranking;
+            return View();
+        }
+
+        [HttpGet]
+        [UserValidationFilter]
+        public ActionResult Votaciones()
+        {
+            ViewBag.titulo = "Votaciones";
+            var service = new VotacionService();
+            try
+            {
+                ViewBag.votaciones = service.GetVotaciones();
+                ViewBag.mensaje = "listar";
+                new LogService().FormatAndSaveLog("Votaciones", "Listar", "");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.mensaje = ex.Message;
+            }
             return View();
         }
 
