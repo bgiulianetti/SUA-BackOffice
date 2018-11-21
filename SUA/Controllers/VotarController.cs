@@ -44,6 +44,12 @@ namespace SUA.Controllers
                 ViewBag.show = "El Innombrable";
                 ViewBag.color = "#b10959";
             }
+            else if (show == "magalitajes")
+            {
+                ViewBag.image = "magalitajes.png";
+                ViewBag.show = "#LOSOTROS Magalí Tajes";
+                ViewBag.color = "#9f0f81";
+            }
             else
             {
                 ViewBag.mensaje = "Esta url no existe :(";
@@ -80,9 +86,15 @@ namespace SUA.Controllers
             }
             else if (fileNameShow == "elinnombrable")
             {
-                ViewBag.image = "elinnombrable.png";
+                ViewBag.image = "losotros.png";
                 ViewBag.show = "El Innombrable";
                 ViewBag.color = "#b10959";
+            }
+            else if (fileNameShow == "magalitajes")
+            {
+                ViewBag.image = "magalitajes.png";
+                ViewBag.show = "#LOSOTROS - Magalí Tajes";
+                ViewBag.color = "#9f0f81";
             }
             else
             {
