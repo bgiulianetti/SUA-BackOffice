@@ -47,7 +47,7 @@ namespace SUA.Controllers
             else if (show == "magalitajes")
             {
                 ViewBag.image = "magalitajes.png";
-                ViewBag.show = "#LOSOTROS Magalí Tajes";
+                ViewBag.show = "Magalí Tajes";
                 ViewBag.color = "#9f0f81";
             }
             else
