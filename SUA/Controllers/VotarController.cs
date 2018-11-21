@@ -47,7 +47,7 @@ namespace SUA.Controllers
             else if (show == "magalitajes")
             {
                 ViewBag.image = "magalitajes.png";
-                ViewBag.show = "#LOSOTROS Magalí Tajes";
+                ViewBag.show = "#LOSOTROS \nMagalí Tajes";
                 ViewBag.color = "#9f0f81";
             }
             else
@@ -169,7 +169,7 @@ namespace SUA.Controllers
             else if (show == "magalitajes")
             {
                 ViewBag.image = "magalitajes.png";
-                ViewBag.show = "#LOSOTROS Magalí Tajes";
+                ViewBag.show = "#LOSOTROS \nMagalí Tajes";
                 showNombreCorrecto = "#LOSOTROS Magalí Tajes";
                 ViewBag.color = "#9f0f81";
             }

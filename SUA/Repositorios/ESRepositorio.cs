@@ -2082,7 +2082,7 @@ namespace SUA.Repositorios
             }
             return votaciones;
         }
-        public Votacion GetVotacionesByEmail(string email)
+        public Votacion GetVotacionesByEmailAndShow(string email, string show)
         {
             if (string.IsNullOrEmpty(email))
                 throw new Exception(VOTACION_GET_BY_SHOW_INVALID_PARAMETER_EXCEPTION);
@@ -2104,7 +2104,7 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    if (email == item.Email)
+                    if (email == item.Email && show == item.Show)
                     {
                         votacion = item;
                         break;
@@ -2112,7 +2112,7 @@ namespace SUA.Repositorios
             }
             return votacion;
         }
-        public Votacion GetVotacionesByTel(string tel)
+        public Votacion GetVotacionesByTelAndShow(string tel, string show)
         {
             if (string.IsNullOrEmpty(tel))
                 throw new Exception(VOTACION_GET_BY_SHOW_INVALID_PARAMETER_EXCEPTION);
@@ -2134,7 +2134,7 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    if (tel == item.Telefono)
+                    if (tel == item.Telefono && show == item.Show)
                     {
                         votacion = item;
                         break;
@@ -2179,11 +2179,11 @@ namespace SUA.Repositorios
             if (votaciones != null && votaciones.Count >= 3)
                 throw new Exception(VOTACION_CANT_MAX_EXCEPTION);
 
-            var votacionObtenida = GetVotacionesByEmail(votacion.Email);
+            var votacionObtenida = GetVotacionesByEmailAndShow(votacion.Email, votacion.Show);
             if(votacionObtenida != null)
                 throw new Exception(VOTACION_CANT_MAX_EXCEPTION);
 
-            var votacionObtenidaTel = GetVotacionesByTel(votacion.Telefono);
+            var votacionObtenidaTel = GetVotacionesByTelAndShow(votacion.Telefono, votacion.Show);
             if(votacionObtenidaTel != null)
                 throw new Exception(VOTACION_CANT_MAX_EXCEPTION);
 
