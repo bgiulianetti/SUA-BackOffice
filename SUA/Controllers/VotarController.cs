@@ -166,6 +166,13 @@ namespace SUA.Controllers
                 showNombreCorrecto = "El Innombrable";
                 ViewBag.color = "#b10959";
             }
+            else if (show == "magalitajes")
+            {
+                ViewBag.image = "magalitajes.png";
+                ViewBag.show = "#LOSOTROS Magalí Tajes";
+                showNombreCorrecto = "#LOSOTROS Magalí Tajes";
+                ViewBag.color = "#9f0f81";
+            }
             else
             {
                 ViewBag.mensaje = "Esta url no existe :(";
