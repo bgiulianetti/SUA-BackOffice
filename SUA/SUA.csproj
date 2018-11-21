@@ -434,6 +434,9 @@
     <Content Include="assets\votacion\images\lailaygonzo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="assets\votacion\images\magalitajes.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="assets\votacion\images\nicolasdetracy.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
