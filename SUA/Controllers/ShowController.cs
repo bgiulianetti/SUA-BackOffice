@@ -60,7 +60,7 @@ namespace SUA.Controllers
             show.Integrantes = GetStanduperosListByDnis(_standuperos);
             show.Productor = new ProductorService().GetProductorByDni(_productor);
             show.SiglaBordereaux = show.SiglaBordereaux.ToUpper();
-            show.Repeticion = GenerateRepeticionPlazas(_plazasRepetir);
+            //show.Repeticion = GenerateRepeticionPlazas(_plazasRepetir);
             ViewBag.colores = UtilitiesAndStuff.GetColores();
             var service = new ShowService();
             try
