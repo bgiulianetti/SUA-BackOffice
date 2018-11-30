@@ -26,7 +26,8 @@ namespace SUA.Controllers
         {
             ViewBag.mensaje = "Get";
             ViewBag.salas = new SalaService().GetSalas();
-            ViewBag.shows = new ShowService().GetShows();
+            var shows = SimplifyShowsList(new ShowService().GetShows());
+            ViewBag.shows = shows;
             ViewBag.productores = new ProductorService().GetProductores();
 
             if (string.IsNullOrEmpty(id))
@@ -111,48 +112,51 @@ namespace SUA.Controllers
             var service = new FechaService();
             var fecha = service.GetUltimaFechaBySalaAndShow(idSala, idShow);
             return fecha;
-            //return JsonConvert.SerializeObject(fecha);
         }
 
         [HttpGet]
         public string GetSalasConRepeticiones(string idShow, DateTime fechaProximoShow)
         {
             var salas = new SalaService().GetSalas();
-            var salaOrdenadas = salas.OrderByDescending(o => o.RepeticionEnDias).ToList();
-            return JsonConvert.SerializeObject(salaOrdenadas);
-            /*
             try
             {
-
                 var fechaService = new FechaService();
                 var fechas = fechaService.GetFechasByShowId(idShow);
                 var repeticiones = new ShowService().GetShowById(idShow).Repeticion;
-
-                foreach (var sala in salas)
+                if(repeticiones != null)
                 {
-                    sala.RepeticionEnDias = 10000;
-                    foreach (var repeticion in repeticiones)
+                    foreach (var sala in salas)
                     {
-                        if (repeticion.Ciudad.Trim() == sala.Direccion.Ciudad.Trim())
+                        sala.RepeticionEnDias = 10000;
+                        foreach (var repeticion in repeticiones)
                         {
-                            var ultimaFecha = fechaService.GetUltimaFechaBySalaAndShow(sala.UniqueId, idShow);
-                            if (ultimaFecha != null && fechaProximoShow > ultimaFecha.FechaHorario)
+                            if (repeticion.Ciudad.Trim() == sala.Direccion.Ciudad.Trim())
                             {
-                                var porcentajeDiferencia = UtilitiesAndStuff.CalcularRepeticion(ultimaFecha.FechaHorario, fechaProximoShow, 45);
-                                sala.RepeticionEnDias = porcentajeDiferencia;
+                                var ultimaFecha = fechaService.GetUltimaFechaBySalaAndShow(sala.UniqueId, idShow);
+                                if (ultimaFecha != null && fechaProximoShow > ultimaFecha.FechaHorario)
+                                {
+                                    var porcentajeDiferencia = UtilitiesAndStuff.CalcularRepeticion(ultimaFecha.FechaHorario, fechaProximoShow, repeticion.Dias);
+                                    sala.RepeticionEnDias = porcentajeDiferencia;
+                                }
                             }
                         }
                     }
                 }
-
-                var salaOrdenadas = salas.OrderByDescending(o => o.RepeticionEnDias).ToList();
+                else
+                {
+                    foreach (var sala in salas)
+                    {
+                        sala.RepeticionEnDias = 10000;
+                    }
+                }
+                var salaOrdenadas = salas.OrderBy(o => o.RepeticionEnDias).ToList();
                 return JsonConvert.SerializeObject(salaOrdenadas);
             }
             catch
             {
                 var salaOrdenadas = salas.OrderBy(o => o.Nombre).ToList();
                 return JsonConvert.SerializeObject(salaOrdenadas);
-            }*/
+            }
         }
 
         private RepeticionPlazas GetRepeticionPlaza(string idShow, Sala sala, List<RepeticionPlazas> repeticiones)
@@ -649,5 +653,18 @@ namespace SUA.Controllers
             doc.Add(totales);
         }
 
+        private List<Show> SimplifyShowsList(List<Show> shows)
+        {
+            var showsSimplfy = new List<Show>();
+            foreach (var show in shows)
+            {
+                show.Integrantes = null;
+                show.Productor.Direccion = null;
+                show.Productor.DatosBancarios = null;
+                show.Productor.DireccionFacturacion = null;
+                showsSimplfy.Add(show);
+            }
+            return showsSimplfy;
+        }
     }
 }

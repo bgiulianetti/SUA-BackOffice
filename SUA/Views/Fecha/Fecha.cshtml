@@ -76,6 +76,13 @@
                                     <label class="form-control">Fechas 20 días antes y 20 días después</label>
                                     <select  multiple="multiple" class="form-control" id="antesDespues" Style="width:300px; height:400px"></select>
                                 </td>
+                                <td>
+                                    <label class="form-control" style="background-color:red;color:white">100% a 40% antes</label>
+                                    <label class="form-control" style="background-color:orange;color:white">40% a 15% antes</label>
+                                    <label class="form-control" style="background-color:forestgreen;color:white">de 15% antes a 15% despues</label>
+                                    <label class="form-control" style="background-color:darkslateblue;color:white">Posterior a 15%</label>
+                                    <label class="form-control" style="background-color:slategrey;color:white">Sin especifiación</label>
+                                </td>
                             </tr>
                         </table>
 
@@ -173,38 +180,44 @@
     {
         $("#salasList").empty();
         var salas = JSON.parse(data);
-        
-        //var diasVencidos;
         for (var i = 0; i < salas.length; i++)
-        {/*
-            var backgroundcolor;
-            var placeholder = salas[i].RepeticionEnDias;
-            if (salas[i].RepeticionEnDias >= 0)
+        {
+            var cantDias = "-";
+            if (salas[i].RepeticionEnDias == 10000)
             {
-                backgroundcolor = "red";
-                diasVencidos = salas[i].RepeticionEnDias + " días vencida";
+                backgroundcolor = "slategrey";
+                placeholder = "";
             }
-            else if (salas[i].RepeticionEnDias < 0 && salas[i].RepeticionEnDias >= -30)
+            else if (salas[i].RepeticionEnDias > 15)
+            {
+                backgroundcolor = "darkslateblue";
+                cantDias = salas[i].RepeticionEnDias + "%";
+            }
+            else if (salas[i].RepeticionEnDias >= -15 && salas[i].RepeticionEnDias <= 15)
+            {
+                backgroundcolor = "forestgreen";
+                cantDias = salas[i].RepeticionEnDias + "%";
+            }
+            else if (salas[i].RepeticionEnDias > -40 && salas[i].RepeticionEnDias < -15)
             {
                 backgroundcolor = "orange";
-                var cantDias = salas[i].RepeticionEnDias.toString().replace("-", "");
-                diasVencidos = "vence en " + cantDias + " días";
+                cantDias = salas[i].RepeticionEnDias + "%";
             }
-            else if (salas[i].RepeticionEnDias < -30 && salas[i].RepeticionEnDias > -365)
+            else if (salas[i].RepeticionEnDias >-100 && salas[i].RepeticionEnDias <= -40)
             {
-                backgroundcolor = "lightgreen";
-                var cantDias = salas[i].RepeticionEnDias.toString().replace("-", "");
-                diasVencidos = "vence en " + cantDias + " días";
+                backgroundcolor = "red";
+                cantDias = salas[i].RepeticionEnDias + "%";
+            }
+
+            if (cantDias == "-")
+            {
+                $("#salasList").append('<option value="' + salas[i].UniqueId + '" style="color:white; background-color:' + backgroundcolor + '">' + salas[i].Nombre + ' - ' + salas[i].Direccion.Ciudad + '</option>');
             }
             else
             {
-                backgroundcolor = "grey";
-                placeholder = "";
-                diasVencidos = "-";
+                //$("#salasList").append('<option value="' + salas[i].UniqueId + '" style="color:white; background-color:' + backgroundcolor + '">' + salas[i].Nombre + ' - ' + salas[i].Direccion.Ciudad + ' (' + cantDias + ')</option>');
+                $("#salasList").append('<option value="' + salas[i].UniqueId + '" style="color:white; background-color:' + backgroundcolor + '">' + salas[i].Nombre + ' - ' + salas[i].Direccion.Ciudad + '</option>');
             }
-            //$("#salasList").append('<option value="' + salas[i].UniqueId + '" placeholder="' + placeholder + '" style="color:white; background-color:' + backgroundcolor + '">' + salas[i].Nombre + ' - ' + salas[i].Direccion.Ciudad + ' (' + diasVencidos + ')</option>');
-        */
-            $("#salasList").append('<option value="' + salas[i].UniqueId + '">' + salas[i].Nombre + ' - ' + salas[i].Direccion.Ciudad +  '</option>');
         }
     }
 

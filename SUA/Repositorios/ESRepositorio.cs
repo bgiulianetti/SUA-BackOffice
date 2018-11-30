@@ -1101,6 +1101,8 @@ namespace SUA.Repositorios
             var response = Client.Search<Fecha>(s => s
                 .Index(Index)
                 .Type(Index)
+                .From(0)
+                .Size(GetCount(Index))
                 .Query(q => q
                     .Match(m => m.Field(f => f.Show._Show).Query(nombreShow)))
                     );
@@ -1127,6 +1129,8 @@ namespace SUA.Repositorios
             var response = Client.Search<Fecha>(s => s
                 .Index(Index)
                 .Type(Index)
+                .From(0)
+                .Size(GetCount(Index))
                 .Query(q => q
                     .Match(m => m.Field(f => f.Show.UniqueId).Query(id)))
                     );
@@ -1153,6 +1157,8 @@ namespace SUA.Repositorios
             var response = Client.Search<Fecha>(s => s
                 .Index(Index)
                 .Type(Index)
+                .From(0)
+                .Size(GetCount(Index))
                 .Query(q => q
                     .Match(m => m.Field(f => f.Sala.Direccion.Provincia).Query(nombreProvincia)))
                     );
@@ -1179,6 +1185,8 @@ namespace SUA.Repositorios
             var response = Client.Search<Fecha>(s => s
                 .Index(Index)
                 .Type(Index)
+                .From(0)
+                .Size(GetCount(Index))
                 .Query(q => q
                     .Match(m => m.Field(f => f.Sala.Nombre).Query(nombreSala)))
                     );
@@ -1205,6 +1213,8 @@ namespace SUA.Repositorios
             var response = Client.Search<Fecha>(s => s
                 .Index(Index)
                 .Type(Index)
+                .From(0)
+                .Size(GetCount(Index))
                 .Query(q => q
                     .Match(m => m.Field(f => f.Sala.UniqueId).Query(id)))
                     );
@@ -1231,6 +1241,8 @@ namespace SUA.Repositorios
             var response = Client.Search<Fecha>(s => s
                 .Index(Index)
                 .Type(Index)
+                .From(0)
+                .Size(GetCount(Index))
                 .Query(q => q
                     .Match(m => m
                         .Field(f => f.Sala.UniqueId).Query(idSala)
@@ -1262,6 +1274,8 @@ namespace SUA.Repositorios
             var response = Client.Search<Fecha>(s => s
                 .Index(Index)
                 .Type(Index)
+                .From(0)
+                .Size(GetCount(Index))
                  .Query(q => q
                     .Match(m => m.Field(f => f.Sala.Direccion.Ciudad).Query(ciudad))
                     && q.DateRange(r => r

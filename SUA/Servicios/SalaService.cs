@@ -57,7 +57,10 @@ namespace SUA.Servicios
         }
         public List<string> GetCiudadesInSalas()
         {
-            return Repository.GetCiudadesInSalas();
+            var ciudades = Repository.GetCiudadesInSalas();
+            var ciudadesOrdenadas = ciudades.OrderBy(f => f).ToList();
+            return ciudadesOrdenadas;
+
         }
     }
 }
