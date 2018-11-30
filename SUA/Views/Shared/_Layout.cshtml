@@ -1,7 +1,5 @@
 ﻿<!DOCTYPE html>
-
 <html>
-
 <head>
     <meta charset="utf-8">
     <title>SUA - Back Office</title>
@@ -35,7 +33,13 @@
     <script type="text/javascript" src="./assets/js/jquery/jquery-2.1.0.min.js?v=5022"></script>
     <script type="text/javascript" src="./assets/js/bootstrap/bootstrap.min.js?v=5022"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-
+    <style>
+        #style-2::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            border-radius: 10px;
+            background-color: #F5F5F5;
+        }
+    </style>
 </head>
 
 <body>
@@ -43,13 +47,13 @@
     <!-- WRAPPER -->
     <div id="wrapper">
         <!-- SIDEBAR -->
-        <div class="sidebar">
+        <div class="sidebar" id="style-2">
             <div style=" align-items:center; background-color:white; padding: 15px; padding-left:45px">
                 <a href="@Url.RouteUrl("Index")">
                     <img src="~/assets/img/sua-logo.png" alt="SUA Logo" class="img-responsive logo" style="height: 50px">
                 </a>
             </div>
-            <div class="sidebar-scroll">
+            <div class="force-overflow">
                 <nav>
                     <ul class="nav">
                         <li><a href="@Url.RouteUrl("Index")" data-to="dashboard" class="active"><i class="lnr lnr-home"></i> <span>Back Office</span></a></li>
@@ -57,9 +61,9 @@
                             <a href="#subFechas" data-to="fechas" data-toggle="collapse" class="collapsed"> <span>Fechas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subFechas" class="collapse ">
                                 <ul class="nav">
-                                    <li><a href="@Url.RouteUrl("Fechas")" class="">Listar</a></li>
-                                    <li><a href="@Url.RouteUrl("FechasCerradas")" class="">Fechas Cerradas</a></li>
-                                    <li><a href="#" class="">Reportes</a></li>
+                                    <li><a href="@Url.RouteUrl("Fechas")" class=""><i class="lnr lnr-menu"></i><span>Listar</span></a></li>
+                                    <li><a href="@Url.RouteUrl("FechasCerradas")" class=""><i class="lnr lnr-menu"></i><span>Fechas Cerradas</span></a></li>
+                                    <li><a href="#" class=""><i class="lnr lnr-menu"></i><span>Reportes</span></a></li>
                                 </ul>
                             </div>
                         </li>
@@ -67,10 +71,10 @@
                             <a href="#subSalas" data-to="salas" data-toggle="collapse" class="collapsed"> <span>Lugares</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subSalas" class="collapse ">
                                 <ul class="nav">
-                                    <li><a href="@Url.RouteUrl("Salas")" class="">Salas</a></li>
-                                    <li><a href="@Url.RouteUrl("Hoteles")" class="">Hoteles</a></li>
-                                    <li><a href="@Url.RouteUrl("Restaurantes")" class="">Restaurantes</a></li>
-                                    <li><a href="@Url.RouteUrl("Ciudades")" class="">Ciudades</a></li>
+                                    <li><a href="@Url.RouteUrl("Salas")" class=""><i class="lnr lnr-star"></i><span>Salas</span></a></li>
+                                    <li><a href="@Url.RouteUrl("Hoteles")" class=""><i class="lnr lnr-apartment"></i><span>Hoteles</span></a></li>
+                                    <li><a href="@Url.RouteUrl("Restaurantes")" class=""><i class="lnr lnr-dinner"></i><span>Restaurantes</span></a></li>
+                                    <li><a href="@Url.RouteUrl("Ciudades")" class=""><i class="lnr lnr-map-marker"></i><span>Ciudades</span></a></li>
                                 </ul>
                             </div>
                         </li>
@@ -78,20 +82,30 @@
                             <a href="#ranking" data-to="salas" data-toggle="collapse" class="collapsed"> <span>Ranking</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="ranking" class="collapse ">
                                 <ul class="nav">
-                                    <li><a href="@Url.RouteUrl("Votaciones")" class="">Votaciones</a></li>
-                                    <li><a target="_blank" href="/ranking?show=sanata&listado=full" class="">Sanata Stand Up</a></li>
-                                    <li><a target="_blank" href="/ranking?show=nicolasdetracy&listado=full" class="">Artesanal</a></li>
-                                    <li><a target="_blank" href="/ranking?show=lailaygonzo&listado=full" class="">Laila y Gonzo</a></li>
-                                    <li><a target="_blank" href="/ranking?show=magalitajes&listado=full" class="">Magalí Tajes</a></li>
+                                    <li><a href="@Url.RouteUrl("Votaciones")" class=""><i class="lnr lnr-menu"></i><span>Votaciones</span></a></li>
+                                    <li><a target="_blank" href="/ranking?show=sanata&listado=full" class=""><i class="lnr lnr-sort-amount-asc"></i><span>Sanata Stand Up</span></a></li>
+                                    <li><a target="_blank" href="/ranking?show=nicolasdetracy&listado=full" class=""><i class="lnr lnr-sort-amount-asc"></i><span>Artesanal</span></a></li>
+                                    <li><a target="_blank" href="/ranking?show=lailaygonzo&listado=full" class=""><i class="lnr lnr-sort-amount-asc"></i><span>Laila y Gonzo</span></a></li>
+                                    <li><a target="_blank" href="/ranking?show=magalitajes&listado=full" class=""><i class="lnr lnr-sort-amount-asc"></i><span>Magalí Tajes</span></a></li>
                                 </ul>
                             </div>
                         </li>
-                        <li><a href="@Url.RouteUrl("Shows")" class=""><i class="lnr lnr-cog"></i> <span>Shows</span></a></li>
-                        <li><a href="@Url.RouteUrl("Standuperos")" class=""><i class="lnr lnr-mic"></i> <span>Standuperos</span></a></li>
-                        <li><a href="@Url.RouteUrl("Productores")" class=""><i class="lnr lnr-briefcase"></i> <span>Productores</span></a></li>
+
+                        <li>
+                            <a href="#shows" data-to="shows" data-toggle="collapse" class="collapsed"> <span>Shows</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="shows" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="@Url.RouteUrl("Shows")" class=""><i class="lnr lnr-cog"></i> <span>Shows</span></a></li>
+                                    <li><a href="@Url.RouteUrl("Standuperos")" class=""><i class="lnr lnr-mic"></i> <span>Standuperos</span></a></li>
+                                    <li><a href="@Url.RouteUrl("Productores")" class=""><i class="lnr lnr-briefcase"></i> <span>Productores</span></a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+
                         <li><a href="#" class=""><i class="lnr lnr-chart-bars"></i> <span>Estadisticas</span></a></li>
                         <li><a href="@Url.RouteUrl("Users")" class=""><i class="lnr lnr-users"></i> <span>Usuarios</span></a></li>
-                        <li><a href="@Url.RouteUrl("Historial")"><i class="lnr lnr-list"></i> <span>Logs</span></a></li>
+                        <li><a href="@Url.RouteUrl("Historial")"><i class="lnr lnr-history"></i> <span>Historial</span></a></li>
                         <li><a href="@Url.RouteUrl("Logout")"><i class="lnr lnr-exit"></i> <span>Cerrar sesión</span></a></li>
                     </ul>
 
@@ -108,7 +122,7 @@
                     <div class="navbar-btn">
                         <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
                     </div>
-                    <div class="">
+                    <div>
                         <h2>@ViewBag.titulo</h2>
                     </div>
 

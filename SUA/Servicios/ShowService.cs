@@ -19,7 +19,7 @@ namespace SUA.Servicios
             Repository = new ESRepositorio(settings, ESRepositorio.ContentType.show.ToString());
         }
 
-        public List<Show> GetShows()
+        public List<Show> GetShows(bool isIndexRequesting = false)
         {
             var shows = Repository.GetShows();
             var session = HttpContext.Current.Request.Cookies.Get("session");
@@ -27,6 +27,9 @@ namespace SUA.Servicios
             var user = service.GetUserByNombre(session.Value);
             if(user.UserMaster == "no")
             {
+                if (isIndexRequesting)
+                    return shows;
+
                 if (user.ShowsAsignados.Count > 0)
                 {
                     var showFiltrados = new List<Show>();

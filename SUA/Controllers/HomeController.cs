@@ -68,7 +68,7 @@ namespace SUA.Controllers
             var calendarService = new GoogleCalendarService();
             ViewBag.CalendarsFullUrl = "home/GetShowCalendars";
             ViewBag.Key = calendarService.GetCalendarKey();
-            ViewBag.showCalendars = GetShowCalendarsList();
+            ViewBag.showCalendars = GetShowCalendarsList(true);
             ViewBag.titulo = "Inicio";
             return View();
         }
@@ -114,10 +114,10 @@ namespace SUA.Controllers
             return listaJson;
         }
 
-        public List<GoogleCalendarProperties> GetShowCalendarsList()
+        public List<GoogleCalendarProperties> GetShowCalendarsList(bool isIndexRequesting)
         {
             var service = new ShowService();
-            var shows = service.GetShows();
+            var shows = service.GetShows(isIndexRequesting);
             var lista = new List<GoogleCalendarProperties>();
             foreach (var show in shows)
             {
