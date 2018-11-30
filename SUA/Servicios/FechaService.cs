@@ -21,7 +21,7 @@ namespace SUA.Servicios
             Repository = new ESRepositorio(settings, ESRepositorio.ContentType.fecha.ToString());
         }
 
-        public List<Fecha> GetFechas()
+        public List<Fecha> GetFechas(bool isIndexRequesting = false)
         {
             var fechas = Repository.GetFechas();
             var session = HttpContext.Current.Request.Cookies.Get("session");
