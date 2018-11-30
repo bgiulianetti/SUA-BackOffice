@@ -66,6 +66,15 @@ namespace SUA.Controllers
                     service.AddFecha(fecha);
                     ViewBag.mensaje = "creado";
                     new LogService().FormatAndSaveLog("Fecha", "Crear", JsonConvert.SerializeObject(fecha));
+
+                    /*
+                    var serviceEmail = new EmailService();
+                    serviceEmail.SendEmail(
+                        emailTo: new UserService().GetUserByNombre("sua-user").MailRecover, 
+                        subject: "Creación Fecha", 
+                        body: GenerateBodyEmail(fecha)
+                    );
+                    */
                 }
                 else if (string.Equals(accion, "Put"))
                 {
@@ -665,6 +674,11 @@ namespace SUA.Controllers
                 showsSimplfy.Add(show);
             }
             return showsSimplfy;
+        }
+
+        private string GenerateBodyEmail(Fecha fecha)
+        {
+            return "";
         }
     }
 }
