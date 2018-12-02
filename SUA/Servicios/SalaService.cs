@@ -31,9 +31,9 @@ namespace SUA.Servicios
         {
             return Repository.GetSalaByNombre(nombre);
         }
-        public Sala GetSalaByProvincia(string provincia)
+        public List<Sala> GetSalasByCiudad(string ciudad)
         {
-            return Repository.GetSalaByProvincia(provincia);
+            return Repository.GetSalasByCiudad(ciudad);
         }
         public void AddSala(Sala sala)
         {

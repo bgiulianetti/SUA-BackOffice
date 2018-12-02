@@ -90,8 +90,8 @@ namespace SUA.Repositorios
         public const string SALA_GET_BY_ID_INVALID_SEARCH_EXCEPTION = "Error al querer buscar una sala por id";
         public const string SALA_GET_BY_NOMBRE_INVALID_PARAMETER_EXCEPTION = "Para obtener una sala por nombre debe pasar un nombre válido";
         public const string SALA_GET_BY_NOMBRE_INVALID_SEARCH_EXCEPTION = "Error al querer buscar una sala por nombre";
-        public const string SALA_GET_BY_PROVINCIA_INVALID_PARAMETER_EXCEPTION = "Para obtener una sala por provincia debe pasar una provincia válida";
-        public const string SALA_GET_BY_PROVINCIA_INVALID_SEARCH_EXCEPTION = "Error al querer buscar una sala por provincia";
+        public const string SALA_GET_BY_CIUDAD_INVALID_PARAMETER_EXCEPTION = "Para obtener una sala por ciudad debe pasar una provincia válida";
+        public const string SALA_GET_BY_CIUDAD_INVALID_SEARCH_EXCEPTION = "Error al querer buscar una sala por ciudad";
         public const string SALA_CREATE_INVALID_PARAMETER_EXCEPTION = "Para agregar una sala debe pasar una sala válida";
         public const string SALA_CREATE_ALREADY_EXISTS_EXCEPTION = "Para agregar una sala debe pasar una sala que no exista previamente";
         public const string SALA_CREATE_NOT_CREATED_EXCEPTION = "Falla al querer crear una sala nueva";
@@ -883,31 +883,32 @@ namespace SUA.Repositorios
             }
             return sala;
         }
-        public Sala GetSalaByProvincia(string provincia)
+        public List<Sala> GetSalasByCiudad(string ciudad)
         {
-            if (string.IsNullOrEmpty(provincia))
-                throw new Exception(SALA_GET_BY_PROVINCIA_INVALID_PARAMETER_EXCEPTION);
+            if (string.IsNullOrEmpty(ciudad))
+                throw new Exception(SALA_GET_BY_CIUDAD_INVALID_PARAMETER_EXCEPTION);
 
             var response = Client.Search<Sala>(s => s
                 .Index(Index)
                 .Type(Index)
                 .Query(q => q
-                    .Match(m => m.Field(f => f.Direccion.Provincia).Query(provincia)))
+                    .Match(m => m.Field(f => f.Direccion.Ciudad).Query(ciudad)))
                     );
 
             if (response == null)
                 return null;
 
             if (!response.IsValid)
-                throw new Exception(SALA_GET_BY_PROVINCIA_INVALID_SEARCH_EXCEPTION);
+                throw new Exception(SALA_GET_BY_CIUDAD_INVALID_SEARCH_EXCEPTION);
 
-            Sala sala = null;
+            List<Sala> salas = null;
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    sala = item;
+                    if (item.Direccion.Ciudad == ciudad)
+                        salas.Add(item);
             }
-            return sala;
+            return salas;
         }
         public void AddSala(Sala sala)
         {
@@ -1262,6 +1263,39 @@ namespace SUA.Repositorios
             {
                 foreach (var item in response.Documents)
                     if (item.Sala.UniqueId == idSala && item.Show.UniqueId == idShow)
+                        fechas.Add(item);
+            }
+            return fechas;
+        }
+        public List<Fecha> GetFechasByCiudadAndIdShow(string ciudad, string idShow)
+        {
+            if (string.IsNullOrEmpty(idShow) || string.IsNullOrEmpty(ciudad))
+                throw new Exception(FECHA_GET_BY_ID_SALA_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Fecha>(s => s
+                .Index(Index)
+                .Type(Index)
+                .From(0)
+                .Size(GetCount(Index))
+                .Query(q => q
+                    .Match(m => m
+                        .Field(f => f.Sala.Direccion.Ciudad).Query(ciudad)
+                        .Field(f => f.Show.UniqueId).Query(idShow)
+                        )
+                     )
+                );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(FECHA_GET_BY_ID_SALA_INVALID_SEARCH_EXCEPTION);
+
+            var fechas = new List<Fecha>();
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    if (item.Sala.Direccion.Ciudad == ciudad && item.Show.UniqueId == idShow)
                         fechas.Add(item);
             }
             return fechas;

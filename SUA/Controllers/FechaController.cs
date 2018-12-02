@@ -115,14 +115,26 @@ namespace SUA.Controllers
             return View();
         }
 
+
+        [HttpGet]
+        public string GetRepeticionPlazas(string idShow, DateTime date)
+        {
+            var fechaService = new FechaService();
+            var repeticiones = fechaService.GetRepeticionPlazasByShowAndDate(idShow, date);
+            return JsonConvert.SerializeObject(repeticiones);
+        }
+
+        /*
         [HttpGet]
         public Fecha GetUltimaFechaByShowAndSala(string idShow, string idSala)
         {
             var service = new FechaService();
             var fecha = service.GetUltimaFechaBySalaAndShow(idSala, idShow);
             return fecha;
-        }
+        }*/
 
+
+        /*
         [HttpGet]
         public string GetSalasConRepeticiones(string idShow, DateTime fechaProximoShow)
         {
@@ -166,8 +178,10 @@ namespace SUA.Controllers
                 var salaOrdenadas = salas.OrderBy(o => o.Nombre).ToList();
                 return JsonConvert.SerializeObject(salaOrdenadas);
             }
-        }
+        }*/
 
+
+        /*
         private RepeticionPlazas GetRepeticionPlaza(string idShow, Sala sala, List<RepeticionPlazas> repeticiones)
         {
             RepeticionPlazas repeticionPlaza = null;
@@ -178,7 +192,7 @@ namespace SUA.Controllers
                     repeticionPlaza = repeticion;
             }
             return repeticionPlaza;
-        }
+        }*/
 
         [HttpGet]
         [UserValidationFilter]

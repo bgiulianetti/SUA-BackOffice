@@ -1,5 +1,6 @@
 ﻿using SUA.Models;
 using SUA.Repositorios;
+using SUA.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -176,5 +177,66 @@ namespace SUA.Servicios
             }
 
         }
+        public List<Fecha> GetFechasByCiudadAndIdShow(string ciudad, string idShow)
+        {
+            return Repository.GetFechasByCiudadAndIdShow(ciudad, idShow);
+        }
+
+        public List<InfoPlazasParaRepeticion> GetRepeticionPlazasByShowAndDate(string idShow, DateTime date)
+        {
+            var list = new List<InfoPlazasParaRepeticion>();
+
+            var salaService = new SalaService();
+            var ciudades = salaService.GetCiudadesInSalas();
+
+            var showService = new ShowService();
+            var repeticiones = showService.GetShowById(idShow).Repeticion;
+
+            foreach (var ciudad in ciudades)
+            {
+                RepeticionPlazas repeticion = null;
+                repeticion = repeticiones.Where(f => f.Ciudad == ciudad).FirstOrDefault();
+                if (repeticion != null)
+                {
+                    var fechaService = new FechaService();
+                    var ultimaFechaByCiudadAndShow = fechaService.GetFechasByCiudadAndIdShow(ciudad, idShow).OrderByDescending(f=>f.FechaHorario).ToList().FirstOrDefault();
+                    var porcentajeDiferencia = UtilitiesAndStuff.CalcularRepeticion(ultimaFechaByCiudadAndShow.FechaHorario, date, repeticion.Dias);
+
+                    var salas = salaService.GetSalasByCiudad(ciudad);
+                    list.Add(new InfoPlazasParaRepeticion
+                    {
+                        Ciudad = ciudad,
+                        Repeticion = porcentajeDiferencia,
+                        Salas = ConverSalaListToSalaSimpleList(salas)
+                    });
+                }
+                else
+                {
+                    var salas = salaService.GetSalasByCiudad(ciudad);
+                    list.Add(new InfoPlazasParaRepeticion
+                    {
+                        Ciudad = ciudad,
+                        Repeticion = 100000,
+                        Salas = ConverSalaListToSalaSimpleList(salas)
+                    });
+                }
+            }
+            var listOrdenada = list.OrderBy(o => o.Repeticion).ToList();
+            return listOrdenada;
+        }
+
+        private List<SalaSimple> ConverSalaListToSalaSimpleList(List<Sala> salas)
+        {
+            var list = new List<SalaSimple>();
+            foreach (var sala in salas)
+            {
+                list.Add(new SalaSimple {
+                    IdSala = sala.UniqueId,
+                    Nombre = sala.Nombre
+                });
+            }
+            return list;
+        }
+
     }
 }

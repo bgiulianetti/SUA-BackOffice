@@ -212,6 +212,7 @@
     <Compile Include="Models\Productor.cs" />
     <Compile Include="Models\PruebaSonidoEnsayo.cs" />
     <Compile Include="Models\RankingRecord.cs" />
+    <Compile Include="Models\InfoPlazasParaRepeticion.cs" />
     <Compile Include="Models\RepeticionPlazas.cs" />
     <Compile Include="Models\Restaurante.cs" />
     <Compile Include="Models\Ubicacion.cs" />
