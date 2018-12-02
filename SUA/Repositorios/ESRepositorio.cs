@@ -1030,8 +1030,8 @@ namespace SUA.Repositorios
             {
                 foreach (var item in response.Documents)
                 {
-                    if (!ciudades.Contains(item.Direccion.Ciudad))
-                        ciudades.Add(item.Direccion.Ciudad);
+                    if (!ciudades.Contains(item.Direccion.Ciudad.Trim()))
+                        ciudades.Add(item.Direccion.Ciudad.Trim());
                 }
             }
             return ciudades;
