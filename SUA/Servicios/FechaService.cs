@@ -179,7 +179,8 @@ namespace SUA.Servicios
         }
         public List<Fecha> GetFechasByCiudadAndIdShow(string ciudad, string idShow)
         {
-            return Repository.GetFechasByCiudadAndIdShow(ciudad, idShow);
+            var fechas = Repository.GetFechasByCiudadAndIdShow(ciudad, idShow);
+            return fechas;
         }
 
         public List<InfoPlazasParaRepeticion> GetRepeticionPlazasByShowAndDate(string idShow, DateTime date)
@@ -200,6 +201,16 @@ namespace SUA.Servicios
                 {
                     var fechaService = new FechaService();
                     var ultimaFechaByCiudadAndShow = fechaService.GetFechasByCiudadAndIdShow(ciudad, idShow).OrderByDescending(f=>f.FechaHorario).ToList().FirstOrDefault();
+                    if(ultimaFechaByCiudadAndShow == null)
+                    {
+                        var salasPorCiudad = salaService.GetSalasByCiudad(ciudad);
+                        list.Add(new InfoPlazasParaRepeticion
+                        {
+                            Ciudad = ciudad,
+                            Repeticion = 100000,
+                            Salas = ConverSalaListToSalaSimpleList(salasPorCiudad)
+                        });
+                    }
                     var porcentajeDiferencia = UtilitiesAndStuff.CalcularRepeticion(ultimaFechaByCiudadAndShow.FechaHorario, date, repeticion.Dias);
 
                     var salas = salaService.GetSalasByCiudad(ciudad);

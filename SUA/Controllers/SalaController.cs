@@ -58,6 +58,7 @@ namespace SUA.Controllers
                 else if (string.Equals(accion, "Put"))
                 {
                     service.UpdateSala(sala);
+                    ActualizarDependencias(sala);
                     ViewBag.mensaje = "actualizado";
                     new LogService().FormatAndSaveLog("Sala", "Editar", JsonConvert.SerializeObject(sala));
                 }
@@ -109,6 +110,20 @@ namespace SUA.Controllers
         private List<string> GetImpuestosList(string impuestos)
         {
             return impuestos.Split('-').ToList();
+        }
+
+        private void ActualizarDependencias(Sala sala)
+        {
+            var fechaService = new FechaService();
+            var fechas = fechaService.GetFechas();
+            foreach (var fecha in fechas)
+            {
+                if(fecha.Sala.UniqueId == sala.UniqueId)
+                {
+                    fecha.Sala = sala;
+                    fechaService.UpdateFecha(fecha);
+                }
+            }
         }
     }
 }

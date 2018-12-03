@@ -63,6 +63,7 @@ namespace SUA.Controllers
                 else if (string.Equals(accion, "Put"))
                 {
                     service.UpdateProductor(productor);
+                    ActualizarDependencias(productor);
                     ViewBag.mensaje = "actualizado";
                     new LogService().FormatAndSaveLog("Productor", "Editar", JsonConvert.SerializeObject(productor));
                 }
@@ -110,5 +111,37 @@ namespace SUA.Controllers
             }
             return RedirectToAction("Productores", "Productor");
         }
+
+        private void ActualizarDependencias(Productor productor)
+        {
+            ////////////////Shows/////////////////////
+            var showService = new ShowService();
+            var shows = showService.GetShows();
+            foreach (var show in shows)
+            {
+               if(show.Productor.Dni == productor.Dni)
+                {
+                    show.Productor = productor;
+                    showService.UpdateShow(show);
+                }
+            }
+
+            ////////////////Fechas////////////////
+            var fechaService = new FechaService();
+            var fechas = fechaService.GetFechas();
+            foreach (var fecha in fechas)
+            {
+                if(fecha.Show.Productor.Dni == productor.Dni)
+                {
+                    fecha.Show.Productor = productor;
+                }
+                if(fecha.Productor.Dni == productor.Dni)
+                {
+                    fecha.Productor = productor;
+                }
+                fechaService.UpdateFecha(fecha);
+            }
+        }
+
     }
 }

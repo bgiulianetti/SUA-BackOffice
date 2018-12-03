@@ -66,12 +66,10 @@
                                     @if (ViewBag.accion == "Put")
                                     {
                                         <select name="salasList" multiple="multiple" class="form-control" id="salasList" Style="width:350px; height:400px" required>
-
-                                            foreach (var item in ViewBag.salas)
+                                            @foreach (var item in ViewBag.salas)
                                             {
-                                            <option value="@item.UniqueId">@item.Nombre</option>
+                                                <option value="@item.UniqueId">@item.Nombre</option>
                                             }
-
                                         </select>
                                     }
                                     else

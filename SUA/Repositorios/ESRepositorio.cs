@@ -901,11 +901,11 @@ namespace SUA.Repositorios
             if (!response.IsValid)
                 throw new Exception(SALA_GET_BY_CIUDAD_INVALID_SEARCH_EXCEPTION);
 
-            List<Sala> salas = null;
+            var salas = new List<Sala>();
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    if (item.Direccion.Ciudad == ciudad)
+                    if (item.Direccion.Ciudad.Trim() == ciudad.Trim())
                         salas.Add(item);
             }
             return salas;
@@ -1202,7 +1202,10 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    fechas.Add(item);
+                {
+                    if(item.Sala.Nombre.Trim() == nombreSala.Trim())
+                        fechas.Add(item);
+                }
             }
             return fechas;
         }
@@ -1295,7 +1298,7 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    if (item.Sala.Direccion.Ciudad == ciudad && item.Show.UniqueId == idShow)
+                    if (item.Sala.Direccion.Ciudad.Trim() == ciudad.Trim() && item.Show.UniqueId == idShow)
                         fechas.Add(item);
             }
             return fechas;
