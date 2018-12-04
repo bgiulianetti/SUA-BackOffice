@@ -211,15 +211,18 @@ namespace SUA.Servicios
                             Salas = ConverSalaListToSalaSimpleList(salasPorCiudad)
                         });
                     }
-                    var porcentajeDiferencia = UtilitiesAndStuff.CalcularRepeticion(ultimaFechaByCiudadAndShow.FechaHorario, date, repeticion.Dias);
-
-                    var salas = salaService.GetSalasByCiudad(ciudad);
-                    list.Add(new InfoPlazasParaRepeticion
+                    else
                     {
-                        Ciudad = ciudad,
-                        Repeticion = porcentajeDiferencia,
-                        Salas = ConverSalaListToSalaSimpleList(salas)
-                    });
+                        var porcentajeDiferencia = UtilitiesAndStuff.CalcularRepeticion(ultimaFechaByCiudadAndShow.FechaHorario, date, repeticion.Dias);
+
+                        var salas = salaService.GetSalasByCiudad(ciudad);
+                        list.Add(new InfoPlazasParaRepeticion
+                        {
+                            Ciudad = ciudad,
+                            Repeticion = porcentajeDiferencia,
+                            Salas = ConverSalaListToSalaSimpleList(salas)
+                        });
+                    }
                 }
                 else
                 {

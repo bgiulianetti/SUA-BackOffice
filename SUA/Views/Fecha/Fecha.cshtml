@@ -48,10 +48,12 @@
                                         @Html.TextBoxFor(model => model.FechaHorario, new { @id = "fechaHorario", @class = "form-control", Style = "width:300px", required = "required", @type = "datetime-local", @Value = Model.FechaHorario.ToString("yyyy-MM-ddTHH:mm") })
                                     }
                                 </td>
+                                <!--
                                 <td>
                                     <label>&nbsp;</label><br />
                                     <input class="form-control" id="verSalasButton" type="button" value=">>" />
                                 </td>
+                                    -->
                             </tr>
 
                         </table>
@@ -63,27 +65,13 @@
                                 <td>
                                     <input id="filterSala" type="text" placeholder="Buscar Sala" class="form-control" style="width:100%" />
 
-                                    @if (ViewBag.accion == "Put")
-                                    {
+
                                         <select name="salasList" multiple="multiple" class="form-control" id="salasList" Style="width:350px; height:400px" required>
                                             @foreach (var item in ViewBag.salas)
                                             {
-                                                <option value="@item.UniqueId">@item.Nombre</option>
+                                                <option value="@item.UniqueId">@item.Nombre - @item.Direccion.Ciudad</option>
                                             }
                                         </select>
-                                    }
-                                    else
-                                    {
-                                        <div data-role="collapsibleset" data-theme="a" data-inset="false">
-
-
-                                            <div data-role="collapsible" id="ciudades">
-
-                                            </div>
-
-
-                                        </div>
-                                    }
                                 </td>
                                 <td>
                                     <label class="form-control">Fechas 20 días antes y 20 días después</label>
