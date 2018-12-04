@@ -56,7 +56,6 @@ namespace SUA.Controllers
             return View();
         }
 
-
         [HttpGet]
         public ActionResult BackupVotacion(string id)
         {

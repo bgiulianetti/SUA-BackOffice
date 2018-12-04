@@ -124,12 +124,17 @@ namespace SUA.Controllers
                     votacion.Descuentos = "off";
 
                 service.AddVotacion(votacion);
-                ViewBag.mensaje = "creado";
                 return RedirectToAction("Ranking", new { show = fileNameShow });
             }
             catch (Exception ex)
             {
-                ViewBag.mensaje = ex.Message;
+                new LogService().FormatAndSaveLog("Votacion", ex.Message, JsonConvert.SerializeObject(votacion));
+                var mensaje = "";
+                if (ex.Message == "voto_ya_registrado_error")
+                    mensaje = "Ya tenemos registrado tu voto!";
+                else
+                    mensaje = "No pudimos registrar tu voto. Intentá nuevamente";
+                ViewBag.mensaje = mensaje;
             }
             return View();
         }

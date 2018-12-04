@@ -206,14 +206,14 @@ namespace SUA.Repositorios
 
 
         //Votacion
-        public const string INVALID_VOTACION_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch al querer obtener todas las votaciones";
-        public const string VOTACION_GET_ALL_EXCEPTION = "Falla al querer obtener todas las votaciones";
-        public const string VOTACION_GET_BY_IP_INVALID_PARAMETER_EXCEPTION = "Para obtener una votacion por ip debe pasar un ip válido";
-        public const string VOTACION_GET_BY_SHOW_INVALID_PARAMETER_EXCEPTION = "Para obtener votaciones por show debe pasar un show válido";
-        public const string VOTACION_GET_BY_SHOW_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un votaciones por show";
-        public const string VOTACION_CREATE_INVALID_PARAMETER_EXCEPTION = "Para agregar una votacion debe pasar una votacion válida";
-        public const string VOTACION_CANT_MAX_EXCEPTION = "Ya tenemos registrado tu voto!";
-        public const string VOTACION_CREATE_NOT_CREATED_EXCEPTION = "Falla al querer crear una votación nueva";
+        public const string INVALID_VOTACION_ES_CONNECTION_EXCEPTION = "db_connection_error";
+        public const string VOTACION_GET_ALL_EXCEPTION = "get_votaciones_error";
+        public const string VOTACION_GET_BY_IP_INVALID_PARAMETER_EXCEPTION = "invalid_ip";
+        public const string VOTACION_GET_BY_SHOW_INVALID_PARAMETER_EXCEPTION = "invalid_show";
+        public const string VOTACION_GET_BY_SHOW_INVALID_SEARCH_EXCEPTION = "get_votacion_by_show_error";
+        public const string VOTACION_CREATE_INVALID_PARAMETER_EXCEPTION = "add_votacion_invalid_parameter_error";
+        public const string VOTACION_CANT_MAX_EXCEPTION = "voto_ya_registrado_error";
+        public const string VOTACION_CREATE_NOT_CREATED_EXCEPTION = "add_votacion_error";
 
 
 

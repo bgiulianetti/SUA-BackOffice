@@ -30,7 +30,16 @@
         <section id="main">
             <header>
                 <span class="avatar"><img src="~/assets/votacion/images/@ViewBag.image" .jpg alt="" /></span>
-                <h1 style="color:@ViewBag.color">@ViewBag.show</h1>
+                
+                @if (@ViewBag.show == "#LOSOTROS Magalí Tajes")
+                {
+                    <h1 style="color:@ViewBag.color; font-weight:bold">#LOSOTROS <br />Magalí Tajes</h1>
+                }
+                else
+                {
+                    <h1 style="color:@ViewBag.color; font-weight:bold">@ViewBag.show</h1>
+                }
+                
                 <h2>Ranking de Ciudades</h2>
                 @if (ViewBag.mensaje != "")
                 {
