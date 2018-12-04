@@ -25,10 +25,50 @@ namespace SUA.Controllers
                 entidades.Add("fechas", JsonConvert.SerializeObject(new FechaService().GetFechasForBackUp()));
                 entidades.Add("usuarios", JsonConvert.SerializeObject(new UserService().GetUsers()));
                 entidades.Add("salas", JsonConvert.SerializeObject(new SalaService().GetSalas()));
-                entidades.Add("restaurantes", JsonConvert.SerializeObject(new RestauranteService().GetRestaurantes()));
+                try
+                {
+                    entidades.Add("restaurantes", JsonConvert.SerializeObject(new RestauranteService().GetRestaurantes()));
+                }
+                catch
+                { }
+               
                 entidades.Add("logs", JsonConvert.SerializeObject(new LogService().GetLogs()));
                 entidades.Add("hoteles", JsonConvert.SerializeObject(new HotelService().GetHoteles()));
                 entidades.Add("votaciones", JsonConvert.SerializeObject(new VotacionService().GetVotaciones()));
+
+                var directory = "";
+                directory = "~/BackUp/" + DateTime.Now.ToString("yyyy-MM-dd");
+                System.IO.Directory.CreateDirectory(Server.MapPath(directory));
+                foreach (var entidad in entidades)
+                {
+                    var fileNameFullPath = Server.MapPath(directory + "/" + DateTime.Now.ToString("yyyy-MM-dd") + "_" + entidad.Key + ".txt");
+                    System.IO.File.WriteAllText(fileNameFullPath, entidad.Value);
+                    fileNameList.Add(fileNameFullPath);
+                }
+                SendBackupFiles(fileNameList, Server.MapPath(directory), id);
+                ViewBag.mensaje = "Backup Generado con éxito";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.mensaje = ex.Message;
+            }
+
+            return View();
+        }
+
+
+        [HttpGet]
+        public ActionResult BackupVotacion(string id)
+        {
+            var entidades = new Dictionary<string, string>();
+            try
+            {
+                var fileNameList = new List<string>();
+                var votaciones = new List<Votacion>();
+                var votacionService = new VotacionService();
+                votaciones.AddRange(votacionService.GetVotaciones());
+
+                entidades.Add("votaciones", JsonConvert.SerializeObject(votaciones));
 
                 var directory = "";
                 directory = "~/BackUp/" + DateTime.Now.ToString("yyyy-MM-dd");

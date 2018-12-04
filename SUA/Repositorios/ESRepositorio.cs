@@ -214,7 +214,7 @@ namespace SUA.Repositorios
         public const string VOTACION_CREATE_INVALID_PARAMETER_EXCEPTION = "Para agregar una votacion debe pasar una votacion válida";
         public const string VOTACION_CANT_MAX_EXCEPTION = "Ya tenemos registrado tu voto!";
         public const string VOTACION_CREATE_NOT_CREATED_EXCEPTION = "Falla al querer crear una votación nueva";
-        
+
 
 
         protected ElasticClient Client { get; set; }
@@ -1203,7 +1203,7 @@ namespace SUA.Repositorios
             {
                 foreach (var item in response.Documents)
                 {
-                    if(item.Sala.Nombre.Trim() == nombreSala.Trim())
+                    if (item.Sala.Nombre.Trim() == nombreSala.Trim())
                         fechas.Add(item);
                 }
             }
@@ -2081,20 +2081,20 @@ namespace SUA.Repositorios
 
         /*-------------------Votacion-------------------*/
 
-        public List<Votacion> GetVotaciones()
+        public List<Votacion> GetVotacionesViejo(int skip, int take)
         {
             var response = Client.Search<Votacion>(s => s
                    .Index(Index)
                    .Type(Index)
-                   .From(0)
-                   .Size(GetCount(Index))
+                   .From(skip)
+                   .Size(take)
                   );
 
             if (response == null)
                 throw new Exception(INVALID_VOTACION_ES_CONNECTION_EXCEPTION);
 
             if (!response.IsValid)
-                throw new Exception(FECHA_GET_ALL_EXCEPTION);
+                throw new Exception(VOTACION_GET_ALL_EXCEPTION);
 
             var votaciones = new List<Votacion>();
             if (response.Total > 0)
@@ -2104,7 +2104,7 @@ namespace SUA.Repositorios
             }
             return votaciones;
         }
-        public List<Votacion> GetVotacionesByShow(string show)
+        public List<Votacion> GetVotacionesByShowViejo(string show)
         {
             if (string.IsNullOrEmpty(show))
                 throw new Exception(VOTACION_GET_BY_SHOW_INVALID_PARAMETER_EXCEPTION);
@@ -2113,7 +2113,7 @@ namespace SUA.Repositorios
                    .Index(Index)
                    .Type(Index)
                    .From(0)
-                   .Size(GetCount(Index))
+                   .Size(9999)
                    .Query(q => q
                    .Match(m => m.Field(f => f.Show).Query(show)))
                    );
@@ -2231,11 +2231,11 @@ namespace SUA.Repositorios
                 throw new Exception(VOTACION_CANT_MAX_EXCEPTION);
 
             var votacionObtenida = GetVotacionesByEmailAndShow(votacion.Email, votacion.Show);
-            if(votacionObtenida != null)
+            if (votacionObtenida != null)
                 throw new Exception(VOTACION_CANT_MAX_EXCEPTION);
 
             var votacionObtenidaTel = GetVotacionesByTelAndShow(votacion.Telefono, votacion.Show);
-            if(votacionObtenidaTel != null)
+            if (votacionObtenidaTel != null)
                 throw new Exception(VOTACION_CANT_MAX_EXCEPTION);
 
             var response = Client.IndexAsync(votacion, i => i
@@ -2257,6 +2257,83 @@ namespace SUA.Repositorios
             if (!response.IsValid)
                 throw new Exception(VOTACION_CREATE_NOT_CREATED_EXCEPTION);
         }
+
+        public List<Votacion> GetVotaciones()
+        {
+            var response = Client.Search<Votacion>
+                (scr => scr.Index(Index)
+                     .From(0)
+                     .Take(10000)
+                     .MatchAll()
+                     .Scroll("2m"));
+            var votaciones = new List<Votacion>();
+
+            if (!response.IsValid || string.IsNullOrEmpty(response.ScrollId))
+                throw new Exception(VOTACION_GET_ALL_EXCEPTION);
+
+            if (response.Documents.Any())
+                votaciones.AddRange(response.Documents);
+
+            string scrollid = response.ScrollId;
+            bool isScrollSetHasData = true;
+            while (isScrollSetHasData)
+            {
+                var loopingResponse = Client.Scroll<Votacion>("2m", scrollid);
+                if (loopingResponse.IsValid)
+                {
+                    votaciones.AddRange(loopingResponse.Documents);
+                    scrollid = loopingResponse.ScrollId;
+                }
+                isScrollSetHasData = loopingResponse.Documents.Any();
+            }
+
+            Client.ClearScroll(new ClearScrollRequest(scrollid));
+            return votaciones;
+        }
+
+        public List<Votacion> GetVotacionesByShow(string show)
+        {
+            var response = Client.Search<Votacion>
+                (scr => scr.Index(Index)
+                     .From(0)
+                     .Take(10000)
+                     .Query(q => q
+                        .Match(m => m.Field(f => f.Show).Query(show)))
+                     .Scroll("2m"));
+            var votaciones = new List<Votacion>();
+
+            if (!response.IsValid || string.IsNullOrEmpty(response.ScrollId))
+                throw new Exception(VOTACION_GET_ALL_EXCEPTION);
+
+            if (response.Documents.Any())
+            {
+                foreach (var item in response.Documents)
+                {
+                    if(item.Show == show)
+                        votaciones.Add(item);
+                }
+            }
+
+            string scrollid = response.ScrollId;
+            bool isScrollSetHasData = true;
+            while (isScrollSetHasData)
+            {
+                var loopingResponse = Client.Scroll<Votacion>("2m", scrollid);
+                if (loopingResponse.IsValid)
+                {
+                    foreach (var item in loopingResponse.Documents)
+                    {
+                        votaciones.Add(item);
+                    }
+                    scrollid = loopingResponse.ScrollId;
+                }
+                isScrollSetHasData = loopingResponse.Documents.Any();
+            }
+
+            Client.ClearScroll(new ClearScrollRequest(scrollid));
+            return votaciones;
+        }
+
         /*---------Metodos genericos------------------*/
 
         public int GetCount(string tipo)

@@ -19,9 +19,28 @@ namespace SUA.Servicios
             Repository = new ESRepositorio(settings, ESRepositorio.ContentType.votacion.ToString());
         }
 
-        public List<Votacion> GetVotaciones()
+        public List<Votacion> GetVotaciones(/*string skip = null, string take = null*/)
         {
             return Repository.GetVotaciones();
+            /*
+            int _skip = 0;
+            int _take = 0;
+            if(skip != null)
+            {
+                _skip = Int32.Parse(skip);
+                _take = Int32.Parse(take);
+            }
+            else
+            {
+                _take = Repository.GetCount(ESRepositorio.ContentType.votacion.ToString());
+            }
+            return Repository.GetVotaciones(_skip, _take);
+            */
+        }
+
+        public int GetCount()
+        {
+            return Repository.GetCount(ESRepositorio.ContentType.votacion.ToString());
         }
 
         public void AddVotacion(Votacion votacion)
