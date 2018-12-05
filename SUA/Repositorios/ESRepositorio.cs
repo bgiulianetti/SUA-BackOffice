@@ -210,7 +210,11 @@ namespace SUA.Repositorios
         public const string VOTACION_GET_ALL_EXCEPTION = "get_votaciones_error";
         public const string VOTACION_GET_BY_IP_INVALID_PARAMETER_EXCEPTION = "invalid_ip";
         public const string VOTACION_GET_BY_SHOW_INVALID_PARAMETER_EXCEPTION = "invalid_show";
+        public const string VOTACION_GET_BY_SHOW_AND_EMAIL_INVALID_PARAMETER_EXCEPTION = "invalid_email";
+        public const string VOTACION_GET_BY_SHOW_AND_TEL_INVALID_PARAMETER_EXCEPTION = "invalid_tel";
         public const string VOTACION_GET_BY_SHOW_INVALID_SEARCH_EXCEPTION = "get_votacion_by_show_error";
+        public const string VOTACION_GET_BY_SHOW_AND_TEL_INVALID_SEARCH_EXCEPTION = "get_votacion_by_show_and_tel_search_error";
+        public const string VOTACION_GET_BY_SHOW_AND_MAIL_INVALID_SEARCH_EXCEPTION = "get_votacion_by_show_and_mail_search_error";
         public const string VOTACION_CREATE_INVALID_PARAMETER_EXCEPTION = "add_votacion_invalid_parameter_error";
         public const string VOTACION_CANT_MAX_EXCEPTION = "voto_ya_registrado_error";
         public const string VOTACION_CREATE_NOT_CREATED_EXCEPTION = "add_votacion_error";
@@ -2136,7 +2140,7 @@ namespace SUA.Repositorios
         public Votacion GetVotacionesByEmailAndShow(string email, string show)
         {
             if (string.IsNullOrEmpty(email))
-                throw new Exception(VOTACION_GET_BY_SHOW_INVALID_PARAMETER_EXCEPTION);
+                throw new Exception(VOTACION_GET_BY_SHOW_AND_EMAIL_INVALID_PARAMETER_EXCEPTION);
 
             var response = Client.Search<Votacion>(s => s
                    .Index(Index)
@@ -2149,7 +2153,7 @@ namespace SUA.Repositorios
                 return null;
 
             if (!response.IsValid)
-                throw new Exception(VOTACION_GET_BY_SHOW_INVALID_SEARCH_EXCEPTION);
+                throw new Exception(VOTACION_GET_BY_SHOW_AND_MAIL_INVALID_SEARCH_EXCEPTION);
 
             Votacion votacion = null;
             if (response.Total > 0)
@@ -2166,7 +2170,7 @@ namespace SUA.Repositorios
         public Votacion GetVotacionesByTelAndShow(string tel, string show)
         {
             if (string.IsNullOrEmpty(tel))
-                throw new Exception(VOTACION_GET_BY_SHOW_INVALID_PARAMETER_EXCEPTION);
+                throw new Exception(VOTACION_GET_BY_SHOW_AND_TEL_INVALID_PARAMETER_EXCEPTION);
 
             var response = Client.Search<Votacion>(s => s
                    .Index(Index)
@@ -2179,7 +2183,7 @@ namespace SUA.Repositorios
                 return null;
 
             if (!response.IsValid)
-                throw new Exception(VOTACION_GET_BY_SHOW_INVALID_SEARCH_EXCEPTION);
+                throw new Exception(VOTACION_GET_BY_SHOW_AND_TEL_INVALID_SEARCH_EXCEPTION);
 
             Votacion votacion = null;
             if (response.Total > 0)

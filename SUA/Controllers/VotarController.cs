@@ -112,9 +112,10 @@ namespace SUA.Controllers
                 ViewBag.mensaje = "No pudimos reconocer tu ciudad";
                 return View();
             }
-            var service = new VotacionService();
+            
             try
             {
+                var service = new VotacionService();
                 votacion.Ciudad = ciudadObtenida;
                 votacion.Fecha = DateTime.Now;
                 if (votacion.Notificaciones == null)
@@ -186,9 +187,18 @@ namespace SUA.Controllers
                 ViewBag.color = "black";
                 return View();
             }
-            var service = new VotacionService();
-            var ranking = service.GetRankingByShow(showNombreCorrecto, listado);
-            ViewBag.ranking = ranking;
+            try
+            {
+                var service = new VotacionService();
+                var ranking = service.GetRankingByShow(showNombreCorrecto, listado);
+                ViewBag.ranking = ranking;
+            }
+            catch(Exception ex)
+            {
+                new LogService().FormatAndSaveLog("Raking", ex.Message, "");
+                ViewBag.mensaje = "Muchas Gracias!";
+            }
+
             return View();
         }
 
