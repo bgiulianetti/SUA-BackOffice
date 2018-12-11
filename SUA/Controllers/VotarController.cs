@@ -14,8 +14,9 @@ namespace SUA.Controllers
     public class VotarController : Controller
     {
         [HttpGet]
-        public ActionResult Votar(string id)
+        public void Votar(string id)
         {
+            /*
             ViewBag.mensaje = "";
             ViewBag.ciudades = GetCiudadesParaMostrar();
             var show = id.ToLower().Trim();
@@ -58,11 +59,13 @@ namespace SUA.Controllers
                 ViewBag.color = "black";
             }
             return View();
+            */
         }
 
         [HttpPost]
-        public ActionResult Votar(Votacion votacion, string ciudad, string fileNameShow)
+        public void Votar(Votacion votacion, string ciudad, string fileNameShow)
         {
+            /*
             //seteo ViewBags
             ViewBag.ciudades = GetCiudadesParaMostrar();
             ViewBag.fileNameShow = fileNameShow;
@@ -138,9 +141,11 @@ namespace SUA.Controllers
                 ViewBag.mensaje = mensaje;
             }
             return View();
+            */
         }
 
         [HttpGet]
+        [UserValidationFilter]
         public ActionResult Ranking(string show, string listado)
         {
             var showNombreCorrecto = "";
