@@ -7,6 +7,41 @@
     td {
         padding: 10px;
     }
+
+    .collapsible {
+        background-color: #777;
+        color: white;
+        cursor: pointer;
+        padding: 10px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+    }
+
+        .active, .collapsible:hover {
+            background-color: #555;
+        }
+
+        .collapsible:after {
+            content: '\002B';
+            color: white;
+            font-weight: bold;
+            float: right;
+        }
+
+    .active:after {
+        content: "\2212";
+    }
+
+    .content {
+        padding: 0 18px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        background-color: #f1f1f1;
+    }
 </style>
 
 <div class="main-content">
@@ -48,12 +83,11 @@
                                         @Html.TextBoxFor(model => model.FechaHorario, new { @id = "fechaHorario", @class = "form-control", Style = "width:300px", required = "required", @type = "datetime-local", @Value = Model.FechaHorario.ToString("yyyy-MM-ddTHH:mm") })
                                     }
                                 </td>
-                                <!--
                                 <td>
                                     <label>&nbsp;</label><br />
                                     <input class="form-control" id="verSalasButton" type="button" value=">>" />
                                 </td>
-                                    -->
+
                             </tr>
 
                         </table>
@@ -62,21 +96,36 @@
 
                         <table style="border-radius: 10px;">
                             <tr>
-                                <td>
-                                    <input id="filterSala" type="text" placeholder="Buscar Sala" class="form-control" style="width:100%" />
 
 
+                                @if (ViewBag.accion == "Post")
+                                {
+                                    <td>
+                                        <label class="form-control">Ciudades</label>
+                                        <select name="ciudadesList" multiple="multiple" class="form-control" id="ciudadesList" Style="width:350px; height:400px" required></select>
+                                    </td>
+                                    <td>
+                                        <label class="form-control">Teatros - Salas</label>
+                                        <select name="salasList" multiple="multiple" class="form-control" id="salasList" Style="width:350px; height:400px" required></select>
+                                    </td>
+                                    <td>
+                                        <label class="form-control">Fechas 20 días antes y 20 días después</label>
+                                        <select multiple="multiple" class="form-control" id="antesDespues" Style="width:300px; height:400px"></select>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        <input id="filterSala" type="text" placeholder="Buscar Sala" class="form-control" style="width:100%" />
                                         <select name="salasList" multiple="multiple" class="form-control" id="salasList" Style="width:350px; height:400px" required>
                                             @foreach (var item in ViewBag.salas)
                                             {
                                                 <option value="@item.UniqueId">@item.Nombre - @item.Direccion.Ciudad</option>
                                             }
                                         </select>
-                                </td>
-                                <td>
-                                    <label class="form-control">Fechas 20 días antes y 20 días después</label>
-                                    <select multiple="multiple" class="form-control" id="antesDespues" Style="width:300px; height:400px"></select>
-                                </td>
+                                    </td>
+                                }
+
                                 <td>
                                     <label class="form-control" style="background-color:red;color:white">100% a 40% antes</label>
                                     <label class="form-control" style="background-color:orange;color:white">40% a 15% antes</label>
@@ -87,7 +136,7 @@
                             </tr>
                         </table>
 
-                        <hr style="color: #8dd9f7">
+                        <hr style="color:#8dd9f7">
                         <table>
                             <tr>
                                 <td>
@@ -105,6 +154,7 @@
                         <hr style="color: #8dd9f7">
 
                         <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
+                        <input name="idSala" id="idSala" class="hidden" data-form="error-box" />
                         @Html.TextBoxFor(model => model.UniqueId, new { @class = "hidden" })
 
                         <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
@@ -122,7 +172,7 @@
 
 <script>
 
-
+    var ciudadesSalaList;
     $(document).ready(function ()
     {
         $("#filterSala").on("keyup", function ()
@@ -157,6 +207,7 @@
         $('#showsList option[value="' + "@ViewBag.show" + '"]').attr("selected", "selected");
         $('#salasList option[value="' + "@ViewBag.sala" + '"]').attr("selected", "selected");
         $('#productoresList option[value="' + "@ViewBag.productor" + '"]').attr("selected", "selected");
+        $("#idSala").val("@ViewBag.sala");
     }
     else
     {
@@ -179,66 +230,53 @@
 
     function popularListaSalas(data)
     {
+        $("#ciudadesList").empty();
         $("#salasList").empty();
-        var list = JSON.parse(data);
-        for (var i = 0; i < list.length; i++)
+        $("#antesDespues").empty();
+        ciudadesSalaList = JSON.parse(data);
+        for (var i = 0; i < ciudadesSalaList.length; i++)
         {
-            var cantDias = list[i].Repeticion + "%";
-            /*
-            if (list[i].Repeticion == 10000)
-            {
-                backgroundcolor = "slategrey";
-                placeholder = "";
-            }
-            else if (list[i].Repeticion > 15)
-            {
-                backgroundcolor = "darkslateblue";
-                cantDias = list[i].Repeticion + "%";
-            }
-            else if (list[i].Repeticion >= -15 && list[i].Repeticion <= 15)
-            {
-                backgroundcolor = "forestgreen";
-                cantDias = list[i].Repeticion + "%";
-            }
-            else if (list[i].Repeticion > -40 && list[i].Repeticion < -15)
-            {
-                backgroundcolor = "orange";
-                cantDias = list[i].Repeticion + "%";
-            }
-            else if (list[i].Repeticion > -100 && list[i].Repeticion <= -40)
-            {
-                backgroundcolor = "red";
-                cantDias = list[i].Repeticion + "%";
-            }
-            */
-            if (cantDias == "-")
-            {
-                $("#salasList").append('<option value="' + salas[i].UniqueId + '" style="color:white; background-color:' + backgroundcolor + '">' + salas[i].Nombre + ' - ' + salas[i].Direccion.Ciudad + '</option>');
-            }
-            else
-            {
-                $("#ciudades").append('<h2>' + list[i].Ciudad + '</h2><ul data-role="listview" id="' + list[i].Ciudad + '"></ul>');
-                for (var a = 0; a < list[i].Salas; a++)
-                {
-                    $("#" + list[i].Ciudad).append('<li id="' + list[i].Salas[a].IdSala + '"><a href="index.html">' + list[i].Salas[a].Nombre + '</a></li>');
-                }
-            }
+            var backgroundColor;
+            if (ciudadesSalaList[i].Repeticion == 100000)
+                backgroundColor = "slategrey";
+            else if (ciudadesSalaList[i].Repeticion < -40)
+                backgroundColor = "red";
+            else if (ciudadesSalaList[i].Repeticion >= -40 && ciudadesSalaList[i].Repeticion <= -15)
+                backgroundColor = "orange"
+            else if (ciudadesSalaList[i].Repeticion > -15 && ciudadesSalaList[i].Repeticion <= 15)
+                backgroundColor = "forestgreen";
+            else if (ciudadesSalaList[i].Repeticion > 15 && ciudadesSalaList[i].Repeticion <= 100)
+                backgroundColor = "darkslateblue";
+            $("#ciudadesList").append('<option style="background-color:' + backgroundColor + '; color:white">' + ciudadesSalaList[i].Ciudad + '</option>');
         }
     }
 
 
-    $('#salasList').change(function ()
+    $('#ciudadesList').change(function ()
     {
-        var idSala = $("#salasList option:selected").val();
-        var idShow = $("#showsList option:selected").val();
+        $("#salasList").empty();
+        $("#antesDespues").empty();
+        var nombreSala = $("#ciudadesList option:selected").val();
+        var ciudadSalaItem = ciudadesSalaList.filter(function (item) { return item.Ciudad === nombreSala; });
+        for (var i = 0; i < ciudadSalaItem[0].Salas.length; i++)
+        {
+            $("#salasList").append('<option id="' + ciudadSalaItem[0].Salas[i].IdSala + '">' + ciudadSalaItem[0].Salas[i].Nombre + '</option>');
+        }
+    });
+
+    $('#salasList').change(function () {
+
+        var idSala = $("#salasList option:selected").attr("id");
 
         $.ajax({
             url: '/fecha/GetAntesDespuesFechas?idSala=' + idSala + '&fecha=' + $("#fechaHorario").val(),
             type: 'GET',
             accepts: 'application/Json',
             success: mostrarAntesDespues,
-            error: function () { console.log("ERROR: No se puede obtener informacion de la ultima fecha en la sala seleccionada");}
+            error: function () { console.log("ERROR: No se puede obtener informacion de la ultima fecha en la sala seleccionada"); }
         });
+
+        $("#idSala").val($("#salasList option:selected").attr("id"));
 
     });
 
@@ -254,10 +292,26 @@
                 $("#antesDespues").append('<option>' + fechas[i].FechaHorario.toString().split('T')[0] + ' - ' + fechas[i].Show._Show + '</option>');
             }
         }
-
     }
 
 
 
+</script>
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        });
+    }
 </script>
 

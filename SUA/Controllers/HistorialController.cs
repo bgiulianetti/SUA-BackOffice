@@ -12,13 +12,13 @@ namespace SUA.Controllers
     {
         [HttpGet]
         [UserValidationFilter]
-        public ActionResult Historial()
+        public ActionResult Historial(string all = "")
         {
             ViewBag.titulo = "Logs";
             try
             {
                 var service = new LogService();
-                ViewBag.logs = service.GetLogs();
+                ViewBag.logs = service.GetLogs(all);
                 ViewBag.mensaje = "listar";
             }
             catch (Exception ex)

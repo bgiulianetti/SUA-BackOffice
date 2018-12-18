@@ -32,9 +32,9 @@ namespace SUA.Controllers
                 catch
                 { }
                
-                entidades.Add("logs", JsonConvert.SerializeObject(new LogService().GetLogs()));
+                entidades.Add("logs", JsonConvert.SerializeObject(new LogService().GetLogs("all")));
                 entidades.Add("hoteles", JsonConvert.SerializeObject(new HotelService().GetHoteles()));
-                entidades.Add("votaciones", JsonConvert.SerializeObject(new VotacionService().GetVotaciones()));
+                entidades.Add("votaciones", JsonConvert.SerializeObject(new VotacionService().GetVotaciones("true")));
 
                 var directory = "";
                 directory = "~/BackUp/" + DateTime.Now.ToString("yyyy-MM-dd");
@@ -65,7 +65,7 @@ namespace SUA.Controllers
                 var fileNameList = new List<string>();
                 var votaciones = new List<Votacion>();
                 var votacionService = new VotacionService();
-                votaciones.AddRange(votacionService.GetVotaciones());
+                votaciones.AddRange(votacionService.GetVotaciones("true"));
 
                 entidades.Add("votaciones", JsonConvert.SerializeObject(votaciones));
 

@@ -115,7 +115,7 @@ namespace SUA.Controllers
         private void ActualizarDependencias(Sala sala)
         {
             var fechaService = new FechaService();
-            var fechas = fechaService.GetFechas();
+            var fechas = fechaService.GetFechas("all");
             foreach (var fecha in fechas)
             {
                 if(fecha.Sala.UniqueId == sala.UniqueId)

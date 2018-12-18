@@ -50,11 +50,11 @@ namespace SUA.Controllers
         }
 
         [HttpPost]
-        public ActionResult Fecha(Fecha fecha, string accion, string showsList, string salasList, string productoresList)
+        public ActionResult Fecha(Fecha fecha, string accion, string showsList, string idSala, string productoresList)
         {
             ViewBag.titulo = "Crear Fecha";
             fecha.Productor = new ProductorService().GetProductorByDni(productoresList);
-            fecha.Sala = new SalaService().GetSalaById(salasList);
+            fecha.Sala = new SalaService().GetSalaById(idSala);
             fecha.Show = new ShowService().GetShowById(showsList);
 
             var service = new FechaService();
@@ -97,13 +97,13 @@ namespace SUA.Controllers
 
         [HttpGet]
         [UserValidationFilter]
-        public ActionResult Fechas()
+        public ActionResult Fechas(string all = "")
         {
             ViewBag.titulo = "Fechas";
             var service = new FechaService();
             try
             {
-                var fechas = service.GetFechas();
+                var fechas = service.GetFechas(all);
                 ViewBag.fechas = fechas;
                 ViewBag.mensaje = "listar";
                 new LogService().FormatAndSaveLog("Fecha", "Listar", "");

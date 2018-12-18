@@ -19,9 +19,9 @@ namespace SUA.Servicios
             Repository = new ESRepositorio(settings, ESRepositorio.ContentType.log.ToString());
         }
 
-        public List<Log> GetLogs()
+        public List<Log> GetLogs(string all)
         {
-            return Repository.GetLogs();
+            return Repository.GetLogs(all);
         }
 
         public void AddLog(Log log)

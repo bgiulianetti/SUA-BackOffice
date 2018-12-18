@@ -77,7 +77,7 @@ namespace SUA.Controllers
         {
             var fechasCalendar = new List<CalendarFeed>();
             var service = new FechaService();
-            var fechas = service.GetFechas();
+            var fechas = service.GetFechas("all");
             foreach (var fecha in fechas)
             {
                 var calendarFeed = new CalendarFeed

@@ -10,6 +10,11 @@
                         <input type="button" value="Crear Fecha" class="form-control" style="width:120px" />
                     </a>
                 </td>
+                <td style="width:200px;">
+                    <a href="@Url.RouteUrl("Fechas", new { all = "true"})">
+                        <input type="button" value="Todas las fechas" class="form-control" style="width:120px" />
+                    </a>
+                </td>
                 <td>
                     <div id="entries" style="width:200px"></div>
                 </td>
@@ -29,22 +34,22 @@
                 <thead>
                     <tr>
                         <th></th>
+                        <th>Fecha</th>
                         <th>Show</th>
                         <th>Sala</th>
                         <th>Ciudad</th>
                         <th>Provincia</th>
-                        <th>Fecha</th>
                         <th>Productor</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
                         <th></th>
+                        <th>Fecha</th>
                         <th>Show</th>
                         <th>Sala</th>
                         <th>Ciudad</th>
                         <th>Provincia</th>
-                        <th>Fecha</th>
                         <th>Productor</th>
                     </tr>
                 </tfoot>
@@ -70,11 +75,11 @@
                                 }
 
                             </td>
+                            <td>@item.FechaHorario.ToString("yyyy-MM-dd HH:mm")</td>
                             <td>@item.Show._Show - @item.Show.Nombre</td>
                             <td>@item.Sala.Nombre</td>
                             <td>@item.Sala.Direccion.Ciudad</td>
                             <td>@item.Sala.Direccion.Provincia</td>
-                            <td>@item.FechaHorario</td>
                             <td>@item.Productor.Nombre @item.Productor.Apellido</td>
                         </tr>
                     }

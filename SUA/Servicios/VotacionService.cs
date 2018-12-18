@@ -19,23 +19,12 @@ namespace SUA.Servicios
             Repository = new ESRepositorio(settings, ESRepositorio.ContentType.votacion.ToString());
         }
 
-        public List<Votacion> GetVotaciones(/*string skip = null, string take = null*/)
+        public List<Votacion> GetVotaciones(string all = "")
         {
-            return Repository.GetVotaciones();
-            /*
-            int _skip = 0;
-            int _take = 0;
-            if(skip != null)
-            {
-                _skip = Int32.Parse(skip);
-                _take = Int32.Parse(take);
-            }
-            else
-            {
-                _take = Repository.GetCount(ESRepositorio.ContentType.votacion.ToString());
-            }
-            return Repository.GetVotaciones(_skip, _take);
-            */
+            var votos = Repository.GetVotaciones();
+            if (all != "true")
+                votos = votos.OrderByDescending(f => f.Fecha).Take(100).ToList();
+            return votos;
         }
 
         public int GetCount()

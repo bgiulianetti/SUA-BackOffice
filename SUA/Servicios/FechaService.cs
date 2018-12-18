@@ -22,9 +22,12 @@ namespace SUA.Servicios
             Repository = new ESRepositorio(settings, ESRepositorio.ContentType.fecha.ToString());
         }
 
-        public List<Fecha> GetFechas(bool isIndexRequesting = false)
+        public List<Fecha> GetFechas(string all, bool isIndexRequesting = false)
         {
             var fechas = Repository.GetFechas();
+            if(all != "true")
+                fechas = fechas.OrderByDescending(f => f.FechaHorario).Take(50).ToList();
+
             var session = HttpContext.Current.Request.Cookies.Get("session");
             var service = new UserService();
             var user = service.GetUserByNombre(session.Value);
@@ -118,7 +121,6 @@ namespace SUA.Servicios
                 return fechas.Last();
             }
             return null;
-
         }
         public List<Fecha> GetFechasByCiudadAndRangoFecha(string ciudad, DateTime desde, DateTime hasta)
         {
@@ -192,39 +194,9 @@ namespace SUA.Servicios
 
             var showService = new ShowService();
             var repeticiones = showService.GetShowById(idShow).Repeticion;
-
-            foreach (var ciudad in ciudades)
+            if(repeticiones == null)
             {
-                RepeticionPlazas repeticion = null;
-                repeticion = repeticiones.Where(f => f.Ciudad == ciudad).FirstOrDefault();
-                if (repeticion != null)
-                {
-                    var fechaService = new FechaService();
-                    var ultimaFechaByCiudadAndShow = fechaService.GetFechasByCiudadAndIdShow(ciudad, idShow).OrderByDescending(f=>f.FechaHorario).ToList().FirstOrDefault();
-                    if(ultimaFechaByCiudadAndShow == null)
-                    {
-                        var salasPorCiudad = salaService.GetSalasByCiudad(ciudad);
-                        list.Add(new InfoPlazasParaRepeticion
-                        {
-                            Ciudad = ciudad,
-                            Repeticion = 100000,
-                            Salas = ConverSalaListToSalaSimpleList(salasPorCiudad)
-                        });
-                    }
-                    else
-                    {
-                        var porcentajeDiferencia = UtilitiesAndStuff.CalcularRepeticion(ultimaFechaByCiudadAndShow.FechaHorario, date, repeticion.Dias);
-
-                        var salas = salaService.GetSalasByCiudad(ciudad);
-                        list.Add(new InfoPlazasParaRepeticion
-                        {
-                            Ciudad = ciudad,
-                            Repeticion = porcentajeDiferencia,
-                            Salas = ConverSalaListToSalaSimpleList(salas)
-                        });
-                    }
-                }
-                else
+                foreach (var ciudad in ciudades)
                 {
                     var salas = salaService.GetSalasByCiudad(ciudad);
                     list.Add(new InfoPlazasParaRepeticion
@@ -233,6 +205,52 @@ namespace SUA.Servicios
                         Repeticion = 100000,
                         Salas = ConverSalaListToSalaSimpleList(salas)
                     });
+                }
+            }
+            else
+            {
+                foreach (var ciudad in ciudades)
+                {
+                    RepeticionPlazas repeticion = null;
+                    repeticion = repeticiones.Where(f => f.Ciudad == ciudad).FirstOrDefault();
+                    if (repeticion != null)
+                    {
+                        var fechaService = new FechaService();
+                        var ultimaFechaByCiudadAndShow = fechaService.GetFechasByCiudadAndIdShow(ciudad, idShow).OrderByDescending(f => f.FechaHorario).ToList().FirstOrDefault();
+                        if (ultimaFechaByCiudadAndShow == null)
+                        {
+                            var porcentajeDiferencia = UtilitiesAndStuff.CalcularRepeticion(new DateTime(2018, 09, 01), date, repeticion.Dias);
+                            var salasPorCiudad = salaService.GetSalasByCiudad(ciudad);
+                            list.Add(new InfoPlazasParaRepeticion
+                            {
+                                Ciudad = ciudad,
+                                Repeticion = porcentajeDiferencia,
+                                Salas = ConverSalaListToSalaSimpleList(salasPorCiudad)
+                            });
+                        }
+                        else
+                        {
+                            var porcentajeDiferencia = UtilitiesAndStuff.CalcularRepeticion(ultimaFechaByCiudadAndShow.FechaHorario, date, repeticion.Dias);
+
+                            var salas = salaService.GetSalasByCiudad(ciudad);
+                            list.Add(new InfoPlazasParaRepeticion
+                            {
+                                Ciudad = ciudad,
+                                Repeticion = porcentajeDiferencia,
+                                Salas = ConverSalaListToSalaSimpleList(salas)
+                            });
+                        }
+                    }
+                    else
+                    {
+                        var salas = salaService.GetSalasByCiudad(ciudad);
+                        list.Add(new InfoPlazasParaRepeticion
+                        {
+                            Ciudad = ciudad,
+                            Repeticion = 100000,
+                            Salas = ConverSalaListToSalaSimpleList(salas)
+                        });
+                    }
                 }
             }
             var listOrdenada = list.OrderBy(o => o.Repeticion).ToList();

@@ -1686,13 +1686,21 @@ namespace SUA.Repositorios
 
 
         /*-------------------Logs-------------------*/
-        public List<Log> GetLogs()
+        public List<Log> GetLogs(string all)
         {
+
+            int count = 0;
+            if (all == "true")
+                count = GetCount(Index);
+            else
+                count = 200;
+
             var response = Client.Search<Log>(s => s
                    .Index(Index)
                    .Type(Index)
                    .From(0)
-                   .Size(GetCount(Index))
+                   .Size(count)
+                   .Sort(f => f.Descending(c => c.Fecha))
                   );
 
             if (response == null)

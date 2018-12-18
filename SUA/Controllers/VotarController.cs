@@ -209,13 +209,13 @@ namespace SUA.Controllers
 
         [HttpGet]
         [UserValidationFilter]
-        public ActionResult Votaciones()
+        public ActionResult Votaciones(string all)
         {
             ViewBag.titulo = "Votaciones";
             var service = new VotacionService();
             try
             {
-                ViewBag.votaciones = service.GetVotaciones();
+                ViewBag.votaciones = service.GetVotaciones(all);
                 ViewBag.mensaje = "listar";
                 new LogService().FormatAndSaveLog("Votaciones", "Listar", "");
             }
