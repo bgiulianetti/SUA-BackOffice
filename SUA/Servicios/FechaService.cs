@@ -219,7 +219,7 @@ namespace SUA.Servicios
                         var ultimaFechaByCiudadAndShow = fechaService.GetFechasByCiudadAndIdShow(ciudad, idShow).OrderByDescending(f => f.FechaHorario).ToList().FirstOrDefault();
                         if (ultimaFechaByCiudadAndShow == null)
                         {
-                            var porcentajeDiferencia = UtilitiesAndStuff.CalcularRepeticion(new DateTime(2018, 09, 01), date, repeticion.Dias);
+                            var porcentajeDiferencia = UtilitiesAndStuff.CalcularRepeticion(new DateTime(2018, 01, 01), date, repeticion.Dias);
                             var salasPorCiudad = salaService.GetSalasByCiudad(ciudad);
                             list.Add(new InfoPlazasParaRepeticion
                             {
@@ -253,7 +253,7 @@ namespace SUA.Servicios
                     }
                 }
             }
-            var listOrdenada = list.OrderBy(o => o.Repeticion).ToList();
+            var listOrdenada = list.OrderByDescending(o => o.Repeticion).ToList();
             return listOrdenada;
         }
 
