@@ -244,6 +244,7 @@
         {
             $("#repeticion").append('<option>' + $("#listaCiudad").val() + ' (' + $("#cantidadDias").val() + ' días)</option>');
             $("#cantidadDias").val("");
+            $("#listaCiudad option[value='" + $("#listaCiudad").val() + "']").remove();
             generateReptirPlazasList();
         }
         else
