@@ -197,6 +197,7 @@
                 $('#productoresList option[value="' + dniProductor + '"]').attr("selected", "selected");
             }
         }
+        GetSalasCiuaddes();
     });
 
 
@@ -215,18 +216,20 @@
     }
 
     //muestro info del show elegido
-    $('#verSalasButton').click(function ()
-    {
+    $('#verSalasButton').click(GetSalasCiuaddes);
+
+
+    function GetSalasCiuaddes() {
         var fechaHorario = $("#fechaHorario").val();
         var idShow = $("#showsList option:selected").val();
         $.ajax({
             url: '/fecha/GetRepeticionPlazas?idShow=' + idShow + '&date=' + fechaHorario,
             type: 'GET',
             accepts: 'application/Json',
-            success:  popularListaSalas,
+            success: popularListaSalas,
             error: function () { }
         });
-    });
+    }
 
     function popularListaSalas(data)
     {
