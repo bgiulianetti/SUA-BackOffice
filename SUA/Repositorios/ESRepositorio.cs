@@ -1318,13 +1318,9 @@ namespace SUA.Repositorios
                 .From(0)
                 .Size(GetCount(Index))
                  .Query(q => q
-                    .Match(m => m.Field(f => f.Sala.Direccion.Ciudad).Query(ciudad))
-                    && q.DateRange(r => r
-                        .Field(f => f.FechaHorario)
-                        .GreaterThan(desde)
-                        .LessThan(hasta)
-                      )
-                 )
+                    .Match(m => m
+                        .Field(f => f.Sala.Direccion.Ciudad).Query(ciudad))
+                     )
              );
 
             if (response == null)
@@ -1334,11 +1330,9 @@ namespace SUA.Repositorios
                 throw new Exception(FECHA_GET_BY_ID_CIUDAD_INVALID_SEARCH_EXCEPTION);
 
             var fechas = new List<Fecha>();
-            if (response.Total > 0)
-            {
-                foreach (var item in response.Documents)
-                    fechas.Add(item);
-            }
+            fechas.AddRange(response.Documents);
+            fechas = fechas.Where(f => f.Sala.Direccion.Ciudad == ciudad  && f.FechaHorario >= desde && f.FechaHorario <= hasta ).ToList();
+
             return fechas;
         }
         public Fecha GetFechaBySalaAndFechaAndHorario(string idSala, DateTime fechaYHorario)

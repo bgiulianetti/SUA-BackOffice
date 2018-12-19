@@ -92,16 +92,6 @@ namespace SUA.TestProject
         }
 
         [TestMethod]
-        public void PuedoObtenerUnaSalaPorProvinciaCorrectamente()
-        {
-            var id = UtilitiesAndStuff.GenerateUniqueId();
-            var sala = CrearSala(id);
-            repository.AddSala(sala);
-            var salaObtenida = repository.GetSalaByProvincia(sala.Direccion.Provincia);
-            Assert.AreEqual(sala, salaObtenida);
-        }
-
-        [TestMethod]
         public void SiModificoUnaSalaInexistenteObtengoUnError()
         {
             var id = UtilitiesAndStuff.GenerateUniqueId();
