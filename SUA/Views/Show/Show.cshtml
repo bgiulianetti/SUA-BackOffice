@@ -83,15 +83,18 @@
                             <tr>
                                 <td>
                                     <label>Repetir Plazas</label>
-                                    <select class="form-control" id="listaCiudad">
+                                    <select multiple="multiple" class="form-control" id="listaCiudad" Style="width:300px; height:124px">
                                         @foreach (var item in ViewBag.plazas)
                                         {
                                             <option>@item</option>
                                         }
                                     </select>
                                     <input type="number" id="cantidadDias" class="form-control" placeholder="días" min="30" max="365" />
-                                    <input type="button" id="agregarRepeticion"  value="Agregar" class="form-control"/>
-                                    <select multiple="multiple" class="form-control" id="repeticion" name="repeticion" Style="width:300px; height:124px">
+                                    <input type="button" id="agregarRepeticion" value="Agregar" class="form-control" />
+                                </td>
+                                <td>
+                                    <label> </label>
+                                    <select multiple="multiple" class="form-control" id="repeticion" name="repeticion" Style="width:300px; height:160px">
                                         @if (ViewBag.accion == "Put")
                                         {
                                             if (Model.Repeticion != null)
@@ -244,7 +247,7 @@
         {
             $("#repeticion").append('<option>' + $("#listaCiudad").val() + ' (' + $("#cantidadDias").val() + ' días)</option>');
             $("#cantidadDias").val("");
-            $("#listaCiudad option[value='" + $("#listaCiudad").val() + "']").remove();
+            $("#listaCiudad option:selected").remove();
             generateReptirPlazasList();
         }
         else
@@ -255,12 +258,11 @@
 
     $("#borrarRepeticion").click(function (event) {
         var seleccion = $("#repeticion option:selected");
-        if (seleccion.val() == undefined) {
+        if (seleccion.val() == undefined)
             alert("Debe seleccionar una plaza");
-        }
         else {
+            $("#listaCiudad").append('<option>' + $("#repeticion option:selected").val().split('(')[0].trim() + '</option>');
             $("#repeticion option:selected").remove();
-            generateImpuestosHiddenList();
         }
         generateReptirPlazasList();
     });

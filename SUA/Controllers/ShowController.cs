@@ -21,14 +21,14 @@ namespace SUA.Controllers
             ViewBag.colores = UtilitiesAndStuff.GetColores();
             var productoresService = new ProductorService();
             ViewBag.productores = productoresService.GetProductores();
-            var salaService = new SalaService();
-            ViewBag.plazas = salaService.GetCiudadesInSalas();
 
             var standuperoService = new StanduperoService();
             var standuperos = standuperoService.GetStanduperos();
 
             if (string.IsNullOrEmpty(id))
             {
+                var salaService = new SalaService();
+                ViewBag.plazas = salaService.GetCiudadesInSalas();
                 ViewBag.standuperos = standuperos;
                 ViewBag.accion = "Post";
                 ViewBag.titulo = "Crear Show";
@@ -37,13 +37,20 @@ namespace SUA.Controllers
             {
                 var showService = new ShowService();
                 var show = showService.GetShowById(id);
-
                 foreach (var item in show.Integrantes)
                 {
                     if(standuperos.Contains(item))
                         standuperos.Remove(item);
                 }
 
+                var salaService = new SalaService();
+                var plazas = salaService.GetCiudadesInSalas();
+                foreach (var plaza in show.Repeticion)
+                {
+                    if (plazas.Contains(plaza.Ciudad))
+                        plazas.Remove(plaza.Ciudad);
+                }
+                ViewBag.plazas = plazas;
                 ViewBag.productor = show.Productor.Dni;
                 ViewBag.standuperos = standuperos;
                 ViewBag.accion = "Put";
