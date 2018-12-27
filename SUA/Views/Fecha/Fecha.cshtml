@@ -240,7 +240,7 @@
         for (var i = 0; i < ciudadesSalaList.length; i++)
         {
             var backgroundColor;
-            if (ciudadesSalaList[i].Repeticion == 100000)
+            if (ciudadesSalaList[i].Repeticion == 10000000)
                 backgroundColor = "slategrey";
             else if (ciudadesSalaList[i].Repeticion < -40)
                 backgroundColor = "red";
@@ -248,7 +248,7 @@
                 backgroundColor = "orange"
             else if (ciudadesSalaList[i].Repeticion > -15 && ciudadesSalaList[i].Repeticion <= 15)
                 backgroundColor = "forestgreen";
-            else if (ciudadesSalaList[i].Repeticion > 15 && ciudadesSalaList[i].Repeticion <= 100)
+            else if (ciudadesSalaList[i].Repeticion > 15 && ciudadesSalaList[i].Repeticion <= 9999999)
                 backgroundColor = "darkslateblue";
             $("#ciudadesList").append('<option style="background-color:' + backgroundColor + '; color:white">' + ciudadesSalaList[i].Ciudad + '</option>');
         }

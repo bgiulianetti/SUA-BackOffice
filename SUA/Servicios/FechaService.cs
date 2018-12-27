@@ -202,7 +202,7 @@ namespace SUA.Servicios
                     list.Add(new InfoPlazasParaRepeticion
                     {
                         Ciudad = ciudad,
-                        Repeticion = 100000,
+                        Repeticion = 10000000,
                         Salas = ConverSalaListToSalaSimpleList(salas)
                     });
                 }
@@ -247,13 +247,17 @@ namespace SUA.Servicios
                         list.Add(new InfoPlazasParaRepeticion
                         {
                             Ciudad = ciudad,
-                            Repeticion = 100000,
+                            Repeticion = 10000000,
                             Salas = ConverSalaListToSalaSimpleList(salas)
                         });
                     }
                 }
             }
+            
             var listOrdenada = list.OrderByDescending(o => o.Repeticion).ToList();
+            var ciudadesSinEspecificacion = listOrdenada.Where(f => f.Repeticion == 10000000).ToList();
+            listOrdenada.RemoveAll(f => f.Repeticion == 10000000);
+            listOrdenada.AddRange(ciudadesSinEspecificacion);
             return listOrdenada;
         }
 
