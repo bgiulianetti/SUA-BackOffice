@@ -280,6 +280,14 @@
         });
 
         $("#idSala").val($("#salasList option:selected").attr("id"));
+        if ($('#ciudadesList option:selected')[0].style.backgroundColor == "orange")
+        {
+            alert("¿No sería mejor esperar un poco más para esta fecha?");
+        }
+        else if ($('#ciudadesList option:selected')[0].style.backgroundColor == "red")
+        {
+            alert("Me parece muy mala idea cerrar elegir esta sala. Deberías esperar un poco mas");
+        }
 
     });
 
