@@ -111,7 +111,7 @@
                             <tr>
                                 <td>
                                     <label>Shows </label>
-                                    <select style="width:300px" multiple="multiple" class="form-control" id="shows">
+                                    <select style="width:300px" multiple="multiple" class="form-control" id="showsDisponibles">
                                         @foreach (var item in ViewBag.shows)
                                         {
                                             <option value="@item.UniqueId">@item._Show</option>
@@ -168,13 +168,13 @@
     }
 
     $("#agregar").click(function (event) {
-        var seleccion = $("#shows option:selected");
+        var seleccion = $("#showsDisponibles option:selected");
         if (seleccion.val() == undefined)
             alert("Debe seleccionar un show");
         else
         {
             $("#showsAsignados").append('<option value="' + seleccion.val() + '">' + seleccion.html() + '</option>');
-            $("#shows option[value='" + seleccion.val() + "']").remove();
+            $("#showsDisponibles option[value='" + seleccion.val() + "']").remove();
             generateShowsHiddenList();
         }
 
@@ -186,7 +186,7 @@
             alert("Debe seleccionar un show");
         else
         {
-            $("#shows").append('<option value="' + seleccion.val() + '">' + seleccion.html() + '</option>');
+            $("#showsDisponibles").append('<option value="' + seleccion.val() + '">' + seleccion.html() + '</option>');
             $("#showsAsignados option[value='" + seleccion.val() + "']").remove();
             generateShowsHiddenList();
         }
