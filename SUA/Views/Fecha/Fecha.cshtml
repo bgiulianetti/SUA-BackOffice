@@ -101,7 +101,7 @@
                                 @if (ViewBag.accion == "Post")
                                 {
                                     <td>
-                                        <label class="form-control">Ciudades</label>
+                                        <input id="filterCiudad" type="text" placeholder="Buscar Ciudad" class="form-control" style="width:100%" />
                                         <select name="ciudadesList" multiple="multiple" class="form-control" id="ciudadesList" Style="width:350px; height:400px" required></select>
                                     </td>
                                     <td>
@@ -157,7 +157,7 @@
                         <input name="idSala" id="idSala" class="hidden" data-form="error-box" />
                         @Html.TextBoxFor(model => model.UniqueId, new { @class = "hidden" })
 
-                        <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
+                        <button id="btn_guardar" type="submit" onclick="return validate()" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
                     </form>
                 </div>
             </div>
@@ -180,6 +180,13 @@
             var value = $(this).val().toLowerCase();
             $("#salasList option").filter(function ()
             {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $("#filterCiudad").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#ciudadesList option").filter(function () {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
@@ -280,15 +287,6 @@
         });
 
         $("#idSala").val($("#salasList option:selected").attr("id"));
-        if ($('#ciudadesList option:selected')[0].style.backgroundColor == "orange")
-        {
-            alert("¿No sería mejor esperar un poco más para esta fecha?");
-        }
-        else if ($('#ciudadesList option:selected')[0].style.backgroundColor == "red")
-        {
-            alert("Me parece muy mala idea cerrar elegir esta sala. Deberías esperar un poco mas");
-        }
-
     });
 
 
@@ -305,6 +303,15 @@
         }
     }
 
+    function validate()
+    {
+        if ($('#ciudadesList option:selected')[0].style.backgroundColor == "orange") {
+            return confirm("¿No sería mejor esperar un poco más para esta fecha?");
+        }
+        else if ($('#ciudadesList option:selected')[0].style.backgroundColor == "red") {
+            return confirm("Me parece muy mala idea cerrar esta fecha. ¿Queres continuar?");
+        }
+    }
 
 
 </script>
