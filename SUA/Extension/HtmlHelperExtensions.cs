@@ -34,6 +34,11 @@ namespace SUA.Extension
                 anchorBuilder.MergeAttribute("target", "_blank");
             }
 
+            if (action.ToLower().Contains("delete"))
+            {
+                anchorBuilder.MergeAttribute("onclick", "return confirm('¿Deseas borrar el elemento seleccionado?')");
+            }
+
             anchorBuilder.InnerHtml = imgHtml; // include the <img> tag inside
             string anchorHtml = anchorBuilder.ToString(TagRenderMode.Normal);
 
