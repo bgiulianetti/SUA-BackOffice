@@ -274,10 +274,19 @@
         }
     });
 
-    $('#salasList').change(function () {
+    $('#salasList').change(function ()
+    {
+        var idSala;
+        if ("@ViewBag.accion" == "Put")
+        {
+            idSala = $("#salasList option:selected").val();
+        }
+        else
+        {
+            idSala = $("#salasList option:selected").attr("id")
+        }
 
-        var idSala = $("#salasList option:selected").attr("id");
-
+        $("#idSala").val(idSala);
         $.ajax({
             url: '/fecha/GetAntesDespuesFechas?idSala=' + idSala + '&fecha=' + $("#fechaHorario").val(),
             type: 'GET',
@@ -285,8 +294,6 @@
             success: mostrarAntesDespues,
             error: function () { console.log("ERROR: No se puede obtener informacion de la ultima fecha en la sala seleccionada"); }
         });
-
-        $("#idSala").val($("#salasList option:selected").attr("id"));
     });
 
 

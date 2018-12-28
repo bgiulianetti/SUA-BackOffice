@@ -262,14 +262,22 @@ namespace SUA.Controllers
         [HttpGet]
         public string GetAntesDespuesFechas(string idSala, DateTime fecha)
         {
-            var salaService = new SalaService();
-            var ciudad = salaService.GetSalaById(idSala).Direccion.Ciudad;
+            try
+            {
+                var salaService = new SalaService();
+                var ciudad = salaService.GetSalaById(idSala).Direccion.Ciudad;
 
-            var fechaService = new FechaService();
-            var desde = fecha.AddDays(-20);
-            var hasta = fecha.AddDays(20);
-            var fechas = fechaService.GetFechasByCiudadAndRangoFecha(ciudad, desde, hasta);
-            return JsonConvert.SerializeObject(fechas);
+                var fechaService = new FechaService();
+                var desde = fecha.AddDays(-20);
+                var hasta = fecha.AddDays(20);
+                var fechas = fechaService.GetFechasByCiudadAndRangoFecha(ciudad, desde, hasta);
+                return JsonConvert.SerializeObject(fechas);
+            }
+            catch
+            {
+                return string.Empty;
+            }
+
         }
 
         [UserValidationFilter]
