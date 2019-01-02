@@ -249,6 +249,7 @@
             $("#cantidadDias").val("");
             $("#listaCiudad option:selected").remove();
             generateReptirPlazasList();
+            SortList("#repeticion");
         }
         else
         {
@@ -265,6 +266,7 @@
             $("#repeticion option:selected").remove();
         }
         generateReptirPlazasList();
+        SortList("#listaCiudad");
     });
 
 
@@ -283,4 +285,15 @@
         }
         $("#_plazasRepetir").val(_plaza);
     }
+
+    function SortList(select) {
+
+        $(select).html($(select).children('option').sort(function (x, y) {
+            return $(x).text().toUpperCase() < $(y).text().toUpperCase() ? -1 : 1;
+        }));
+        $(select).get(0).selectedIndex = 0;
+        e.preventDefault();
+
+    }
+
 </script>

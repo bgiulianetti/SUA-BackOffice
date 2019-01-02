@@ -44,12 +44,17 @@ namespace SUA.Controllers
                 }
 
                 var salaService = new SalaService();
-                var plazas = salaService.GetCiudadesInSalas();
-                foreach (var plaza in show.Repeticion)
+                var plazas = salaService.GetCiudadesInSalas().OrderBy(f=>f).ToList();
+                if(show.Repeticion != null)
                 {
-                    if (plazas.Contains(plaza.Ciudad))
-                        plazas.Remove(plaza.Ciudad);
+                    show.Repeticion = show.Repeticion.OrderBy(f => f.Ciudad).ToList();
+                    foreach (var plaza in show.Repeticion)
+                    {
+                        if (plazas.Contains(plaza.Ciudad))
+                            plazas.Remove(plaza.Ciudad);
+                    }
                 }
+
                 ViewBag.plazas = plazas;
                 ViewBag.productor = show.Productor.Dni;
                 ViewBag.standuperos = standuperos;
