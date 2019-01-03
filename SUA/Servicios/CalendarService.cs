@@ -19,6 +19,7 @@ namespace SUA.Servicios
     {
         public Uri ApiUrl { get; set; }
         public HttpClient Client { get; set; }
+        public string[] Scopes { get; set; }
 
         public GoogleCalendarService()
         {
@@ -26,6 +27,9 @@ namespace SUA.Servicios
             Client = new HttpClient();
             Client.BaseAddress = ApiUrl;
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            Scopes = new string[] {
+                "https://www.googleapis.com/auth/calendar",
+            };
         }
 
         public string GetCalendarKey()
@@ -50,6 +54,54 @@ namespace SUA.Servicios
             var responseJson = response.Content.ReadAsStringAsync().Result;
             var credentials = JsonConvert.DeserializeObject<ClientSecrets>(responseJson);
             return credentials;
+        }
+
+        public void CreateEvent()
+        {
+            var start = new DateTime(2019, 01, 09, 22, 00, 00);
+            var end = new DateTime(2019, 01, 09, 23, 59, 59);
+            var body = "Descripcion \n Descrición \n Hola tarola";
+            var location = "San Martin 980 Quilmes";
+            var titulo = "Titulo Test";
+            var calendarId = "09ptb764ha2oood2ighc8udfik@group.calendar.google.com";
+
+            UserCredential credential;
+
+            using (var stream =
+                new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
+            {
+                // The file token.json stores the user's access and refresh tokens, and is created
+                // automatically when the authorization flow completes for the first time.
+                string credPath = "token.json";
+                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+                    GoogleClientSecrets.Load(stream).Secrets,
+                    Scopes,
+                    "user",
+                    CancellationToken.None,
+                    new FileDataStore(credPath, true)).Result;
+                Console.WriteLine("Credential file saved to: " + credPath);
+            }
+
+            // Create Google Calendar API service.
+            var service = new CalendarService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = "SUA - BackOffice",
+            });
+
+            //Event
+            var _event = new Event
+            {
+                Id = System.Guid.NewGuid().ToString().Replace("-", ""),
+                Start = new EventDateTime { DateTime = start },
+                End = new EventDateTime { DateTime = end },
+                Location = location,
+                Description = body,
+                Summary = titulo,
+                Source = new Event.SourceData { Title = "BO-SUA", Url = "http://c721.cloud.wiroos.net" }
+            };
+            var newEventRequest = service.Events.Insert(_event, calendarId);
+            var eventResult = newEventRequest.Execute();
         }
     }
 

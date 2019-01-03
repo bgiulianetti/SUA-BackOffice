@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SUA", "SUA\SUA.csproj", "{2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SUA.TestProject", "SUA.TestProject\SUA.TestProject.csproj", "{D705B1DD-1F06-4B58-AE10-32353CA4B422}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SUA.CalendarService", "SUA.CalendarService\SUA.CalendarService.csproj", "{E65C8838-88B6-4328-AEC0-AA5A01F53DA9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D705B1DD-1F06-4B58-AE10-32353CA4B422}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D705B1DD-1F06-4B58-AE10-32353CA4B422}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D705B1DD-1F06-4B58-AE10-32353CA4B422}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E65C8838-88B6-4328-AEC0-AA5A01F53DA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E65C8838-88B6-4328-AEC0-AA5A01F53DA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E65C8838-88B6-4328-AEC0-AA5A01F53DA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E65C8838-88B6-4328-AEC0-AA5A01F53DA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
