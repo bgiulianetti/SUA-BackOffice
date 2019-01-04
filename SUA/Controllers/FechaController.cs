@@ -67,14 +67,16 @@ namespace SUA.Controllers
                     ViewBag.mensaje = "creado";
                     new LogService().FormatAndSaveLog("Fecha", "Crear", JsonConvert.SerializeObject(fecha));
 
-                    /*
-                    var serviceEmail = new EmailService();
-                    serviceEmail.SendEmail(
-                        emailTo: new UserService().GetUserByNombre("sua-user").MailRecover, 
-                        subject: "Creación Fecha", 
-                        body: GenerateBodyEmail(fecha)
-                    );
-                    */
+                    var calendarService = new GoogleCalendarService();
+                    calendarService.CreateEvent(Server.MapPath("~/Content/CalendarService/SUA.CalendarService.exe"),
+                                                "post",
+                                                fecha.FechaHorario,
+                                                fecha.FechaHorario.AddHours(3),
+                                                fecha.Sala.ToString(),
+                                                fecha.Sala.Direccion.Direccion + ", " + fecha.Sala.Direccion.Ciudad,
+                                                fecha.Show._Show + " en " + fecha.Sala.Direccion.Ciudad,
+                                                fecha.Show.GoogleCalendarId,
+                                                fecha.UniqueId);
                 }
                 else if (string.Equals(accion, "Put"))
                 {

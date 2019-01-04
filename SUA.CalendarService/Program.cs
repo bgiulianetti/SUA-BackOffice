@@ -33,11 +33,11 @@ namespace CalendarQuickstart
                 var location = args[4];
                 var titulo = args[5];
                 var calendarId = args[6]; //"09ptb764ha2oood2ighc8udfik@group.calendar.google.com";
+                var eventId = args[7];
 
                 UserCredential credential;
 
-                using (var stream =
-                    new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
+                using (var stream = new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
                 {
                     // The file token.json stores the user's access and refresh tokens, and is created
                     // automatically when the authorization flow completes for the first time.
@@ -61,13 +61,13 @@ namespace CalendarQuickstart
                 //Event
                 var _event = new Event
                 {
-                    Id = System.Guid.NewGuid().ToString().Replace("-", ""),
+                    Id = eventId,
                     Start = new EventDateTime { DateTime = start },
                     End = new EventDateTime { DateTime = end },
                     Location = location,
                     Description = body,
                     Summary = titulo,
-                    Source = new Event.SourceData { Title = "BO-SUA", Url = "http://c721.cloud.wiroos.net" }
+                    Source = new Event.SourceData { Title = "BO-SUA", Url = "http://c721.cloud.wiroos.net" },
                 };
                 var newEventRequest = service.Events.Insert(_event, calendarId);
                 var eventResult = newEventRequest.Execute();
