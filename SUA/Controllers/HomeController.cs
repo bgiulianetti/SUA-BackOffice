@@ -66,6 +66,21 @@ namespace SUA.Controllers
         public ActionResult Index()
         {
             var calendarService = new GoogleCalendarService();
+
+            //calendarService.CreateEvent(Server.MapPath("~/credentials.json"));
+
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            process.StartInfo.FileName = Server.MapPath("~/Content/CalendarService/SUA.CalendarService.exe");
+            process.StartInfo.Arguments = "post " + 
+                                          new DateTime(2019, 01, 24, 21, 00, 00).ToString("yyyy-MM-dd") + " " +
+                                          new DateTime(2019, 01, 24, 23, 59, 59).ToString("yyyy-MM-dd") + " " +
+                                          "Descripcion_nueva " + 
+                                          "Migueletes-680 " + 
+                                          "Titulo_viernes_14 " +
+                                          "09ptb764ha2oood2ighc8udfik@group.calendar.google.com";
+            process.Start();
+            //process.Close();
+
             ViewBag.CalendarsFullUrl = "home/GetShowCalendars";
             ViewBag.Key = calendarService.GetCalendarKey();
             ViewBag.showCalendars = GetShowCalendarsList();

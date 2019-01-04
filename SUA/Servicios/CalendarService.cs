@@ -56,19 +56,19 @@ namespace SUA.Servicios
             return credentials;
         }
 
-        public void CreateEvent()
+        public void CreateEvent(string path)
         {
-            var start = new DateTime(2019, 01, 09, 22, 00, 00);
-            var end = new DateTime(2019, 01, 09, 23, 59, 59);
-            var body = "Descripcion \n Descrición \n Hola tarola";
+            var start = new DateTime(2019, 01, 10, 22, 00, 00);
+            var end = new DateTime(2019, 01, 10, 23, 59, 59);
+            var body = "otra descripcion mas";
             var location = "San Martin 980 Quilmes";
-            var titulo = "Titulo Test";
+            var titulo = "Test 2";
             var calendarId = "09ptb764ha2oood2ighc8udfik@group.calendar.google.com";
 
             UserCredential credential;
 
             using (var stream =
-                new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
+                new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 // The file token.json stores the user's access and refresh tokens, and is created
                 // automatically when the authorization flow completes for the first time.
@@ -100,6 +100,9 @@ namespace SUA.Servicios
                 Summary = titulo,
                 Source = new Event.SourceData { Title = "BO-SUA", Url = "http://c721.cloud.wiroos.net" }
             };
+
+            _event.Attendees = new List<EventAttendee> { new EventAttendee { DisplayName = "Bruno Nicolas Giulianetti", Email = "bruno.giulianetti@gmail.com" } };
+
             var newEventRequest = service.Events.Insert(_event, calendarId);
             var eventResult = newEventRequest.Execute();
         }
