@@ -185,6 +185,11 @@ namespace SUA.Servicios
             return fechas;
         }
 
+        public List<Fecha> GetFechaForGoogleCalendarAction()
+        {
+            return Repository.GetFechaForGoogleCalendarAction();
+        }
+
         public List<InfoPlazasParaRepeticion> GetRepeticionPlazasByShowAndDate(string idShow, DateTime date)
         {
             var list = new List<InfoPlazasParaRepeticion>();

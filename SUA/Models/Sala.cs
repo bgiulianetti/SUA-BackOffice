@@ -44,7 +44,7 @@ namespace SUA.Models
         public override string ToString()
         {
             var salaString = "";
-            salaString += "Nombre: " + this.Nombre + "\n";
+            salaString += "Sala: " + this.Nombre + "\n";
             salaString += Direccion == null ? "" : "Dirección: " + this.Direccion.Direccion + ", " + this.Direccion.Ciudad + "\n";
             salaString += "Capacidad: " +  this.Capacidad + "\n";
             salaString += Telefono == null ? "" : "Telefono: " + this.Telefono + "\n";

@@ -1461,7 +1461,27 @@ namespace SUA.Repositorios
                 throw new Exception(FECHA_DELETE_NOT_DELETED_EXCEPTION);
         }
 
+        public List<Fecha> GetFechaForGoogleCalendarAction()
+        {
+            var response = Client.Search<Fecha>(s => s
+               .Index(Index)
+               .Type(Index)
+               .From(0)
+               .Size(GetCount(Index))
+              );
 
+            if (response == null)
+                throw new Exception(INVALID_FECHA_ES_CONNECTION_EXCEPTION);
+
+            if (!response.IsValid)
+                throw new Exception(FECHA_GET_ALL_EXCEPTION);
+
+            var fechas = new List<Fecha>();
+
+            fechas.AddRange(response.Documents);
+            fechas = fechas.Where(f=>f.GoogleCalendarState != null && f.GoogleCalendarState != "ok").ToList();
+            return fechas;
+        }
 
 
 

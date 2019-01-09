@@ -6,6 +6,7 @@ using Google.Apis.Util.Store;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -56,21 +57,88 @@ namespace SUA.Servicios
             return credentials;
         }
 
-        public void CreateEvent(string path, string accion, DateTime start, DateTime end, string salaInfo, string direccion, string titulo, string calendarId, string eventId)
-        {
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            process.StartInfo.FileName = path;
-            var arguments = accion + " " +
-                            " \"" + start.ToString("yyyy-MM-dd hh:mm:ss") + "\" " +
-                            " \"" + end.ToString("yyyy-MM-dd hh:mm:ss") + "\" " +
-                            " \"" + salaInfo + "\" " +
-                            " \"" + direccion + "\" " +
-                            " \" " + titulo + "\" " +
-                            "09ptb764ha2oood2ighc8udfik@group.calendar.google.com" + " " + 
-                            eventId;
-            process.StartInfo.Arguments = arguments;
 
-            process.Start();
+
+        public void CreateEvent(/*string calendarId, string body, DateTime start, DateTime end*/)
+        {
+            string[] Scopes = {
+            "https://www.googleapis.com/auth/calendar",
+        };
+            string ApplicationName = "Google Calendar API .NET Quickstart";
+
+
+            //var accion = args[0];
+            //if(args[0] == "post")
+            //{
+            var start = new DateTime(2019, 01, 06, 22, 00, 00);//DateTime.Parse(args[1]);
+            var end = new DateTime(2019, 01, 06, 23, 59, 59); //DateTime.Parse(args[2]);
+            var body = "body";//args[3];
+            var location = "Pinamar";// args[4];
+            var titulo = "Sanata en Pinamar";// args[5];
+            var calendarId = "09ptb764ha2oood2ighc8udfik@group.calendar.google.com"; //args[6];
+            var eventId = DateTime.Now.ToString("yyyyMMddHHmmss");// args[7];
+
+            UserCredential credential;
+
+            using (var stream = new FileStream("D:/Git/SUA-BackOffice/SUA.CalendarService/bin/Debug/credentials.json", FileMode.Open, FileAccess.Read))
+            {
+                // The file token.json stores the user's access and refresh tokens, and is created
+                // automatically when the authorization flow completes for the first time.
+                string credPath = "D:/Git/SUA-BackOffice/SUA.CalendarService/bin/Debug/token.json";
+                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+                    GoogleClientSecrets.Load(stream).Secrets,
+                    Scopes,
+                    "user",
+                    CancellationToken.None,
+                    new FileDataStore(credPath, true)).Result;
+                Console.WriteLine("Credential file saved to: " + credPath);
+            }
+
+            // Create Google Calendar API service.
+            var service = new CalendarService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = ApplicationName,
+            });
+
+            //Event
+            var _event = new Event
+            {
+                Id = eventId,
+                Start = new EventDateTime { DateTime = start },
+                End = new EventDateTime { DateTime = end },
+                Location = location,
+                Description = body,
+                Summary = titulo,
+                Source = new Event.SourceData { Title = "BO-SUA", Url = "http://c721.cloud.wiroos.net" },
+            };
+            var newEventRequest = service.Events.Insert(_event, calendarId);
+            var eventResult = newEventRequest.Execute();
+            /* }
+             else if(args[0] == "put")
+             {
+
+             }
+             else if (args[0] == "delete")
+             {
+
+             }*/
+        }
+
+
+        public static void CreateEventViejo(/*string path, string accion, DateTime start, DateTime end, string salaInfo, string direccion, string titulo, string calendarId, string eventId*/)
+        {
+            var proc = new Process();
+            proc.StartInfo.FileName = @"C:\Users\fcacho\Documents\calendarService\SUA.CalendarService.exe ";
+
+            //proc.StartInfo.UseShellExecute = false;
+            //proc.StartInfo.RedirectStandardOutput = true;
+            proc.Start();
+            //string outPut = proc.StandardOutput.ReadToEnd();
+
+            proc.WaitForExit();
+            //var exitCode = proc.ExitCode;
+            //proc.Close();
         }
     }
 

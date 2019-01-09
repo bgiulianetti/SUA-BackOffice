@@ -14,6 +14,7 @@ namespace SUA.Models
         public DateTime FechaHorario { get; set; }
         public Productor Productor { get; set; }
         public Bordereaux Borederaux { get; set; }
+        public string GoogleCalendarState { get; set; }
 
         public void SetIdAndFechaAlta()
         {

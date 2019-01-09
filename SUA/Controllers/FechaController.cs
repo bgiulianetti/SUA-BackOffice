@@ -63,26 +63,17 @@ namespace SUA.Controllers
                 if (string.Equals(accion, "Post"))
                 {
                     fecha.SetIdAndFechaAlta();
+                    fecha.GoogleCalendarState = "post";
                     service.AddFecha(fecha);
                     ViewBag.mensaje = "creado";
                     new LogService().FormatAndSaveLog("Fecha", "Crear", JsonConvert.SerializeObject(fecha));
-
-                    var calendarService = new GoogleCalendarService();
-                    calendarService.CreateEvent(Server.MapPath("~/Content/CalendarService/SUA.CalendarService.exe"),
-                                                "post",
-                                                fecha.FechaHorario,
-                                                fecha.FechaHorario.AddHours(3),
-                                                fecha.Sala.ToString(),
-                                                fecha.Sala.Direccion.Direccion + ", " + fecha.Sala.Direccion.Ciudad,
-                                                fecha.Show._Show + " en " + fecha.Sala.Direccion.Ciudad,
-                                                fecha.Show.GoogleCalendarId,
-                                                fecha.UniqueId);
                 }
                 else if (string.Equals(accion, "Put"))
                 {
                     var fechaObtenida = service.GetFechaById(fecha.UniqueId);
                     if (fechaObtenida.Borederaux != null)
                         fecha.Borederaux = fechaObtenida.Borederaux;
+                    fecha.GoogleCalendarState = "put";
 
                     service.UpdateFecha(fecha);
                     ViewBag.mensaje = "actualizado";

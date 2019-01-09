@@ -58,8 +58,8 @@
     <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.36.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Apis.Auth.1.36.1\lib\net45\Google.Apis.Auth.PlatformServices.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.Calendar.v3, Version=1.36.1.1445, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Calendar.v3.1.36.1.1445\lib\net45\Google.Apis.Calendar.v3.dll</HintPath>
+    <Reference Include="Google.Apis.Calendar.v3, Version=1.36.1.1461, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Calendar.v3.1.36.1.1461\lib\net45\Google.Apis.Calendar.v3.dll</HintPath>
     </Reference>
     <Reference Include="Google.Apis.Core, Version=1.36.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Apis.Core.1.36.1\lib\net45\Google.Apis.Core.dll</HintPath>
@@ -446,25 +446,10 @@
     </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\CalendarService\Google.Apis.Auth.dll" />
-    <Content Include="Content\CalendarService\Google.Apis.Auth.pdb" />
-    <Content Include="Content\CalendarService\Google.Apis.Auth.PlatformServices.dll" />
-    <Content Include="Content\CalendarService\Google.Apis.Auth.xml" />
-    <Content Include="Content\CalendarService\Google.Apis.Calendar.v3.dll" />
-    <Content Include="Content\CalendarService\Google.Apis.Calendar.v3.pdb" />
-    <Content Include="Content\CalendarService\Google.Apis.Calendar.v3.xml" />
-    <Content Include="Content\CalendarService\Google.Apis.Core.dll" />
-    <Content Include="Content\CalendarService\Google.Apis.Core.pdb" />
-    <Content Include="Content\CalendarService\Google.Apis.Core.xml" />
-    <Content Include="Content\CalendarService\Google.Apis.dll" />
-    <Content Include="Content\CalendarService\Google.Apis.pdb" />
-    <Content Include="Content\CalendarService\Google.Apis.PlatformServices.dll" />
-    <Content Include="Content\CalendarService\Google.Apis.xml" />
-    <Content Include="Content\CalendarService\Newtonsoft.Json.dll" />
-    <Content Include="Content\CalendarService\Newtonsoft.Json.xml" />
-    <Content Include="Content\CalendarService\SUA.CalendarService.exe" />
-    <Content Include="Content\CalendarService\SUA.CalendarService.pdb" />
     <Content Include="favicon.ico" />
+    <Content Include="fechas.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="fonts\glyphicons-halflings-regular.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -554,10 +539,9 @@
     <Content Include="assets\votacion\assets\sass\noscript.scss">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="credentials.json" />
-    <Content Include="Content\CalendarService\credentials.json" />
-    <Content Include="Content\CalendarService\SUA.CalendarService.exe.config" />
-    <Content Include="Content\CalendarService\token.json\Google.Apis.Auth.OAuth2.Responses.TokenResponse-user" />
+    <Content Include="credentials.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
