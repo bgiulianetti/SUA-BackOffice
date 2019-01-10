@@ -59,7 +59,7 @@ namespace CalendarQuickstart
                     {
                         try
                         {
-                            var eventRequest = service.Events.Insert(_event, "09ptb764ha2oood2ighc8udfik@group.calendar.google.com" /*fecha.Show.GoogleCalendarId*/);
+                            var eventRequest = service.Events.Insert(_event, fecha.Show.GoogleCalendarId);
                             eventRequest.SendNotifications = true;
                             eventRequest.Execute();
                         }
@@ -70,7 +70,7 @@ namespace CalendarQuickstart
                     {
                         try
                         {
-                            var eventRequest = service.Events.Update(_event, "09ptb764ha2oood2ighc8udfik@group.calendar.google.com", fecha.UniqueId);
+                            var eventRequest = service.Events.Update(_event, fecha.Show.GoogleCalendarId, fecha.UniqueId);
                             eventRequest.SendNotifications = true;
                             eventRequest.Execute();
                         }
@@ -107,7 +107,7 @@ namespace CalendarQuickstart
                 attendees.Add(atendee);
             }
             attendees.Add(new EventAttendee(){ Email = fecha.Productor.Email, DisplayName = fecha.Productor.Nombre + " " + fecha.Productor.Apellido, Organizer = true });
-            _event.Attendees = new EventAttendee[] { new EventAttendee { Email = "bruno.giulianetti@gmail.com", DisplayName = "Bruno Giulianetti" } }; //attendees.ToArray();
+            _event.Attendees = attendees.ToArray();
             return _event;
         }
     }
