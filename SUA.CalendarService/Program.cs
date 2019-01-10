@@ -45,7 +45,7 @@ namespace CalendarQuickstart
             var service = new CalendarService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
+                ApplicationName = ApplicationName
             });
 
             var serviceFecha = new SUA.Servicios.FechaService();
@@ -59,26 +59,24 @@ namespace CalendarQuickstart
                     {
                         try
                         {
-                            var eventRequest = service.Events.Insert(_event, "09ptb764ha2oood2ighc8udfik@group.calendar.google.com" /*fecha.Show.GoogleCalendarId*/).Execute();
+                            var eventRequest = service.Events.Insert(_event, "09ptb764ha2oood2ighc8udfik@group.calendar.google.com" /*fecha.Show.GoogleCalendarId*/);
+                            eventRequest.SendNotifications = true;
+                            eventRequest.Execute();
                         }
                         catch //(Exception ex)
-                        {
-
-                        }
-
+                        {}
                     }
                     else if (fecha.GoogleCalendarState == "put")
                     {
                         try
                         {
-                            var eventRequest = service.Events.Update(_event, "09ptb764ha2oood2ighc8udfik@group.calendar.google.com", fecha.UniqueId).Execute();
+                            var eventRequest = service.Events.Update(_event, "09ptb764ha2oood2ighc8udfik@group.calendar.google.com", fecha.UniqueId);
+                            eventRequest.SendNotifications = true;
+                            eventRequest.Execute();
                         }
                         catch// (Exception ex)
-                        {
-
-                        }
+                        {}
                     }
-
                     fecha.GoogleCalendarState = "ok";
                     serviceFecha.UpdateFecha(fecha);
                 }
@@ -87,16 +85,30 @@ namespace CalendarQuickstart
 
         public static Event CreateEvent(Fecha fecha)
         {
-            return new Event
+            var _event =  new Event
             {
                 Id = fecha.UniqueId,
                 Start = new EventDateTime { DateTime = fecha.FechaHorario },
                 End = new EventDateTime { DateTime = fecha.FechaHorario },
-                Location = fecha.Sala.Direccion.Direccion + " " + fecha.Sala.Direccion.Ciudad,
+                Location = fecha.Sala.Direccion.Direccion + ", " + fecha.Sala.Direccion.Ciudad,
                 Description = fecha.Sala.ToString(),
                 Summary = fecha.Show._Show + " en " + fecha.Sala.Direccion.Ciudad,
                 Source = new Event.SourceData { Title = "BO-SUA", Url = "http://c721.cloud.wiroos.net" }
             };
+
+            var attendees = new List<EventAttendee>();
+            foreach (var integrante  in fecha.Show.Integrantes)
+            {
+                var atendee = new EventAttendee()
+                {
+                    Email = integrante.Email,
+                    DisplayName = integrante.Nombre + " " + integrante.Apellido,
+                };
+                attendees.Add(atendee);
+            }
+            attendees.Add(new EventAttendee(){ Email = fecha.Productor.Email, DisplayName = fecha.Productor.Nombre + " " + fecha.Productor.Apellido, Organizer = true });
+            _event.Attendees = new EventAttendee[] { new EventAttendee { Email = "bruno.giulianetti@gmail.com", DisplayName = "Bruno Giulianetti" } }; //attendees.ToArray();
+            return _event;
         }
     }
 }
