@@ -247,14 +247,5 @@ namespace SUA.TestProject
             a++;
             */
         }
-
-
-
-        [TestMethod]
-        public void CreateEventTest()
-        {
-            var program = new CalendarEvents.Program();
-            program.CreateEvent();
-        }
     }
 }

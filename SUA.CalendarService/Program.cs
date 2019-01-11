@@ -59,7 +59,7 @@ namespace CalendarQuickstart
                     {
                         try
                         {
-                            var eventRequest = service.Events.Insert(_event, fecha.Show.GoogleCalendarId);
+                            var eventRequest = service.Events.Insert(_event, "09ptb764ha2oood2ighc8udfik@group.calendar.google.com"/*fecha.Show.GoogleCalendarId*/);
                             eventRequest.SendNotifications = true;
                             eventRequest.Execute();
                         }
@@ -70,12 +70,23 @@ namespace CalendarQuickstart
                     {
                         try
                         {
-                            var eventRequest = service.Events.Update(_event, fecha.Show.GoogleCalendarId, fecha.UniqueId);
+                            var eventRequest = service.Events.Update(_event, "09ptb764ha2oood2ighc8udfik@group.calendar.google.com"/*fecha.Show.GoogleCalendarId*/, fecha.UniqueId);
                             eventRequest.SendNotifications = true;
                             eventRequest.Execute();
                         }
                         catch// (Exception ex)
                         {}
+                    }
+                    else if(fecha.GoogleCalendarState == "delete")
+                    {
+                        try
+                        {
+                            var eventRequest = service.Events.Delete("09ptb764ha2oood2ighc8udfik@group.calendar.google.com"/*fecha.Show.GoogleCalendarId*/, fecha.UniqueId);
+                            eventRequest.SendNotifications = true;
+                            eventRequest.Execute();
+                        }
+                        catch// (Exception ex)
+                        { }
                     }
                     fecha.GoogleCalendarState = "ok";
                     serviceFecha.UpdateFecha(fecha);
@@ -88,12 +99,12 @@ namespace CalendarQuickstart
             var _event =  new Event
             {
                 Id = fecha.UniqueId,
-                Start = new EventDateTime { DateTime = fecha.FechaHorario },
-                End = new EventDateTime { DateTime = fecha.FechaHorario },
+                Start = new EventDateTime { DateTime = fecha.FechaHorario, TimeZone = "America/Buenos_Aires" },
+                End = new EventDateTime { DateTime = fecha.FechaHorario, TimeZone = "America/Buenos_Aires" },
                 Location = fecha.Sala.Direccion.Direccion + ", " + fecha.Sala.Direccion.Ciudad,
                 Description = fecha.Sala.ToString(),
                 Summary = fecha.Show._Show + " en " + fecha.Sala.Direccion.Ciudad,
-                Source = new Event.SourceData { Title = "BO-SUA", Url = "http://c721.cloud.wiroos.net" }
+                Source = new Event.SourceData { Title = "BO-SUA", Url = "http://c721.cloud.wiroos.net" },
             };
 
             var attendees = new List<EventAttendee>();

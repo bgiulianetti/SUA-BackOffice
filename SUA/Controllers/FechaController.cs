@@ -280,7 +280,9 @@ namespace SUA.Controllers
             try
             {
                 var fecha = service.GetFechaById(id);
-                service.DeleteFecha(id);
+                fecha.Status = "deleted";
+                fecha.GoogleCalendarState = "delete";
+                service.UpdateFecha(fecha);
                 new LogService().FormatAndSaveLog("Fecha", "Borrar", JsonConvert.SerializeObject(fecha));
             }
             catch /*(Exception ex)*/

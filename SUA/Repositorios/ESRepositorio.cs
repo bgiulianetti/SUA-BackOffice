@@ -1068,7 +1068,11 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    fechas.Add(item);
+                {
+                    if(item.Status == null)
+                        fechas.Add(item);
+                }
+
             }
             return fechas;
         }
@@ -1094,7 +1098,11 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    fecha = item;
+                {
+                    if (item.Status == null)
+                        fecha = item;
+                }
+
             }
             return fecha;
         }
@@ -1122,7 +1130,11 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    fechas.Add(item);
+                {
+                    if (item.Status == null)
+                        fechas.Add(item);
+                }
+
             }
             return fechas;
         }
@@ -1150,7 +1162,11 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    fechas.Add(item);
+                {
+                    if (item.Status == null)
+                        fechas.Add(item);
+                }
+
             }
             return fechas;
         }
@@ -1178,7 +1194,11 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    fechas.Add(item);
+                {
+                    if (item.Status == null)
+                        fechas.Add(item);
+                }
+
             }
             return fechas;
         }
@@ -1207,8 +1227,12 @@ namespace SUA.Repositorios
             {
                 foreach (var item in response.Documents)
                 {
-                    if (item.Sala.Nombre.Trim() == nombreSala.Trim())
+                    if (item.Status == null)
+                    {
+                        if (item.Sala.Nombre.Trim() == nombreSala.Trim())
                         fechas.Add(item);
+                    }
+
                 }
             }
             return fechas;
@@ -1237,7 +1261,11 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    fechas.Add(item);
+                {
+                    if (item.Status == null)
+                        fechas.Add(item);
+                }
+
             }
             return fechas;
         }
@@ -1269,8 +1297,13 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    if (item.Sala.UniqueId == idSala && item.Show.UniqueId == idShow)
+                {
+                    if (item.Status == null)
+                    {
+                        if (item.Sala.UniqueId == idSala && item.Show.UniqueId == idShow)
                         fechas.Add(item);
+                    }
+                }
             }
             return fechas;
         }
@@ -1302,8 +1335,13 @@ namespace SUA.Repositorios
             if (response.Total > 0)
             {
                 foreach (var item in response.Documents)
-                    if (item.Sala.Direccion.Ciudad.Trim() == ciudad.Trim() && item.Show.UniqueId == idShow)
+                {
+                    if (item.Status == null)
+                    {
+                        if (item.Sala.Direccion.Ciudad.Trim() == ciudad.Trim() && item.Show.UniqueId == idShow)
                         fechas.Add(item);
+                    }
+                }
             }
             return fechas;
         }
@@ -1331,7 +1369,7 @@ namespace SUA.Repositorios
 
             var fechas = new List<Fecha>();
             fechas.AddRange(response.Documents);
-            fechas = fechas.Where(f => f.Sala.Direccion.Ciudad == ciudad  && f.FechaHorario >= desde && f.FechaHorario <= hasta ).ToList();
+            fechas = fechas.Where(f => f.Status == null && f.Sala.Direccion.Ciudad == ciudad  && f.FechaHorario >= desde && f.FechaHorario <= hasta ).ToList();
 
             return fechas;
         }
@@ -1359,8 +1397,11 @@ namespace SUA.Repositorios
             {
                 foreach (var item in response.Documents)
                 {
-                    if (item.FechaHorario == fechaYHorario)
-                        fecha = item;
+                    if (item.Status == null)
+                    {
+                        if (item.FechaHorario == fechaYHorario)
+                            fecha = item;
+                    }
                 }
             }
             return fecha;
