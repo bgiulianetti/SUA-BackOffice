@@ -199,10 +199,53 @@ namespace SUA.Repositorios
         public const string RESTAURANTE_CREATE_NOT_CREATED_EXCEPTION = "Falla al querer crear un restaurante nuevo";
         public const string RESTAURANTE_UPDATE_INVALID_PARAMETER_EXCEPTION = "Para editar un restaurante debe pasar un restaurante válido";
         public const string RESTAURANTE_UPDATE_NOT_EXISTS_EXCEPTION = "Para editar un restaurante debe pasar un restaurante que exista previamente";
-        public const string RESTAURANTE_UPDATE_NOT_UPDATED_EXCEPTION = "Falla al querer editar un hotel";
+        public const string RESTAURANTE_UPDATE_NOT_UPDATED_EXCEPTION = "Falla al querer editar un restaurante";
         public const string RESTAURANTE_DELETE_INVALID_PARAMETER_EXCEPTION = "Para borrar un restaurante por id debe pasar un id válido";
         public const string RESTAURANTE_DELETE_NOT_EXISTS_EXCEPTION = "Para borrar un restaurante debe pasar un restaurante que exista previamente";
-        public const string RESTAURANTE_DELETE_NOT_DELETED_EXCEPTION = "Falla al querer borrar un hotel";
+        public const string RESTAURANTE_DELETE_NOT_DELETED_EXCEPTION = "Falla al querer borrar un restaurante";
+
+
+
+        //Proveedor
+        public const string INVALID_PROVEEDOR_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch al querer obtener todos los proveedores";
+        public const string PROVEEDOR_GET_ALL_EXCEPTION = "Falla al querer obtener todos los proveedores";
+        public const string PROVEEDOR_GET_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para obtener un proveedor por id debe pasar un id válido";
+        public const string PROVEEDOR_GET_BY_ID_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un proveedor por id";
+        public const string PROVEEDOR_GET_BY_NOMBRE_INVALID_PARAMETER_EXCEPTION = "Para obtener un proveedor por nombre debe pasar un nombre válido";
+        public const string PROVEEDOR_GET_BY_NOMBRE_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un proveedor por nombre";
+        public const string PROVEEDOR_GET_INNERID_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para obtener un proveedor innerId por id debe pasar un id válido";
+        public const string PROVEEDOR_GET_INNERID_BY_ID_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un proveedor innerId por id";
+        public const string PROVEEDOR_CREATE_INVALID_PARAMETER_EXCEPTION = "Para agregar un proveedor debe pasar un proveedor válido";
+        public const string PROVEEDOR_CREATE_ALREADY_EXISTS_EXCEPTION = "Para agregar un proveedor debe pasar un proveedor que no exista previamente";
+        public const string PROVEEDOR_CREATE_NOT_CREATED_EXCEPTION = "Falla al querer crear un proveedor nuevo";
+        public const string PROVEEDOR_UPDATE_INVALID_PARAMETER_EXCEPTION = "Para editar un proveedor debe pasar un proveedor válido";
+        public const string PROVEEDOR_UPDATE_NOT_EXISTS_EXCEPTION = "Para editar un proveedor debe pasar un proveedor que exista previamente";
+        public const string PROVEEDOR_UPDATE_NOT_UPDATED_EXCEPTION = "Falla al querer editar un proveedor";
+        public const string PROVEEDOR_DELETE_INVALID_PARAMETER_EXCEPTION = "Para borrar un proveedor por id debe pasar un id válido";
+        public const string PROVEEDOR_DELETE_NOT_EXISTS_EXCEPTION = "Para borrar un proveedor debe pasar un proveedor que exista previamente";
+        public const string PROVEEDOR_DELETE_NOT_DELETED_EXCEPTION = "Falla al querer borrar un proveedor";
+
+
+        //Prensa
+        public const string INVALID_PRENSA_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch al querer obtener todos los prensa";
+        public const string PRENSA_GET_ALL_EXCEPTION = "Falla al querer obtener todos los prensa";
+        public const string PRENSA_GET_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para obtener un prensa por id debe pasar un id válido";
+        public const string PRENSA_GET_BY_ID_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un prensa por id";
+        public const string PRENSA_GET_BY_NOMBRE_INVALID_PARAMETER_EXCEPTION = "Para obtener un prensa por nombre debe pasar un nombre válido";
+        public const string PRENSA_GET_BY_NOMBRE_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un prensa por nombre";
+        public const string PRENSA_GET_INNERID_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para obtener un prensa innerId por id debe pasar un id válido";
+        public const string PRENSA_GET_INNERID_BY_ID_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un prensa innerId por id";
+        public const string PRENSA_CREATE_INVALID_PARAMETER_EXCEPTION = "Para agregar un prensa debe pasar un prensa válido";
+        public const string PRENSA_CREATE_ALREADY_EXISTS_EXCEPTION = "Para agregar un prensa debe pasar un prensa que no exista previamente";
+        public const string PRENSA_CREATE_NOT_CREATED_EXCEPTION = "Falla al querer crear un prensa nuevo";
+        public const string PRENSA_UPDATE_INVALID_PARAMETER_EXCEPTION = "Para editar un prensa debe pasar un prensa válido";
+        public const string PRENSA_UPDATE_NOT_EXISTS_EXCEPTION = "Para editar un prensa debe pasar un prensa que exista previamente";
+        public const string PRENSA_UPDATE_NOT_UPDATED_EXCEPTION = "Falla al querer editar un prensa";
+        public const string PRENSA_DELETE_INVALID_PARAMETER_EXCEPTION = "Para borrar un prensa por id debe pasar un id válido";
+        public const string PRENSA_DELETE_NOT_EXISTS_EXCEPTION = "Para borrar un prensa debe pasar un prensa que exista previamente";
+        public const string PRENSA_DELETE_NOT_DELETED_EXCEPTION = "Falla al querer borrar un prensa";
+
+
 
 
         //Votacion
@@ -2146,6 +2189,360 @@ namespace SUA.Repositorios
         }
 
 
+
+
+        /*-------------------Proveedores-------------------*/
+        public List<Proveedor> GetProveedores()
+        {
+            var response = Client.Search<Proveedor>(s => s
+                   .Index(Index)
+                   .Type(Index)
+                   .From(0)
+                   .Size(GetCount(Index))
+                  );
+
+            if (response == null)
+                throw new Exception(INVALID_PROVEEDOR_ES_CONNECTION_EXCEPTION);
+
+            if (!response.IsValid)
+                throw new Exception(PROVEEDOR_GET_ALL_EXCEPTION);
+
+            var proveedores = new List<Proveedor>();
+            proveedores.AddRange(response.Documents);
+            return proveedores;
+        }
+        public Proveedor GetProveedorById(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(PROVEEDOR_GET_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Proveedor>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q
+                    .Match(m => m.Field(f => f.UniqueId).Query(id)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(PROVEEDOR_GET_BY_ID_INVALID_SEARCH_EXCEPTION);
+
+            Proveedor proveedor = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                {
+                    if(item.UniqueId == id)
+                        proveedor = item;
+                }
+
+            }
+            return proveedor;
+        }
+        public Proveedor GetProveedorByNombre(string nombre)
+        {
+            if (string.IsNullOrEmpty(nombre))
+                throw new Exception(PROVEEDOR_GET_BY_NOMBRE_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Proveedor>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q
+                    .Match(m => m.Field(f => f.Nombre).Query(nombre)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(PROVEEDOR_GET_BY_NOMBRE_INVALID_SEARCH_EXCEPTION);
+
+            Proveedor proveedor = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    if (item.Nombre == nombre)
+                    {
+                        proveedor = item;
+                        break;
+                    }
+            }
+            return proveedor;
+        }
+        public string GetProveedorInnerIdById(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(PROVEEDOR_GET_INNERID_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Proveedor>(s => s
+               .Index(Index)
+               .Type(Index)
+               .Query(q => q
+                   .Match(m => m.Field(f => f.UniqueId).Query(id)))
+                   );
+
+            string innerId = null;
+            if (response == null)
+                return innerId;
+
+            if (!response.IsValid)
+                throw new Exception(PROVEEDOR_GET_INNERID_BY_ID_INVALID_SEARCH_EXCEPTION);
+
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Hits)
+                    innerId = item.Id;
+            }
+            return innerId;
+        }
+        public void AddProveedor(Proveedor proveedor)
+        {
+            if (proveedor == null)
+                throw new Exception(PROVEEDOR_CREATE_INVALID_PARAMETER_EXCEPTION);
+
+            if (!IndexExists())
+                CreateIndex();
+
+            var resultado = GetProveedorByNombre(proveedor.Nombre);
+            if (resultado != null)
+                throw new Exception(PROVEEDOR_CREATE_ALREADY_EXISTS_EXCEPTION);
+
+            var response = Client.IndexAsync(proveedor, i => i
+              .Index(Index)
+              .Type(Index)
+              .Refresh(Refresh.True)
+              ).Result;
+
+            if (!response.IsValid)
+                throw new Exception(PROVEEDOR_CREATE_NOT_CREATED_EXCEPTION);
+        }
+        public void AddBulkProveedor(List<Proveedor> proveedores)
+        {
+            if (!IndexExists())
+                CreateIndex();
+
+            var response = Client.IndexManyAsync(proveedores, Index, Index).Result;
+
+            if (!response.IsValid)
+                throw new Exception(PROVEEDOR_CREATE_NOT_CREATED_EXCEPTION);
+        }
+        public void UpdateProveedor(Proveedor proveedor)
+        {
+            if (proveedor == null)
+                throw new Exception(PROVEEDOR_UPDATE_INVALID_PARAMETER_EXCEPTION);
+
+            var innerId = GetProveedorInnerIdById(proveedor.UniqueId);
+            if (innerId == null)
+                throw new Exception(PROVEEDOR_UPDATE_NOT_EXISTS_EXCEPTION);
+
+            var result = Client.Index(proveedor, i => i
+                            .Index(Index)
+                            .Type(Index)
+                            .Id(innerId)
+                            .Refresh(Refresh.True));
+
+            if (!result.IsValid)
+                throw new Exception(PROVEEDOR_UPDATE_NOT_UPDATED_EXCEPTION);
+        }
+        public void DeleteProveedor(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(PROVEEDOR_DELETE_INVALID_PARAMETER_EXCEPTION);
+
+            var innerId = GetProveedorInnerIdById(id);
+            if (innerId == null)
+                throw new Exception(PROVEEDOR_DELETE_NOT_EXISTS_EXCEPTION);
+
+            var response = Client.Delete<Proveedor>(innerId, d => d
+                                                        .Index(Index)
+                                                        .Type(Index)
+                                                        .Refresh(Refresh.True)
+                                                        );
+            if (!response.IsValid)
+                throw new Exception(PROVEEDOR_DELETE_NOT_DELETED_EXCEPTION);
+        }
+
+
+        /*-------------------Prensa-------------------*/
+        public List<Prensa> GetPrensa()
+        {
+            var response = Client.Search<Prensa>(s => s
+                   .Index(Index)
+                   .Type(Index)
+                   .From(0)
+                   .Size(GetCount(Index))
+                  );
+
+            if (response == null)
+                throw new Exception(INVALID_PRENSA_ES_CONNECTION_EXCEPTION);
+
+            if (!response.IsValid)
+                throw new Exception(PRENSA_GET_ALL_EXCEPTION);
+
+            var prensa = new List<Prensa>();
+            prensa.AddRange(response.Documents);
+            return prensa;
+        }
+        public Prensa GetPrensaById(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(PRENSA_GET_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Prensa>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q
+                    .Match(m => m.Field(f => f.UniqueId).Query(id)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(PRENSA_GET_BY_ID_INVALID_SEARCH_EXCEPTION);
+
+            Prensa prensa = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                {
+                    if (item.UniqueId == id)
+                    {
+                        prensa = item;
+                        break;
+                    }
+
+                }
+            }
+            return prensa;
+        }
+        public Prensa GetPrensaByNombre(string nombre)
+        {
+            if (string.IsNullOrEmpty(nombre))
+                throw new Exception(PRENSA_GET_BY_NOMBRE_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Prensa>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q
+                    .Match(m => m.Field(f => f.Nombre).Query(nombre)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(PRENSA_GET_BY_NOMBRE_INVALID_SEARCH_EXCEPTION);
+
+            Prensa prensa = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    if (item.Nombre == nombre)
+                    {
+                        prensa = item;
+                        break;
+                    }
+            }
+            return prensa;
+        }
+        public string GetPrensaInnerIdById(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(PRENSA_GET_INNERID_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Prensa>(s => s
+               .Index(Index)
+               .Type(Index)
+               .Query(q => q
+                   .Match(m => m.Field(f => f.UniqueId).Query(id)))
+                   );
+
+            string innerId = null;
+            if (response == null)
+                return innerId;
+
+            if (!response.IsValid)
+                throw new Exception(PRENSA_GET_INNERID_BY_ID_INVALID_SEARCH_EXCEPTION);
+
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Hits)
+                    innerId = item.Id;
+            }
+            return innerId;
+        }
+        public void AddPrensa(Prensa prensa)
+        {
+            if (prensa == null)
+                throw new Exception(PRENSA_CREATE_INVALID_PARAMETER_EXCEPTION);
+
+            if (!IndexExists())
+                CreateIndex();
+
+            var resultado = GetPrensaByNombre(prensa.Nombre);
+            if (resultado != null)
+                throw new Exception(PRENSA_CREATE_ALREADY_EXISTS_EXCEPTION);
+
+            var response = Client.IndexAsync(prensa, i => i
+              .Index(Index)
+              .Type(Index)
+              .Refresh(Refresh.True)
+              ).Result;
+
+            if (!response.IsValid)
+                throw new Exception(PRENSA_CREATE_NOT_CREATED_EXCEPTION);
+        }
+        public void AddBulkPrensa(List<Prensa> prensa)
+        {
+            if (!IndexExists())
+                CreateIndex();
+
+            var response = Client.IndexManyAsync(prensa, Index, Index).Result;
+
+            if (!response.IsValid)
+                throw new Exception(PRENSA_CREATE_NOT_CREATED_EXCEPTION);
+        }
+        public void UpdatePrensa(Prensa prensa)
+        {
+            if (prensa == null)
+                throw new Exception(PRENSA_UPDATE_INVALID_PARAMETER_EXCEPTION);
+
+            var innerId = GetPrensaInnerIdById(prensa.UniqueId);
+            if (innerId == null)
+                throw new Exception(PRENSA_UPDATE_NOT_EXISTS_EXCEPTION);
+
+            var result = Client.Index(prensa, i => i
+                            .Index(Index)
+                            .Type(Index)
+                            .Id(innerId)
+                            .Refresh(Refresh.True));
+
+            if (!result.IsValid)
+                throw new Exception(PRENSA_UPDATE_NOT_UPDATED_EXCEPTION);
+        }
+        public void DeletePrensa(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(PRENSA_DELETE_INVALID_PARAMETER_EXCEPTION);
+
+            var innerId = GetPrensaInnerIdById(id);
+            if (innerId == null)
+                throw new Exception(PRENSA_DELETE_NOT_EXISTS_EXCEPTION);
+
+            var response = Client.Delete<Prensa>(innerId, d => d
+                                                        .Index(Index)
+                                                        .Type(Index)
+                                                        .Refresh(Refresh.True)
+                                                        );
+            if (!response.IsValid)
+                throw new Exception(PRENSA_DELETE_NOT_DELETED_EXCEPTION);
+        }
+
+
+
         /*-------------------Votacion-------------------*/
 
         public List<Votacion> GetVotacionesViejo(int skip, int take)
@@ -2424,8 +2821,10 @@ namespace SUA.Repositorios
                 response = Client.Count<Hotel>(c => c.Index(Index).Type(Index));
             else if (tipo == "restaurante")
                 response = Client.Count<Restaurante>(c => c.Index(Index).Type(Index));
+            else if (tipo == "proveedor")
+                response = Client.Count<Proveedor>(c => c.Index(Index).Type(Index));
             else if (tipo == "votacion")
-                response = Client.Count<Restaurante>(c => c.Index(Index).Type(Index));
+                response = Client.Count<Votacion>(c => c.Index(Index).Type(Index));
             return (int)response.Count;
         }
         public void DeleteIndex()
@@ -2462,6 +2861,8 @@ namespace SUA.Repositorios
             log,
             hotel,
             restaurante,
+            proveedor,
+            prensa,
             votacion
         }
     }

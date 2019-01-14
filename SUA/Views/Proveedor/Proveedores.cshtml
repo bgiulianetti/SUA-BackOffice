@@ -4,8 +4,8 @@
         <table style="border-spacing: 20px">
             <tr>
                 <td style="width:200px;">
-                    <a href="@Url.RouteUrl("Restaurante")">
-                        <input type="button" value="Crear Restaurante" class="form-control" style="width:160px" />
+                    <a href="@Url.RouteUrl("Proveedor")">
+                        <input type="button" value="Crear Proveedor" class="form-control" style="width:160px" />
                     </a>
                 </td>
                 <td>
@@ -28,24 +28,20 @@
                     <tr>
                         <th></th>
                         <th>Nombre</th>
-                        <th>Direccion</th>
-                        <th>Ciudad</th>
-                        <th>Contacto</th>
-                        <th>WhatsApp</th>
+                        <th>Telefono</th>
                         <th>Email</th>
-                        <th>Arreglo</th>
+                        <th>Ciudad</th>
+                        <th>Comentarios</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
                         <th></th>
                         <th>Nombre</th>
-                        <th>Direccion</th>
-                        <th>Ciudad</th>
-                        <th>Contacto</th>
-                        <th>WhatsApp</th>
+                        <th>Telefono</th>
                         <th>Email</th>
-                        <th>Arreglo</th>
+                        <th>Ciudad</th>
+                        <th>Comentarios</th>
                     </tr>
                 </tfoot>
                 <tbody>
@@ -53,16 +49,14 @@
                     {
                         <tr>
                             <td>
-                                @Html.ActionImage("DeleteRestaurante", "Restaurante", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
-                                @Html.ActionImage("Restaurante", "Restaurante", new { id = item.UniqueId }, "~/assets/img/edit_icon.png")
+                                @Html.ActionImage("DeleteProveedor", "Proveedor", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
+                                @Html.ActionImage("Proveedor", "Proveedor", new { id = item.UniqueId }, "~/assets/img/edit_icon.png")
                             </td>
-                            <td>@item.Nombre</td>
-                            <td>@item.Direccion.Direccion</td>
-                            <td>@item.Direccion.Ciudad</td>
-                            <td>@item.Contacto</td>
-                            <td>@item.WhatsApp</td>
+                            <td>@item.Nombre @item.Apellido</td>
+                            <td>@item.Telefono</td>
                             <td>@item.Email</td>
-                            <td>@item.Arreglo</td>
+                            <td>@item.Ciudad</td>
+                            <td>@item.Comentarios</td>
                         </tr>
                     }
                 </tbody>
@@ -90,13 +84,13 @@
 <script>
 
     $(document).ready(function () {
-        var tableSalas = $('#table_restaurantes').DataTable({
+        var tableSalas = $('#table_proveedores').DataTable({
             responsive: true,
             dom: 'l<B>ftip',
             buttons: [
-                { extend: 'excelHtml5', title: "Restaurantes", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/') },
+                { extend: 'excelHtml5', title: "Proveedores", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/') },
                 'csvHtml5',
-                { extend: 'pdf', title: "Listado de Restaurantes", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/'), orientation: 'landscape' }
+                { extend: 'pdf', title: "Listado de Proveedores", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/'), orientation: 'landscape' }
             ],
             'columnDefs': [{ "targets": 0, "className": "text-center" }]
         });
@@ -106,17 +100,16 @@
     });
 
     function AcomodaDOM() {
-        $('#table_restaurantes_filter').hide();
+        $('#table_proveedores_filter').hide();
         $("#divCapacidad").append($("#SearchContainer"));
-        $("#info").append($("#table_restaurantes_info"));
-        //$("#table_restaurantes_paginate").hide();
+        $("#info").append($("#table_proveedores_info"));
         $("#entries").append($(".dt-buttons"));
         $("#botones").append($(".dataTables_length"));
     }
 
     function AplicarFiltrosEnFooter() {
         var contador = 0;
-        $('#table_restaurantes tfoot th').each(function () {
+        $('#table_proveedores tfoot th').each(function () {
             if (contador != 0) {
                 var title = $(this).text();
                 $(this).html('<input type="text" placeholder="' + title + '" />');

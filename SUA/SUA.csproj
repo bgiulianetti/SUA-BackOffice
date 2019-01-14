@@ -210,8 +210,9 @@
     <Compile Include="Models\InstagramUserInfoResponse.cs" />
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\Persona.cs" />
+    <Compile Include="Models\Prensa.cs" />
     <Compile Include="Models\Productor.cs" />
-    <Compile Include="Models\Proveedores.cs" />
+    <Compile Include="Models\Proveedor.cs" />
     <Compile Include="Models\PruebaSonidoEnsayo.cs" />
     <Compile Include="Models\RankingRecord.cs" />
     <Compile Include="Models\InfoPlazasParaRepeticion.cs" />
@@ -231,7 +232,9 @@
     <Compile Include="Servicios\FechaService.cs" />
     <Compile Include="Servicios\HotelService.cs" />
     <Compile Include="Servicios\LogService.cs" />
+    <Compile Include="Servicios\PrensaService.cs" />
     <Compile Include="Servicios\ProductorService.cs" />
+    <Compile Include="Servicios\ProveedorService.cs" />
     <Compile Include="Servicios\RestauranteService.cs" />
     <Compile Include="Servicios\SalaService.cs" />
     <Compile Include="Servicios\ShowService.cs" />
@@ -605,11 +608,12 @@
     <Content Include="Views\DataBase\Backup.cshtml" />
     <Content Include="Views\Votar\Votaciones.cshtml" />
     <Content Include="Views\DataBase\Restore.cshtml" />
+    <Content Include="Views\Proveedor\Proveedor.cshtml" />
+    <Content Include="Views\Proveedor\Proveedores.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="BackUp\" />
-    <Folder Include="Views\Proveedor\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff">

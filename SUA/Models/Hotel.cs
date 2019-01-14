@@ -24,6 +24,7 @@ namespace SUA.Models
         public string ContactoEmail { get; set; }
         public string ContactoWhatsApp { get; set; }
         public string UltimosCanjes { get; set; }
+        public string Comentarios { get; set; }
 
 
         public void SetId()

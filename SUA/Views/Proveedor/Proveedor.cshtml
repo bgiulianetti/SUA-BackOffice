@@ -1,0 +1,105 @@
+﻿@model SUA.Models.Proveedor
+<style>
+    table {
+        border-spacing: 20px;
+    }
+
+    td {
+        padding: 10px;
+    }
+</style>
+
+<div class="main-content">
+    @using (Html.BeginForm("Proveedor", "Proveedor", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        if (ViewBag.mensaje == "creado")
+        {
+            <label>El restaurante ha sido creado con éxito. Puede verlo en el <a href="@Url.RouteUrl("Proveedores")">Listado de proveedores</a></label>
+        }
+        else if (ViewBag.mensaje == "actualizado")
+        {
+            <label>El restaurante ha sido actualizado con éxito. Puede ver los cambios en el <a href="@Url.RouteUrl("Proveedores")">Listado de proveedores</a></label>
+        }
+        else if (ViewBag.mensaje == "Get")
+        {
+            <div class="panel">
+                <div class="panel-body">
+                    <form data-id="" id="pdf-create-form" to-action="/pdfs/create">
+
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <label>Nombre </label>
+                                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                                <td>
+                                    <label>Apellido </label>
+                                    @Html.TextBoxFor(model => model.Apellido, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Email</label>
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", Style = "width:300px", @type = "email" })
+                                </td>
+                                <td>
+                                    <label>Telefono</label>
+                                    @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="color: #8dd9f7">
+                        <table>
+                            <tr>
+                                <td>
+                                    <label>Luces</label>
+                                    @Html.TextBoxFor(model => model.Luces, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                                <td>
+                                    <label>Sonido </label>
+                                    @Html.TextBoxFor(model => model.Sonido, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Pantalla </label>
+                                    @Html.TextBoxFor(model => model.Pantalla, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+                                <td>
+                                    <label>Proyector </label>
+                                    @Html.DropDownListFor(model => model.Proyector, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                        </table>
+
+                        <hr style="color: #8dd9f7">
+
+                        <table>
+                            <tr>
+                                <td>
+                                    <label>Ciudad </label>
+                                    @Html.TextBoxFor(model => model.Ciudad, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                                <td>
+                                    <label>Comentarios </label>
+                                    @Html.TextBoxFor(model => model.Comentarios, new { @class = "form-control", Style = "width:300px" })
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="color: #8dd9f7">
+
+                        <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
+                        @Html.TextBoxFor(model => model.UniqueId, new { @class = "hidden" })
+
+                        <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        }
+        else
+        {
+            <label>@ViewBag.mensaje</label>
+        }
+    }
+
+</div>

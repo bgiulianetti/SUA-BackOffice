@@ -59,7 +59,7 @@ namespace CalendarQuickstart
                     {
                         try
                         {
-                            var eventRequest = service.Events.Insert(_event, "09ptb764ha2oood2ighc8udfik@group.calendar.google.com"/*fecha.Show.GoogleCalendarId*/);
+                            var eventRequest = service.Events.Insert(_event, fecha.Show.GoogleCalendarId);
                             eventRequest.SendNotifications = true;
                             eventRequest.Execute();
                         }
@@ -70,7 +70,7 @@ namespace CalendarQuickstart
                     {
                         try
                         {
-                            var eventRequest = service.Events.Update(_event, "09ptb764ha2oood2ighc8udfik@group.calendar.google.com"/*fecha.Show.GoogleCalendarId*/, fecha.UniqueId);
+                            var eventRequest = service.Events.Update(_event, fecha.Show.GoogleCalendarId, fecha.UniqueId);
                             eventRequest.SendNotifications = true;
                             eventRequest.Execute();
                         }
@@ -81,7 +81,7 @@ namespace CalendarQuickstart
                     {
                         try
                         {
-                            var eventRequest = service.Events.Delete("09ptb764ha2oood2ighc8udfik@group.calendar.google.com"/*fecha.Show.GoogleCalendarId*/, fecha.UniqueId);
+                            var eventRequest = service.Events.Delete(fecha.Show.GoogleCalendarId, fecha.UniqueId);
                             eventRequest.SendNotifications = true;
                             eventRequest.Execute();
                         }

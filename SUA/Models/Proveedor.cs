@@ -6,7 +6,7 @@ using System.Web;
 
 namespace SUA.Models
 {
-    public class Proveedores
+    public class Proveedor
     {
         public string UniqueId { get; set; }
         public string Nombre { get; set; }
