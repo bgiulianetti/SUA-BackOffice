@@ -4,8 +4,8 @@
         <table style="border-spacing: 20px">
             <tr>
                 <td style="width:200px;">
-                    <a href="@Url.RouteUrl("Proveedor")">
-                        <input type="button" value="Crear Proveedor" class="form-control" style="width:160px" />
+                    <a href="@Url.RouteUrl("Prensa")">
+                        <input type="button" value="Crear Prensa" class="form-control" style="width:160px" />
                     </a>
                 </td>
                 <td>
@@ -49,8 +49,8 @@
                     {
                         <tr>
                             <td>
-                                @Html.ActionImage("DeleteProveedor", "Proveedor", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
-                                @Html.ActionImage("Proveedor", "Proveedor", new { id = item.UniqueId }, "~/assets/img/edit_icon.png")
+                                @Html.ActionImage("DeletePrensa", "Prensa", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
+                                @Html.ActionImage("Prensa", "Prensa", new { id = item.UniqueId }, "~/assets/img/edit_icon.png")
                             </td>
                             <td>@item.Nombre @item.Apellido</td>
                             <td>@item.Telefono</td>
@@ -84,13 +84,13 @@
 <script>
 
     $(document).ready(function () {
-        var tableSalas = $('#table_proveedores').DataTable({
+        var tableSalas = $('#table_prensa').DataTable({
             responsive: true,
             dom: 'l<B>ftip',
             buttons: [
-                { extend: 'excelHtml5', title: "Proveedores", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/') },
+                { extend: 'excelHtml5', title: "Prensa", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/') },
                 'csvHtml5',
-                { extend: 'pdf', title: "Listado de Proveedores", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/'), orientation: 'landscape' }
+                { extend: 'pdf', title: "Listado de Prensa", messageTop: 'Fecha: ' + new Date().toJSON().slice(0, 10).replace(/-/g, '/'), orientation: 'landscape' }
             ],
             'columnDefs': [{ "targets": 0, "className": "text-center" }]
         });
@@ -100,16 +100,16 @@
     });
 
     function AcomodaDOM() {
-        $('#table_proveedores_filter').hide();
+        $('#table_prensa_filter').hide();
         $("#divCapacidad").append($("#SearchContainer"));
-        $("#info").append($("#table_proveedores_info"));
+        $("#info").append($("#table_prensa_info"));
         $("#entries").append($(".dt-buttons"));
         $("#botones").append($(".dataTables_length"));
     }
 
     function AplicarFiltrosEnFooter() {
         var contador = 0;
-        $('#table_proveedores tfoot th').each(function () {
+        $('#table_prensa tfoot th').each(function () {
             if (contador != 0) {
                 var title = $(this).text();
                 $(this).html('<input type="text" placeholder="' + title + '" />');
@@ -119,7 +119,7 @@
 
 
         // Apply the search
-        var table = $('#table_proveedores').DataTable();
+        var table = $('#table_prensa').DataTable();
         table.columns().every(function () {
             var that = this;
             $('input', this.footer()).on('keyup change', function () {

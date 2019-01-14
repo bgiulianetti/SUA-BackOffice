@@ -184,6 +184,32 @@ namespace SUA
                 defaults: new { controller = "Restaurante", action = "Restaurantes" }
             );
 
+            //============================Proveedor=======================================
+            routes.MapRoute(
+                name: "Proveedor",
+                url: "proveedor",
+                defaults: new { controller = "Proveedor", action = "Proveedor" }
+            );
+
+            routes.MapRoute(
+                name: "Proveedores",
+                url: "proveedores",
+                defaults: new { controller = "Proveedor", action = "Proveedores" }
+            );
+
+            //============================Prensa=======================================
+            routes.MapRoute(
+                name: "Prensa",
+                url: "prensa",
+                defaults: new { controller = "Prensa", action = "Prensa" }
+            );
+
+            routes.MapRoute(
+                name: "Prensas",
+                url: "prensas",
+                defaults: new { controller = "Prensa", action = "Prensas" }
+            );
+
             //============================Votacion=======================================
 
             routes.MapRoute(

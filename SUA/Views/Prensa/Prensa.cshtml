@@ -1,4 +1,4 @@
-﻿@model SUA.Models.Proveedor
+﻿@model SUA.Models.Prensa
 <style>
     table {
         border-spacing: 20px;
@@ -10,15 +10,15 @@
 </style>
 
 <div class="main-content">
-    @using (Html.BeginForm("Proveedor", "Proveedor", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Prensa", "Prensa", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         if (ViewBag.mensaje == "creado")
         {
-            <label>El restaurante ha sido creado con éxito. Puede verlo en el <a href="@Url.RouteUrl("Proveedores")">Listado de proveedores</a></label>
+            <label>El restaurante ha sido creado con éxito. Puede verlo en el <a href="@Url.RouteUrl("Prensas")">Listado de prensa</a></label>
         }
         else if (ViewBag.mensaje == "actualizado")
         {
-            <label>El restaurante ha sido actualizado con éxito. Puede ver los cambios en el <a href="@Url.RouteUrl("Proveedores")">Listado de proveedores</a></label>
+            <label>El restaurante ha sido actualizado con éxito. Puede ver los cambios en el <a href="@Url.RouteUrl("Prensas")">Listado de prensa</a></label>
         }
         else if (ViewBag.mensaje == "Get")
         {
@@ -48,30 +48,6 @@
                                 </td>
                             </tr>
                         </table>
-                        <hr style="color: #8dd9f7">
-                        <table>
-                            <tr>
-                                <td>
-                                    <label>Luces</label>
-                                    @Html.TextBoxFor(model => model.Luces, new { @class = "form-control", Style = "width:300px" })
-                                </td>
-                                <td>
-                                    <label>Sonido </label>
-                                    @Html.TextBoxFor(model => model.Sonido, new { @class = "form-control", Style = "width:300px" })
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label>Pantalla </label>
-                                    @Html.TextBoxFor(model => model.Pantalla, new { @class = "form-control", Style = "width:300px" })
-                                </td>
-                            </tr>
-                                <td>
-                                    <label>Proyector </label>
-                                    @Html.TextBoxFor(model => model.Proyector, new { @class = "form-control", Style = "width:300px" })
-                                </td>
-                        </table>
-
                         <hr style="color: #8dd9f7">
 
                         <table>
