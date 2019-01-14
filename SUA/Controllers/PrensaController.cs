@@ -70,7 +70,7 @@ namespace SUA.Controllers
             var service = new PrensaService();
             try
             {
-                ViewBag.restaurantes = service.GetPrensa();
+                ViewBag.prensas = service.GetPrensa();
                 ViewBag.mensaje = "listar";
                 new LogService().FormatAndSaveLog("Prensa", "Listar", "");
             }

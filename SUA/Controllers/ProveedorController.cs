@@ -71,7 +71,7 @@ namespace SUA.Controllers
             var service = new ProveedorService();
             try
             {
-                ViewBag.restaurantes = service.GetProveedores();
+                ViewBag.proveedores = service.GetProveedores();
                 ViewBag.mensaje = "listar";
                 new LogService().FormatAndSaveLog("Proveedor", "Listar", "");
             }

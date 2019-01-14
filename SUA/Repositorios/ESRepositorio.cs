@@ -2823,6 +2823,8 @@ namespace SUA.Repositorios
                 response = Client.Count<Restaurante>(c => c.Index(Index).Type(Index));
             else if (tipo == "proveedor")
                 response = Client.Count<Proveedor>(c => c.Index(Index).Type(Index));
+            else if (tipo == "prensa")
+                response = Client.Count<Prensa>(c => c.Index(Index).Type(Index));
             else if (tipo == "votacion")
                 response = Client.Count<Votacion>(c => c.Index(Index).Type(Index));
             return (int)response.Count;
