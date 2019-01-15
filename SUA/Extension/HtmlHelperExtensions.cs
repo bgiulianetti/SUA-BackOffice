@@ -29,7 +29,7 @@ namespace SUA.Extension
                 anchorBuilder.MergeAttribute("href", url.Action(action, controller, routeValues));
             }
 
-            if (action == "PrintBordereaux")
+            if (action == "PrintBordereaux" || action == "InfoFecha")
             {
                 anchorBuilder.MergeAttribute("target", "_blank");
             }

@@ -411,14 +411,9 @@ namespace SUA.Controllers
             jpgLogo.SetAbsolutePosition(15f, PageSize.A4.Height - 135f);
             doc.Add(jpgLogo);
 
-
-            //Logo
             string bordereauxIcon = Server.MapPath("~/assets/img/fecha.png");
             var jpg = Image.GetInstance(bordereauxIcon);
             jpg.ScaleToFit(140f, 120f);
-            //jpg.SpacingBefore = 10f;
-            //jpg.SpacingAfter = 17f;
-            //jpg.Alignment = Element.ALIGN_LEFT;
             jpg.SetAbsolutePosition(90f, PageSize.A4.Height - 135f);
             doc.Add(jpg);
 
@@ -435,22 +430,6 @@ namespace SUA.Controllers
             doc.Add(new Paragraph(" "));
             doc.Add(new Paragraph(fecha.Sala.ToString(), FontFactory.GetFont(FontFactory.COURIER, 10)));
 
-            /*
-
-            var arreglo = new PdfPTable(2);
-            arreglo.DefaultCell.Padding = 3;
-            arreglo.SetWidths(new int[] { 10, 10 });
-            arreglo.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            arreglo.HeaderRows = 0;
-            arreglo.DefaultCell.BorderWidth = 0;
-            arreglo.DefaultCell.BackgroundColor = BaseColor.WHITE;
-            arreglo.AddCell(new Phrase(fecha.Show._Show + " - " + fecha.Show.Nombre, FontFactory.GetFont(FontFactory.COURIER_BOLD, 10)));
-            arreglo.CompleteRow();
-
-            arreglo.CompleteRow();
-            doc.Add(arreglo);
-            doc.Add(new Paragraph(" "));
-            */
             doc.Close();
             Process.Start(filePath);
 
@@ -462,7 +441,6 @@ namespace SUA.Controllers
             Response.Redirect(fileName);
 
             new LogService().FormatAndSaveLog("Fecha", "InfoFecha", fecha.UniqueId);
-
         }
 
         private void AgregarCabecera(Document doc, Fecha fecha)
