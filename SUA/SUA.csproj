@@ -349,6 +349,24 @@
     <Content Include="assets\css\vendor\icon-sets.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="assets\img\201809251121934.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\img\201809251401711.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\img\201809300847352.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\img\201810021209749.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\img\201810031247443.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\img\201811302037715.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="assets\img\add_borderaux_icon.png" />
     <Content Include="assets\img\avatar.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -363,7 +381,9 @@
     <Content Include="assets\img\favicon.ico" />
     <Content Include="assets\img\fecha.png" />
     <Content Include="assets\img\fecha_full_info.png" />
-    <Content Include="assets\img\infoFecha.png" />
+    <Content Include="assets\img\infoFecha.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="assets\img\listado-fechas-cerradas-logo.jpeg" />
     <Content Include="assets\img\listado_bordereaux.png" />
     <Content Include="assets\img\listado_fechas.png" />

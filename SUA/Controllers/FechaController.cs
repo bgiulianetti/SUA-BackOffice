@@ -391,6 +391,80 @@ namespace SUA.Controllers
 
         }
 
+        [HttpGet]
+        public void InfoFecha(string id)
+        {
+            var service = new FechaService();
+            var fecha = service.GetFechaById(id);
+
+            Document doc = new Document(PageSize.A4, 20, 20, 15, 10);
+            var fileName = "~/assets/Pdf/fecha_" + fecha.UniqueId + ".pdf";
+            string filePath = Server.MapPath(fileName);
+            FileStream file = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
+            PdfWriter.GetInstance(doc, file);
+
+            doc.Open();
+
+            string showLogo = Server.MapPath("~/assets/img/" + fecha.Show.UniqueId + ".png");
+            var jpgLogo = Image.GetInstance(showLogo);
+            jpgLogo.ScaleToFit(140f, 60f);
+            jpgLogo.SetAbsolutePosition(15f, PageSize.A4.Height - 135f);
+            doc.Add(jpgLogo);
+
+
+            //Logo
+            string bordereauxIcon = Server.MapPath("~/assets/img/fecha.png");
+            var jpg = Image.GetInstance(bordereauxIcon);
+            jpg.ScaleToFit(140f, 120f);
+            //jpg.SpacingBefore = 10f;
+            //jpg.SpacingAfter = 17f;
+            //jpg.Alignment = Element.ALIGN_LEFT;
+            jpg.SetAbsolutePosition(90f, PageSize.A4.Height - 135f);
+            doc.Add(jpg);
+
+            doc.Add(new Paragraph(" "));
+            doc.Add(new Paragraph(" "));
+            doc.Add(new Paragraph(" "));
+            doc.Add(new Paragraph(" "));
+            doc.Add(new Paragraph(" "));
+            doc.Add(new Paragraph(" "));
+            doc.Add(new Paragraph(" "));
+            doc.Add(new Paragraph(" "));
+            doc.Add(new Paragraph(fecha.Show._Show + " en " + fecha.Sala.Direccion.Ciudad, FontFactory.GetFont(FontFactory.COURIER_BOLD, 12)));
+            doc.Add(new Paragraph("Dirección:  " + fecha.Sala.Direccion.Direccion +  ", " + fecha.Sala.Direccion.Ciudad, FontFactory.GetFont(FontFactory.COURIER_BOLD, 12)));
+            doc.Add(new Paragraph(" "));
+            doc.Add(new Paragraph(fecha.Sala.ToString(), FontFactory.GetFont(FontFactory.COURIER, 10)));
+
+            /*
+
+            var arreglo = new PdfPTable(2);
+            arreglo.DefaultCell.Padding = 3;
+            arreglo.SetWidths(new int[] { 10, 10 });
+            arreglo.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
+            arreglo.HeaderRows = 0;
+            arreglo.DefaultCell.BorderWidth = 0;
+            arreglo.DefaultCell.BackgroundColor = BaseColor.WHITE;
+            arreglo.AddCell(new Phrase(fecha.Show._Show + " - " + fecha.Show.Nombre, FontFactory.GetFont(FontFactory.COURIER_BOLD, 10)));
+            arreglo.CompleteRow();
+
+            arreglo.CompleteRow();
+            doc.Add(arreglo);
+            doc.Add(new Paragraph(" "));
+            */
+            doc.Close();
+            Process.Start(filePath);
+
+            //descargo el archivo
+            var di = new DirectoryInfo(filePath);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(di.FullName);
+            //return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+
+            Response.Redirect(fileName);
+
+            new LogService().FormatAndSaveLog("Fecha", "InfoFecha", fecha.UniqueId);
+
+        }
+
         private void AgregarCabecera(Document doc, Fecha fecha)
         {
             //Logo

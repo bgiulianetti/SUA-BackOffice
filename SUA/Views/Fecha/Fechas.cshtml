@@ -60,7 +60,7 @@
                             <td>
                                 @Html.ActionImage("DeleteFecha", "Fecha", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
                                 @Html.ActionImage("Fecha", "Fecha", new { id = item.UniqueId }, "~/assets/img/edit_icon.png")
-
+                                @Html.ActionImage("InfoFecha", "Fecha", new { id = item.UniqueId }, "~/assets/img/infoFecha.png")
                                 @if (DateTime.Now.AddHours(3) >= item.FechaHorario)
                                 {
                                     if (item.Borederaux == null)
