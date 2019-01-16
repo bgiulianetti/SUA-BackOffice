@@ -1142,8 +1142,11 @@ namespace SUA.Repositorios
             {
                 foreach (var item in response.Documents)
                 {
-                    if (item.Status == null)
+                    if (item.UniqueId == id)
+                    {
                         fecha = item;
+                        break;
+                    }
                 }
 
             }
