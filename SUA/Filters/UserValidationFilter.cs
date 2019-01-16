@@ -343,6 +343,83 @@ namespace SUA.Filters
                                 filterContext.Result = new RedirectResult("/restaurantes");
                             }
                         }
+
+
+                        ////////////////////////////////////PROVEEDORES/////////////////////////////////
+
+
+                        //CREAR - EDITAR
+                        else if (controller == "Proveedor" && action == "Proveedor")
+                        {
+                            if (user.Proveedores == "Prohibido")
+                            {
+                                filterContext.Result = new RedirectResult("/inicio");
+                            }
+                            else if (user.Proveedores == "Lectura")
+                            {
+                                filterContext.Result = new RedirectResult("/inicio");
+                            }
+                        }
+
+                        //LISTAR
+                        else if (controller == "Proveedor" && action == "Proveedores")
+                        {
+                            if (user.Proveedores == "Prohibido")
+                            {
+                                filterContext.Result = new RedirectResult("/inicio");
+                            }
+                        }
+                        //BORRAR
+                        else if (controller == "Proveedor" && action == "DeleteProveedor")
+                        {
+                            if (user.Proveedores == "Prohibido")
+                            {
+                                filterContext.Result = new RedirectResult("/inicio");
+                            }
+                            if (user.Proveedores == "Lectura")
+                            {
+                                filterContext.Result = new RedirectResult("/proveedores");
+                            }
+                        }
+
+
+
+                        ////////////////////////////////////PRENSA/////////////////////////////////
+
+
+                        //CREAR - EDITAR
+                        else if (controller == "Prensa" && action == "Prensa")
+                        {
+                            if (user.Prensa == "Prohibido")
+                            {
+                                filterContext.Result = new RedirectResult("/inicio");
+                            }
+                            else if (user.Prensa == "Lectura")
+                            {
+                                filterContext.Result = new RedirectResult("/inicio");
+                            }
+                        }
+
+                        //LISTAR
+                        else if (controller == "Prensa" && action == "Prensas")
+                        {
+                            if (user.Prensa == "Prohibido")
+                            {
+                                filterContext.Result = new RedirectResult("/inicio");
+                            }
+                        }
+                        //BORRAR
+                        else if (controller == "Prensa" && action == "DeletePrensa")
+                        {
+                            if (user.Prensa == "Prohibido")
+                            {
+                                filterContext.Result = new RedirectResult("/inicio");
+                            }
+                            if (user.Prensa == "Lectura")
+                            {
+                                filterContext.Result = new RedirectResult("/prensas");
+                            }
+                        }
                     }
                 }
 

@@ -91,6 +91,16 @@
                                     @Html.DropDownListFor(model => model.Restaurantes, new SelectList(ViewBag.permisos, "Text", "Value"), new { @id = "restaurantes", @class = "form-control", Style = "width:130px" })
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <label>Proveedores</label>
+                                    @Html.DropDownListFor(model => model.Proveedores, new SelectList(ViewBag.permisos, "Text", "Value"), new { @id = "proveedores", @class = "form-control", Style = "width:130px" })
+                                </td>
+                                <td>
+                                    <label>Prensa</label>
+                                    @Html.DropDownListFor(model => model.Prensa, new SelectList(ViewBag.permisos, "Text", "Value"), new { @id = "prensa", @class = "form-control", Style = "width:130px" })
+                                </td>
+                            </tr>
                         </table>
                         <hr style="color: #8dd9f7">
                         <table>

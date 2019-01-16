@@ -408,17 +408,15 @@ namespace SUA.Controllers
             string showLogo = Server.MapPath("~/assets/img/" + fecha.Show.UniqueId + ".png");
             var jpgLogo = Image.GetInstance(showLogo);
             jpgLogo.ScaleToFit(140f, 60f);
-            jpgLogo.SetAbsolutePosition(15f, PageSize.A4.Height - 135f);
+            jpgLogo.SetAbsolutePosition(15f, PageSize.A4.Height - 100f);
             doc.Add(jpgLogo);
 
             string bordereauxIcon = Server.MapPath("~/assets/img/fecha.png");
             var jpg = Image.GetInstance(bordereauxIcon);
             jpg.ScaleToFit(140f, 120f);
-            jpg.SetAbsolutePosition(90f, PageSize.A4.Height - 135f);
+            jpg.SetAbsolutePosition(90f, PageSize.A4.Height - 100f);
             doc.Add(jpg);
 
-            doc.Add(new Paragraph(" "));
-            doc.Add(new Paragraph(" "));
             doc.Add(new Paragraph(" "));
             doc.Add(new Paragraph(" "));
             doc.Add(new Paragraph(" "));

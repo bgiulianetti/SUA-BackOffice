@@ -24,7 +24,10 @@ namespace SUA.Models
         public string Salas { get; set; }
         public string Hoteles { get; set; }
         public string Restaurantes { get; set; }
-        
+
+        public string Proveedores { get; set; }
+        public string Prensa { get; set; }
+
 
         public List<Show> ShowsAsignados { get; set; }
         public string UserMaster { get; set; }
