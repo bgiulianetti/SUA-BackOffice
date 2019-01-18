@@ -26,6 +26,7 @@ namespace CalendarQuickstart
             CreateEvent();
             //Console.Read();
         }
+
         public static void CreateEvent()
         {
             UserCredential credential;
@@ -106,13 +107,12 @@ namespace CalendarQuickstart
                 End = new EventDateTime { DateTime = fecha.FechaHorario, DateTimeRaw = fecha.FechaHorario.ToString("yyyy-MM-ddTHH:mm:ss-03:00") },
                 Location = fecha.Sala.Direccion.Direccion + ", " + fecha.Sala.Direccion.Ciudad,
                 Description = fecha.Sala.ToString(),
-                Summary = fecha.Show._Show + " en " + fecha.Sala.Direccion.Ciudad,
+                Summary = fecha.Sala.Direccion.Ciudad + " " + fecha.Show.SiglaBordereaux,
                 Source = new Event.SourceData { Title = "BO-SUA", Url = "http://c721.cloud.wiroos.net" },
             };
 
             var attendees = new List<EventAttendee>();
-            attendees.Add(new EventAttendee() { Email = "standupargentina@gmail.com", DisplayName = "SUA" });
-            attendees.Add(new EventAttendee() { Email = fecha.Productor.Email, DisplayName = fecha.Productor.Nombre + " " + fecha.Productor.Apellido, Organizer = true });
+            attendees.Add(new EventAttendee() { Email = fecha.Productor.Email, DisplayName = fecha.Productor.Nombre + " " + fecha.Productor.Apellido });
             foreach (var integrante  in fecha.Show.Integrantes)
             {
                 var atendee = new EventAttendee()
@@ -122,6 +122,7 @@ namespace CalendarQuickstart
                 };
                 attendees.Add(atendee);
             }
+            attendees.Add(new EventAttendee() { Email = "standupargentina@gmail.com", DisplayName = "SUA" });
             _event.Attendees = attendees.ToArray();
             return _event;
         }

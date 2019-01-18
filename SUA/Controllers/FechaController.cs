@@ -441,6 +441,16 @@ namespace SUA.Controllers
             new LogService().FormatAndSaveLog("Fecha", "InfoFecha", fecha.UniqueId);
         }
 
+
+        [HttpGet]
+        public void CalendarPDF(int year, int month)
+        {
+            var c = new Utilities.PDFCalendar(2008, 8);
+            var fileName = "~/assets/Pdf/calendar_" + UtilitiesAndStuff.GenerateUniqueId() + ".pdf";
+            string filePath = Server.MapPath(fileName);
+            c.create(filePath);
+        }
+
         private void AgregarCabecera(Document doc, Fecha fecha)
         {
             //Logo
