@@ -34,15 +34,21 @@
                 </div>
             </div>
             <div id='calendar'></div>
+        </div>
+
+
+
+        <div class="panel-body" style="padding-left:130px; padding-right:130px; padding-top:50px; padding-bottom:60px">
             <div class="well well-sm text-center">
                 <h4>Imprimir Calendario</h4>
 
                 <div class="btn-group" data-toggle="buttons">
                     <label>Año</label>
-                    <input id="calendar_year" min="2017" max="2029" />
-
+                    <input type="number" id="calendar_year" min="2017" max="2029" value="2019" />
+                    &nbsp;
                     <label>Mes</label>
-                    <input id="calendar_month" min="01" max="12" />
+                    <input type="number" id="calendar_month" min="01" max="12" value="01" />
+                    <input type="button" onclick="createPDF()" value="Ok" />
                 </div>
             </div>
         </div>
@@ -66,7 +72,10 @@
         getCalendarsAndDrawCalendar("initial");
     });
 
-
+    function createPDF()
+    {
+        return window.open('/fecha/CalendarPDF?year=' + $("#calendar_year").val() + '&month=' + $("#calendar_month").val());
+    }
 
     function getCalendarsAndDrawCalendar(state)
     {
