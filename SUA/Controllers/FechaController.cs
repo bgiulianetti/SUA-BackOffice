@@ -445,10 +445,13 @@ namespace SUA.Controllers
         [HttpGet]
         public void CalendarPDF(int year, int month)
         {
-            var c = new Utilities.PDFCalendar(2008, 8);
+            var c = new Utilities.PDFCalendar(year, month);
             var fileName = "~/assets/Pdf/calendar_" + UtilitiesAndStuff.GenerateUniqueId() + ".pdf";
             string filePath = Server.MapPath(fileName);
-            c.create(filePath);
+            c.create(filePath, year, month);
+
+            var di = new DirectoryInfo(filePath);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(di.FullName);
         }
 
         private void AgregarCabecera(Document doc, Fecha fecha)
