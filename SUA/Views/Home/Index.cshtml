@@ -25,14 +25,26 @@
                     @foreach (var show in ViewBag.showCalendars)
                     {
                         var id = "check" + show.uniqueId;
-                        <label id="@show.uniqueId" title="@show.show" class="btn btn-success active">@show.show
-                            <input id="@id" type="checkbox" autocomplete="off" checked>
-                            <span class="glyphicon glyphicon-ok"></span>
-                        </label>
+                        <label id="@show.uniqueId" title="@show.show" class="btn btn-success active">
+                            @show.show
+                        <input id="@id" type="checkbox" autocomplete="off" checked>
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </label>
                     }
                 </div>
             </div>
             <div id='calendar'></div>
+            <div class="well well-sm text-center">
+                <h4>Imprimir Calendario</h4>
+
+                <div class="btn-group" data-toggle="buttons">
+                    <label>Año</label>
+                    <input id="calendar_year" min="2017" max="2029" />
+
+                    <label>Mes</label>
+                    <input id="calendar_month" min="01" max="12" />
+                </div>
+            </div>
         </div>
     </div>
 

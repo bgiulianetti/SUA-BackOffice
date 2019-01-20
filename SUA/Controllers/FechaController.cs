@@ -452,6 +452,7 @@ namespace SUA.Controllers
 
             var di = new DirectoryInfo(filePath);
             byte[] fileBytes = System.IO.File.ReadAllBytes(di.FullName);
+            Response.Redirect(fileName);
         }
 
         private void AgregarCabecera(Document doc, Fecha fecha)
