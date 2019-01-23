@@ -319,10 +319,10 @@
     function validate()
     {
         if ($('#ciudadesList option:selected')[0].style.backgroundColor == "orange") {
-            return confirm("¿No sería mejor esperar un poco más para esta fecha?");
+            return confirm("Es muy pronto para cerrar esta fecha ¿Queres continuar?");
         }
         else if ($('#ciudadesList option:selected')[0].style.backgroundColor == "red") {
-            return confirm("Me parece muy mala idea cerrar esta fecha. ¿Queres continuar?");
+            return confirm("Me parece muy mala idea cerrar esta fecha ¿Queres continuar?");
         }
     }
 
