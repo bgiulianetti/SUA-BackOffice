@@ -67,6 +67,11 @@ namespace SUA.Controllers
                     service.AddFecha(fecha);
                     ViewBag.mensaje = "creado";
                     new LogService().FormatAndSaveLog("Fecha", "Crear", JsonConvert.SerializeObject(fecha));
+                    new EmailService().SendEmail(
+                                emailTo: "standupargentina@gmail.com",
+                                subject: "Creación Evento SUA - " + fecha.Show.SiglaBordereaux + " en " + fecha.Sala.Direccion.Ciudad,
+                                body: CreateDescription(fecha)
+                            );
                 }
                 else if (string.Equals(accion, "Put"))
                 {
@@ -79,6 +84,11 @@ namespace SUA.Controllers
                     ViewBag.mensaje = "actualizado";
 
                     new LogService().FormatAndSaveLog("Fecha", "Editar", JsonConvert.SerializeObject(fecha));
+                    new EmailService().SendEmail(
+                        emailTo: "standupargentina@gmail.com",
+                        subject: "Modificación Evento SUA - " + fecha.Show.SiglaBordereaux + " en " + fecha.Sala.Direccion.Ciudad,
+                        body: CreateDescription(fecha)
+                    );
                 }
             }
             catch (Exception ex)
@@ -284,6 +294,11 @@ namespace SUA.Controllers
                 fecha.GoogleCalendarState = "delete";
                 service.UpdateFecha(fecha);
                 new LogService().FormatAndSaveLog("Fecha", "Borrar", JsonConvert.SerializeObject(fecha));
+                new EmailService().SendEmail(
+                                emailTo: "standupargentina@gmail.com",
+                                subject: "Cancelación Evento SUA - " + fecha.Show.SiglaBordereaux + " en " + fecha.Sala.Direccion.Ciudad,
+                                body: CreateDescription(fecha)
+                            );
             }
             catch /*(Exception ex)*/
             {
@@ -424,7 +439,7 @@ namespace SUA.Controllers
             doc.Add(new Paragraph(" "));
             doc.Add(new Paragraph(" "));
             doc.Add(new Paragraph(fecha.Show._Show + " en " + fecha.Sala.Direccion.Ciudad, FontFactory.GetFont(FontFactory.COURIER_BOLD, 12)));
-            doc.Add(new Paragraph("Dirección:  " + fecha.Sala.Direccion.Direccion +  ", " + fecha.Sala.Direccion.Ciudad, FontFactory.GetFont(FontFactory.COURIER_BOLD, 12)));
+            doc.Add(new Paragraph("Dirección:  " + fecha.Sala.Direccion.Direccion + ", " + fecha.Sala.Direccion.Ciudad, FontFactory.GetFont(FontFactory.COURIER_BOLD, 12)));
             doc.Add(new Paragraph(" "));
             doc.Add(new Paragraph(fecha.Sala.ToString(), FontFactory.GetFont(FontFactory.COURIER, 10)));
 
@@ -690,6 +705,16 @@ namespace SUA.Controllers
         private string GenerateBodyEmail(Fecha fecha)
         {
             return "";
+        }
+
+        private string CreateDescription(Fecha fecha)
+        {
+            var description = fecha.Sala.ToString();
+            if (!string.IsNullOrEmpty(fecha.Observaciones))
+            {
+                description += "\n\nObservaciones: " + fecha.Observaciones;
+            }
+            return description;
         }
     }
 }

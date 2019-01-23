@@ -65,14 +65,11 @@ namespace CalendarQuickstart
                             var eventRequest = service.Events.Insert(_event, fecha.Show.GoogleCalendarId);
                             eventRequest.SendNotifications = true;
                             eventRequest.Execute();
-                            new EmailService().SendEmail(
-                                emailTo: "standupargentina@gmail.com",
-                                subject: "Creación Evento SUA - " + fecha.Show.SiglaBordereaux + " en " + fecha.Sala.Direccion.Ciudad,
-                                body: CreateDescription(fecha)
-                            );
                         }
-                        catch //(Exception ex)
-                        {}
+                        catch (Exception ex)
+                        {
+                            var mensaje = ex.Message;
+                        }
                     }
                     else if (fecha.GoogleCalendarState == "put")
                     {
@@ -82,14 +79,11 @@ namespace CalendarQuickstart
                             var eventRequest = service.Events.Update(_event, fecha.Show.GoogleCalendarId, fecha.UniqueId);
                             eventRequest.SendNotifications = true;
                             eventRequest.Execute();
-                            new EmailService().SendEmail(
-                                emailTo: "standupargentina@gmail.com",
-                                subject: "Modificación Evento SUA - " + fecha.Show.SiglaBordereaux + " en " + fecha.Sala.Direccion.Ciudad,
-                                body: CreateDescription(fecha)
-                            );
                         }
-                        catch// (Exception ex)
-                        {}
+                        catch (Exception ex)
+                        {
+                            var mensaje = ex.Message;
+                        }
                     }
                     else if(fecha.GoogleCalendarState == "delete")
                     {
@@ -99,14 +93,11 @@ namespace CalendarQuickstart
                             var eventRequest = service.Events.Delete(fecha.Show.GoogleCalendarId, fecha.UniqueId);
                             eventRequest.SendNotifications = true;
                             eventRequest.Execute();
-                            new EmailService().SendEmail(
-                                emailTo: "standupargentina@gmail.com",
-                                subject: "Cancelación Evento SUA - " + fecha.Show.SiglaBordereaux + " en " + fecha.Sala.Direccion.Ciudad,
-                                body: CreateDescription(fecha)
-                            );
                         }
-                        catch// (Exception ex)
-                        { }
+                        catch (Exception ex)
+                        {
+                            var mensaje = ex.Message;
+                        }
                     }
                     fecha.GoogleCalendarState = "ok";
                     serviceFecha.UpdateFecha(fecha);
