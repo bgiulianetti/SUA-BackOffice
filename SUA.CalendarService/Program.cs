@@ -4,6 +4,7 @@ using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using SUA.Models;
+using SUA.Servicios;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -64,6 +65,11 @@ namespace CalendarQuickstart
                             var eventRequest = service.Events.Insert(_event, fecha.Show.GoogleCalendarId);
                             eventRequest.SendNotifications = true;
                             eventRequest.Execute();
+                            new EmailService().SendEmail(
+                                emailTo: "standupargentina@gmail.com",
+                                subject: "Creación Evento SUA - " + fecha.Show.SiglaBordereaux + " en " + fecha.Sala.Direccion.Ciudad,
+                                body: CreateDescription(fecha)
+                            );
                         }
                         catch //(Exception ex)
                         {}
@@ -76,6 +82,11 @@ namespace CalendarQuickstart
                             var eventRequest = service.Events.Update(_event, fecha.Show.GoogleCalendarId, fecha.UniqueId);
                             eventRequest.SendNotifications = true;
                             eventRequest.Execute();
+                            new EmailService().SendEmail(
+                                emailTo: "standupargentina@gmail.com",
+                                subject: "Modificación Evento SUA - " + fecha.Show.SiglaBordereaux + " en " + fecha.Sala.Direccion.Ciudad,
+                                body: CreateDescription(fecha)
+                            );
                         }
                         catch// (Exception ex)
                         {}
@@ -88,6 +99,11 @@ namespace CalendarQuickstart
                             var eventRequest = service.Events.Delete(fecha.Show.GoogleCalendarId, fecha.UniqueId);
                             eventRequest.SendNotifications = true;
                             eventRequest.Execute();
+                            new EmailService().SendEmail(
+                                emailTo: "standupargentina@gmail.com",
+                                subject: "Cancelación Evento SUA - " + fecha.Show.SiglaBordereaux + " en " + fecha.Sala.Direccion.Ciudad,
+                                body: CreateDescription(fecha)
+                            );
                         }
                         catch// (Exception ex)
                         { }
@@ -106,7 +122,7 @@ namespace CalendarQuickstart
                 Start = new EventDateTime { DateTime = fecha.FechaHorario, DateTimeRaw = fecha.FechaHorario.ToString("yyyy-MM-ddTHH:mm:ss-03:00") },
                 End = new EventDateTime { DateTime = fecha.FechaHorario, DateTimeRaw = fecha.FechaHorario.ToString("yyyy-MM-ddTHH:mm:ss-03:00") },
                 Location = fecha.Sala.Direccion.Direccion + ", " + fecha.Sala.Direccion.Ciudad,
-                Description = fecha.Sala.ToString(),
+                Description = CreateDescription(fecha),
                 Summary = fecha.Sala.Direccion.Ciudad + " " + fecha.Show.SiglaBordereaux,
                 Source = new Event.SourceData { Title = "BO-SUA", Url = "http://c721.cloud.wiroos.net" },
             };
@@ -126,5 +142,17 @@ namespace CalendarQuickstart
             _event.Attendees = attendees.ToArray();
             return _event;
         }
+
+
+        public static string CreateDescription(Fecha fecha)
+        {
+            var description = fecha.Sala.ToString();
+            if (!string.IsNullOrEmpty(fecha.Observaciones))
+            {
+                description += "\n\nObservaciones: " + fecha.Observaciones;
+            }
+            return description;
+        }
+
     }
 }

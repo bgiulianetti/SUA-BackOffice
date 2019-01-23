@@ -16,6 +16,7 @@ namespace SUA.Models
         public Bordereaux Borederaux { get; set; }
         public string GoogleCalendarState { get; set; }
         public string Status { get; set; }
+        public string Observaciones { get; set; }
 
         public void SetIdAndFechaAlta()
         {
