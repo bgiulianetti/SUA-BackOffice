@@ -44,7 +44,12 @@ namespace SUA.Controllers
                 ViewBag.productor = fecha.Productor.Dni;
                 ViewBag.sala = fecha.Sala.UniqueId;
                 ViewBag.show = fecha.Show.UniqueId;
+
+                var repeticiones = new FechaService().GetRepeticionPlazasByShowAndDate(fecha.Show.UniqueId, fecha.FechaHorario);
+                ViewBag.ciudades = repeticiones;
+
                 return View(fecha);
+
             }
             return View();
         }
@@ -709,7 +714,9 @@ namespace SUA.Controllers
 
         private string CreateDescription(Fecha fecha)
         {
-            var description = fecha.Sala.ToString();
+            var description = fecha.Show._Show + " en " + fecha.Sala.Direccion.Ciudad + 
+                              "\nFecha y Hora: " + fecha.FechaHorario.ToString("dd-MM-yyyy HH:mm") + "\n\n" + 
+                              fecha.Sala.ToString();
             if (!string.IsNullOrEmpty(fecha.Observaciones))
             {
                 description += "\n\nObservaciones: " + fecha.Observaciones;

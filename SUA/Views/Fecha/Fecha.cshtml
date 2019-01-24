@@ -96,36 +96,18 @@
 
                         <table style="border-radius: 10px;">
                             <tr>
-
-
-                                @if (ViewBag.accion == "Post")
-                                {
-                                    <td>
-                                        <input id="filterCiudad" type="text" placeholder="Buscar Ciudad" class="form-control" style="width:100%" />
-                                        <select name="ciudadesList" multiple="multiple" class="form-control" id="ciudadesList" Style="width:350px; height:400px" required></select>
-                                    </td>
-                                    <td>
-                                        <label class="form-control">Teatros - Salas</label>
-                                        <select name="salasList" multiple="multiple" class="form-control" id="salasList" Style="width:350px; height:400px" required></select>
-                                    </td>
-                                    <td>
-                                        <label class="form-control">Fechas 20 días antes y 20 días después</label>
-                                        <select multiple="multiple" class="form-control" id="antesDespues" Style="width:300px; height:400px"></select>
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td>
-                                        <input id="filterSala" type="text" placeholder="Buscar Sala" class="form-control" style="width:100%" />
-                                        <select name="salasList" multiple="multiple" class="form-control" id="salasList" Style="width:350px; height:400px" required>
-                                            @foreach (var item in ViewBag.salas)
-                                            {
-                                                <option value="@item.UniqueId">@item.Nombre - @item.Direccion.Ciudad</option>
-                                            }
-                                        </select>
-                                    </td>
-                                }
-
+                                <td>
+                                    <input id="filterCiudad" type="text" placeholder="Buscar Ciudad" class="form-control" style="width:100%" />
+                                    <select name="ciudadesList" multiple="multiple" class="form-control" id="ciudadesList" Style="width:350px; height:400px" required></select>
+                                </td>
+                                <td>
+                                    <label class="form-control">Teatros - Salas</label>
+                                    <select name="salasList" multiple="multiple" class="form-control" id="salasList" Style="width:350px; height:400px" required></select>
+                                </td>
+                                <td>
+                                    <label class="form-control">Fechas 20 días antes y 20 días después</label>
+                                    <select multiple="multiple" class="form-control" id="antesDespues" Style="width:300px; height:400px"></select>
+                                </td>
                                 <td>
                                     <label class="form-control" style="background-color:darkslateblue;color:white">Ideal para cerrar fecha</label>
                                     <label class="form-control" style="background-color:forestgreen;color:white">Bien para cerrar fecha</label>
@@ -222,6 +204,21 @@
         $('#salasList option[value="' + "@ViewBag.sala" + '"]').attr("selected", "selected");
         $('#productoresList option[value="' + "@ViewBag.productor" + '"]').attr("selected", "selected");
         $("#idSala").val("@ViewBag.sala");
+
+        var ciudades = @Html.Raw(Json.Encode(@ViewBag.ciudades));
+        popularListaSalas(ciudades, "decrypted");
+
+        $('#ciudadesList option').filter(function () {
+            return ($(this).text() == '@Model.Sala.Direccion.Ciudad');
+        }).prop('selected', true);
+
+
+        CargarSalasAlSeleccionarCiudad();
+
+        $('#salasList option').filter(function () {
+            return ($(this).text() == '@Model.Sala.Nombre');
+        }).prop('selected', true);
+
     }
     else
     {
@@ -244,12 +241,17 @@
         });
     }
 
-    function popularListaSalas(data)
+    function popularListaSalas(data, accion)
     {
         $("#ciudadesList").empty();
         $("#salasList").empty();
         $("#antesDespues").empty();
-        ciudadesSalaList = JSON.parse(data);
+
+        if (accion == "decrypted")
+            ciudadesSalaList = data;
+        else
+            ciudadesSalaList = JSON.parse(data);
+
         for (var i = 0; i < ciudadesSalaList.length; i++)
         {
             var backgroundColor;
@@ -268,7 +270,11 @@
     }
 
 
-    $('#ciudadesList').change(function ()
+    $('#ciudadesList').change(CargarSalasAlSeleccionarCiudad);
+
+
+
+    function CargarSalasAlSeleccionarCiudad()
     {
         $("#salasList").empty();
         $("#antesDespues").empty();
@@ -278,20 +284,13 @@
         {
             $("#salasList").append('<option id="' + ciudadSalaItem[0].Salas[i].IdSala + '">' + ciudadSalaItem[0].Salas[i].Nombre + '</option>');
         }
-    });
+    }
+
+
 
     $('#salasList').change(function ()
     {
-        var idSala;
-        if ("@ViewBag.accion" == "Put")
-        {
-            idSala = $("#salasList option:selected").val();
-        }
-        else
-        {
-            idSala = $("#salasList option:selected").attr("id")
-        }
-
+        var idSala = $("#salasList option:selected").attr("id")
         $("#idSala").val(idSala);
         $.ajax({
             url: '/fecha/GetAntesDespuesFechas?idSala=' + idSala + '&fecha=' + $("#fechaHorario").val(),
