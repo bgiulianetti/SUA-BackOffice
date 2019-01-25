@@ -202,6 +202,7 @@
     <Compile Include="Models\Contacto.cs" />
     <Compile Include="Models\DatosBancarios.cs" />
     <Compile Include="Models\Fecha.cs" />
+    <Compile Include="Models\FechasPorTiempo.cs" />
     <Compile Include="Models\GastosBordereaux.cs" />
     <Compile Include="Models\GoogleCalendarProperties.cs" />
     <Compile Include="Models\Hotel.cs" />

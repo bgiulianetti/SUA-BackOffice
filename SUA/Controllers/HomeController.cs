@@ -71,6 +71,7 @@ namespace SUA.Controllers
             ViewBag.Key = calendarService.GetCalendarKey();
             ViewBag.showCalendars = GetShowCalendarsList();
             ViewBag.titulo = "Inicio";
+            ViewBag.showsByYear = new FechaService().GetFechasByYear(DateTime.Now.Year);
             return View();
         }
 
@@ -146,6 +147,12 @@ namespace SUA.Controllers
                 lista.Add(show.Nombre);
             }
             return lista;
+        }
+
+        [HttpGet]
+        public List<FechasByYear> GetFechasByYear(string year)
+        {
+            return new FechaService().GetFechasByYear(Int32.Parse(year));
         }
 
     }
