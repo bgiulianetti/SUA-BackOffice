@@ -72,11 +72,16 @@ namespace SUA.Controllers
                     service.AddFecha(fecha);
                     ViewBag.mensaje = "creado";
                     new LogService().FormatAndSaveLog("Fecha", "Crear", JsonConvert.SerializeObject(fecha));
-                    new EmailService().SendEmail(
-                                emailTo: "standupargentina@gmail.com",
-                                subject: "Creación Evento SUA - " + fecha.Show.SiglaBordereaux + " en " + fecha.Sala.Direccion.Ciudad,
-                                body: CreateDescription(fecha)
-                            );
+
+                    var enviroment = System.Configuration.ConfigurationManager.AppSettings.Get("Enviroment");
+                    if (enviroment == "prod")
+                    {
+                        new EmailService().SendEmail(
+                            emailTo: "standupargentina@gmail.com",
+                            subject: "Creación Evento SUA - " + fecha.Show.SiglaBordereaux + " en " + fecha.Sala.Direccion.Ciudad,
+                            body: CreateDescription(fecha)
+                        );
+                    }
                 }
                 else if (string.Equals(accion, "Put"))
                 {
@@ -89,11 +94,17 @@ namespace SUA.Controllers
                     ViewBag.mensaje = "actualizado";
 
                     new LogService().FormatAndSaveLog("Fecha", "Editar", JsonConvert.SerializeObject(fecha));
-                    new EmailService().SendEmail(
-                        emailTo: "standupargentina@gmail.com",
-                        subject: "Modificación Evento SUA - " + fecha.Show.SiglaBordereaux + " en " + fecha.Sala.Direccion.Ciudad,
-                        body: CreateDescription(fecha)
-                    );
+
+                    var enviroment = System.Configuration.ConfigurationManager.AppSettings.Get("Enviroment");
+                    if (enviroment == "prod")
+                    {
+                        new EmailService().SendEmail(
+                            emailTo: "standupargentina@gmail.com",
+                            subject: "Modificación Evento SUA - " + fecha.Show.SiglaBordereaux + " en " + fecha.Sala.Direccion.Ciudad,
+                            body: CreateDescription(fecha)
+                        );
+                    }
+
                 }
             }
             catch (Exception ex)
@@ -299,11 +310,16 @@ namespace SUA.Controllers
                 fecha.GoogleCalendarState = "delete";
                 service.UpdateFecha(fecha);
                 new LogService().FormatAndSaveLog("Fecha", "Borrar", JsonConvert.SerializeObject(fecha));
-                new EmailService().SendEmail(
-                                emailTo: "standupargentina@gmail.com",
-                                subject: "Cancelación Evento SUA - " + fecha.Show.SiglaBordereaux + " en " + fecha.Sala.Direccion.Ciudad,
-                                body: CreateDescription(fecha)
-                            );
+
+                var enviroment = System.Configuration.ConfigurationManager.AppSettings.Get("Enviroment");
+                if (enviroment == "prod")
+                {
+                    new EmailService().SendEmail(
+                        emailTo: "standupargentina@gmail.com",
+                        subject: "Cancelación Evento SUA - " + fecha.Show.SiglaBordereaux + " en " + fecha.Sala.Direccion.Ciudad,
+                        body: CreateDescription(fecha)
+                    );
+                }
             }
             catch /*(Exception ex)*/
             {
@@ -714,8 +730,8 @@ namespace SUA.Controllers
 
         private string CreateDescription(Fecha fecha)
         {
-            var description = fecha.Show._Show + " en " + fecha.Sala.Direccion.Ciudad + 
-                              "\nFecha y Hora: " + fecha.FechaHorario.ToString("dd-MM-yyyy HH:mm") + "\n\n" + 
+            var description = fecha.Show._Show + " en " + fecha.Sala.Direccion.Ciudad +
+                              "\nFecha y Hora: " + fecha.FechaHorario.ToString("dd-MM-yyyy HH:mm") + "\n\n" +
                               fecha.Sala.ToString();
             if (!string.IsNullOrEmpty(fecha.Observaciones))
             {

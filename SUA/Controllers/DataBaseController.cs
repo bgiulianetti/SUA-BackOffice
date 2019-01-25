@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SUA.Filters;
 using SUA.Models;
 using SUA.Servicios;
 using System;
@@ -12,6 +13,7 @@ namespace SUA.Controllers
     public class DataBaseController : Controller
     {
         [HttpGet]
+        [UserValidationFilter]
         public ActionResult Backup(string id)
         {
 

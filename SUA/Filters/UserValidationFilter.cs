@@ -34,6 +34,15 @@ namespace SUA.Filters
                 {
                     if (user.UserMaster == "no")
                     {
+                        //////////////////////Database BackUp //////////////////////////
+
+                        if (controller == "DataBase" && action == "Backup")
+                        {
+                            filterContext.Result = new RedirectResult("/inicio");
+                        }
+
+
+                        ////////////////////// LOGIN //////////////////////////
                         if (controller == "Home" && action == "Login")
                         {
                             filterContext.Result = new RedirectResult("/inicio");
