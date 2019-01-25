@@ -209,14 +209,14 @@
         popularListaSalas(ciudades, "decrypted");
 
         $('#ciudadesList option').filter(function () {
-            return ($(this).text() == '@Model.Sala.Direccion.Ciudad');
+            return ($(this).text() == '@ViewBag.salaCiudad');
         }).prop('selected', true);
 
 
         CargarSalasAlSeleccionarCiudad();
 
         $('#salasList option').filter(function () {
-            return ($(this).text() == '@Model.Sala.Nombre');
+            return ($(this).text() == '@ViewBag.salaNombre');
         }).prop('selected', true);
 
     }

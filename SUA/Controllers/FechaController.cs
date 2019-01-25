@@ -34,6 +34,8 @@ namespace SUA.Controllers
             {
                 ViewBag.accion = "Post";
                 ViewBag.titulo = "Crear Fecha";
+                ViewBag.salaCiudad = "";
+                ViewBag.salaNombre = "";
             }
             else
             {
@@ -44,7 +46,8 @@ namespace SUA.Controllers
                 ViewBag.productor = fecha.Productor.Dni;
                 ViewBag.sala = fecha.Sala.UniqueId;
                 ViewBag.show = fecha.Show.UniqueId;
-
+                ViewBag.salaCiudad = fecha.Sala.Direccion.Ciudad;
+                ViewBag.salaNombre = fecha.Sala.Nombre;
                 var repeticiones = new FechaService().GetRepeticionPlazasByShowAndDate(fecha.Show.UniqueId, fecha.FechaHorario);
                 ViewBag.ciudades = repeticiones;
 
