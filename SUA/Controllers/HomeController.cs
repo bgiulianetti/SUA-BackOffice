@@ -150,9 +150,10 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
-        public List<FechasByYear> GetFechasByYear(string year)
+        public string GetFechasByYear(string year)
         {
-            return new FechaService().GetFechasByYear(Int32.Parse(year));
+            var fechas = new FechaService().GetFechasByYear(Int32.Parse(year));
+            return JsonConvert.SerializeObject(fechas);
         }
 
     }

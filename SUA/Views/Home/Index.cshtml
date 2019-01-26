@@ -27,9 +27,9 @@
                         var id = "check" + show.uniqueId;
                         <label id="@show.uniqueId" title="@show.show" class="btn btn-success active">
                             @show.show
-                        <input id="@id" type="checkbox" autocomplete="off" checked>
-                        <span class="glyphicon glyphicon-ok"></span>
-                    </label>
+                            <input id="@id" type="checkbox" autocomplete="off" checked>
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </label>
                     }
                 </div>
             </div>
@@ -38,7 +38,7 @@
 
         <div class="panel-body" style="padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:10px">
             <div class="well well-sm text-center">
-                
+
                 <h4>Imprimir Calendario</h4>
                 <div class="btn-group" data-toggle="buttons">
                     <label>Año</label>
@@ -54,10 +54,7 @@
         <div class="panel-body" style="padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
             <div class="well well-sm text-center">
                 <h4>Cantidad de shows por año</h4>
-                <label>Año</label>
-                <input type="number" id="showsYear" min="2017" max="2029" value="2019" />
                 <div id="chartContainer" style="height: 300px; width: 100%;"></div>
-                <input type="button" onclick="fechasByYear()" value="Ok" />
             </div>
         </div>
 
@@ -84,8 +81,8 @@
 
 
         //shows por año
-         var showsByYear = @Html.Raw(Json.Encode(@ViewBag.showsByYear));
-    var chart = new CanvasJS.Chart("chartContainer", {
+        //var showsByYear = @Html.Raw(Json.Encode(@ViewBag.showsByYear));
+        var chart = new CanvasJS.Chart("chartContainer", {
         animationEnabled: true,
         theme: "light2", // "light1", "light2", "dark1", "dark2"
         axisY: {
@@ -98,7 +95,7 @@
         },
         data: [{
             type: "column",
-            yValueFormatString: "#,##0.0#\"%\"",
+            yValueFormatString: "#,##0#\"\"",
             dataPoints: @Html.Raw(Json.Encode(@ViewBag.showsByYear))
         }]
     });
@@ -178,7 +175,7 @@
     }
 
 
-
+    /*
     function fechasByYear()
     {
         $.getJSON("/home/GetFechasByYear?year=" + $("#showsYear").val(), addData);
@@ -193,6 +190,6 @@
         }
         chart.render();
 
-    }
+    }*/
 
 </script>
