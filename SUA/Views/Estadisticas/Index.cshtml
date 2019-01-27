@@ -7,19 +7,14 @@
 
     <div class="panel">
 
-
-
         <div class="panel-body" style="padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
             <div class="well well-sm text-center">
                 <h4>Ganancias netas por mes</h4>
+                <input type="number" id="gananciasNetasPorMes_year" min="2017" max="2029" value="2018" />
+                <input type="button" id="gananciasNetasPorMes" value="Ok" />
                 <div id="chartContainer" style="height: 300px; width: 100%;"></div>
             </div>
         </div>
-
-
-
-
-
 
     </div>
 </div>
@@ -27,77 +22,46 @@
 <script>
 
 
-    $(document).ready(function ()
-    {
+    $(document).ready(function () {
 
-        var gananciasNetasPorMesDataPoints = CreateArray(@Html.Raw(Json.Encode(@ViewBag.gananciasNetasPorMes)));
-        var gananciaNetaPorMes = new CanvasJS.Chart("chartContainer", {
-            animationEnabled: true,
-            title: {
-                text: "Ganancias netas por mes"
-            },
-            axisX: {
-                valueFormatString: "MMM,YY"
-            },
-            axisY: {
-                title: "Dinero",
-                includeZero: false,
-                suffix: " $"
-            },
-            legend: {
-                cursor: "pointer",
-                fontSize: 16,
-                itemclick: toggleDataSeries
-            },
-            toolTip: {
-                shared: true
-            },
-            data: [{
-                type: "spline",
-                yValueFormatString: "#0.##",
-                showInLegend: true,
-                dataPoints: gananciasNetasPorMesDataPoints
-            }]
-        });
-
-        gananciaNetaPorMes.render();
-
-        function toggleDataSeries(e)
-        {
-            if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible)
-                e.dataSeries.visible = false;
-            else 
-                e.dataSeries.visible = true;
-            gananciaNetaPorMes.render();
+        var dataPoints = [];
+        var gananciasNetasPorMes = createGananciasNetasPorMes();
+        
+        updateGananciasNetasPorMes();
+        $("#gananciasNetasPorMes").click(updateGananciasNetasPorMes);
+        function addData(data) {
+            gananciasNetasPorMes.destroy();
+            for (var i = 0; i < data.length; i++) {
+                if (dataPoints.length >= 12) dataPoints = [];
+                dataPoints.push({
+                    x: new Date(data[i].date),
+                    y: data[i].units
+                });
+            }
+            gananciasNetasPorMes = createGananciasNetasPorMes();
+            gananciasNetasPorMes.render();
         }
-
+        function updateGananciasNetasPorMes() {
+            $.getJSON("estadisticas/GetGananciasNetasPorMes?year=" + $("#gananciasNetasPorMes_year").val(), addData);
+        }
+        function createGananciasNetasPorMes() {
+            return new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                theme: "light2",
+                axisY: {
+                    title: " $",
+                    titleFontSize: 24
+                },
+                data: [{
+                    type: "spline",
+                    yValueFormatString: "#,### $",
+                    dataPoints: dataPoints
+                }]
+            });
+        }
     });
 
-    function CreateArray(infoArray)
-    {
-        var datapoint = [
-            { x: new Date(2017, 00, 1), y: 02 },
-            { x: new Date(2017, 00, 1), y: 02 },
-            { x: new Date(2017, 00, 1), y: 02 },
-            { x: new Date(2017, 00, 1), y: 02 },
-            { x: new Date(2017, 00, 1), y: 02 },
-            { x: new Date(2017, 00, 1), y: 02 },
-            { x: new Date(2017, 00, 1), y: 02 },
-            { x: new Date(2017, 00, 1), y: 02 },
-            { x: new Date(2017, 00, 1), y: 02 },
-            { x: new Date(2017, 00, 1), y: 02 },
-            { x: new Date(2017, 00, 1), y: 02 },
-            { x: new Date(2017, 00, 1), y: 02 }
-        ]
-
-        for (var i = 0; i < infoArray.length; i++)
-        {
-            datapoint[i].x = new Date(infoArray.Year, infoArray.Month, infoArray.Day);
-            datapoint[i].y = infoArray.info;
-        }
-        return datapoint;
-    }
 
 
 
- </script>
+</script>

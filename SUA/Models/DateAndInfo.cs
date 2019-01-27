@@ -7,9 +7,7 @@ namespace SUA.Models
 {
     public class DateAndInfo
     {
-        public int Year { get; set; }
-        public int Month { get; set; }
-        public int Day { get; set; }
-        public string Info { get; set; }
+        public double date { get; set; }
+        public float units { get; set; }
     }
 }
