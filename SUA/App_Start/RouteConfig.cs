@@ -241,6 +241,16 @@ namespace SUA
 
 
 
+            //============================Estadisticas=======================================
+
+            routes.MapRoute(
+                name: "Estadisticas",
+                url: "estadisticas",
+                defaults: new { controller = "Estadisticas", action = "Index", id = UrlParameter.Optional }
+            );
+
+
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
