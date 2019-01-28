@@ -8,6 +8,6 @@ namespace SUA.Models
     public class DateAndInfo
     {
         public double date { get; set; }
-        public float units { get; set; }
+        public string units { get; set; }
     }
 }

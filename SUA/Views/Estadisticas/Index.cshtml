@@ -10,9 +10,31 @@
         <div class="panel-body" style="padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
             <div class="well well-sm text-center">
                 <h4>Ganancias netas por mes</h4>
-                <input type="number" id="gananciasNetasPorMes_year" min="2017" max="2029" value="2018" />
+                <input type="number" id="gananciasNetasPorMes_year" min="2017" max="2029" value="2019" />
                 <input type="button" id="gananciasNetasPorMes" value="Ok" />
-                <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                <br /><br />
+                <div id="gananciasNetasPorMesChart" style="height: 300px; width: 100%;"></div>
+            </div>
+        </div>
+
+        <div class="panel-body" style="padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
+            <div class="well well-sm text-center">
+                <h4>Ganancias brutas por mes</h4>
+                <input type="number" id="gananciasBrutasPorMes_year" min="2017" max="2029" value="2019" />
+                <input type="button" id="gananciasBrutasPorMes" value="Ok" />
+                <br /><br />
+                <div id="gananciasBrutasPorMesChart" style="height: 300px; width: 100%;"></div>
+            </div>
+        </div>
+
+        <div class="panel-body" style="padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
+            <div class="well well-sm text-center">
+                <h4>Ganancias netas por mes - Versus</h4>
+                <input type="number" id="gananciasNetasPorMesVersus_yearA" min="2017" max="2029" value="2019" /> vs 
+                <input type="number" id="gananciasNetasPorMesVersus_yearB" min="2017" max="2029" value="2019" />
+                <input type="button" id="gananciasNetasPorMesVersus" value="Ok" />
+                <br /><br />
+                <div id="gananciasNetasPorMesVersusChart" style="height: 300px; width: 100%;"></div>
             </div>
         </div>
 
@@ -22,32 +44,39 @@
 <script>
 
 
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
 
-        var dataPoints = [];
-        var gananciasNetasPorMes = createGananciasNetasPorMes();
-        
+        //Ganancias Netas por mes
+        var gananciasNetasPorMesDataPoints = [];
+        var gananciasNetasPorMes = createGananciasNetasPorMes();       
         updateGananciasNetasPorMes();
         $("#gananciasNetasPorMes").click(updateGananciasNetasPorMes);
-        function addData(data) {
+        function addGananciasNetasPorMesData(data) {
             gananciasNetasPorMes.destroy();
-            for (var i = 0; i < data.length; i++) {
-                if (dataPoints.length >= 12) dataPoints = [];
-                dataPoints.push({
+            for (var i = 0; i < data.length; i++)
+            {
+                if (gananciasNetasPorMesDataPoints.length >= 12)
+                    gananciasNetasPorMesDataPoints = [];
+
+                gananciasNetasPorMesDataPoints.push({
                     x: new Date(data[i].date),
-                    y: data[i].units
+                    y: parseFloat(data[i].units)
                 });
             }
             gananciasNetasPorMes = createGananciasNetasPorMes();
             gananciasNetasPorMes.render();
         }
-        function updateGananciasNetasPorMes() {
-            $.getJSON("estadisticas/GetGananciasNetasPorMes?year=" + $("#gananciasNetasPorMes_year").val(), addData);
+        function updateGananciasNetasPorMes()
+        {
+            $.getJSON("estadisticas/GetGananciasNetasPorMes?year=" + $("#gananciasNetasPorMes_year").val(), addGananciasNetasPorMesData);
         }
-        function createGananciasNetasPorMes() {
-            return new CanvasJS.Chart("chartContainer", {
+        function createGananciasNetasPorMes()
+        {
+            return new CanvasJS.Chart("gananciasNetasPorMesChart", {
                 animationEnabled: true,
                 theme: "light2",
+                exportEnabled: true,
                 axisY: {
                     title: " $",
                     titleFontSize: 24
@@ -55,7 +84,91 @@
                 data: [{
                     type: "spline",
                     yValueFormatString: "#,### $",
-                    dataPoints: dataPoints
+                    dataPoints: gananciasNetasPorMesDataPoints
+                }]
+            });
+        }
+
+
+        //Ganancias Brutas por mes
+        var gananciasBrutasPorMesDataPoints = [];
+        var gananciasBrutasPorMes = createGananciasBrutasPorMes();
+        updateGananciasBrutasPorMes();
+        $("#gananciasBrutasPorMes").click(updateGananciasBrutasPorMes);
+        function addGananciasBrutasPorMesData(data)
+        {
+            gananciasBrutasPorMes.destroy();
+            for (var i = 0; i < data.length; i++)
+            {
+                if (gananciasBrutasPorMesDataPoints.length >= 12)
+                    gananciasBrutasPorMesDataPoints = [];
+
+                gananciasBrutasPorMesDataPoints.push({
+                    x: new Date(data[i].date),
+                    y: parseFloat(data[i].units)
+                });
+            }
+            gananciasBrutasPorMes = createGananciasBrutasPorMes();
+            gananciasBrutasPorMes.render();
+        }
+        function updateGananciasBrutasPorMes()
+        {
+            $.getJSON("estadisticas/GetGananciasBrutasPorMes?year=" + $("#gananciasBrutasPorMes_year").val(), addGananciasBrutasPorMesData);
+        }
+        function createGananciasBrutasPorMes()
+        {
+            return new CanvasJS.Chart("gananciasBrutasPorMesChart", {
+                animationEnabled: true,
+                theme: "light2",
+                exportEnabled: true,
+                axisY: {
+                    title: " $",
+                    titleFontSize: 24
+                },
+                data: [{
+                    type: "spline",
+                    yValueFormatString: "#,### $",
+                    dataPoints: gananciasBrutasPorMesDataPoints
+                }]
+            });
+        }
+
+
+        //Ganancias Netas por mes Versus
+        var gananciasNetasPorMesVersusDataPoints = [];
+        var gananciasNetasPorMesVersus = createGananciasNetasPorMesVersus();
+        updateGananciasNetasPorMesVersus();
+        $("#gananciasNetasPorMesVersus").click(updateGananciasNetasPorMesVersus);
+        function addGananciasNetasPorMesVersusData(data) {
+            gananciasNetasPorMes.destroy();
+            for (var i = 0; i < data.length; i++) {
+                if (gananciasNetasPorMesVersusDataPoints.length >= 12)
+                    gananciasNetasPorMesVersusDataPoints = [];
+
+                gananciasNetasPorMesVersusDataPoints.push({
+                    x: new Date(data[i].date),
+                    y: parseFloat(data[i].units)
+                });
+            }
+            gananciasNetasPorMesVersus = createGananciasNetasPorMesVersus();
+            gananciasNetasPorMesVersus.render();
+        }
+        function updateGananciasNetasPorMesVersus() {
+            $.getJSON("estadisticas/GetGananciasNetasPorMesVersus?yearA=" + $("#gananciasNetasPorMesVersus_yearA").val() + "&yearB=" + $("#gananciasNetasPorMesVersus_yearB").val(), addGananciasNetasPorMesVersusData);
+        }
+        function createGananciasNetasPorMesVersus() {
+            return new CanvasJS.Chart("gananciasNetasPorMesVersusChart", {
+                animationEnabled: true,
+                theme: "light2",
+                exportEnabled: true,
+                axisY: {
+                    title: " $",
+                    titleFontSize: 24
+                },
+                data: [{
+                    type: "spline",
+                    yValueFormatString: "#,### $",
+                    dataPoints: gananciasNetasPorMesVersusDataPoints
                 }]
             });
         }
