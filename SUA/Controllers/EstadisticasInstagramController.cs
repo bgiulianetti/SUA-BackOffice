@@ -11,7 +11,7 @@ namespace SUA.Controllers
     public class EstadisticasInstagramController : Controller
     {
         // GET: EstadisticasInstagram
-        public ActionResult Index()
+        public ActionResult InstagramStats()
         {
             var service = new InstagramService();
             var standuperoService = new StanduperoService();

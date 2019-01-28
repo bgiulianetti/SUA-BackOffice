@@ -642,11 +642,11 @@
     <Content Include="Views\Prensa\Prensa.cshtml" />
     <Content Include="Views\Prensa\Prensas.cshtml" />
     <Content Include="Views\Estadisticas\Index.cshtml" />
+    <Content Include="Views\EstadisticasInstagram\InstagramStats.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="BackUp\" />
-    <Folder Include="Views\EstadisticasInstagram\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff">

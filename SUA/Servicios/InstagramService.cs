@@ -28,16 +28,17 @@ namespace SUA.Servicios
             var response = Client.GetAsync(username).Result;
             var responseJson = response.Content.ReadAsStringAsync().Result;
             var foto = responseJson.Split(new string[] { "<meta property=\"og:image\" content=\"" }, StringSplitOptions.None)[1].Split('"')[0];
-            var following = responseJson.Split(new string[] { " Following" }, StringSplitOptions.None)[0].Split(new string[] { ", " }, StringSplitOptions.None)[1].Trim();
-            var posts = responseJson.Split(new string[] { " Posts" }, StringSplitOptions.None)[0].Split(new string[] { ", " }, StringSplitOptions.None)[1].Trim();
+            var following = responseJson.Split(new string[] { " Following" }, StringSplitOptions.None)[0].Split(new string[] { ", " }, StringSplitOptions.None).Last().Trim().Replace(",", "").Replace(".", "");
+            var posts = responseJson.Split(new string[] { " Posts" }, StringSplitOptions.None)[0].Split(new string[] { ", " }, StringSplitOptions.None).Last().Trim().Replace(",", "").Replace(".", "");
 
             var user = new InstagramUserData()
             {
                 Followers = Int32.Parse(responseJson.Split(new string[] { "userInteractionCount\":\"" }, StringSplitOptions.None)[1].Split('"')[0]),
                 Picture = new Uri(foto),
-                InstagramUser = username
+                InstagramUser = username,
+                Following = Int32.Parse(following),
+                Posts = Int32.Parse(posts)
             };
-            ;
 
             return user;
         }
