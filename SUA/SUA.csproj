@@ -175,6 +175,7 @@
     <Compile Include="Controllers\CiudadController.cs" />
     <Compile Include="Controllers\DataBaseController.cs" />
     <Compile Include="Controllers\EstadisticasController.cs" />
+    <Compile Include="Controllers\EstadisticasInstagramController.cs" />
     <Compile Include="Controllers\FechaController.cs" />
     <Compile Include="Controllers\HistorialController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -214,6 +215,7 @@
     <Compile Include="Models\InstagramUserInfoResponse.cs" />
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\Persona.cs" />
+    <Compile Include="Models\PieChartContract.cs" />
     <Compile Include="Models\Prensa.cs" />
     <Compile Include="Models\Productor.cs" />
     <Compile Include="Models\Proveedor.cs" />
@@ -235,6 +237,7 @@
     <Compile Include="Servicios\EmailService.cs" />
     <Compile Include="Servicios\FechaService.cs" />
     <Compile Include="Servicios\HotelService.cs" />
+    <Compile Include="Servicios\InstagramService.cs" />
     <Compile Include="Servicios\LogService.cs" />
     <Compile Include="Servicios\PrensaService.cs" />
     <Compile Include="Servicios\ProductorService.cs" />
@@ -643,6 +646,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="BackUp\" />
+    <Folder Include="Views\EstadisticasInstagram\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff">

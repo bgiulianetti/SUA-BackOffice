@@ -15,16 +15,10 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            //Ganancias netas por show por año //pie chart
-
             //Ganancia de cada show por mes //barras
-
             ViewBag.title = "Estadisticas";
             return View();
         }
-
-
-
 
         [HttpGet]
         public string GetGananciasNetasPorMes(int year)
@@ -119,6 +113,23 @@ namespace SUA.Controllers
             return JsonConvert.SerializeObject(lista);
         }
 
+        [HttpGet]
+        public string GetGananciasNetasPorShow(int year)
+        {
+            var info = new List<PieChartContract>();
+            var service = new FechaService();
+            var fechasInYear = service.GetFechas("true").Where(f => f.FechaHorario >= new DateTime(year, 01, 01) && f.FechaHorario <= new DateTime(year, 12, 31) && f.Borederaux != null).ToList();
+            var showService = new ShowService();
+            var shows = showService.GetShows();
+            foreach (var show in shows)
+            {
+                var montoByShow = fechasInYear.Where(f => f.Show.UniqueId == show.UniqueId).Sum(f => f.Borederaux.SUAMontoFinal);
+                info.Add(new PieChartContract { label = show._Show, y = montoByShow });
+            }
+
+            return JsonConvert.SerializeObject(info);
+        }
+
         private string GetMonthNetoSum(List<Fecha> fechas)
         {
             float sum = fechas.Sum(f => f.Borederaux.SUAMontoFinal);
@@ -132,6 +143,5 @@ namespace SUA.Controllers
             var sum_string = sum.ToString("0.0").Replace(",", ".");
             return sum_string;
         }
-
     }
 }

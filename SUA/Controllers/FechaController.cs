@@ -46,8 +46,8 @@ namespace SUA.Controllers
                 ViewBag.productor = fecha.Productor.Dni;
                 ViewBag.sala = fecha.Sala.UniqueId;
                 ViewBag.show = fecha.Show.UniqueId;
-                ViewBag.salaCiudad = fecha.Sala.Direccion.Ciudad;
-                ViewBag.salaNombre = fecha.Sala.Nombre;
+                ViewBag.salaCiudad = fecha.Sala.Direccion.Ciudad.Trim();
+                ViewBag.salaNombre = fecha.Sala.Nombre.Trim();
                 var repeticiones = new FechaService().GetRepeticionPlazasByShowAndDate(fecha.Show.UniqueId, fecha.FechaHorario);
                 ViewBag.ciudades = repeticiones;
 
