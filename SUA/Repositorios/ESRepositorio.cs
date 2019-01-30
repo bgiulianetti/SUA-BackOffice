@@ -402,9 +402,10 @@ namespace SUA.Repositorios
         }
         public void AddBulkStandupero(List<Standupero> standuperos)
         {
+/*
             if (!IndexExists())
                 CreateIndex();
-
+*/
             var response = Client.IndexManyAsync(standuperos, Index, Index).Result;
 
             if (!response.IsValid)
@@ -604,9 +605,10 @@ namespace SUA.Repositorios
         }
         public void AddBulkProductor(List<Productor> productores)
         {
+/*
             if (!IndexExists())
                 CreateIndex();
-
+*/
             var response = Client.IndexManyAsync(productores, Index, Index).Result;
 
             if (!response.IsValid)
@@ -753,9 +755,10 @@ namespace SUA.Repositorios
         }
         public void AddBulkShow(List<Show> shows)
         {
+/*
             if (!IndexExists())
                 CreateIndex();
-
+*/
             var response = Client.IndexManyAsync(shows, Index, Index).Result;
 
             if (!response.IsValid)

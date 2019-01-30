@@ -249,6 +249,14 @@ namespace SUA
                 defaults: new { controller = "Estadisticas", action = "Index", id = UrlParameter.Optional }
             );
 
+            //============================Instagram Stats=======================================
+
+            routes.MapRoute(
+                name: "InstagramStats",
+                url: "instagram-stats",
+                defaults: new { controller = "EstadisticasInstagram", action = "InstagramStats" }
+            );
+
 
 
             routes.MapRoute(

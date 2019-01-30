@@ -10,20 +10,23 @@ namespace SUA.Controllers
 {
     public class EstadisticasInstagramController : Controller
     {
-        // GET: EstadisticasInstagram
         public ActionResult InstagramStats()
         {
             var service = new InstagramService();
-            var standuperoService = new StanduperoService();
-            var standuperos = standuperoService.GetStanduperos();
-            var lista = new List<InstagramUserData>();
-            foreach (var standupero in standuperos)
-            {
-                lista.Add(service.GetUser(standupero.InstagramUser.Replace("@", "").Trim()));
-            }
-
-            ViewBag.standuperosInstagram = lista;
+            var instagramUsers = service.GetUsers();
+            ViewBag.standuperosSUA = GetInstagramUsersForChart(instagramUsers);
             return View();
+        }
+
+
+        public List<ChartInfoContract> GetInstagramUsersForChart(List<InstagramUserData> users)
+        {
+            var lista = new List<ChartInfoContract>();
+            foreach (var user in users)
+            {
+                lista.Add(new ChartInfoContract { y = user.Followers, label = user.InstagramUser/* + "\nSeguidos: " + user.Following + "\nPosts: " + user.Posts*/});
+            }
+            return lista.OrderByDescending(f => f.y).ToList();
         }
     }
 }

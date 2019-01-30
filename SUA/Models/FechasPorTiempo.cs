@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SUA.Models
 {
-    public class FechasByYear
+    public class ChartInfoContract
     {
         public int y { get; set; }
         //public string ShowId { get; set; }

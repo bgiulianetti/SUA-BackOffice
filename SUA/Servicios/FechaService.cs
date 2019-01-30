@@ -279,17 +279,17 @@ namespace SUA.Servicios
             return list;
         }
 
-        public List<FechasByYear> GetFechasByYear(int year)
+        public List<ChartInfoContract> GetFechasByYear(int year)
         {
             var fechasInYear = Repository.GetFechas().Where(f => f.FechaHorario >= new DateTime(year, 01, 01) && f.FechaHorario <= new DateTime(year, 12, 31)).ToList();
-            var fechas = new List<FechasByYear>();
+            var fechas = new List<ChartInfoContract>();
 
             var showService = new ShowService();
             var shows = showService.GetShows();
             foreach (var show in shows)
             {
                 var count = fechasInYear.Where(f => f.Show.UniqueId == show.UniqueId).Count();
-                fechas.Add(new FechasByYear { y = count, /*ShowColor = show.BackgroundColorCalendar, ShowId = show.UniqueId,*/ label = show._Show/*, Year = year*/});
+                fechas.Add(new ChartInfoContract { y = count, /*ShowColor = show.BackgroundColorCalendar, ShowId = show.UniqueId,*/ label = show._Show/*, Year = year*/});
             }
             return fechas;
         }

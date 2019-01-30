@@ -209,9 +209,8 @@
         popularListaSalas(ciudades, "decrypted");
 
         $('#ciudadesList option').filter(function () {
-            return ($(this).text() == '@ViewBag.salaCiudad');
+            return ($(this).text() == '@Html.Raw(HttpUtility.JavaScriptStringEncode(ViewBag.salaCiudad))');
         }).prop('selected', true);
-
 
         CargarSalasAlSeleccionarCiudad();
 

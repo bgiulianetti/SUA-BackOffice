@@ -90,8 +90,14 @@ namespace SUA.Controllers
                 {
                     var fechaObtenida = service.GetFechaById(fecha.UniqueId);
                     if (fechaObtenida.Borederaux != null)
+                    {
                         fecha.Borederaux = fechaObtenida.Borederaux;
-                    fecha.GoogleCalendarState = "put";
+                        fecha.GoogleCalendarState = fechaObtenida.GoogleCalendarState;
+                    }
+                    else
+                    {
+                        fecha.GoogleCalendarState = "put";
+                    }
 
                     service.UpdateFecha(fecha);
                     ViewBag.mensaje = "actualizado";
@@ -99,7 +105,7 @@ namespace SUA.Controllers
                     new LogService().FormatAndSaveLog("Fecha", "Editar", JsonConvert.SerializeObject(fecha));
 
                     var enviroment = System.Configuration.ConfigurationManager.AppSettings.Get("Enviroment");
-                    if (enviroment == "prod")
+                    if (enviroment == "prod" && fechaObtenida.Borederaux == null)
                     {
                         new EmailService().SendEmail(
                             emailTo: "standupargentina@gmail.com",

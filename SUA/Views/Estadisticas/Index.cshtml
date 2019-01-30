@@ -227,19 +227,15 @@
                 animationEnabled: true,
                 theme: "light2",
                 exportEnabled: true,
-                axisY: {
-                    title: " $",
-                    titleFontSize: 24
-                },
                 data: [{
                     type: "pie",
-                    yValueFormatString: "#,### $",
+                    yValueFormatString: "#,###",
                     startAngle: 25,
-                    toolTipContent: "<b>{label}</b>: {y}%",
+                    toolTipContent: "<b>{label}</b>: ${y}",
                     showInLegend: "true",
                     legendText: "{label}",
                     indexLabelFontSize: 16,
-                    indexLabel: "{label} - {y}%",
+                    indexLabel: "{label} - ${y}",
                     dataPoints: gananciasNetasPorShowDataPoints
                 }]
             });
