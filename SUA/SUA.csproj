@@ -175,7 +175,7 @@
     <Compile Include="Controllers\CiudadController.cs" />
     <Compile Include="Controllers\DataBaseController.cs" />
     <Compile Include="Controllers\EstadisticasController.cs" />
-    <Compile Include="Controllers\EstadisticasInstagramController.cs" />
+    <Compile Include="Controllers\InstagramUserController.cs" />
     <Compile Include="Controllers\FechaController.cs" />
     <Compile Include="Controllers\HistorialController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -211,7 +211,9 @@
     <Compile Include="Models\Hotel.cs" />
     <Compile Include="Models\ImpuestosDeduccionesTeatroBorderaux.cs" />
     <Compile Include="Models\InfoSalasVista.cs" />
+    <Compile Include="Models\InstagramFollowersHistory.cs" />
     <Compile Include="Models\InstagramUserData.cs" />
+    <Compile Include="Models\InstagramUserDataContract.cs" />
     <Compile Include="Models\InstagramUserInfoResponse.cs" />
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\Persona.cs" />
@@ -238,6 +240,7 @@
     <Compile Include="Servicios\FechaService.cs" />
     <Compile Include="Servicios\HotelService.cs" />
     <Compile Include="Servicios\InstagramService.cs" />
+    <Compile Include="Servicios\InstagramUserService.cs" />
     <Compile Include="Servicios\LogService.cs" />
     <Compile Include="Servicios\PrensaService.cs" />
     <Compile Include="Servicios\ProductorService.cs" />

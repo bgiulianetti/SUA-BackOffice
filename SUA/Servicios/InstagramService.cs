@@ -94,6 +94,11 @@ namespace SUA.Servicios
             }
             return lista;
         }
+        /*
+        public List<InstagramUser> AddBulkUsers(List<InstagramUser> users)
+        {
+        
+        }*/
 
 
     }

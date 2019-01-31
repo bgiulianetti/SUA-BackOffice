@@ -987,9 +987,6 @@ namespace SUA.Repositorios
         }
         public void AddBulkSala(List<Sala> salas)
         {
-            if (!IndexExists())
-                CreateIndex();
-
             var response = Client.IndexManyAsync(salas, Index, Index).Result;
 
             if (!response.IsValid)
@@ -1482,9 +1479,6 @@ namespace SUA.Repositorios
         }
         public void AddBulkFecha(List<Fecha> fechas)
         {
-            if (!IndexExists())
-                CreateIndex();
-
             var response = Client.IndexManyAsync(fechas, Index, Index).Result;
 
             if (!response.IsValid)
@@ -1718,9 +1712,6 @@ namespace SUA.Repositorios
         }
         public void AddBulkUser(List<UserModel> usuarios)
         {
-            if (!IndexExists())
-                CreateIndex();
-
             var response = Client.IndexManyAsync(usuarios, Index, Index).Result;
 
             if (!response.IsValid)
@@ -1841,9 +1832,6 @@ namespace SUA.Repositorios
         }
         public void AddBulkLog(List<Log> logs)
         {
-            if (!IndexExists())
-                CreateIndex();
-
             var response = Client.IndexManyAsync(logs, Index, Index).Result;
 
             if (!response.IsValid)
@@ -1978,9 +1966,6 @@ namespace SUA.Repositorios
         }
         public void AddBulkHotel(List<Hotel> hoteles)
         {
-            if (!IndexExists())
-                CreateIndex();
-
             var response = Client.IndexManyAsync(hoteles, Index, Index).Result;
 
             if (!response.IsValid)
@@ -2150,9 +2135,6 @@ namespace SUA.Repositorios
         }
         public void AddBulkRestaurante(List<Restaurante> restaurantes)
         {
-            if (!IndexExists())
-                CreateIndex();
-
             var response = Client.IndexManyAsync(restaurantes, Index, Index).Result;
 
             if (!response.IsValid)
@@ -2326,9 +2308,6 @@ namespace SUA.Repositorios
         }
         public void AddBulkProveedor(List<Proveedor> proveedores)
         {
-            if (!IndexExists())
-                CreateIndex();
-
             var response = Client.IndexManyAsync(proveedores, Index, Index).Result;
 
             if (!response.IsValid)
@@ -2503,9 +2482,6 @@ namespace SUA.Repositorios
         }
         public void AddBulkPrensa(List<Prensa> prensa)
         {
-            if (!IndexExists())
-                CreateIndex();
-
             var response = Client.IndexManyAsync(prensa, Index, Index).Result;
 
             if (!response.IsValid)
@@ -2719,15 +2695,11 @@ namespace SUA.Repositorios
         }
         public void AddBulkVotacion(List<Votacion> votaciones)
         {
-            if (!IndexExists())
-                CreateIndex();
-
             var response = Client.IndexManyAsync(votaciones, Index, Index).Result;
 
             if (!response.IsValid)
                 throw new Exception(VOTACION_CREATE_NOT_CREATED_EXCEPTION);
         }
-
         public List<Votacion> GetVotaciones()
         {
             var response = Client.Search<Votacion>
@@ -2760,7 +2732,6 @@ namespace SUA.Repositorios
             Client.ClearScroll(new ClearScrollRequest(scrollid));
             return votaciones;
         }
-
         public List<Votacion> GetVotacionesByShow(string show)
         {
             var response = Client.Search<Votacion>
@@ -2804,6 +2775,131 @@ namespace SUA.Repositorios
             return votaciones;
         }
 
+
+        /*-------------------Instagram Users-------------------*/
+
+        public List<InstagramUser> GetInstagramUsers()
+        {
+            var response = Client.Search<InstagramUser>(s => s
+                   .Index(Index)
+                   .Type(Index)
+                   .From(0)
+                   .Size(GetCount(Index))
+                  );
+
+            if (response == null)
+                throw new Exception(INVALID_USER_ES_CONNECTION_EXCEPTION);
+
+            if (!response.IsValid)
+                throw new Exception(USER_GET_ALL_EXCEPTION);
+
+            var users = new List<InstagramUser>();
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                    users.Add(item);
+            }
+            return users;
+        }
+        public InstagramUser GetUserByUsername(string username)
+        {
+            if (string.IsNullOrEmpty(username))
+                throw new Exception(USER_GET_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<InstagramUser>(s => s
+                .Index(Index)
+                .Type(Index)
+                .Query(q => q
+                    .Match(m => m.Field(f => f.Username).Query(username)))
+                    );
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(USER_GET_BY_ID_INVALID_SEARCH_EXCEPTION);
+
+            InstagramUser user = null;
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Documents)
+                {
+                    if (item.Username == username)
+                    {
+                        user = item;
+                        break;
+                    }
+                }
+
+            }
+            return user;
+        }
+        public void AddInstagramUser(InstagramUser user)
+        {
+            if (user == null)
+                throw new Exception(USER_CREATE_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.IndexAsync(user, i => i
+              .Index(Index)
+              .Type(Index)
+              .Refresh(Refresh.True)
+              ).Result;
+
+            if (!response.IsValid)
+                throw new Exception(USER_CREATE_NOT_CREATED_EXCEPTION);
+        }
+        public void AddBulkInstagramUser(List<InstagramUser> usuarios)
+        {
+            var response = Client.IndexManyAsync(usuarios, Index, Index).Result;
+
+            if (!response.IsValid)
+                throw new Exception(USER_CREATE_NOT_CREATED_EXCEPTION);
+        }
+        public string GetInstagramUserInnerIdByUsername(string username)
+        {
+            if (string.IsNullOrEmpty(username))
+                throw new Exception(USER_GET_INNERID_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<InstagramUser>(s => s
+                    .Index(Index)
+                    .Type(Index)
+                    .Query(q => q.Term("username", username))
+                  );
+
+            string innerId = null;
+            if (response == null)
+                return innerId;
+
+            if (!response.IsValid)
+                throw new Exception(USER_GET_INNERID_BY_ID_INVALID_SEARCH_EXCEPTION);
+
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Hits)
+                    innerId = item.Id;
+            }
+            return innerId;
+        }
+        public void UpdateInstagramUser(InstagramUser user)
+        {
+            if (user == null)
+                throw new Exception(USER_UPDATE_INVALID_PARAMETER_EXCEPTION);
+
+            var innerId = GetInstagramUserInnerIdByUsername(user.Username);
+            if (innerId == null)
+                throw new Exception(USER_UPDATE_NOT_EXISTS_EXCEPTION);
+
+            var result = Client.Index(user, i => i
+                            .Index(Index)
+                            .Type(Index)
+                            .Id(innerId)
+                            .Refresh(Refresh.True));
+
+            if (!result.IsValid)
+                throw new Exception(USER_UPDATE_NOT_UPDATED_EXCEPTION);
+        }
+
+
         /*---------Metodos genericos------------------*/
 
         public int GetCount(string tipo)
@@ -2833,6 +2929,8 @@ namespace SUA.Repositorios
                 response = Client.Count<Prensa>(c => c.Index(Index).Type(Index));
             else if (tipo == "votacion")
                 response = Client.Count<Votacion>(c => c.Index(Index).Type(Index));
+            else if (tipo == "instagramUser")
+                response = Client.Count<InstagramUser>(c => c.Index(Index).Type(Index));
             return (int)response.Count;
         }
         public void DeleteIndex()
@@ -2871,7 +2969,8 @@ namespace SUA.Repositorios
             restaurante,
             proveedor,
             prensa,
-            votacion
+            votacion,
+            instagramUser
         }
     }
 }
