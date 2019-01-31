@@ -2929,7 +2929,7 @@ namespace SUA.Repositorios
                 response = Client.Count<Prensa>(c => c.Index(Index).Type(Index));
             else if (tipo == "votacion")
                 response = Client.Count<Votacion>(c => c.Index(Index).Type(Index));
-            else if (tipo == "instagramUser")
+            else if (tipo == "instagramuser")
                 response = Client.Count<InstagramUser>(c => c.Index(Index).Type(Index));
             return (int)response.Count;
         }
@@ -2970,7 +2970,7 @@ namespace SUA.Repositorios
             proveedor,
             prensa,
             votacion,
-            instagramUser
+            instagramuser
         }
     }
 }

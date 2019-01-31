@@ -19,5 +19,6 @@ namespace SUA.Models
     {
         public DateTime Date { get; set; }
         public int Count { get; set; }
+        public int Difference { get; set; }
     }
 }

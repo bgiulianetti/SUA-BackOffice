@@ -25,6 +25,7 @@ namespace SUA.Controllers
         [HttpPost]
         public ActionResult Login(string username, string password)
         {
+            username = username.ToLower();
             var service = new UserService();
             
             try

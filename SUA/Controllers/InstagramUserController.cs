@@ -20,7 +20,6 @@ namespace SUA.Controllers
             return View();
         }
 
-
         public List<ChartInfoContract> GetInstagramUsersForChart(List<InstagramUserData> users)
         {
             var lista = new List<ChartInfoContract>();
@@ -64,7 +63,10 @@ namespace SUA.Controllers
             var history = new List<InstragramUserFollowersHistory>();
             foreach (var item in user.data)
             {
-                history.Add(new InstragramUserFollowersHistory { Count = item, Date = date });
+                var difference = 0;
+                if (history.Count > 0)
+                    difference = item - history.Last().Count;
+                history.Add(new InstragramUserFollowersHistory { Count = item, Date = date, Difference = difference });
                 date = date.AddDays(1);
             }
             return history;

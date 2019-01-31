@@ -16,7 +16,7 @@ namespace SUA.Servicios
             var node = new UriBuilder("localhost");
             node.Port = 9200;
             var settings = new ESSettings(node);
-            Repository = new ESRepositorio(settings, ESRepositorio.ContentType.instagramUser.ToString());
+            Repository = new ESRepositorio(settings, ESRepositorio.ContentType.instagramuser.ToString());
         }
 
         public List<InstagramUser> GetInstagramUsers()
