@@ -34,6 +34,7 @@ namespace SUA.Controllers
         [HttpGet]
         public void AddInstagramUsers()
         {
+            var instagramUsers = new List<InstagramUser>();
             var instagramService = new InstagramService();
             var json = System.IO.File.ReadAllText(Server.MapPath("~/assets/InstagramFollowersHistory/sergudiores.json"));
             var users = JsonConvert.DeserializeObject<InstagramUserDataContract[]>(json);
@@ -45,11 +46,15 @@ namespace SUA.Controllers
                 {
                     Username = user.user,
                     Following = userObtenido.Following,
-                    ProfilePicture = userObtenido.Picture.AbsolutePath,
+                    ProfilePicture = userObtenido.Picture.AbsoluteUri,
                     Posts = userObtenido.Posts,
                     Followers = CreateUserFollowersHistory(user)
                 };
+                instagramUsers.Add(instagramUser);
             }
+
+            var instagramUserService = new InstagramUserService();
+            instagramUserService.AddBulkInstagramUser(instagramUsers);
         }
 
         private List<InstragramUserFollowersHistory> CreateUserFollowersHistory(InstagramUserDataContract user)
