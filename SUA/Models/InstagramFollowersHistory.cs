@@ -11,6 +11,7 @@ namespace SUA.Models
         public string ProfilePicture { get; set; }
         public int Posts { get; set; }
         public int Following { get; set; }
+        public List<InstragramUserFollowersHistory> FollowersLegacy { get; set; }
         public List<InstragramUserFollowersHistory> Followers { get; set; }
         public string Status { get; set; }
     }

@@ -12,26 +12,46 @@ namespace SUA.Controllers
     public class InstagramUserController : Controller
     {
 
-        public ActionResult StanduperosSUARaning()
+        public ActionResult InstagramUsers()
         {
-            var service = new InstagramService();
-            var instagramUsers = service.GetUsers();
-            ViewBag.standuperosSUA = GetInstagramUsersForChart(instagramUsers);
+            //Followers legacy (de todos)
+
+            //Ranking de todos
+
+            //ultimo mes de followers oficial (en ranknig con diferencias)
+
+            
+            var service = new InstagramUserService();
+            var users = service.GetInstagramUsers();
+            ViewBag.standuperosSUA = FormatInstagramUsersForChart(GetStanduperosSUA());
             return View();
         }
 
-        public List<ChartInfoContract> GetInstagramUsersForChart(List<InstagramUserData> users)
+        private List<InstagramUser> GetStanduperosSUA()
+        {
+            var lista = new List<InstagramUser>();
+            var standuperos = new StanduperoService().GetStanduperos();
+            var instagramUserService = new InstagramUserService();
+            foreach (var standupero in standuperos)
+            {
+                lista.Add(instagramUserService.GetInstagramUserByUsername(standupero.InstagramUser.ToLower()));
+            }
+            return lista;
+        }
+
+
+        public List<ChartInfoContract> FormatInstagramUsersForChart(List<InstagramUser> users)
         {
             var lista = new List<ChartInfoContract>();
             foreach (var user in users)
             {
-                lista.Add(new ChartInfoContract { y = user.Followers, label = user.InstagramUser });
+                lista.Add(new ChartInfoContract { y = user.Followers.Last().Count, label = user.Username });
             }
             return lista.OrderByDescending(f => f.y).ToList();
         }
 
         [HttpGet]
-        public void AddInstagramUsers()
+        public void InitializeInstagramUsers()
         {
             var instagramUsers = new List<InstagramUser>();
             var instagramService = new InstagramService();
@@ -47,7 +67,7 @@ namespace SUA.Controllers
                     Following = userObtenido.Following,
                     ProfilePicture = userObtenido.Picture.AbsoluteUri,
                     Posts = userObtenido.Posts,
-                    Followers = CreateUserFollowersHistory(user)
+                    FollowersLegacy = CreateUserFollowersHistory(user)
                 };
                 instagramUsers.Add(instagramUser);
             }
@@ -61,7 +81,7 @@ namespace SUA.Controllers
             var dateArray = user.pointStart.Split(',');
             var date = new DateTime(Int32.Parse(dateArray[0]), Int32.Parse(dateArray[1]), Int32.Parse(dateArray[2]));
             var history = new List<InstragramUserFollowersHistory>();
-            foreach (var item in user.data)
+            foreach (var item in user.dataLegacy)
             {
                 var difference = 0;
                 if (history.Count > 0)

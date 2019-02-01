@@ -252,9 +252,9 @@ namespace SUA
             //============================Instagram Stats=======================================
 
             routes.MapRoute(
-                name: "InstagramStats",
-                url: "instagram-stats",
-                defaults: new { controller = "EstadisticasInstagram", action = "InstagramStats" }
+                name: "InstagramUsers",
+                url: "instagram-users",
+                defaults: new { controller = "InstagramUser", action = "InstagramUsers" }
             );
 
 

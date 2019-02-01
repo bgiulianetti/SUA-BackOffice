@@ -2801,7 +2801,7 @@ namespace SUA.Repositorios
             }
             return users;
         }
-        public InstagramUser GetUserByUsername(string username)
+        public InstagramUser GetInstagramUserByUsername(string username)
         {
             if (string.IsNullOrEmpty(username))
                 throw new Exception(USER_GET_BY_ID_INVALID_PARAMETER_EXCEPTION);

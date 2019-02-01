@@ -27,16 +27,14 @@ namespace SUA.Controllers
                 entidades.Add("fechas", JsonConvert.SerializeObject(new FechaService().GetFechasForBackUp()));
                 entidades.Add("usuarios", JsonConvert.SerializeObject(new UserService().GetUsers()));
                 entidades.Add("salas", JsonConvert.SerializeObject(new SalaService().GetSalas()));
-                try
-                {
-                    entidades.Add("restaurantes", JsonConvert.SerializeObject(new RestauranteService().GetRestaurantes()));
-                }
-                catch
-                { }
-               
+                try{ entidades.Add("restaurantes", JsonConvert.SerializeObject(new RestauranteService().GetRestaurantes())); } catch { }
                 entidades.Add("logs", JsonConvert.SerializeObject(new LogService().GetLogs("all")));
                 entidades.Add("hoteles", JsonConvert.SerializeObject(new HotelService().GetHoteles()));
                 entidades.Add("votaciones", JsonConvert.SerializeObject(new VotacionService().GetVotaciones("true")));
+                try { entidades.Add("prensa", JsonConvert.SerializeObject(new PrensaService().GetPrensa()));} catch { }
+                try { entidades.Add("proveedores", JsonConvert.SerializeObject(new ProveedorService().GetProveedores())); } catch { }
+                try { entidades.Add("instagramusers", JsonConvert.SerializeObject(new InstagramUserService().GetInstagramUsers())); } catch { }
+
 
                 var directory = "";
                 directory = "~/BackUp/" + DateTime.Now.ToString("yyyy-MM-dd");
@@ -95,7 +93,7 @@ namespace SUA.Controllers
         public ActionResult Restore(string id)
         {
             var date = id;
-            var entidades = new List<string> { "standuperos", "productores", "shows", "fechas", "usuarios", "salas", "restaurantes", "logs", "hoteles", "votaciones" };
+            var entidades = new List<string> { "standuperos", "productores", "shows", "fechas", "usuarios", "salas", "restaurantes", "logs", "hoteles", "votaciones", "prensa", "proveedores", "instagramusers" };
             try
             {
                 foreach (var entidad in entidades)
@@ -160,6 +158,24 @@ namespace SUA.Controllers
                         var votaciones = JsonConvert.DeserializeObject<Votacion[]>(json);
                         if (votaciones.Length > 0)
                             new VotacionService().AddBulkVotacion(votaciones.ToList());
+                    }
+                    else if (entidad == "prensa")
+                    {
+                        var prensas = JsonConvert.DeserializeObject<Prensa[]>(json);
+                        if (prensas.Length > 0)
+                            new PrensaService().AddBulkPrensa(prensas.ToList());
+                    }
+                    else if (entidad == "proveedores")
+                    {
+                        var proveedores = JsonConvert.DeserializeObject<Proveedor[]>(json);
+                        if (proveedores.Length > 0)
+                            new ProveedorService().AddBulkProveedor(proveedores.ToList());
+                    }
+                    else if (entidad == "instagramusers")
+                    {
+                        var instagramusers = JsonConvert.DeserializeObject<InstagramUser[]>(json);
+                        if (instagramusers.Length > 0)
+                            new InstagramUserService().AddBulkInstagramUser(instagramusers.ToList());
                     }
                 }
                 ViewBag.mensaje = "Backup Generado con éxito";

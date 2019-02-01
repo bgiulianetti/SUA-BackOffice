@@ -649,6 +649,7 @@
     <Content Include="Views\Prensa\Prensas.cshtml" />
     <Content Include="Views\Estadisticas\Index.cshtml" />
     <Content Include="Views\EstadisticasInstagram\InstagramStats.cshtml" />
+    <Content Include="Views\InstagramUser\InstagramUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

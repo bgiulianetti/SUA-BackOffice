@@ -25,6 +25,15 @@ namespace SUA.Servicios
             return users.Where(f => f.Status != "deleted").ToList();
         }
 
+        public InstagramUser GetInstagramUserByUsername(string username)
+        {
+            var user = Repository.GetInstagramUserByUsername(username.Replace("@", ""));
+            if (user.Status == "deleted")
+                return null;
+            else
+                return user;
+        }
+
         public void AddInstagramUser(InstagramUser user)
         {
             Repository.AddInstagramUser(user);
