@@ -28,7 +28,7 @@ namespace SUA.Controllers
             ViewBag.standuperosSUAFollowersActual = FormatInstagramUsersForBarChart(GetStanduperosSUA());
             ViewBag.standuperosSUAFollowersLegacy = FormatInstagramUsersForSplineChart(service.GetSUAInstagramUsers());
             ViewBag.standuperosSUAFollowersTable = GetStanduperosSUA();
-
+            ViewBag.standuperosSUAUsernames = GetStanduperosSUAUsernameOrderByUsername();
 
             ViewBag.standuperosRanking = FormatInstagramUsersForHorizontalBarChart(service.GetInstagramUsers());
             //ViewBag.standuperosFollowersLegacy = FormatInstagramUsersForSplineChart(service.GetInstagramUsers());
@@ -47,6 +47,16 @@ namespace SUA.Controllers
             return lista;
         }
 
+        private List<string> GetStanduperosSUAUsernameOrderByUsername()
+        {
+            var lista = new List<string>();
+            var standuperos = new StanduperoService().GetStanduperos();
+            foreach (var standupero in standuperos)
+            {
+                lista.Add(standupero.InstagramUser.Replace("@", "").ToLower());
+            }
+            return lista.OrderBy(f=>f).ToList();
+        }
 
         public List<ChartInfoContract> FormatInstagramUsersForBarChart(List<InstagramUser> users)
         {
