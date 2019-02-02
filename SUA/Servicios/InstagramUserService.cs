@@ -25,6 +25,17 @@ namespace SUA.Servicios
             return users.Where(f => f.Status != "deleted").ToList();
         }
 
+        public List<InstagramUser> GetSUAInstagramUsers()
+        {
+            var standuperosSUA = new List<InstagramUser>();
+            var standuperos = new StanduperoService().GetStanduperos();
+            foreach (var standupero in standuperos)
+            {
+                standuperosSUA.Add(GetInstagramUserByUsername(standupero.InstagramUser.Replace("@", "").ToLower()));
+            }
+            return standuperosSUA.OrderByDescending(f => f.Username).ToList();
+        }
+
         public InstagramUser GetInstagramUserByUsername(string username)
         {
             var user = Repository.GetInstagramUserByUsername(username.Replace("@", ""));

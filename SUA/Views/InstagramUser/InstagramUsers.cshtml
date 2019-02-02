@@ -8,9 +8,23 @@
     <div class="panel">
 
         <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
-            <div class="well well-sm text-center" style="width:90%;">
+            <div class="well well-sm text-center">
                 <h4>Standuperos SUA - Seguidores</h4>
                 <div id="standuperosSUA" style="height: 300px; width: 100%;"></div>
+            </div>
+        </div>
+
+        <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
+            <div class="well well-sm text-center">
+                <h4>Standuperos SUA - Historial Seguidores</h4>
+                <div id="standuperosSUAHistorialSeguidores" style="height: 600px; width: 100%;"></div>
+            </div>
+        </div>
+
+        <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
+            <div class="well well-sm text-center">
+                <h4>Standuperos - Ranking Seguidores</h4>
+                <div id="chartContainer" style="height: 1000px; width: 100%;"></div>
             </div>
         </div>
 
@@ -25,23 +39,70 @@
 
         //standuperosSUA
         var standuperosSUA = new CanvasJS.Chart("standuperosSUA", {
-        animationEnabled: true,
-        theme: "light2", // "light1", "light2", "dark1", "dark2"
-        axisX: {
-            title: "Standuperos"
-        },
-        axisY: {
-            title: "Seguidores",
-            suffix: " seguidores",
-            includeZero: false
-        },
-        data: [{
-            type: "column",
-            yValueFormatString: "#",
-            dataPoints: @Html.Raw(Json.Encode(@ViewBag.standuperosSUA))
-        }]
-    });
+            animationEnabled: true,
+            theme: "light2", // "light1", "light2", "dark1", "dark2"
+            axisX: { title: "Standuperos" },
+            axisY: { title: "Seguidores",  suffix: " seguidores", includeZero: false },
+            data: [{
+                type: "column",
+                yValueFormatString: "#",
+                dataPoints: @Html.Raw(Json.Encode(@ViewBag.standuperosSUAFollowersLast))
+            }]
+        });
         standuperosSUA.render();
+
+
+
+        //Standuperos SUA - Followers legacy
+        var standuperos = @Html.Raw(Json.Encode(@ViewBag.standuperosSUAFollowersLegacy));
+        for (var a = 0; a < standuperos.length; a++)
+            for (var b = 0; b < standuperos[a].dataPoints.length; b++)
+                standuperos[a].dataPoints[b].x = new Date(standuperos[a].dataPoints[b].x);
+
+        var standuperosSUAHistorialSeguidores = new CanvasJS.Chart("standuperosSUAHistorialSeguidores", {
+            animationEnabled: true,
+            axisX: { valueFormatString: "MMM,YY", labelFontSize: 15},
+            axisY: {
+                title: "Seguidores",
+                includeZero: false,
+                suffix: "",
+                labelFontSize: 15
+            },
+            legend: {
+                cursor: "pointer",
+                fontSize: 16,
+                itemclick: toggleDataSeries
+            },
+            toolTip: { shared: true },
+            data: standuperos
+        });
+        standuperosSUAHistorialSeguidores.render();
+
+        function toggleDataSeries(e) {
+            if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible)
+                e.dataSeries.visible = false;
+            else
+                e.dataSeries.visible = true;
+            standuperosSUAHistorialSeguidores.render();
+        }
+
+
+
+
+        //Ranking todos los standuperos
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            axisX: { interval: 1, labelFontSize: 15 },
+            axisY: { labelFontSize: 15},
+            data: [{
+                type: "bar",
+                toolTipContent: "<img src={url}\" style=\"width:40px; height:20px;\"><br> <b>{label}</b><br>Seguidores: {y}<br>Seguidos: {seguidos}<br>Posts: {posts}",
+                dataPoints:  @Html.Raw(Json.Encode(@ViewBag.standuperosRanking))
+            }]
+        });
+        chart.render();
+
+
 
     });
 </script>	

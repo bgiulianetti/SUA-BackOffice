@@ -208,6 +208,7 @@
     <Compile Include="Models\FechasPorTiempo.cs" />
     <Compile Include="Models\GastosBordereaux.cs" />
     <Compile Include="Models\GoogleCalendarProperties.cs" />
+    <Compile Include="Models\HorizontalBarChartDataContract.cs" />
     <Compile Include="Models\Hotel.cs" />
     <Compile Include="Models\ImpuestosDeduccionesTeatroBorderaux.cs" />
     <Compile Include="Models\InfoSalasVista.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="Models\InfoPlazasParaRepeticion.cs" />
     <Compile Include="Models\RepeticionPlazas.cs" />
     <Compile Include="Models\Restaurante.cs" />
+    <Compile Include="Models\SplineChartDataContract.cs" />
     <Compile Include="Models\Ubicacion.cs" />
     <Compile Include="Models\Sala.cs" />
     <Compile Include="Models\Show.cs" />
