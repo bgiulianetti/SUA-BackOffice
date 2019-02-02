@@ -25,10 +25,13 @@ namespace SUA.Controllers
 
             var service = new InstagramUserService();
             var users = service.GetInstagramUsers();
-            ViewBag.standuperosSUAFollowersLast = FormatInstagramUsersForBarChart(GetStanduperosSUA());
+            ViewBag.standuperosSUAFollowersActual = FormatInstagramUsersForBarChart(GetStanduperosSUA());
             ViewBag.standuperosSUAFollowersLegacy = FormatInstagramUsersForSplineChart(service.GetSUAInstagramUsers());
+            ViewBag.standuperosSUAFollowersTable = GetStanduperosSUA();
+
+
             ViewBag.standuperosRanking = FormatInstagramUsersForHorizontalBarChart(service.GetInstagramUsers());
-            ViewBag.standuperosFollowersLegacy = FormatInstagramUsersForSplineChart(service.GetInstagramUsers());
+            //ViewBag.standuperosFollowersLegacy = FormatInstagramUsersForSplineChart(service.GetInstagramUsers());
             return View();
         }
 

@@ -3,11 +3,22 @@
     ViewBag.Title = "InstagramStats";
 }
 
+<style>
+    td.negative {
+        font-weight: bold;
+        color: red;
+    }
+    
+    td.positive {
+        font-weight: bold;
+        color: green;
+    }
+</style>
 <div class="main-content">
 
     <div class="panel">
 
-        <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
+        <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:30px">
             <div class="well well-sm text-center">
                 <h4>Standuperos SUA - Seguidores</h4>
                 <div id="standuperosSUA" style="height: 300px; width: 100%;"></div>
@@ -16,10 +27,62 @@
 
         <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
             <div class="well well-sm text-center">
-                <h4>Standuperos SUA - Historial Seguidores</h4>
-                <div id="standuperosSUAHistorialSeguidores" style="height: 600px; width: 100%;"></div>
+                <h4>Standuperos SUA - Historial Seguidores Legacy</h4>
+                <div id="standuperosSUAHistorialSeguidoresLegacy" style="height: 600px; width: 100%;"></div>
             </div>
         </div>
+
+        <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
+            <div class="well well-sm text-center">
+                <h4>Standuperos SUA - Historial Seguidores</h4>
+                <div style="width: 100%; overflow-x: auto;  white-space: nowrap;">
+
+                    <table id="table_sua_historial_seguidores" class="display compact hover nowrap">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Fecha</th>
+                                <th>Día</th>
+                                <th>Seguidores</th>
+                                <th>Diferencia</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>User</th>
+                                <th>Fecha</th>
+                                <th>Día</th>
+                                <th>Seguidores</th>
+                                <th>Diferencia</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @foreach (var standupero in ViewBag.standuperosSUAFollowersTable)
+                            {
+                                foreach (var item in standupero.Followers)
+                                {
+                                    <tr>
+                                        <td>@standupero.Username</td>
+                                        <td>@item.Date.ToString("yyyy-MM-dd")</td>
+                                        <td>@item.Date.ToString("ddd")</td>
+                                        <td>@item.Count</td>
+                                        @if (item.Difference > 0)
+                                        {
+                                            <td>+@item.Difference</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@item.Difference</td>
+                                        }
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
 
         <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
             <div class="well well-sm text-center">
@@ -46,7 +109,7 @@
             data: [{
                 type: "column",
                 yValueFormatString: "#",
-                dataPoints: @Html.Raw(Json.Encode(@ViewBag.standuperosSUAFollowersLast))
+                dataPoints: @Html.Raw(Json.Encode(@ViewBag.standuperosSUAFollowersActual))
             }]
         });
         standuperosSUA.render();
@@ -59,7 +122,7 @@
             for (var b = 0; b < standuperos[a].dataPoints.length; b++)
                 standuperos[a].dataPoints[b].x = new Date(standuperos[a].dataPoints[b].x);
 
-        var standuperosSUAHistorialSeguidores = new CanvasJS.Chart("standuperosSUAHistorialSeguidores", {
+        var standuperosSUAHistorialSeguidoresLegacy = new CanvasJS.Chart("standuperosSUAHistorialSeguidoresLegacy", {
             animationEnabled: true,
             axisX: { valueFormatString: "MMM,YY", labelFontSize: 15},
             axisY: {
@@ -76,14 +139,14 @@
             toolTip: { shared: true },
             data: standuperos
         });
-        standuperosSUAHistorialSeguidores.render();
+        standuperosSUAHistorialSeguidoresLegacy.render();
 
         function toggleDataSeries(e) {
             if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible)
                 e.dataSeries.visible = false;
             else
                 e.dataSeries.visible = true;
-            standuperosSUAHistorialSeguidores.render();
+            standuperosSUAHistorialSeguidoresLegacy.render();
         }
 
 
@@ -93,7 +156,7 @@
         var chart = new CanvasJS.Chart("chartContainer", {
             animationEnabled: true,
             axisX: { interval: 1, labelFontSize: 15 },
-            axisY: { labelFontSize: 15},
+            axisY: { labelFontSize: 10},
             data: [{
                 type: "bar",
                 toolTipContent: "<img src={url}\" style=\"width:40px; height:20px;\"><br> <b>{label}</b><br>Seguidores: {y}<br>Seguidos: {seguidos}<br>Posts: {posts}",
@@ -103,6 +166,42 @@
         chart.render();
 
 
-
+        var table_sua_historial_seguidores = $('#table_sua_historial_seguidores').DataTable({
+            responsive: true,
+            dom: 'l<B>ftip',
+            buttons: [ ],
+            'columnDefs': [{ "targets": 0, "className": "text-center" }],
+            "createdRow": function (row, data, index) {
+                if (data[4].indexOf('-') > -1)
+                    $('td', row).eq(4).addClass('negative');
+                else
+                    $('td', row).eq(4).addClass('positive');
+            },
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var column = this;
+                    if (column[0][0] == 0)
+                    {
+                        var select = $('<select></select>')
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                                column
+                                    .search(val ? '^' + val + '$' : '', true, false)
+                                    .draw();
+                            });
+                        column.data().unique().sort().each(function (d, j) {
+                            select.append('<option value="' + d + '">' + d + '</option>')
+                        });
+                    }
+                });
+            }
+        });
+        AcomodaDOM();
     });
+
+
+    function AcomodaDOM() {
+        $('#table_sua_historial_seguidores_filter').hide();
+    }
 </script>	
