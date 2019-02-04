@@ -24,21 +24,21 @@
 
         <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:30px">
             <div class="well well-sm text-center">
-                <h4>Standuperos SUA - Seguidores</h4>
+                <h3>Standuperos SUA - Seguidores</h3>
                 <div id="standuperosSUA" style="height: 300px; width: 100%;"></div>
             </div>
         </div>
 
         <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
             <div class="well well-sm text-center">
-                <h4>Standuperos SUA - Historial Seguidores Legacy</h4>
+                <h3>Standuperos SUA - Historial Seguidores Legacy</h3>
                 <div id="standuperosSUAHistorialSeguidoresLegacy" style="height: 600px; width: 100%;"></div>
             </div>
         </div>
 
         <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
             <div class="well well-sm text-center">
-                <h4>Standuperos SUA - Historial Seguidores</h4>
+                <h3>Standuperos SUA - Historial Seguidores</h3>
                 <div style="width: 100%; overflow-x: auto;  white-space: nowrap;">
                     <select id="filter_table_standuperosSUAFollowersTable">
                         @foreach (var standupero in ViewBag.standuperosSUAUsernames)
@@ -88,7 +88,7 @@
 
         <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
             <div class="well well-sm text-center">
-                <h4>Standuperos - Ranking Seguidores</h4>
+                <h3>Standuperos - Ranking Seguidores</h3>
                 <div id="chartContainer" style="height: 1000px; width: 100%;"></div>
             </div>
         </div>
@@ -185,7 +185,7 @@
         ///////////////////////////////////////////Tabla Standuperos SUA Diferencia
         var table_sua_historial_seguidores = $('#table_sua_historial_seguidores').DataTable({
             "bSort": false,
-            "pageLength": 50,
+            //"pageLength": 50,
             "columns": [
                 { "width": "60%" },
                 { "width": "10%" },
@@ -215,7 +215,8 @@
         // Toggle the visibility
         column.visible(false);
 
-        $('#filter_table_standuperosSUAFollowersTable').on('change', function () {
+        $('#filter_table_standuperosSUAFollowersTable').on('change', function ()
+        {
             table_sua_historial_seguidores.search(this.value).draw();
             for (var i = 0; i < standuperos_followers_actual.length; i++)
             {
@@ -225,7 +226,6 @@
                     standuperos_followers_actual[i].visible = true;
             }
             standuperosSUAHistorialSeguidores.render();
-                
         });
 
 
@@ -265,6 +265,8 @@
             standuperosSUAHistorialSeguidores.render();
         }
 
+
+        $('#filter_table_standuperosSUAFollowersTable').val("@ViewBag.standuperosSUAUsernames[0]").trigger('change');
 
 
 

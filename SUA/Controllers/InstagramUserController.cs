@@ -45,7 +45,7 @@ namespace SUA.Controllers
             var lista = new List<ChartInfoContract>();
             foreach (var user in users)
             {
-                lista.Add(new ChartInfoContract { y = user.Followers.Last().Count, label = user.Username });
+                lista.Add(new ChartInfoContract { y = user.Followers.First().Count, label = user.Username });
             }
             return lista.OrderByDescending(f => f.y).ToList();
         }
@@ -122,12 +122,12 @@ namespace SUA.Controllers
             instagramUserService.AddBulkInstagramUser(instagramUsers);
         }
 
-        private List<InstragramUserFollowersHistory> CreateUserFollowersHistory(InstagramUserDataContract user, string dataType)
+        private List<InstragramUserFollowersHistory> CreateUserFollowersHistory(InstagramUserDataContract user, string type)
         {
             var history = new List<InstragramUserFollowersHistory>();
             string[] dateArray;
             int[] data;
-            if (dataType == "legacy")
+            if (type == "legacy")
             {
                 dateArray = user.pointStartLegacy.Split(',');
                 data = user.dataLegacy;
