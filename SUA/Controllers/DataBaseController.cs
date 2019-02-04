@@ -27,11 +27,11 @@ namespace SUA.Controllers
                 entidades.Add("fechas", JsonConvert.SerializeObject(new FechaService().GetFechasForBackUp()));
                 entidades.Add("usuarios", JsonConvert.SerializeObject(new UserService().GetUsers()));
                 entidades.Add("salas", JsonConvert.SerializeObject(new SalaService().GetSalas()));
-                try{ entidades.Add("restaurantes", JsonConvert.SerializeObject(new RestauranteService().GetRestaurantes())); } catch { }
+                try { entidades.Add("restaurantes", JsonConvert.SerializeObject(new RestauranteService().GetRestaurantes())); } catch { }
                 entidades.Add("logs", JsonConvert.SerializeObject(new LogService().GetLogs("all")));
                 entidades.Add("hoteles", JsonConvert.SerializeObject(new HotelService().GetHoteles()));
                 entidades.Add("votaciones", JsonConvert.SerializeObject(new VotacionService().GetVotaciones("true")));
-                try { entidades.Add("prensa", JsonConvert.SerializeObject(new PrensaService().GetPrensa()));} catch { }
+                try { entidades.Add("prensa", JsonConvert.SerializeObject(new PrensaService().GetPrensa())); } catch { }
                 try { entidades.Add("proveedores", JsonConvert.SerializeObject(new ProveedorService().GetProveedores())); } catch { }
                 try { entidades.Add("instagramusers", JsonConvert.SerializeObject(new InstagramUserService().GetInstagramUsers())); } catch { }
 
@@ -42,6 +42,38 @@ namespace SUA.Controllers
                 foreach (var entidad in entidades)
                 {
                     var fileNameFullPath = Server.MapPath(directory + "/" + DateTime.Now.ToString("yyyy-MM-dd") + "_" + entidad.Key + ".txt");
+                    System.IO.File.WriteAllText(fileNameFullPath, entidad.Value);
+                    fileNameList.Add(fileNameFullPath);
+                }
+                SendBackupFiles(fileNameList, Server.MapPath(directory), id);
+                ViewBag.mensaje = "Backup Generado con éxito";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.mensaje = ex.Message;
+            }
+
+            return View();
+        }
+
+        [HttpGet]
+        [UserValidationFilter]
+        public ActionResult BackupInstagramUsers(string id)
+        {
+
+            var entidades = new Dictionary<string, string>();
+            try
+            {
+                var fileNameList = new List<string>();
+                entidades.Add("instagramusers", JsonConvert.SerializeObject(new InstagramUserService().GetInstagramUsers()));
+
+
+                var directory = "";
+                directory = "~/BackUp/instagramusers-" + DateTime.Now.ToString("yyyy-MM-dd");
+                System.IO.Directory.CreateDirectory(Server.MapPath(directory));
+                foreach (var entidad in entidades)
+                {
+                    var fileNameFullPath = Server.MapPath(directory + "/instagramusers-" + DateTime.Now.ToString("yyyy-MM-dd") + "_" + entidad.Key + ".txt");
                     System.IO.File.WriteAllText(fileNameFullPath, entidad.Value);
                     fileNameList.Add(fileNameFullPath);
                 }
@@ -178,6 +210,29 @@ namespace SUA.Controllers
                             new InstagramUserService().AddBulkInstagramUser(instagramusers.ToList());
                     }
                 }
+                ViewBag.mensaje = "Backup Generado con éxito";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.mensaje = ex.Message;
+            }
+
+            return View();
+        }
+
+
+        [HttpGet]
+        public ActionResult RestoreInstagramUsers(string id)
+        {
+            var date = id;
+            var entidades = new List<string> { "instagramusers" };
+            try
+            {
+                var json = System.IO.File.ReadAllText(Server.MapPath("~/BackUp/instagramusers-" + date + "/instagramusers-" + date + "_instagramusers.txt"));
+                var instagramusers = JsonConvert.DeserializeObject<InstagramUser[]>(json);
+                if (instagramusers.Length > 0)
+                    new InstagramUserService().AddBulkInstagramUser(instagramusers.ToList());
+
                 ViewBag.mensaje = "Backup Generado con éxito";
             }
             catch (Exception ex)
