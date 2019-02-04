@@ -13,6 +13,10 @@
         font-weight: bold;
         color: green;
     }
+
+    table.center-all td, th {
+        text-align: center;
+    }
 </style>
 <div class="main-content">
 
@@ -61,7 +65,7 @@
                                         <td>@standupero.Username</td>
                                         <td>@item.Date.ToString("yyyy-MM-dd")</td>
                                         <td>@item.Date.ToString("ddd")</td>
-                                        <td>@item.Count</td>
+                                        <td>@item.Count.ToString("N0")</td>
                                         @if (item.Difference > 0)
                                         {
                                             <td>+@item.Difference</td>
@@ -76,9 +80,10 @@
                         </tbody>
                     </table>
                 </div>
+                <br />
+                <div id="standuperosSUAHistorialSeguidores" style="height: 600px; width: 100%;"></div>
             </div>
         </div>
-
 
         <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
             <div class="well well-sm text-center">
@@ -105,7 +110,7 @@
             data: [{
                 type: "column",
                 yValueFormatString: "#",
-                dataPoints: @Html.Raw(Json.Encode(@ViewBag.standuperosSUAFollowersActual))
+                dataPoints: @Html.Raw(Json.Encode(@ViewBag.standuperosSUAFollowersLast))
             }]
         });
         standuperosSUA.render();
@@ -144,6 +149,45 @@
                 e.dataSeries.visible = true;
             standuperosSUAHistorialSeguidoresLegacy.render();
         }
+
+
+
+        //Standuperos SUA - Followers actual
+        var standuperos_followers_actual = @Html.Raw(Json.Encode(@ViewBag.standuperosSUAFollowersActual));
+        for (var a = 0; a < standuperos_followers_actual.length; a++)
+            for (var b = 0; b < standuperos_followers_actual[a].dataPoints.length; b++)
+                standuperos_followers_actual[a].dataPoints[b].x = new Date(standuperos_followers_actual[a].dataPoints[b].x);
+
+        var standuperosSUAHistorialSeguidores = new CanvasJS.Chart("standuperosSUAHistorialSeguidores", {
+            animationEnabled: true,
+            axisX: { valueFormatString: "DD/MM/YY", labelFontSize: 15},
+            axisY: {
+                title: "Seguidores",
+                includeZero: false,
+                suffix: "",
+                labelFontSize: 15
+            },
+            legend: {
+                cursor: "pointer",
+                fontSize: 16,
+                itemclick: toggleDataSeries
+            },
+            toolTip: { shared: true },
+            data: standuperos_followers_actual
+        });
+        standuperosSUAHistorialSeguidores.render();
+
+        function toggleDataSeries(e) {
+            if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible)
+                e.dataSeries.visible = false;
+            else
+                e.dataSeries.visible = true;
+            standuperosSUAHistorialSeguidores.render();
+        }
+
+
+
+
 
 
 

@@ -31,7 +31,9 @@ namespace SUA.Servicios
             var standuperos = new StanduperoService().GetStanduperos();
             foreach (var standupero in standuperos)
             {
-                standuperosSUA.Add(GetInstagramUserByUsername(standupero.InstagramUser.Replace("@", "").ToLower()));
+                var instagramUser = GetInstagramUserByUsername(standupero.InstagramUser.Replace("@", "").ToLower());
+                instagramUser.Followers = instagramUser.Followers.OrderByDescending(f => f.Date).ToList();
+                standuperosSUA.Add(instagramUser);
             }
             return standuperosSUA.OrderByDescending(f => f.Username).ToList();
         }
