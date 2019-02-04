@@ -12,6 +12,7 @@ namespace SUA.Models
         public string yValueFormatString { get; set; }
         public bool showInLegend { get; set; }
         public List<DataPointsSplineContract> dataPoints { get; set; }
+        public bool visible { get; set; }
     }
 
     public class DataPointsSplineContract

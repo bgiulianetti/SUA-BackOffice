@@ -61,6 +61,7 @@ namespace SUA.Controllers
                     showInLegend = true,
                     type = "spline",
                     yValueFormatString = "#0,### seguidores",
+                    visible = true
                 };
 
                 var dataPoints = new List<DataPointsSplineContract>();
