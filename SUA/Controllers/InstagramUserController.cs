@@ -14,18 +14,27 @@ namespace SUA.Controllers
     {
         public ActionResult InstagramUsers()
         {
-            //ultimo mes de followers SUA (spline)
-
             //ver legacy de alguien en particular (spline)
-
             var service = new InstagramUserService();
             var users = service.GetInstagramUsers();
             ViewBag.standuperosSUAFollowersLast = FormatInstagramUsersForBarChart(service.GetSUAInstagramUsers());
-            ViewBag.standuperosSUAFollowersLegacy = FormatInstagramUsersFollowersForSplineChart(service.GetSUAInstagramUsers(), "legacy");
-            ViewBag.standuperosSUAFollowersActual = FormatInstagramUsersFollowersForSplineChart(service.GetSUAInstagramUsers());
+            ViewBag.standuperosSUAFollowersLegacy = FormatInstagramUsersFollowersForSplineChart(service.GetSUAInstagramUsers(), true, "legacy");
+            
+            
+            
+            //table sua users
             ViewBag.standuperosSUAFollowersTable = service.GetSUAInstagramUsers();
             ViewBag.standuperosSUAUsernames = GetStanduperosSUAUsernameOrderByUsername();
+            ViewBag.standuperosSUAFollowersActual = FormatInstagramUsersFollowersForSplineChart(service.GetSUAInstagramUsers(), true);
+
+
             ViewBag.standuperosRanking = FormatInstagramUsersForHorizontalBarChart(service.GetInstagramUsers());
+            
+            //table users
+            ViewBag.standuperosFollowersTable = service.GetInstagramUsers();
+            ViewBag.standuperosUsernames = GetStanduperosUsernameOrderByUsername();
+            ViewBag.standuperosFollowersActual = FormatInstagramUsersFollowersForSplineChart(service.GetInstagramUsers(), false);
+
             return View();
         }
 
@@ -40,6 +49,17 @@ namespace SUA.Controllers
             return lista.OrderBy(f=>f).ToList();
         }
 
+        private List<string> GetStanduperosUsernameOrderByUsername()
+        {
+            var lista = new List<string>();
+            var users = new InstagramUserService().GetInstagramUsers();
+            foreach (var user in users)
+            {
+                lista.Add(user.Username.ToLower());
+            }
+            return lista.OrderBy(f => f).ToList();
+        }
+
         public List<ChartInfoContract> FormatInstagramUsersForBarChart(List<InstagramUser> users)
         {
             var lista = new List<ChartInfoContract>();
@@ -50,7 +70,7 @@ namespace SUA.Controllers
             return lista.OrderByDescending(f => f.y).ToList();
         }
 
-        public List<SplineChartDataContract> FormatInstagramUsersFollowersForSplineChart(List<InstagramUser> users, string type = "actual")
+        public List<SplineChartDataContract> FormatInstagramUsersFollowersForSplineChart(List<InstagramUser> users, bool ShowLegend, string type = "actual")
         {
             var lista = new List<SplineChartDataContract>();
             foreach (var user in users)
@@ -58,7 +78,7 @@ namespace SUA.Controllers
                 var splineChartStandupero = new SplineChartDataContract
                 {
                     name = user.Username,
-                    showInLegend = true,
+                    showInLegend = ShowLegend,
                     type = "spline",
                     yValueFormatString = "#0,### seguidores",
                     visible = true

@@ -93,6 +93,58 @@
             </div>
         </div>
 
+
+
+        <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
+            <div class="well well-sm text-center">
+                <h3>Standuperos - Historial Seguidores</h3>
+                <div style="width: 100%; overflow-x: auto;  white-space: nowrap;">
+                    <select id="filter_table_standuperosFollowersTable">
+                        @foreach (var standupero in ViewBag.standuperosUsernames)
+                        {
+                            <option>@standupero</option>
+                        }
+                    </select>
+                    <table id="table_historial_seguidores" style="width:40%" class="display compact hover nowrap">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Fecha</th>
+                                <th>Día</th>
+                                <th>Seguidores</th>
+                                <th>Diferencia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var standupero in ViewBag.standuperosFollowersTable)
+                            {
+                                foreach (var item in standupero.Followers)
+                                {
+                                    <tr>
+                                        <td>@standupero.Username</td>
+                                        <td>@item.Date.ToString("yyyy-MM-dd")</td>
+                                        <td>@item.Date.ToString("ddd")</td>
+                                        <td>@item.Count.ToString("N0")</td>
+                                        @if (item.Difference > 0)
+                                        {
+                                            <td>+@item.Difference</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@item.Difference</td>
+                                        }
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+
+                </div>
+                <div id="standuperosHistorialSeguidores" style="height: 600px; width: 100%;"></div>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -159,30 +211,7 @@
 
 
 
-
-
-
-        /////////////////////////////////////////////////Ranking todos los standuperos
-        var chart = new CanvasJS.Chart("chartContainer", {
-            animationEnabled: true,
-            axisX: { interval: 1, labelFontSize: 15 },
-            axisY: { labelFontSize: 10},
-            data: [{
-                type: "bar",
-                toolTipContent: "<img src={url}\" style=\"width:40px; height:20px;\"><br> <b>{label}</b><br>Seguidores: {y}<br>Seguidos: {seguidos}<br>Posts: {posts}",
-                dataPoints:  @Html.Raw(Json.Encode(@ViewBag.standuperosRanking))
-            }]
-        });
-        chart.render();
-
-
-
-
-
-
-
-
-        ///////////////////////////////////////////Tabla Standuperos SUA Diferencia
+        ///////////////////////////////////////////Tabla Standuperos SUA followers actual (diferencia)
         var table_sua_historial_seguidores = $('#table_sua_historial_seguidores').DataTable({
             "bSort": false,
             //"pageLength": 50,
@@ -208,35 +237,19 @@
                     $('td', row).eq(4).addClass('positive');
             }
         });
-        AcomodaDOM();
+        AcomodaTableSUADOM();
         table_sua_historial_seguidores.search("@ViewBag.standuperosSUAUsernames[0]").draw();
         //ocultar primera columna
         var column = table_sua_historial_seguidores.column(0);
         // Toggle the visibility
         column.visible(false);
 
-        $('#filter_table_standuperosSUAFollowersTable').on('change', function ()
-        {
-            table_sua_historial_seguidores.search(this.value).draw();
-            for (var i = 0; i < standuperos_followers_actual.length; i++)
-            {
-                if (standuperos_followers_actual[i].name != this.value)
-                    standuperos_followers_actual[i].visible = false;
-                else
-                    standuperos_followers_actual[i].visible = true;
-            }
-            standuperosSUAHistorialSeguidores.render();
-        });
 
-
-
-
-
-        ///////////////////////////////////////////Standuperos SUA - Followers actual
-        var standuperos_followers_actual = @Html.Raw(Json.Encode(@ViewBag.standuperosSUAFollowersActual));
-        for (var a = 0; a < standuperos_followers_actual.length; a++)
-            for (var b = 0; b < standuperos_followers_actual[a].dataPoints.length; b++)
-                standuperos_followers_actual[a].dataPoints[b].x = new Date(standuperos_followers_actual[a].dataPoints[b].x);
+        //grafico spline
+        var standuperos_sua_followers_actual = @Html.Raw(Json.Encode(@ViewBag.standuperosSUAFollowersActual));
+        for (var a = 0; a < standuperos_sua_followers_actual.length; a++)
+            for (var b = 0; b < standuperos_sua_followers_actual[a].dataPoints.length; b++)
+                standuperos_sua_followers_actual[a].dataPoints[b].x = new Date(standuperos_sua_followers_actual[a].dataPoints[b].x);
 
         var standuperosSUAHistorialSeguidores = new CanvasJS.Chart("standuperosSUAHistorialSeguidores", {
             animationEnabled: true,
@@ -253,7 +266,7 @@
                 itemclick: toggleDataSeriesStanduperosSUAFollowersActual
             },
             toolTip: { shared: true },
-            data: standuperos_followers_actual
+            data: standuperos_sua_followers_actual
         });
         standuperosSUAHistorialSeguidores.render();
 
@@ -264,9 +277,123 @@
                 e.dataSeries.visible = true;
             standuperosSUAHistorialSeguidores.render();
         }
-
-
+        $('#filter_table_standuperosSUAFollowersTable').on('change', function () {
+            table_sua_historial_seguidores.search(this.value).draw();
+            for (var i = 0; i < standuperos_sua_followers_actual.length; i++) {
+                if (standuperos_sua_followers_actual[i].name != this.value)
+                    standuperos_sua_followers_actual[i].visible = false;
+                else
+                    standuperos_sua_followers_actual[i].visible = true;
+            }
+            standuperosSUAHistorialSeguidores.render();
+        });
         $('#filter_table_standuperosSUAFollowersTable').val("@ViewBag.standuperosSUAUsernames[0]").trigger('change');
+
+
+
+
+
+        /////////////////////////////////Ranking todos los standuperos
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            axisX: { interval: 1, labelFontSize: 15 },
+            axisY: { labelFontSize: 10},
+            data: [{
+                type: "bar",
+                toolTipContent: "<img src={url}\" style=\"width:40px; height:20px;\"><br> <b>{label}</b><br>Seguidores: {y}<br>Seguidos: {seguidos}<br>Posts: {posts}",
+                dataPoints:  @Html.Raw(Json.Encode(@ViewBag.standuperosRanking))
+            }]
+        });
+        chart.render();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                ///////////////////////////////////////////Tabla Standuperos followers actual (diferencia)
+        var table_historial_seguidores = $('#table_historial_seguidores').DataTable({
+            "bSort": false,
+            //"pageLength": 50,
+            "columns": [
+                { "width": "60%" },
+                { "width": "10%" },
+                { "width": "10%" },
+                { "width": "10%" },
+                { "width": "10%" }
+            ],
+            responsive: true,
+            dom: 'l<B>ftip',
+            buttons: [ ],
+            "columnDefs": [
+            {
+                //"targets": [0],
+                //"visible": false
+            }],
+            "createdRow": function (row, data, index) {
+                if (data[4].indexOf('-') > -1)
+                    $('td', row).eq(4).addClass('negative');
+                else
+                    $('td', row).eq(4).addClass('positive');
+            }
+        });
+        AcomodaTableDOM();
+        table_historial_seguidores.search("@ViewBag.standuperosUsernames[0]").draw();
+        //ocultar primera columna
+        var column = table_historial_seguidores.column(0);
+        // Toggle the visibility
+        column.visible(false);
+
+        $('#filter_table_standuperosFollowersTable').on('change', function ()
+        {
+            table_historial_seguidores.search(this.value).draw();
+            for (var i = 0; i < standuperos_followers_actual.length; i++)
+            {
+                if (standuperos_followers_actual[i].name != this.value)
+                    standuperos_followers_actual[i].visible = false;
+                else
+                    standuperos_followers_actual[i].visible = true;
+            }
+            standuperosHistorialSeguidores.render();
+        });
+
+        //grafico spline
+        var standuperos_followers_actual = @Html.Raw(Json.Encode(@ViewBag.standuperosFollowersActual));
+        for (var a = 0; a < standuperos_followers_actual.length; a++)
+            for (var b = 0; b < standuperos_followers_actual[a].dataPoints.length; b++)
+                standuperos_followers_actual[a].dataPoints[b].x = new Date(standuperos_followers_actual[a].dataPoints[b].x);
+
+        var standuperosHistorialSeguidores = new CanvasJS.Chart("standuperosHistorialSeguidores", {
+            animationEnabled: true,
+            axisX: { valueFormatString: "DD/MM/YY", labelFontSize: 15},
+            axisY: {
+                title: "Seguidores",
+                includeZero: false,
+                suffix: "",
+                labelFontSize: 15
+            },
+            legend: {
+                cursor: "pointer",
+                fontSize: 16
+            },
+            toolTip: { shared: false },
+            data: standuperos_followers_actual
+        });
+        standuperosHistorialSeguidores.render();
+
+        $('#filter_table_standuperosFollowersTable').val("@ViewBag.standuperosUsernames[0]").trigger('change');
 
 
 
@@ -274,8 +401,12 @@
 
 
 
-    function AcomodaDOM() {
+    function AcomodaTableSUADOM() {
         $('#table_sua_historial_seguidores_filter').hide();
+    }
+
+    function AcomodaTableDOM() {
+        $('#table_historial_seguidores_filter').hide();
     }
 
 

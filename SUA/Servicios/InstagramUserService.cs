@@ -22,6 +22,10 @@ namespace SUA.Servicios
         public List<InstagramUser> GetInstagramUsers()
         {
             var users = Repository.GetInstagramUsers();
+            foreach (var user in users)
+            {
+                user.Followers = user.Followers.OrderByDescending(f => f.Date).ToList();
+            }
             return users.Where(f => f.Status != "deleted").ToList();
         }
 
