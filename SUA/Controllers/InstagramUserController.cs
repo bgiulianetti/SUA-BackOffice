@@ -37,7 +37,7 @@ namespace SUA.Controllers
                 ViewBag.standuperosFollowersActual = FormatInstagramUsersFollowersForSplineChart(service.GetInstagramUsers(), false);
                 ViewBag.message = "";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewBag.message = ex.Message;
             }
@@ -53,7 +53,7 @@ namespace SUA.Controllers
             {
                 lista.Add(standupero.InstagramUser.Replace("@", "").ToLower());
             }
-            return lista.OrderBy(f=>f).ToList();
+            return lista.OrderBy(f => f).ToList();
         }
 
         private List<string> GetStanduperosUsernameOrderByUsername()
@@ -151,7 +151,7 @@ namespace SUA.Controllers
                 instagramUserService.AddBulkInstagramUser(instagramUsers);
                 ViewBag.message = "";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewBag.message = ex.Message;
             }
