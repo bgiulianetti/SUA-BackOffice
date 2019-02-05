@@ -7,15 +7,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SUA.Utilities;
+using SUA.Filters;
 
 namespace SUA.Controllers
 {
     public class EstadisticasController : Controller
     {
         [HttpGet]
+        [UserValidationFilter]
         public ActionResult Index()
         {
-            //Ganancia de cada show por mes //barras
             ViewBag.title = "Estadisticas";
             return View();
         }

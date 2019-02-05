@@ -27,13 +27,40 @@ namespace SUA.Controllers
                 entidades.Add("fechas", JsonConvert.SerializeObject(new FechaService().GetFechasForBackUp()));
                 entidades.Add("usuarios", JsonConvert.SerializeObject(new UserService().GetUsers()));
                 entidades.Add("salas", JsonConvert.SerializeObject(new SalaService().GetSalas()));
-                try { entidades.Add("restaurantes", JsonConvert.SerializeObject(new RestauranteService().GetRestaurantes())); } catch { }
+                try
+                {
+                    entidades.Add("restaurantes", JsonConvert.SerializeObject(new RestauranteService().GetRestaurantes()));
+                } catch
+                {
+                    entidades.Add("restaurantes", "[]");
+                }
                 entidades.Add("logs", JsonConvert.SerializeObject(new LogService().GetLogs("all")));
                 entidades.Add("hoteles", JsonConvert.SerializeObject(new HotelService().GetHoteles()));
                 entidades.Add("votaciones", JsonConvert.SerializeObject(new VotacionService().GetVotaciones("true")));
-                try { entidades.Add("prensa", JsonConvert.SerializeObject(new PrensaService().GetPrensa())); } catch { }
-                try { entidades.Add("proveedores", JsonConvert.SerializeObject(new ProveedorService().GetProveedores())); } catch { }
-                try { entidades.Add("instagramusers", JsonConvert.SerializeObject(new InstagramUserService().GetInstagramUsers())); } catch { }
+                try
+                {
+                    entidades.Add("prensa", JsonConvert.SerializeObject(new PrensaService().GetPrensa()));
+                }
+                catch
+                {
+                    entidades.Add("prensa", "[]");
+                }
+                try
+                {
+                    entidades.Add("proveedores", JsonConvert.SerializeObject(new ProveedorService().GetProveedores()));
+                }
+                catch
+                {
+                    entidades.Add("proveedores", "[]");
+                }
+                try
+                {
+                    entidades.Add("instagramusers", JsonConvert.SerializeObject(new InstagramUserService().GetInstagramUsers()));
+                }
+                catch
+                {
+                    entidades.Add("instagramusers", "[]");
+                }
 
 
                 var directory = "";
@@ -210,7 +237,7 @@ namespace SUA.Controllers
                             new InstagramUserService().AddBulkInstagramUser(instagramusers.ToList());
                     }
                 }
-                ViewBag.mensaje = "Backup Generado con éxito";
+                ViewBag.mensaje = "Restore Generado con éxito";
             }
             catch (Exception ex)
             {
@@ -225,7 +252,6 @@ namespace SUA.Controllers
         public ActionResult RestoreInstagramUsers(string id)
         {
             var date = id;
-            var entidades = new List<string> { "instagramusers" };
             try
             {
                 var json = System.IO.File.ReadAllText(Server.MapPath("~/BackUp/instagramusers-" + date + "/instagramusers-" + date + "_instagramusers.txt"));
@@ -233,7 +259,7 @@ namespace SUA.Controllers
                 if (instagramusers.Length > 0)
                     new InstagramUserService().AddBulkInstagramUser(instagramusers.ToList());
 
-                ViewBag.mensaje = "Backup Generado con éxito";
+                ViewBag.mensaje = "Restore Generado con éxito";
             }
             catch (Exception ex)
             {

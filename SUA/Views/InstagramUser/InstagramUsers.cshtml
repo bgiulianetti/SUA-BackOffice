@@ -18,135 +18,148 @@
         text-align: center;
     }
 </style>
-<div class="main-content">
 
-    <div class="panel">
 
-        <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:30px">
-            <div class="well well-sm text-center">
-                <h3>Standuperos SUA - Seguidores</h3>
-                <div id="standuperosSUA" style="height: 300px; width: 100%;"></div>
-            </div>
-        </div>
+@if (ViewBag.message == "")
+{
+    <div class="main-content">
 
-        <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
-            <div class="well well-sm text-center">
-                <h3>Standuperos SUA - Historial Seguidores Legacy</h3>
-                <div id="standuperosSUAHistorialSeguidoresLegacy" style="height: 600px; width: 100%;"></div>
-            </div>
-        </div>
+        <div class="panel">
 
-        <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
-            <div class="well well-sm text-center">
-                <h3>Standuperos SUA - Historial Seguidores</h3>
-                <div style="width: 100%; overflow-x: auto;  white-space: nowrap;">
-                    <select id="filter_table_standuperosSUAFollowersTable">
-                        @foreach (var standupero in ViewBag.standuperosSUAUsernames)
-                        {
-                            <option>@standupero</option>
-                        }
-                    </select>
-                    <table id="table_sua_historial_seguidores" style="width:40%" class="display compact hover nowrap">
-                        <thead>
-                            <tr>
-                                <th>User</th>
-                                <th>Fecha</th>
-                                <th>Día</th>
-                                <th>Seguidores</th>
-                                <th>Diferencia</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var standupero in ViewBag.standuperosSUAFollowersTable)
-                            {
-                                foreach (var item in standupero.Followers)
-                                {
-                                    <tr>
-                                        <td>@standupero.Username</td>
-                                        <td>@item.Date.ToString("yyyy-MM-dd")</td>
-                                        <td>@item.Date.ToString("ddd")</td>
-                                        <td>@item.Count.ToString("N0")</td>
-                                        @if (item.Difference > 0)
-                                        {
-                                            <td>+@item.Difference</td>
-                                        }
-                                        else
-                                        {
-                                            <td>@item.Difference</td>
-                                        }
-                                    </tr>
-                                }
-                            }
-                        </tbody>
-                    </table>
-
-                    
+            <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:30px">
+                <div class="well well-sm text-center">
+                    <h3>Standuperos SUA - Seguidores</h3>
+                    <div id="standuperosSUA" style="height: 300px; width: 100%;"></div>
                 </div>
-                <div id="standuperosSUAHistorialSeguidores" style="height: 600px; width: 100%;"></div>
             </div>
-        </div>
 
-        <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
-            <div class="well well-sm text-center">
-                <h3>Standuperos - Ranking Seguidores</h3>
-                <div id="chartContainer" style="height: 1000px; width: 100%;"></div>
-            </div>
-        </div>
-
-
-
-        <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
-            <div class="well well-sm text-center">
-                <h3>Standuperos - Historial Seguidores</h3>
-                <div style="width: 100%; overflow-x: auto;  white-space: nowrap;">
-                    <select id="filter_table_standuperosFollowersTable">
-                        @foreach (var standupero in ViewBag.standuperosUsernames)
-                        {
-                            <option>@standupero</option>
-                        }
-                    </select>
-                    <table id="table_historial_seguidores" style="width:40%" class="display compact hover nowrap">
-                        <thead>
-                            <tr>
-                                <th>User</th>
-                                <th>Fecha</th>
-                                <th>Día</th>
-                                <th>Seguidores</th>
-                                <th>Diferencia</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var standupero in ViewBag.standuperosFollowersTable)
-                            {
-                                foreach (var item in standupero.Followers)
-                                {
-                                    <tr>
-                                        <td>@standupero.Username</td>
-                                        <td>@item.Date.ToString("yyyy-MM-dd")</td>
-                                        <td>@item.Date.ToString("ddd")</td>
-                                        <td>@item.Count.ToString("N0")</td>
-                                        @if (item.Difference > 0)
-                                        {
-                                            <td>+@item.Difference</td>
-                                        }
-                                        else
-                                        {
-                                            <td>@item.Difference</td>
-                                        }
-                                    </tr>
-                                }
-                            }
-                        </tbody>
-                    </table>
-
-
+            <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
+                <div class="well well-sm text-center">
+                    <h3>Standuperos SUA - Historial Seguidores Legacy</h3>
+                    <div id="standuperosSUAHistorialSeguidoresLegacy" style="height: 600px; width: 100%;"></div>
                 </div>
-                <div id="standuperosHistorialSeguidores" style="height: 600px; width: 100%;"></div>
             </div>
-        </div>
 
+            <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
+                <div class="well well-sm text-center">
+                    <h3>Standuperos SUA - Historial Seguidores</h3>
+                    <div style="width: 100%; overflow-x: auto;  white-space: nowrap;">
+                        <select id="filter_table_standuperosSUAFollowersTable">
+                            @foreach (var standupero in ViewBag.standuperosSUAUsernames)
+                            {
+                                <option>@standupero</option>
+                            }
+                        </select>
+                        <table id="table_sua_historial_seguidores" style="width:40%" class="display compact hover nowrap">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Fecha</th>
+                                    <th>Día</th>
+                                    <th>Seguidores</th>
+                                    <th>Diferencia</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var standupero in ViewBag.standuperosSUAFollowersTable)
+                                {
+                                    foreach (var item in standupero.Followers)
+                                    {
+                                        <tr>
+                                            <td>@standupero.Username</td>
+                                            <td>@item.Date.ToString("yyyy-MM-dd")</td>
+                                            <td>@item.Date.ToString("ddd")</td>
+                                            <td>@item.Count.ToString("N0")</td>
+                                            @if (item.Difference > 0)
+                                            {
+                                                <td>+@item.Difference</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@item.Difference</td>
+                                            }
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                    <div id="standuperosSUAHistorialSeguidores" style="height: 600px; width: 100%;"></div>
+                </div>
+            </div>
+
+            <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
+                <div class="well well-sm text-center">
+                    <h3>Standuperos - Ranking Seguidores</h3>
+                    <div id="chartContainer" style="height: 1000px; width: 100%;"></div>
+                </div>
+            </div>
+
+
+
+            <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
+                <div class="well well-sm text-center">
+                    <h3>Standuperos - Historial Seguidores</h3>
+                    <div style="width: 100%; overflow-x: auto;  white-space: nowrap;">
+                        <select id="filter_table_standuperosFollowersTable">
+                            @foreach (var standupero in ViewBag.standuperosUsernames)
+                            {
+                                <option>@standupero</option>
+                            }
+                        </select>
+                        <table id="table_historial_seguidores" style="width:40%" class="display compact hover nowrap">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Fecha</th>
+                                    <th>Día</th>
+                                    <th>Seguidores</th>
+                                    <th>Diferencia</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var standupero in ViewBag.standuperosFollowersTable)
+                                {
+                                    foreach (var item in standupero.Followers)
+                                    {
+                                        <tr>
+                                            <td>@standupero.Username</td>
+                                            <td>@item.Date.ToString("yyyy-MM-dd")</td>
+                                            <td>@item.Date.ToString("ddd")</td>
+                                            <td>@item.Count.ToString("N0")</td>
+                                            @if (item.Difference > 0)
+                                            {
+                                                <td>+@item.Difference</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@item.Difference</td>
+                                            }
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                    <div id="standuperosHistorialSeguidores" style="height: 600px; width: 100%;"></div>
+                </div>
+            </div>
+
+        </div>
     </div>
-</div>
+}
+else
+{
+    <div>
+        @ViewBag.message
+    </div>
+}
+
+
 
 
 

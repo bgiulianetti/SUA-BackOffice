@@ -652,6 +652,9 @@
     <Content Include="Views\Estadisticas\Index.cshtml" />
     <Content Include="Views\EstadisticasInstagram\InstagramStats.cshtml" />
     <Content Include="Views\InstagramUser\InstagramUsers.cshtml" />
+    <Content Include="Views\InstagramUser\InitializeInstagramUsers.cshtml" />
+    <Content Include="Views\DataBase\BackupInstagramUsers.cshtml" />
+    <Content Include="Views\DataBase\RestoreInstagramUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

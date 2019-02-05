@@ -14,26 +14,33 @@ namespace SUA.Controllers
     {
         public ActionResult InstagramUsers()
         {
-            //ver legacy de alguien en particular (spline)
-            var service = new InstagramUserService();
-            var users = service.GetInstagramUsers();
-            ViewBag.standuperosSUAFollowersLast = FormatInstagramUsersForBarChart(service.GetSUAInstagramUsers());
-            ViewBag.standuperosSUAFollowersLegacy = FormatInstagramUsersFollowersForSplineChart(service.GetSUAInstagramUsers(), true, "legacy");
-            
-            
-            
-            //table sua users
-            ViewBag.standuperosSUAFollowersTable = service.GetSUAInstagramUsers();
-            ViewBag.standuperosSUAUsernames = GetStanduperosSUAUsernameOrderByUsername();
-            ViewBag.standuperosSUAFollowersActual = FormatInstagramUsersFollowersForSplineChart(service.GetSUAInstagramUsers(), true);
+            try
+            {
+                //ver legacy de alguien en particular (spline)
+                var service = new InstagramUserService();
+                var users = service.GetInstagramUsers();
+                ViewBag.standuperosSUAFollowersLast = FormatInstagramUsersForBarChart(service.GetSUAInstagramUsers());
+                ViewBag.standuperosSUAFollowersLegacy = FormatInstagramUsersFollowersForSplineChart(service.GetSUAInstagramUsers(), true, "legacy");
 
 
-            ViewBag.standuperosRanking = FormatInstagramUsersForHorizontalBarChart(service.GetInstagramUsers());
-            
-            //table users
-            ViewBag.standuperosFollowersTable = service.GetInstagramUsers();
-            ViewBag.standuperosUsernames = GetStanduperosUsernameOrderByUsername();
-            ViewBag.standuperosFollowersActual = FormatInstagramUsersFollowersForSplineChart(service.GetInstagramUsers(), false);
+                //table sua users
+                ViewBag.standuperosSUAFollowersTable = service.GetSUAInstagramUsers();
+                ViewBag.standuperosSUAUsernames = GetStanduperosSUAUsernameOrderByUsername();
+                ViewBag.standuperosSUAFollowersActual = FormatInstagramUsersFollowersForSplineChart(service.GetSUAInstagramUsers(), true);
+
+
+                ViewBag.standuperosRanking = FormatInstagramUsersForHorizontalBarChart(service.GetInstagramUsers());
+
+                //table users
+                ViewBag.standuperosFollowersTable = service.GetInstagramUsers();
+                ViewBag.standuperosUsernames = GetStanduperosUsernameOrderByUsername();
+                ViewBag.standuperosFollowersActual = FormatInstagramUsersFollowersForSplineChart(service.GetInstagramUsers(), false);
+                ViewBag.message = "";
+            }
+            catch(Exception ex)
+            {
+                ViewBag.message = ex.Message;
+            }
 
             return View();
         }
@@ -109,37 +116,46 @@ namespace SUA.Controllers
             var ranking = users.Count;
             foreach (var user in users)
             {
-                lista.Add(new HorizontalBarChartDataContract { label = "#" + ranking + " - " + user.Username, posts = user.Posts, seguidos = user.Following, y = user.Followers.Last().Count, url = user.ProfilePicture });
+                lista.Add(new HorizontalBarChartDataContract { label = "#" + ranking + " - " + user.Username, posts = user.Posts, seguidos = user.Following, y = user.Followers.First().Count, url = user.ProfilePicture });
                 ranking--;
             }
             return lista;
         }
 
         [HttpGet]
-        public void InitializeInstagramUsers()
+        public ActionResult InitializeInstagramUsers()
         {
-            var instagramUsers = new List<InstagramUser>();
-            var instagramService = new InstagramService();
-            var json = System.IO.File.ReadAllText(Server.MapPath("~/assets/InstagramFollowersHistory/sergudiores.json"));
-            var users = JsonConvert.DeserializeObject<InstagramUserDataContract[]>(json);
-
-            foreach (var user in users)
+            try
             {
-                var userObtenido = instagramService.GetUserBy(user.user);
-                var instagramUser = new InstagramUser
-                {
-                    Username = user.user,
-                    Following = userObtenido.Following,
-                    ProfilePicture = userObtenido.Picture.AbsoluteUri,
-                    Posts = userObtenido.Posts,
-                    FollowersLegacy = CreateUserFollowersHistory(user, "legacy"),
-                    Followers = CreateUserFollowersHistory(user, "actual")
-                };
-                instagramUsers.Add(instagramUser);
-            }
+                var instagramUsers = new List<InstagramUser>();
+                var instagramService = new InstagramService();
+                var json = System.IO.File.ReadAllText(Server.MapPath("~/assets/InstagramFollowersHistory/sergudiores.json"));
+                var users = JsonConvert.DeserializeObject<InstagramUserDataContract[]>(json);
 
-            var instagramUserService = new InstagramUserService();
-            instagramUserService.AddBulkInstagramUser(instagramUsers);
+                foreach (var user in users)
+                {
+                    var userObtenido = instagramService.GetUserBy(user.user);
+                    var instagramUser = new InstagramUser
+                    {
+                        Username = user.user,
+                        Following = userObtenido.Following,
+                        ProfilePicture = userObtenido.Picture.AbsoluteUri,
+                        Posts = userObtenido.Posts,
+                        FollowersLegacy = CreateUserFollowersHistory(user, "legacy"),
+                        Followers = CreateUserFollowersHistory(user, "actual")
+                    };
+                    instagramUsers.Add(instagramUser);
+                }
+
+                var instagramUserService = new InstagramUserService();
+                instagramUserService.AddBulkInstagramUser(instagramUsers);
+                ViewBag.message = "";
+            }
+            catch(Exception ex)
+            {
+                ViewBag.message = ex.Message;
+            }
+            return View();
         }
 
         private List<InstragramUserFollowersHistory> CreateUserFollowersHistory(InstagramUserDataContract user, string type)

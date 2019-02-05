@@ -429,6 +429,13 @@ namespace SUA.Filters
                                 filterContext.Result = new RedirectResult("/prensas");
                             }
                         }
+
+
+                        //////////////////Estadisticas facturación
+                        else if (controller == "Estadisticas" && action == "Index")
+                        {
+                            filterContext.Result = new RedirectResult("/inicio");
+                        }
                     }
                 }
 

@@ -289,9 +289,9 @@ namespace SUA.Servicios
             foreach (var show in shows)
             {
                 var count = fechasInYear.Where(f => f.Show.UniqueId == show.UniqueId).Count();
-                fechas.Add(new ChartInfoContract { y = count, /*ShowColor = show.BackgroundColorCalendar, ShowId = show.UniqueId,*/ label = show._Show/*, Year = year*/});
+                fechas.Add(new ChartInfoContract { y = count, label = show._Show });
             }
-            return fechas;
+            return fechas.OrderByDescending(f=>f.y).ToList();
         }
 
     }
