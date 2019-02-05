@@ -104,7 +104,7 @@ namespace SUA.Controllers
                     System.IO.File.WriteAllText(fileNameFullPath, entidad.Value);
                     fileNameList.Add(fileNameFullPath);
                 }
-                SendBackupFiles(fileNameList, Server.MapPath(directory), id);
+                SendBackupFiles(fileNameList, Server.MapPath(directory), "yo");
                 ViewBag.mensaje = "Backup Generado con éxito";
             }
             catch (Exception ex)
