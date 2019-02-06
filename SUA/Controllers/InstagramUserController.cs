@@ -34,7 +34,7 @@ namespace SUA.Controllers
                 //table users
                 ViewBag.standuperosFollowersTable = service.GetInstagramUsers();
                 ViewBag.standuperosUsernames = GetStanduperosUsernameOrderByUsername();
-                ViewBag.standuperosFollowersActual = FormatInstagramUsersFollowersForSplineChart(service.GetInstagramUsers(), false);
+                ViewBag.standuperosFollowersActual = FormatInstagramUsersFollowersForSplineChart(service.GetInstagramUsers(), true);
                 ViewBag.message = "";
             }
             catch (Exception ex)
@@ -79,6 +79,7 @@ namespace SUA.Controllers
 
         public List<SplineChartDataContract> FormatInstagramUsersFollowersForSplineChart(List<InstagramUser> users, bool ShowLegend, string type = "actual")
         {
+            users = users.OrderBy(f => f.Username).ToList();
             var lista = new List<SplineChartDataContract>();
             foreach (var user in users)
             {

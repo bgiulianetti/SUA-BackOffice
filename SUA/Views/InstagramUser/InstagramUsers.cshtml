@@ -399,7 +399,8 @@ else
             },
             legend: {
                 cursor: "pointer",
-                fontSize: 16
+                fontSize: 16,
+                itemclick: toggleDataSeriesStanduperosFollowersActual,
             },
             toolTip: { shared: false },
             data: standuperos_followers_actual
@@ -408,7 +409,13 @@ else
 
         $('#filter_table_standuperosFollowersTable').val("@ViewBag.standuperosUsernames[0]").trigger('change');
 
-
+        function toggleDataSeriesStanduperosFollowersActual(e) {
+            if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible)
+                e.dataSeries.visible = false;
+            else
+                e.dataSeries.visible = true;
+            standuperosHistorialSeguidores.render();
+        }
 
     });
 
