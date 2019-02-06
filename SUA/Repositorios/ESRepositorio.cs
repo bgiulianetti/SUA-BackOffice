@@ -2793,13 +2793,7 @@ namespace SUA.Repositorios
             if (!response.IsValid)
                 throw new Exception(USER_GET_ALL_EXCEPTION);
 
-            var users = new List<InstagramUser>();
-            if (response.Total > 0)
-            {
-                foreach (var item in response.Documents)
-                    users.Add(item);
-            }
-            return users;
+            return response.Documents.ToList();
         }
         public InstagramUser GetInstagramUserByUsername(string username)
         {

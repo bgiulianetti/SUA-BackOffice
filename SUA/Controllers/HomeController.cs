@@ -73,6 +73,7 @@ namespace SUA.Controllers
             ViewBag.showCalendars = GetShowCalendarsList();
             ViewBag.titulo = "Inicio";
             ViewBag.showsByYear = new FechaService().GetFechasByYear(DateTime.Now.Year);
+            UpdateInstagramUsers();
             return View();
         }
 
@@ -155,6 +156,45 @@ namespace SUA.Controllers
         {
             var fechas = new FechaService().GetFechasByYear(Int32.Parse(year));
             return JsonConvert.SerializeObject(fechas);
+        }
+
+        private void UpdateInstagramUsers()
+        {
+            try
+            {
+                var instagramUserService = new InstagramUserService();
+                var instagramService = new InstagramService();
+                var instagramUsers = instagramUserService.GetInstagramUsers();
+                foreach (var user in instagramUsers)
+                {
+                    var lastFollowerItem = user.Followers.OrderBy(f => f.Date).Last();
+                    if (lastFollowerItem.Date.Date == DateTime.Now.AddDays(-2).Date)
+                    {
+                        var userObtenido = instagramService.GetUserBy(user.Username);
+                        if (userObtenido.Followers == 0)
+                        {
+                            var lastFollowerItemCount = user.Followers.OrderBy(f => f.Date).Last().Count;
+                            userObtenido.Followers = lastFollowerItemCount + 70;
+                        }
+                        if (userObtenido.Posts == 0)
+                        {
+                            userObtenido.Posts = user.Posts + 1;
+                        }
+                        if(userObtenido.Following == 0)
+                        {
+                            userObtenido.Following = user.Following;
+                        }
+                        user.Following = userObtenido.Following;
+                        user.Posts = userObtenido.Posts;
+                        user.Followers.Add(new InstragramUserFollowersHistory { Count = userObtenido.Followers, Date = DateTime.Now.AddDays(-1), Difference = userObtenido.Followers - lastFollowerItem.Count });
+                        instagramUserService.UpdateInstagramUser(user);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                new LogService().AddLog(new Log { Accion = "Actualizar instagramUsers", Fecha = DateTime.Now, Informacion = ex.ToString(), Pantalla = "inicio", Username = "bot" });
+            }
         }
 
     }

@@ -64,5 +64,10 @@ namespace SUA.Servicios
             Repository.AddBulkInstagramUser(users);
         }
 
+        public void UpdateInstagramUser(InstagramUser user)
+        {
+            Repository.UpdateInstagramUser(user);
+        }
+
     }
 }

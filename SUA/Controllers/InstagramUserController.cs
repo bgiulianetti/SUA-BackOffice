@@ -111,7 +111,7 @@ namespace SUA.Controllers
 
         public List<HorizontalBarChartDataContract> FormatInstagramUsersForHorizontalBarChart(List<InstagramUser> users)
         {
-            users = users.OrderBy(f => f.Followers.Last().Count).ToList();
+            users = users.OrderBy(f => f.Followers.First().Count).ToList();
             var lista = new List<HorizontalBarChartDataContract>();
             var ranking = users.Count;
             foreach (var user in users)

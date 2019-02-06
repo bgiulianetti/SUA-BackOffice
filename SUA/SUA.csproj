@@ -655,6 +655,7 @@
     <Content Include="Views\InstagramUser\InitializeInstagramUsers.cshtml" />
     <Content Include="Views\DataBase\BackupInstagramUsers.cshtml" />
     <Content Include="Views\DataBase\RestoreInstagramUsers.cshtml" />
+    <Content Include="Views\InstagramUser\UpdateInstagramUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
