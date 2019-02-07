@@ -72,41 +72,41 @@ namespace SUA.Controllers
         {
             var service = new FechaService();
             var fechasInYearA = service.GetFechas("true").Where(f => f.FechaHorario >= new DateTime(yearA, 01, 01) && f.FechaHorario <= new DateTime(yearA, 12, 31) && f.Borederaux != null).ToList();
-            var fechasA = new List<DateAndInfo>
+            var fechasA = new List<LabelAndInfo>
             {
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearA,  1, 1 )), units = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 01, 01) && f.FechaHorario <= new DateTime(yearA, 01, 31)).ToList()) },
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearA,  2, 1 )), units = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 02, 01) && f.FechaHorario <= new DateTime(yearA, 02, 28)).ToList()) },
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearA,  3, 1 )), units = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 03, 01) && f.FechaHorario <= new DateTime(yearA, 03, 31)).ToList()) },
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearA,  4, 1 )), units = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 04, 01) && f.FechaHorario <= new DateTime(yearA, 04, 30)).ToList()) },
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearA,  5, 1 )), units = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 05, 01) && f.FechaHorario <= new DateTime(yearA, 05, 31)).ToList()) },
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearA,  6, 1 )), units = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 06, 01) && f.FechaHorario <= new DateTime(yearA, 06, 30)).ToList()) },
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearA,  7, 1 )), units = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 07, 01) && f.FechaHorario <= new DateTime(yearA, 07, 31)).ToList()) },
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearA,  8, 1 )), units = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 08, 01) && f.FechaHorario <= new DateTime(yearA, 08, 31)).ToList()) },
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearA,  9, 1 )), units = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 09, 01) && f.FechaHorario <= new DateTime(yearA, 09, 30)).ToList()) },
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearA, 10, 1 )), units = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 10, 01) && f.FechaHorario <= new DateTime(yearA, 10, 31)).ToList()) },
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearA, 11, 1 )), units = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 11, 01) && f.FechaHorario <= new DateTime(yearA, 11, 30)).ToList()) },
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearA, 12, 1 )), units = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 12, 01) && f.FechaHorario <= new DateTime(yearA, 12, 31)).ToList()) }
+                new LabelAndInfo { label = "Jan", y = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 01, 01) && f.FechaHorario <= new DateTime(yearA, 01, 31)).ToList()) },
+                new LabelAndInfo { label = "Feb", y = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 02, 01) && f.FechaHorario <= new DateTime(yearA, 02, 28)).ToList()) },
+                new LabelAndInfo { label = "Mar", y = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 03, 01) && f.FechaHorario <= new DateTime(yearA, 03, 31)).ToList()) },
+                new LabelAndInfo { label = "Apr", y = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 04, 01) && f.FechaHorario <= new DateTime(yearA, 04, 30)).ToList()) },
+                new LabelAndInfo { label = "May", y = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 05, 01) && f.FechaHorario <= new DateTime(yearA, 05, 31)).ToList()) },
+                new LabelAndInfo { label = "Jun", y = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 06, 01) && f.FechaHorario <= new DateTime(yearA, 06, 30)).ToList()) },
+                new LabelAndInfo { label = "Jul", y = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 07, 01) && f.FechaHorario <= new DateTime(yearA, 07, 31)).ToList()) },
+                new LabelAndInfo { label = "Aug", y = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 08, 01) && f.FechaHorario <= new DateTime(yearA, 08, 31)).ToList()) },
+                new LabelAndInfo { label = "Sep", y = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 09, 01) && f.FechaHorario <= new DateTime(yearA, 09, 30)).ToList()) },
+                new LabelAndInfo { label = "Oct", y = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 10, 01) && f.FechaHorario <= new DateTime(yearA, 10, 31)).ToList()) },
+                new LabelAndInfo { label = "Nov", y = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 11, 01) && f.FechaHorario <= new DateTime(yearA, 11, 30)).ToList()) },
+                new LabelAndInfo { label = "Dec", y = GetMonthNetoSum(fechasInYearA.Where(f => f.FechaHorario >= new DateTime(yearA, 12, 01) && f.FechaHorario <= new DateTime(yearA, 12, 31)).ToList()) }
             };
 
 
             var fechasInYearB = service.GetFechas("true").Where(f => f.FechaHorario >= new DateTime(yearB, 01, 01) && f.FechaHorario <= new DateTime(yearB, 12, 31) && f.Borederaux != null).ToList();
-            var fechasB = new List<DateAndInfo>
+            var fechasB = new List<LabelAndInfo>
             {
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearB,  1, 1 )), units = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 01, 01) && f.FechaHorario <= new DateTime(yearB, 01, 31)).ToList()) },
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearB,  2, 1 )), units = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 02, 01) && f.FechaHorario <= new DateTime(yearB, 02, 28)).ToList()) },
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearB,  3, 1 )), units = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 03, 01) && f.FechaHorario <= new DateTime(yearB, 03, 31)).ToList()) },
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearB,  4, 1 )), units = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 04, 01) && f.FechaHorario <= new DateTime(yearB, 04, 30)).ToList()) },
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearB,  5, 1 )), units = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 05, 01) && f.FechaHorario <= new DateTime(yearB, 05, 31)).ToList()) },
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearB,  6, 1 )), units = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 06, 01) && f.FechaHorario <= new DateTime(yearB, 06, 30)).ToList()) },
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearB,  7, 1 )), units = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 07, 01) && f.FechaHorario <= new DateTime(yearB, 07, 31)).ToList()) },
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearB,  8, 1 )), units = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 08, 01) && f.FechaHorario <= new DateTime(yearB, 08, 31)).ToList()) },
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearB,  9, 1 )), units = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 09, 01) && f.FechaHorario <= new DateTime(yearB, 09, 30)).ToList()) },
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearB, 10, 1 )), units = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 10, 01) && f.FechaHorario <= new DateTime(yearB, 10, 31)).ToList()) },
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearB, 11, 1 )), units = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 11, 01) && f.FechaHorario <= new DateTime(yearB, 11, 30)).ToList()) },
-                new DateAndInfo { date = UtilitiesAndStuff.DateToMiliseconds(new DateTime(yearB, 12, 1 )), units = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 12, 01) && f.FechaHorario <= new DateTime(yearB, 12, 31)).ToList()) }
+                new LabelAndInfo { label = "Jan", y = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 01, 01) && f.FechaHorario <= new DateTime(yearB, 01, 31)).ToList()) },
+                new LabelAndInfo { label = "Feb", y = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 02, 01) && f.FechaHorario <= new DateTime(yearB, 02, 28)).ToList()) },
+                new LabelAndInfo { label = "Mar", y = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 03, 01) && f.FechaHorario <= new DateTime(yearB, 03, 31)).ToList()) },
+                new LabelAndInfo { label = "Apr", y = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 04, 01) && f.FechaHorario <= new DateTime(yearB, 04, 30)).ToList()) },
+                new LabelAndInfo { label = "May", y = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 05, 01) && f.FechaHorario <= new DateTime(yearB, 05, 31)).ToList()) },
+                new LabelAndInfo { label = "Jun", y = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 06, 01) && f.FechaHorario <= new DateTime(yearB, 06, 30)).ToList()) },
+                new LabelAndInfo { label = "Jul", y = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 07, 01) && f.FechaHorario <= new DateTime(yearB, 07, 31)).ToList()) },
+                new LabelAndInfo { label = "Aug", y = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 08, 01) && f.FechaHorario <= new DateTime(yearB, 08, 31)).ToList()) },
+                new LabelAndInfo { label = "Sep", y = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 09, 01) && f.FechaHorario <= new DateTime(yearB, 09, 30)).ToList()) },
+                new LabelAndInfo { label = "Oct", y = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 10, 01) && f.FechaHorario <= new DateTime(yearB, 10, 31)).ToList()) },
+                new LabelAndInfo { label = "Nov", y = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 11, 01) && f.FechaHorario <= new DateTime(yearB, 11, 30)).ToList()) },
+                new LabelAndInfo { label = "Dec", y = GetMonthNetoSum(fechasInYearB.Where(f => f.FechaHorario >= new DateTime(yearB, 12, 01) && f.FechaHorario <= new DateTime(yearB, 12, 31)).ToList()) }
             };
 
-            var lista = new List<List<DateAndInfo>> {
+            var lista = new List<List<LabelAndInfo>> {
                 fechasA,
                 fechasB
             };

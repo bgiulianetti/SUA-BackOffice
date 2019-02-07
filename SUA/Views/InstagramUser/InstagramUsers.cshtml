@@ -104,12 +104,13 @@
                     <h3>Standuperos - Historial Seguidores</h3>
                     <div style="width: 100%; overflow-x: auto;  white-space: nowrap;">
                         <img src="#" id="standuperoProfilePicture" style="width:96px; height:100px;"><br /><br />
-                        <select id="filter_table_standuperosFollowersTable">
+                        <select style="text-align-last:center;" id="filter_table_standuperosFollowersTable">
                             @foreach (var standupero in ViewBag.standuperosUsernames)
                             {
-                                <option>@standupero</option>
+                                <option style="text-align:center">@standupero</option>
                             }
                         </select>
+                        <br /><label style="font-size:large" title="Média diaria" id="media_diaria"></label><br />
                         <table id="table_historial_seguidores" style="width:40%" class="display compact hover nowrap">
                             <thead>
                                 <tr>
@@ -143,7 +144,6 @@
                                 }
                             </tbody>
                         </table>
-
 
                     </div>
                     <div id="standuperosHistorialSeguidores" style="height: 600px; width: 100%;"></div>
@@ -370,6 +370,7 @@ else
         // Toggle the visibility
         column.visible(false);
 
+
         $('#filter_table_standuperosFollowersTable').on('change', function ()
         {
             table_historial_seguidores.search(this.value).draw();
@@ -387,6 +388,24 @@ else
                     while (standuperos_all[a].Username != standuperos_followers_actual[i].name)
                     { a++; }
                     $("#standuperoProfilePicture").attr("src", standuperos_all[a].ProfilePicture);
+
+                    var sumaDifrencia = 0;
+                    for (var b = 0; b < standuperos_all[a].Followers.length; b++)
+                    {
+                        sumaDifrencia += standuperos_all[a].Followers[b].Difference;
+                    }
+                    var media = (sumaDifrencia / standuperos_all[a].Followers.length).toFixed(0);
+                    if (media > 0)
+                    {
+                        $('#media_diaria').css("color", "forestgreen");
+                        $('#media_diaria')[0].innerHTML = "+" + media;
+                    }
+                    else
+                    {
+                        $('#media_diaria').css("color", "red");
+                        $('#media_diaria')[0].innerHTML = media;
+                    }
+                    
                 }
             }
             standuperosHistorialSeguidores.render();
@@ -433,10 +452,13 @@ else
 
     function AcomodaTableSUADOM() {
         $('#table_sua_historial_seguidores_filter').hide();
+        $('#table_sua_historial_seguidores_info').hide();
+
     }
 
     function AcomodaTableDOM() {
         $('#table_historial_seguidores_filter').hide();
+        $('#table_historial_seguidores_info').hide();
     }
 
 

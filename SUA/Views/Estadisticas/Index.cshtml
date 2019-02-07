@@ -151,8 +151,8 @@
                     gananciasNetasPorMesVersusDataPointsA = [];
 
                 gananciasNetasPorMesVersusDataPointsA.push({
-                    x: new Date(data[0][i].date),
-                    y: parseFloat(data[0][i].units)
+                    label: data[0][i].label,
+                    y: parseFloat(data[0][i].y)
                 });
             }
 
@@ -164,8 +164,8 @@
                     gananciasNetasPorMesVersusDataPointsB = [];
 
                 gananciasNetasPorMesVersusDataPointsB.push({
-                    x: new Date(data[1][i].date),
-                    y: parseFloat(data[1][i].units)
+                    label: data[1][i].label,
+                    y: parseFloat(data[1][i].y)
                 });
             }
 
@@ -179,6 +179,9 @@
         }
         function createGananciasNetasPorMesVersus() {
             return new CanvasJS.Chart("gananciasNetasPorMesVersusChart", {
+                toolTip: {
+                    shared: true
+                },
                 animationEnabled: true,
                 theme: "light2",
                 exportEnabled: true,

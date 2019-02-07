@@ -16,25 +16,25 @@ namespace SUA.Controllers
         {
             try
             {
-                //ver legacy de alguien en particular (spline)
-                var service = new InstagramUserService();
-                var users = service.GetInstagramUsers();
-                ViewBag.standuperosSUAFollowersLast = FormatInstagramUsersForBarChart(service.GetSUAInstagramUsers());
-                ViewBag.standuperosSUAFollowersLegacy = FormatInstagramUsersFollowersForSplineChart(service.GetSUAInstagramUsers(), true, "legacy");
+                //var service = new InstagramUserService();
+                var users = GetInstagramUsers();
+                var SUAUsers = GetSUAInstagramUsers();
+                ViewBag.standuperosSUAFollowersLast = FormatInstagramUsersForBarChart(SUAUsers);
+                ViewBag.standuperosSUAFollowersLegacy = FormatInstagramUsersFollowersForSplineChart(SUAUsers, true, "legacy");
 
 
                 //table sua users
-                ViewBag.standuperosSUAFollowersTable = service.GetSUAInstagramUsers();
+                ViewBag.standuperosSUAFollowersTable = SUAUsers;
                 ViewBag.standuperosSUAUsernames = GetStanduperosSUAUsernameOrderByUsername();
-                ViewBag.standuperosSUAFollowersActual = FormatInstagramUsersFollowersForSplineChart(service.GetSUAInstagramUsers(), true);
+                ViewBag.standuperosSUAFollowersActual = FormatInstagramUsersFollowersForSplineChart(SUAUsers, true);
 
 
-                ViewBag.standuperosRanking = FormatInstagramUsersForHorizontalBarChart(service.GetInstagramUsers());
+                ViewBag.standuperosRanking = FormatInstagramUsersForHorizontalBarChart(users);
 
                 //table users
-                ViewBag.standuperosFollowersTable = service.GetInstagramUsers();
+                ViewBag.standuperosFollowersTable = users;
                 ViewBag.standuperosUsernames = GetStanduperosUsernameOrderByUsername();
-                ViewBag.standuperosFollowersActual = FormatInstagramUsersFollowersForSplineChart(service.GetInstagramUsers(), true);
+                ViewBag.standuperosFollowersActual = FormatInstagramUsersFollowersForSplineChart(users, true);
                 ViewBag.message = "";
             }
             catch (Exception ex)
@@ -59,7 +59,7 @@ namespace SUA.Controllers
         private List<string> GetStanduperosUsernameOrderByUsername()
         {
             var lista = new List<string>();
-            var users = new InstagramUserService().GetInstagramUsers();
+            var users = GetInstagramUsers();
             foreach (var user in users)
             {
                 lista.Add(user.Username.ToLower());
@@ -187,5 +187,19 @@ namespace SUA.Controllers
             }
             return history;
         }
+
+        private List<InstagramUser> GetInstagramUsers()
+        {
+            var service = new InstagramUserService();
+            var users = service.GetInstagramUsers();
+            return users.Where(f => f.Username != "sofimorandi" && f.Username != "belulucius").ToList();
+        }
+
+        private List<InstagramUser> GetSUAInstagramUsers()
+        {
+            var service = new InstagramUserService();
+            return service.GetSUAInstagramUsers();
+        }
+
     }
 }
