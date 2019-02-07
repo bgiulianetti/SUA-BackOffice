@@ -103,6 +103,7 @@
                 <div class="well well-sm text-center">
                     <h3>Standuperos - Historial Seguidores</h3>
                     <div style="width: 100%; overflow-x: auto;  white-space: nowrap;">
+                        <img src="#" id="standuperoProfilePicture" style="width:96px; height:100px;"><br /><br />
                         <select id="filter_table_standuperosFollowersTable">
                             @foreach (var standupero in ViewBag.standuperosUsernames)
                             {
@@ -375,9 +376,18 @@ else
             for (var i = 0; i < standuperos_followers_actual.length; i++)
             {
                 if (standuperos_followers_actual[i].name != this.value)
+                {
                     standuperos_followers_actual[i].visible = false;
+                }
                 else
+                {
+                    var standuperos_all =  @Html.Raw(Json.Encode(@ViewBag.standuperosFollowersTable));
                     standuperos_followers_actual[i].visible = true;
+                    var a = 0;
+                    while (standuperos_all[a].Username != standuperos_followers_actual[i].name)
+                    { a++; }
+                    $("#standuperoProfilePicture").attr("src", standuperos_all[a].ProfilePicture);
+                }
             }
             standuperosHistorialSeguidores.render();
         });
