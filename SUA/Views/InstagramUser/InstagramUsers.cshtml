@@ -103,6 +103,7 @@
                 <div class="well well-sm text-center">
                     <h3>Standuperos - Historial Seguidores</h3>
                     <div style="width: 100%; overflow-x: auto;  white-space: nowrap;">
+
                         <img src="#" id="standuperoProfilePicture" style="width:96px; height:100px;"><br /><br />
                         <select style="text-align-last:center;" id="filter_table_standuperosFollowersTable">
                             @foreach (var standupero in ViewBag.standuperosUsernames)
@@ -110,7 +111,33 @@
                                 <option style="text-align:center">@standupero</option>
                             }
                         </select>
-                        <br /><label style="font-size:large" title="Média diaria" id="media_diaria"></label><br />
+
+                        <br />
+                        <br />
+                        <table style="margin: auto; " class="display compact hover nowrap">
+                            <tr>
+                                <td class="well well-sm text-center" colspan="3">Promedio diario</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="well well-sm text-center">Total</label><br />
+                                    <label title="Média diaria" id="media_diaria"></label>
+                                </td>
+                                <td>
+                                    <label class="well well-sm text-center">Últimos 30 días</label><br />
+                                    <label title="Média diaria" id="media_diaria_mensual"></label>
+                                </td>
+                                <td>
+                                    <label class="well well-sm text-center">Últimos 7 días</label><br />
+                                    <label title="Média diaria" id="media_diaria_semanal"></label>
+                                </td>
+
+                            </tr>
+                        </table>
+
+
+
+                        <br /><br />
                         <table id="table_historial_seguidores" style="width:40%" class="display compact hover nowrap">
                             <thead>
                                 <tr>
@@ -384,28 +411,16 @@ else
                 {
                     var standuperos_all =  @Html.Raw(Json.Encode(@ViewBag.standuperosFollowersTable));
                     standuperos_followers_actual[i].visible = true;
+
                     var a = 0;
                     while (standuperos_all[a].Username != standuperos_followers_actual[i].name)
                     { a++; }
                     $("#standuperoProfilePicture").attr("src", standuperos_all[a].ProfilePicture);
 
-                    var sumaDifrencia = 0;
-                    for (var b = 0; b < standuperos_all[a].Followers.length; b++)
-                    {
-                        sumaDifrencia += standuperos_all[a].Followers[b].Difference;
-                    }
-                    var media = (sumaDifrencia / standuperos_all[a].Followers.length).toFixed(0);
-                    if (media > 0)
-                    {
-                        $('#media_diaria').css("color", "forestgreen");
-                        $('#media_diaria')[0].innerHTML = "+" + media;
-                    }
-                    else
-                    {
-                        $('#media_diaria').css("color", "red");
-                        $('#media_diaria')[0].innerHTML = media;
-                    }
-                    
+
+                    CalcularMedia(standuperos_all, i, a);
+                    CalcularMediaSemanal(standuperos_all, i, a);
+                    CalcularMediaMensual(standuperos_all, i, a);
                 }
             }
             standuperosHistorialSeguidores.render();
@@ -448,6 +463,59 @@ else
 
     });
 
+
+    function CalcularMedia(standuperos_all, index, a)
+    {
+        var sumaDifrencia = 0;
+        for (var b = 0; b < standuperos_all[a].Followers.length; b++)
+        {
+            sumaDifrencia += standuperos_all[a].Followers[b].Difference;
+        }
+        var media = (sumaDifrencia / standuperos_all[a].Followers.length).toFixed(0);
+        if (media > 0) {
+            $('#media_diaria').css("color", "forestgreen");
+            $('#media_diaria')[0].innerHTML = "+" + media;
+        }
+        else {
+            $('#media_diaria').css("color", "red");
+            $('#media_diaria')[0].innerHTML = media;
+        }
+    }
+
+
+    function CalcularMediaSemanal(standuperos_all, index, a)
+    {
+        var sumaDifrencia = 0;
+        for (var b = 0; b < 7 ; b++)
+        {
+            sumaDifrencia += standuperos_all[a].Followers[b].Difference;
+        }
+        var media = (sumaDifrencia / 7).toFixed(0);
+        if (media > 0) {
+            $('#media_diaria_semanal').css("color", "forestgreen");
+            $('#media_diaria_semanal')[0].innerHTML = "+" + media;
+        }
+        else {
+            $('#media_diaria_semanal').css("color", "red");
+            $('#media_diaria_semanal')[0].innerHTML = media;
+        }
+    }
+
+    function CalcularMediaMensual(standuperos_all, index, a) {
+        var sumaDifrencia = 0;
+        for (var b = 0; b < 30; b++) {
+            sumaDifrencia += standuperos_all[a].Followers[b].Difference;
+        }
+        var media = (sumaDifrencia / 30).toFixed(0);
+        if (media > 0) {
+            $('#media_diaria_mensual').css("color", "forestgreen");
+            $('#media_diaria_mensual')[0].innerHTML = "+" + media;
+        }
+        else {
+            $('#media_diaria_mensual').css("color", "red");
+            $('#media_diaria_mensual')[0].innerHTML = media;
+        }
+    }
 
 
     function AcomodaTableSUADOM() {
