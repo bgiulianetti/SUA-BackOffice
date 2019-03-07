@@ -689,10 +689,7 @@ namespace SUA.Repositorios
 
             var response = Client.Search<Show>(s => s
                 .Index(Index)
-                .Type(Index)
-                .Query(q => q
-                    .Match(m => m.Field(f => f.Nombre).Query(nombre)))
-                    );
+                .Type(Index));
 
             if (response == null)
                 return null;
@@ -700,13 +697,7 @@ namespace SUA.Repositorios
             if (!response.IsValid)
                 throw new Exception(SHOW_GET_BY_NOMBRE_INVALID_SEARCH_EXCEPTION);
 
-            Show show = null;
-            if (response.Total > 0)
-            {
-                foreach (var item in response.Documents)
-                    show = item;
-            }
-            return show;
+            return response.Documents.Where(i => i.Nombre == nombre).FirstOrDefault();
         }
         public Show GetShowById(string id)
         {
