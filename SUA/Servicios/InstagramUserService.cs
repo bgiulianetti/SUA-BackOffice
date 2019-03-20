@@ -48,6 +48,8 @@ namespace SUA.Servicios
         public InstagramUser GetInstagramUserByUsername(string username)
         {
             var user = Repository.GetInstagramUserByUsername(username.Replace("@", ""));
+            if (user == null)
+                return null;
             if (user.Status == "deleted")
                 return null;
             else
