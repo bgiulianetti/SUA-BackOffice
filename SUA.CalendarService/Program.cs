@@ -24,7 +24,12 @@ namespace CalendarQuickstart
 
         static void Main(string[] args)
         {
-            CreateEvent();
+            while (true)
+            {
+                CreateEvent();
+                Thread.Sleep(60000);
+            }
+            
             //Console.Read();
         }
 
