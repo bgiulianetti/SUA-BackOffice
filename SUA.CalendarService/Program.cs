@@ -143,10 +143,12 @@ namespace CalendarQuickstart
         public static string CreateDescription(Fecha fecha)
         {
             var description = fecha.Sala.ToString();
+            /*
             if (!string.IsNullOrEmpty(fecha.Observaciones))
             {
                 description += "\n\nObservaciones: " + fecha.Observaciones;
             }
+            */
             return description;
         }
 
