@@ -51,7 +51,7 @@
                                 </td>
                                 <td>
                                     <label>Quien</label>
-                                    @Html.DropDownListFor(model => model.Quien, new SelectList(ViewBag.personas, "Text", "Value"), new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.DropDownListFor(model => model.Quien, new SelectList(ViewBag.personas,"Value", "Text"), new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                             </tr>
                             <tr>
@@ -63,7 +63,6 @@
                         </table>
                         <hr style="color: #8dd9f7">
                         <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
-                        <input name="copiarFacturacion" id="hiddenCopiarFacturacion" class="hidden" value="" data-form="error-box" />
                         <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
                     </form>
                 </div>

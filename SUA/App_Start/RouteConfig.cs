@@ -270,6 +270,20 @@ namespace SUA
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Fecha", action = "PrintBordereaux", id = UrlParameter.Optional }
             );
+
+
+            //============================Gastos=======================================
+            routes.MapRoute(
+                name: "Gasto",
+                url: "gasto",
+                defaults: new { controller = "Gasto", action = "Gasto" }
+            );
+
+            routes.MapRoute(
+                name: "Gastos",
+                url: "gastos",
+                defaults: new { controller = "Gasto", action = "Gastos" }
+            );
         }
     }
 }

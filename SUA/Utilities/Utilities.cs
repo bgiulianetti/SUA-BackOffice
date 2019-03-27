@@ -117,7 +117,7 @@ namespace SUA.Utilities
         public static List<SelectListItem> GetCategoriasDeGastos()
         {
             var categorias = new List<string> {
-                "Técnico"
+                "Tecnico"
                 ,"Premios"
                 ,"Afip"
                 ,"Sueldos"
@@ -130,8 +130,8 @@ namespace SUA.Utilities
                 ,"Alquiler"
                 ,"Impuestos"
                 ,"Servidores"
-                ,"DOMINIOS"
-                ,"WIX"
+                ,"Dominios"
+                ,"Wix"
                 ,"Flete"
                 ,"Contador"
             };
@@ -721,5 +721,14 @@ namespace SUA.Utilities
             ).TotalMilliseconds;
         }
 
+
+        public static List<SelectListItem> ConvertPeronasListToSelectItemList(List<Persona> personas)
+        {
+            var selectList = new List<SelectListItem>();
+            foreach (var persona in personas)
+                selectList.Add(new SelectListItem { Text = persona.Apellido + ", " + persona.Nombre, Value = persona.Dni });
+
+            return selectList;
+        }
     }
 }

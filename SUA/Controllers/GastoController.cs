@@ -19,6 +19,7 @@ namespace SUA.Controllers
         {
             ViewBag.mensaje = "Get";
             ViewBag.categorias = UtilitiesAndStuff.GetCategoriasDeGastos();
+            ViewBag.personas = GetPersonas();
             if (string.IsNullOrEmpty(id))
             {
                 ViewBag.accion = "Post";
@@ -36,9 +37,10 @@ namespace SUA.Controllers
         }
 
         [HttpPost]
-        public ActionResult Gasto(Gasto gasto, string accion)
+        public ActionResult Gasto(Gasto gasto, string personaDNI, string accion)
         {
             ViewBag.titulo = "Crear Gasto";
+            gasto.Quien = ObtenerPersona(personaDNI);
             var service = new GastoService();
 
             try
@@ -102,6 +104,30 @@ namespace SUA.Controllers
                 //loguear mensaje o mandar pagina de error
             }
             return RedirectToAction("Gastos", "Gasto");
+        }
+
+
+        private List<SelectListItem> GetPersonas()
+        {
+            var standuperos = new StanduperoService().GetStanduperos();
+            var productores = new ProductorService().GetProductores();
+
+            var personas = new List<Persona>();
+            personas.AddRange(standuperos);
+            personas.AddRange(productores);
+
+            return UtilitiesAndStuff.ConvertPeronasListToSelectItemList(personas.Distinct().OrderBy(a=>a.Apellido).ToList());
+        }
+
+        private Persona ObtenerPersona(string dni)
+        {
+            Persona persona = null;
+            persona = new StanduperoService().GetStanduperoByDni(dni);
+            if(persona == null)
+            {
+                persona = new ProductorService().GetProductorByDni(dni);
+            }
+            return persona;
         }
     }
 }

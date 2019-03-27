@@ -11,7 +11,7 @@ namespace SUA.Models
         public DateTime Fecha { get; set; }
         public double Importe { get; set; }
         public string Categoria { get; set; }
-        public string Quien { get; set; }
+        public Persona Quien { get; set; }
         public string Detalle { get; set; }
     }
 }
