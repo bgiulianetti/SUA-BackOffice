@@ -264,6 +264,27 @@ namespace SUA.Repositorios
 
 
 
+
+        //Gasto
+        public const string INVALID_GASTO_ES_CONNECTION_EXCEPTION = "Falla al querer conectar con elasticsearch para obtener todos los gastos";
+        public const string GASTO_GET_ALL_EXCEPTION = "Falla al querer obtener todos los gastos";
+        public const string GASTO_GET_BY_ID_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un gasto por id";
+        public const string GASTO_GET_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para obtener un gasto por id debe pasar un id válido";
+        public const string GASTO_GET_INNERID_BY_ID_INVALID_PARAMETER_EXCEPTION = "Para obtener un innerId de un gasto por id debe pasar un id válido";
+        public const string GASTO_GET_INNERID_BY_ID_INVALID_SEARCH_EXCEPTION = "Error al querer buscar un gasto innerId por id";
+        public const string GASTO_CREATE_INVALID_PARAMETER_EXCEPTION = "Para agregar un gasto debe pasar un gasto válido";
+        public const string GASTO_CREATE_ALREADY_EXISTS_EXCEPTION = "Para agregar un gasto debe pasar un gasto que no exista previamente";
+        public const string GASTO_CREATE_NOT_CREATED_EXCEPTION = "Falla al querer crear un gasto nuevo";
+        public const string GASTO_UPDATE_INVALID_PARAMETER_EXCEPTION = "Para editar un gasto debe pasar un gasto válido";
+        public const string GASTO_UPDATE_NOT_EXISTS_EXCEPTION = "Para editar un gasto debe pasar un gasto que exista previamente";
+        public const string GASTO_UPDATE_NOT_UPDATED_EXCEPTION = "Falla al querer editar un gasto";
+        public const string GASTO_DELETE_INVALID_PARAMETER_EXCEPTION = "Para borrar un gasto por id debe pasar un id válido";
+        public const string GASTO_DELETE_NOT_EXISTS_EXCEPTION = "Para borrar un gasto debe pasar un gasto que exista previamente";
+        public const string GASTO_DELETE_NOT_DELETED_EXCEPTION = "Falla al querer borrar un gasto";
+
+
+
+
         protected ElasticClient Client { get; set; }
         protected string Index { get; set; }
 
@@ -2885,6 +2906,139 @@ namespace SUA.Repositorios
         }
 
 
+
+        /*-------------------Gasto-------------------*/
+        public List<Gasto> GetGastos()
+        {
+            var response = Client.Search<Gasto>(s => s
+                   .Index(Index)
+                   .Type(Index)
+                   .From(0)
+                   .Size(GetCount(Index))
+                  );
+
+            if (response == null)
+                throw new Exception(INVALID_GASTO_ES_CONNECTION_EXCEPTION);
+
+            if (!response.IsValid)
+                throw new Exception(GASTO_GET_ALL_EXCEPTION);
+
+            return response.Documents.ToList();
+        }
+        public Gasto GetGastoById(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(GASTO_GET_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Gasto>(s => s
+                   .Index(Index)
+                   .Type(Index)
+                   .Query(q => q.Term("uniqueId", id)));
+
+            if (response == null)
+                return null;
+
+            if (!response.IsValid)
+                throw new Exception(GASTO_GET_BY_ID_INVALID_SEARCH_EXCEPTION);
+
+            return response.Documents.Where(g => g.UniqueId == id).ToList().FirstOrDefault();
+        }
+        public string GetGastoInnerIdById(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(GASTO_GET_INNERID_BY_ID_INVALID_PARAMETER_EXCEPTION);
+
+            var response = Client.Search<Gasto>(s => s
+                    .Index(Index)
+                    .Type(Index)
+                    .Query(q => q.Term("uniqueId", id))
+                  );
+
+            string innerId = null;
+            if (response == null)
+                return innerId;
+
+            if (!response.IsValid)
+                throw new Exception(GASTO_GET_INNERID_BY_ID_INVALID_SEARCH_EXCEPTION);
+
+            if (response.Total > 0)
+            {
+                foreach (var item in response.Hits)
+                    innerId = item.Id;
+            }
+            return innerId;
+        }
+        public void AddGasto(Gasto gasto)
+        {
+            if (gasto == null)
+                throw new Exception(GASTO_CREATE_INVALID_PARAMETER_EXCEPTION);
+
+            if (!IndexExists())
+                CreateIndex();
+
+            var resultado = GetGastoById(gasto.UniqueId);
+            if (resultado != null)
+                throw new Exception(GASTO_CREATE_ALREADY_EXISTS_EXCEPTION);
+
+            var response = Client.IndexAsync(gasto, i => i
+              .Index(Index)
+              .Type(Index)
+              .Refresh(Refresh.True)
+              ).Result;
+
+            if (!response.IsValid)
+                throw new Exception(GASTO_CREATE_NOT_CREATED_EXCEPTION);
+        }
+        public void AddBulkGasto(List<Gasto> gastos)
+        {
+            var response = Client.IndexManyAsync(gastos, Index, Index).Result;
+
+            if (!response.IsValid)
+                throw new Exception(GASTO_CREATE_NOT_CREATED_EXCEPTION);
+        }
+        public void UpdateGasto(Gasto gasto)
+        {
+            if (gasto == null)
+                throw new Exception(GASTO_UPDATE_INVALID_PARAMETER_EXCEPTION);
+
+            var innerId = GetGastoInnerIdById(gasto.UniqueId);
+            if (innerId == null)
+                throw new Exception(GASTO_UPDATE_NOT_EXISTS_EXCEPTION);
+
+            var result = Client.Index(gasto, i => i
+                            .Index(Index)
+                            .Type(Index)
+                            .Id(innerId)
+                            .Refresh(Refresh.True));
+
+            if (!result.IsValid)
+                throw new Exception(GASTO_UPDATE_NOT_UPDATED_EXCEPTION);
+        }
+        public void DeleteGasto(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new Exception(GASTO_DELETE_INVALID_PARAMETER_EXCEPTION);
+
+            var innerId = GetGastoInnerIdById(id);
+            if (innerId == null)
+                throw new Exception(GASTO_DELETE_NOT_EXISTS_EXCEPTION);
+
+            var response = Client.Delete<Gasto>(innerId, d => d
+                                                        .Index(Index)
+                                                        .Type(Index)
+                                                        .Refresh(Refresh.True)
+                                                        );
+            if (!response.IsValid)
+                throw new Exception(GASTO_DELETE_NOT_DELETED_EXCEPTION);
+        }
+        public void DeleteAllGastos()
+        {
+            Client.DeleteByQuery<Gasto>(q => q.Type(Index));
+        }
+
+
+
+
         /*---------Metodos genericos------------------*/
 
         public int GetCount(string tipo)
@@ -2916,6 +3070,8 @@ namespace SUA.Repositorios
                 response = Client.Count<Votacion>(c => c.Index(Index).Type(Index));
             else if (tipo == "instagramuser")
                 response = Client.Count<InstagramUser>(c => c.Index(Index).Type(Index));
+            else if (tipo == "gasto")
+                response = Client.Count<Gasto>(c => c.Index(Index).Type(Index));
             return (int)response.Count;
         }
         public void DeleteIndex()
@@ -2955,7 +3111,8 @@ namespace SUA.Repositorios
             proveedor,
             prensa,
             votacion,
-            instagramuser
+            instagramuser,
+            gasto
         }
     }
 }

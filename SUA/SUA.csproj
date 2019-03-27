@@ -175,6 +175,7 @@
     <Compile Include="Controllers\CiudadController.cs" />
     <Compile Include="Controllers\DataBaseController.cs" />
     <Compile Include="Controllers\EstadisticasController.cs" />
+    <Compile Include="Controllers\GastoController.cs" />
     <Compile Include="Controllers\InstagramUserController.cs" />
     <Compile Include="Controllers\FechaController.cs" />
     <Compile Include="Controllers\HistorialController.cs" />
@@ -206,6 +207,7 @@
     <Compile Include="Models\DatosBancarios.cs" />
     <Compile Include="Models\Fecha.cs" />
     <Compile Include="Models\FechasPorTiempo.cs" />
+    <Compile Include="Models\Gasto.cs" />
     <Compile Include="Models\GastosBordereaux.cs" />
     <Compile Include="Models\GoogleCalendarProperties.cs" />
     <Compile Include="Models\HorizontalBarChartDataContract.cs" />
@@ -240,6 +242,7 @@
     <Compile Include="Servicios\CalendarService.cs" />
     <Compile Include="Servicios\EmailService.cs" />
     <Compile Include="Servicios\FechaService.cs" />
+    <Compile Include="Servicios\GastoService.cs" />
     <Compile Include="Servicios\HotelService.cs" />
     <Compile Include="Servicios\InstagramService.cs" />
     <Compile Include="Servicios\InstagramUserService.cs" />
@@ -656,10 +659,12 @@
     <Content Include="Views\DataBase\BackupInstagramUsers.cshtml" />
     <Content Include="Views\DataBase\RestoreInstagramUsers.cshtml" />
     <Content Include="Views\InstagramUser\UpdateInstagramUsers.cshtml" />
+    <Content Include="Views\Gasto\Gasto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="BackUp\" />
+    <Folder Include="Views\Gastos\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff">
@@ -696,7 +701,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50751</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

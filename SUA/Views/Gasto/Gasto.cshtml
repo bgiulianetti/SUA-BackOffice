@@ -1,0 +1,79 @@
+﻿@model SUA.Models.Gasto
+<style>
+    table {
+        border-spacing: 20px;
+    }
+
+    td {
+        padding: 10px;
+    }
+</style>
+
+<div class="main-content">
+    @using (Html.BeginForm("Gasto", "Gasto", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        if (ViewBag.mensaje == "creado")
+        {
+            <label>El gasto ha sido cargado con éxito. Puede verlo cargado en el <a href="@Url.RouteUrl("Gastos")">Listado de gastos</a></label>
+        }
+        else if (ViewBag.mensaje == "actualizado")
+        {
+            <label>El gasto ha sido actualizado con éxito. Puede ver los cambios en el <a href="@Url.RouteUrl("Gastos")">Listado de gastos</a></label>
+        }
+        else if (ViewBag.mensaje == "Get")
+        {
+            <div class="panel">
+                <div class="panel-body">
+                    <form data-id="" id="pdf-create-form" to-action="/pdfs/create">
+
+                        <table style="border-spacing: 20px">
+                            <tr>
+                                <td>
+                                    <label>Fecha</label>
+                                    @if (ViewBag.accion == "Post")
+                                    {
+                                        @Html.TextBoxFor(model => model.Fecha, new { @class = "form-control", Style = "width:300px", required = "required", @type = "date" })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(model => model.Fecha, new { @class = "form-control", Style = "width:300px", required = "required", @type = "date", @Value = Model.Fecha.ToString("yyyy-MM-dd") })
+                                    }
+                                </td>
+                                <td>
+                                    <label>Importe</label>
+                                    @Html.TextBoxFor(model => model.Importe, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Categoria</label>
+                                    @Html.DropDownListFor(model => model.Categoria, new SelectList(ViewBag.categorias, "Text", "Value"), new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                                <td>
+                                    <label>Quien</label>
+                                    @Html.DropDownListFor(model => model.Quien, new SelectList(ViewBag.personas, "Text", "Value"), new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Detalle</label>
+                                    @Html.TextBoxFor(model => model.Detalle, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="color: #8dd9f7">
+                        <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
+                        <input name="copiarFacturacion" id="hiddenCopiarFacturacion" class="hidden" value="" data-form="error-box" />
+                        <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        }
+        else
+        {
+            <label>@ViewBag.mensaje</label>
+        }
+    }
+
+</div>
+

@@ -113,6 +113,32 @@ namespace SUA.Utilities
             return ConverListToSelectListItem(bancos);
         }
 
+
+        public static List<SelectListItem> GetCategoriasDeGastos()
+        {
+            var categorias = new List<string> {
+                "Técnico"
+                ,"Premios"
+                ,"Afip"
+                ,"Sueldos"
+                ,"Celular"
+                ,"Programacion"
+                ,"Equipos luces"
+                ,"Equipos Sonidos"
+                ,"Equipos Varios"
+                ,"Varios"
+                ,"Alquiler"
+                ,"Impuestos"
+                ,"Servidores"
+                ,"DOMINIOS"
+                ,"WIX"
+                ,"Flete"
+                ,"Contador"
+            };
+            categorias = categorias.OrderBy(q => q).ToList();
+            return ConverListToSelectListItem(categorias);
+        }
+
         public static List<SelectListItem> ConverListToSelectListItem(List<string> list)
         {
             var selectList = new List<SelectListItem>();
@@ -445,34 +471,34 @@ namespace SUA.Utilities
             ciudades.Add(new Ciudad("Montevideo", "Montevideo", "Uruguay", "1305082"));
             ciudades.Add(new Ciudad("Paysandu​", "Paysandu", "Uruguay", "90690"));
             ciudades.Add(new Ciudad("Salto", "Salto", "Uruguay", "104028"));
-            ciudades.Add(new Ciudad("Chacabuco","Buenos Aires","Argentina","38418"));
-            ciudades.Add(new Ciudad("Balcarce","Buenos Aires","Argentina","38376"));
-            ciudades.Add(new Ciudad("Cosquin - Santa Maria de Punilla - Bialet Masse","Cordoba","Argentina","37273"));
-            ciudades.Add(new Ciudad("Nueve de Julio","Buenos Aires","Argentina","36494"));
-            ciudades.Add(new Ciudad("La Falda - Huerta Grande - Valle Hermoso","Cordoba","Argentina","35821"));
-            ciudades.Add(new Ciudad("Casilda","Santa Fe","Argentina","35058"));
-            ciudades.Add(new Ciudad("Curuzu Cuatia","Corrientes","Argentina","34470"));
-            ciudades.Add(new Ciudad("Bell Ville","Cordoba","Argentina","34439"));
-            ciudades.Add(new Ciudad("Rio Segundo - Pilar​","Cordoba","Argentina","34423"));
-            ciudades.Add(new Ciudad("Chilecito","La Rioja","Argentina","33724"));
-            ciudades.Add(new Ciudad("Chascomus","Buenos Aires","Argentina","33607"));
-            ciudades.Add(new Ciudad("Mercedes","Corrientes","Argentina","33551"));
-            ciudades.Add(new Ciudad("Trenque Lauquen","Buenos Aires","Argentina","33442"));
-            ciudades.Add(new Ciudad("Bragado","Buenos Aires","Argentina","33222"));
-            ciudades.Add(new Ciudad("Centenario","Neuquen","Argentina","32928"));
-            ciudades.Add(new Ciudad("Aguilares","Tucuman","Argentina","32908"));
-            ciudades.Add(new Ciudad("Villaguay","Entre Rios","Argentina","32881"));
-            ciudades.Add(new Ciudad("Chajari","Entre Rios","Argentina","32734"));
-            ciudades.Add(new Ciudad("Esquel","Chubut","Argentina","32343"));
-            ciudades.Add(new Ciudad("Termas de Rio Hondo","Santiago del Estero","Argentina","32166"));
-            ciudades.Add(new Ciudad("Zapala","Neuquen","Argentina","32097"));
-            ciudades.Add(new Ciudad("Pehuajo","Buenos Aires","Argentina","31533"));
-            ciudades.Add(new Ciudad("General Güemes","Salta","Argentina","31494"));
-            ciudades.Add(new Ciudad("Rivadavia","Mendoza","Argentina","31038"));
-            ciudades.Add(new Ciudad("Cruz del Eje","Cordoba","Argentina","30680"));
-            ciudades.Add(new Ciudad("Gobernador Virasoro","Corrientes","Argentina","30666"));
-            ciudades.Add(new Ciudad("Victoria","Entre Rios","Argentina","30623"));
-            ciudades.Add(new Ciudad("Villa Regina","Rio Negro","Argentina","30028"));
+            ciudades.Add(new Ciudad("Chacabuco", "Buenos Aires", "Argentina", "38418"));
+            ciudades.Add(new Ciudad("Balcarce", "Buenos Aires", "Argentina", "38376"));
+            ciudades.Add(new Ciudad("Cosquin - Santa Maria de Punilla - Bialet Masse", "Cordoba", "Argentina", "37273"));
+            ciudades.Add(new Ciudad("Nueve de Julio", "Buenos Aires", "Argentina", "36494"));
+            ciudades.Add(new Ciudad("La Falda - Huerta Grande - Valle Hermoso", "Cordoba", "Argentina", "35821"));
+            ciudades.Add(new Ciudad("Casilda", "Santa Fe", "Argentina", "35058"));
+            ciudades.Add(new Ciudad("Curuzu Cuatia", "Corrientes", "Argentina", "34470"));
+            ciudades.Add(new Ciudad("Bell Ville", "Cordoba", "Argentina", "34439"));
+            ciudades.Add(new Ciudad("Rio Segundo - Pilar​", "Cordoba", "Argentina", "34423"));
+            ciudades.Add(new Ciudad("Chilecito", "La Rioja", "Argentina", "33724"));
+            ciudades.Add(new Ciudad("Chascomus", "Buenos Aires", "Argentina", "33607"));
+            ciudades.Add(new Ciudad("Mercedes", "Corrientes", "Argentina", "33551"));
+            ciudades.Add(new Ciudad("Trenque Lauquen", "Buenos Aires", "Argentina", "33442"));
+            ciudades.Add(new Ciudad("Bragado", "Buenos Aires", "Argentina", "33222"));
+            ciudades.Add(new Ciudad("Centenario", "Neuquen", "Argentina", "32928"));
+            ciudades.Add(new Ciudad("Aguilares", "Tucuman", "Argentina", "32908"));
+            ciudades.Add(new Ciudad("Villaguay", "Entre Rios", "Argentina", "32881"));
+            ciudades.Add(new Ciudad("Chajari", "Entre Rios", "Argentina", "32734"));
+            ciudades.Add(new Ciudad("Esquel", "Chubut", "Argentina", "32343"));
+            ciudades.Add(new Ciudad("Termas de Rio Hondo", "Santiago del Estero", "Argentina", "32166"));
+            ciudades.Add(new Ciudad("Zapala", "Neuquen", "Argentina", "32097"));
+            ciudades.Add(new Ciudad("Pehuajo", "Buenos Aires", "Argentina", "31533"));
+            ciudades.Add(new Ciudad("General Güemes", "Salta", "Argentina", "31494"));
+            ciudades.Add(new Ciudad("Rivadavia", "Mendoza", "Argentina", "31038"));
+            ciudades.Add(new Ciudad("Cruz del Eje", "Cordoba", "Argentina", "30680"));
+            ciudades.Add(new Ciudad("Gobernador Virasoro", "Corrientes", "Argentina", "30666"));
+            ciudades.Add(new Ciudad("Victoria", "Entre Rios", "Argentina", "30623"));
+            ciudades.Add(new Ciudad("Villa Regina", "Rio Negro", "Argentina", "30028"));
             ciudades.Add(new Ciudad("Cañuelas", "Buenos Aires", "Argentina", "29974"));
             ciudades.Add(new Ciudad("General Alvear​", "Mendoza", "Argentina", "29909"));
             ciudades.Add(new Ciudad("Lobos", "Buenos Aires", "Argentina", "29868"));
