@@ -134,6 +134,7 @@ namespace SUA.Utilities
                 ,"Wix"
                 ,"Flete"
                 ,"Contador"
+                ,"Productor"
             };
             categorias = categorias.OrderBy(q => q).ToList();
             return ConverListToSelectListItem(categorias);

@@ -51,7 +51,7 @@
                                 </td>
                                 <td>
                                     <label>Quien</label>
-                                    @Html.DropDownListFor(model => model.Quien, new SelectList(ViewBag.personas,"Value", "Text"), new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.DropDownList("personaDNI", new SelectList(ViewBag.personas,"Value", "Text"), new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                             </tr>
                             <tr>

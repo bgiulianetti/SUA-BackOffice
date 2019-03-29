@@ -260,12 +260,6 @@ namespace SUA
 
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
-
-            routes.MapRoute(
                 name: "printBordereaux",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Fecha", action = "PrintBordereaux", id = UrlParameter.Optional }
@@ -284,6 +278,13 @@ namespace SUA
                 url: "gastos",
                 defaults: new { controller = "Gasto", action = "Gastos" }
             );
+
+
+            routes.MapRoute(
+               name: "Default",
+               url: "{controller}/{action}/{id}",
+               defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+           );
         }
     }
 }

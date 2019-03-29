@@ -660,6 +660,7 @@
     <Content Include="Views\DataBase\RestoreInstagramUsers.cshtml" />
     <Content Include="Views\InstagramUser\UpdateInstagramUsers.cshtml" />
     <Content Include="Views\Gasto\Gasto.cshtml" />
+    <Content Include="Views\Gasto\Gastos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -47,6 +47,7 @@ namespace SUA.Controllers
             {
                 if (string.Equals(accion, "Post"))
                 {
+                    gasto.UniqueId = UtilitiesAndStuff.GenerateUniqueId();
                     service.AddGasto(gasto);
                     ViewBag.mensaje = "creado";
                     new LogService().FormatAndSaveLog("Gasto", "Crear", JsonConvert.SerializeObject(gasto));
