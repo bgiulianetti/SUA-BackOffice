@@ -14,7 +14,6 @@ namespace SUA.Controllers
     public class GastoController : Controller
     {
         [HttpGet]
-        [UserValidationFilter]
         public ActionResult Gasto(string id)
         {
             ViewBag.mensaje = "Get";
@@ -68,7 +67,6 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
-        [UserValidationFilter]
         public ActionResult Gastos()
         {
             ViewBag.titulo = "Gastos";
@@ -94,7 +92,7 @@ namespace SUA.Controllers
             try
             {
                 var gasto = service.GetGastoById(id);
-                if(gasto != null)
+                if (gasto != null)
                 {
                     service.DeleteGasto(id);
                     new LogService().FormatAndSaveLog("Gasto", "Borrar", JsonConvert.SerializeObject(gasto));
@@ -117,14 +115,14 @@ namespace SUA.Controllers
             personas.AddRange(standuperos);
             personas.AddRange(productores);
 
-            return UtilitiesAndStuff.ConvertPeronasListToSelectItemList(personas.Distinct().OrderBy(a=>a.Apellido).ToList());
+            return UtilitiesAndStuff.ConvertPeronasListToSelectItemList(personas.Distinct().OrderBy(a => a.Apellido).ToList());
         }
 
         private Persona ObtenerPersona(string dni)
         {
             Persona persona = null;
             persona = new StanduperoService().GetStanduperoByDni(dni);
-            if(persona == null)
+            if (persona == null)
             {
                 persona = new ProductorService().GetProductorByDni(dni);
             }

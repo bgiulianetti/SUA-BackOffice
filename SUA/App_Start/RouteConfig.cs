@@ -13,6 +13,24 @@ namespace SUA
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+
+
+            routes.MapRoute(
+                name: "Gasto",
+                url: "gasto",
+                defaults: new { controller = "Gasto", action = "Gasto" }
+            );
+
+            routes.MapRoute(
+                name: "Gastos",
+                url: "gastos",
+                defaults: new { controller = "Gasto", action = "Gastos" }
+            );
+
+
+
+
+
             routes.MapRoute(
                 name: "Index",
                 url: "inicio",
@@ -267,17 +285,9 @@ namespace SUA
 
 
             //============================Gastos=======================================
-            routes.MapRoute(
-                name: "Gasto",
-                url: "gasto",
-                defaults: new { controller = "Gasto", action = "Gasto" }
-            );
 
-            routes.MapRoute(
-                name: "Gastos",
-                url: "gastos",
-                defaults: new { controller = "Gasto", action = "Gastos" }
-            );
+
+
 
 
             routes.MapRoute(

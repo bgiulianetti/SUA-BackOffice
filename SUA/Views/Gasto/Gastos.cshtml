@@ -46,14 +46,14 @@
                     </tr>
                 </tfoot>
                 <tbody>
-                    @foreach (var item in ViewBag.standuperos)
+                    @foreach (var item in ViewBag.gastos)
                     {
                         <tr>
                             <td>
                                 @Html.ActionImage("DeleteGastoo", "Gasto", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
                                 @Html.ActionImage("Gasto", "Gasto", new { id = item.UniqueId }, "~/assets/img/edit_icon.png")
                             </td>
-                            <td>@@item.Fecha.ToString("yyyy-MM-dd")</td>
+                            <td>@item.Fecha.ToString("yyyy-MM-dd")</td>
                             <td>@item.Importe</td>
                             <td>@item.Categoria</td>
                             @if (item.Quien == null)
@@ -140,4 +140,3 @@
 
 
 </script>
-

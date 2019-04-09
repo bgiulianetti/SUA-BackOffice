@@ -51,7 +51,7 @@
                                 </td>
                                 <td>
                                     <label>Quien</label>
-                                    @Html.DropDownList("personaDNI", new SelectList(ViewBag.personas,"Value", "Text"), new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.DropDownList("personaDNI", new SelectList(ViewBag.personas, "Value", "Text"), new { @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                             </tr>
                             <tr>
@@ -62,6 +62,11 @@
                             </tr>
                         </table>
                         <hr style="color: #8dd9f7">
+                        @if (ViewBag.accion != "Post")
+                        {
+                            <input name="UniqueId" value="@Model.UniqueId" style="visibility:hidden" />
+                        }
+
                         <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
                         <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
                     </form>
@@ -75,4 +80,3 @@
     }
 
 </div>
-
