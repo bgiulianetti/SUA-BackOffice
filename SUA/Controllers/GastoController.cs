@@ -39,7 +39,12 @@ namespace SUA.Controllers
         public ActionResult Gasto(Gasto gasto, string personaDNI, string accion)
         {
             ViewBag.titulo = "Crear Gasto";
-            gasto.Quien = ObtenerPersona(personaDNI);
+            if (gasto.Categoria == "Tecnico" || gasto.Categoria == "Premios" || gasto.Categoria == "Afip" ||
+                gasto.Categoria == "Sueldos" || gasto.Categoria == "Celular" || gasto.Categoria == "Programacion" ||
+                gasto.Categoria == "Productor")
+            {
+                gasto.Quien = ObtenerPersona(personaDNI);
+            }
             var service = new GastoService();
 
             try

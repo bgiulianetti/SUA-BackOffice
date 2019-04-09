@@ -56,7 +56,7 @@
                             <td>@item.Fecha.ToString("yyyy-MM-dd")</td>
                             <td>@item.Importe</td>
                             <td>@item.Categoria</td>
-                            @if (item.Quien == null)
+                            @if (item.Quien != null)
                             {
                                 <td>@item.Quien.Apellido,  @item.Quien.Nombre</td>
                             }
