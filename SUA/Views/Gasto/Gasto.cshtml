@@ -47,17 +47,17 @@
                             <tr>
                                 <td>
                                     <label>Categoria</label>
-                                    @Html.DropDownListFor(model => model.Categoria, new SelectList(ViewBag.categorias, "Text", "Value"), new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.DropDownListFor(model => model.Categoria, new SelectList(ViewBag.categorias, "Text", "Value"), new { @id = "categoria", @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                                 <td>
                                     <label>Quien</label>
-                                    @Html.DropDownList("personaDNI", new SelectList(ViewBag.personas, "Value", "Text"), new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.DropDownList("personaDNI", new SelectList(ViewBag.personas, "Value", "Text"), new { @id = "persona", @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td colspan="2">
                                     <label>Detalle</label>
-                                    @Html.TextBoxFor(model => model.Detalle, new { @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.TextAreaFor(model => model.Detalle, new { @class = "form-control", Style = "width:100%", required = "required" })
                                 </td>
                             </tr>
                         </table>
@@ -80,3 +80,20 @@
     }
 
 </div>
+
+
+<script>
+
+    $(document).ready(function () {
+        $("#categoria").change(function () {
+            if ($("#categoria").val() == "Tecnico" || $("#categoria").val() == "Premios" || $("#categoria").val() == "Afip" ||
+                $("#categoria").val() == "Sueldos" || $("#categoria").val() == "Celular" || $("#categoria").val() == "Programacion" ||
+                $("#categoria").val() == "Productor") {
+                $("#persona").prop("disabled", false);
+            }
+            else {
+                $("#persona").prop("disabled", true);
+            }
+        });
+    });
+</script>
