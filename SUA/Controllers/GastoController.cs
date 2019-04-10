@@ -14,6 +14,7 @@ namespace SUA.Controllers
     public class GastoController : Controller
     {
         [HttpGet]
+        [UserValidationFilter]
         public ActionResult Gasto(string id)
         {
             ViewBag.mensaje = "Get";
@@ -23,6 +24,7 @@ namespace SUA.Controllers
             {
                 ViewBag.accion = "Post";
                 ViewBag.titulo = "Crear Gasto";
+                ViewBag.quien = "";
             }
             else
             {
@@ -30,6 +32,7 @@ namespace SUA.Controllers
                 ViewBag.titulo = "Editar Gasto";
                 var service = new GastoService();
                 var gasto = service.GetGastoById(id);
+                ViewBag.quien = gasto.Quien.Dni;
                 return View(gasto);
             }
             return View();
@@ -72,6 +75,7 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
+        [UserValidationFilter]
         public ActionResult Gastos()
         {
             ViewBag.titulo = "Gastos";

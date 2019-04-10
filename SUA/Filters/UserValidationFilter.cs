@@ -436,6 +436,14 @@ namespace SUA.Filters
                         {
                             filterContext.Result = new RedirectResult("/inicio");
                         }
+
+
+
+                        //////////////////Estadisticas facturación
+                        else if (controller == "Gasto" && action == "Gastos")
+                        {
+                            filterContext.Result = new RedirectResult("/inicio");
+                        }
                     }
                 }
 

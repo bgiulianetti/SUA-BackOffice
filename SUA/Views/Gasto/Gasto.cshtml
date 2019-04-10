@@ -95,5 +95,20 @@
                 $("#persona").prop("disabled", true);
             }
         });
+
+
+        //Asignar quien en put
+        if ("@ViewBag.accion" == "Put") {
+            if ($("#categoria").val() == "Tecnico" || $("#categoria").val() == "Premios" || $("#categoria").val() == "Afip" ||
+                $("#categoria").val() == "Sueldos" || $("#categoria").val() == "Celular" || $("#categoria").val() == "Programacion" ||
+                $("#categoria").val() == "Productor") {
+                alert("vas a editar!");
+                $("#persona").val('@ViewBag.quien');
+            }
+            else {
+                $("#persona").prop("disabled", true);
+            }
+        }
+
     });
 </script>
