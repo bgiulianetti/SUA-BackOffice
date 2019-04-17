@@ -201,5 +201,57 @@ namespace SUA.Controllers
             return service.GetSUAInstagramUsers();
         }
 
+
+        private void FixInstagramUsers()
+        {
+            var users = new List<string>
+            {
+                "agusbattioni",
+                "angiesammartino",
+                "chapumartinez",
+                "connieballarini",
+                "crococro",
+                "darioorsi",
+                "dieguitomaggio",
+                "ezequielcampa",
+                "fedecyrulnik",
+                "fedesimonetti",
+                "fermetilli",
+                "fersanjiao",
+                "ffrangomez",
+                "gonzovizan",
+                "gregorossello",
+                "javichosoria",
+                "joaquin__castellano",
+                "juampicarbonetti",
+                "juampigon",
+                "julibellese",
+                "lailaroth",
+                "lendrogh",
+                "lucaslauriente",
+                "lucaslezin",
+                "luchomellera",
+                "magalitajes",
+                "malepichot",
+                "martarresok_",
+                "martin_pugliese",
+                "martincirio",
+                "mikechouhy",
+                "molinerd",
+                "nachitosaralegui",
+                "nicolasdetracy",
+                "nicombraun",
+                "pablitofabregas",
+                "pablopicotto",
+                "pichipiccirillo",
+                "pipabarbato",
+                "rodriguezgalati",
+                "soyrada",
+                "standupargentina",
+                "virsammartino"
+            };
+
+        }
+
     }
 }
