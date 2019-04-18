@@ -255,6 +255,30 @@ namespace SUA.Controllers
             {
                 var instagramUserService = new InstagramUserService();
                 var userObtenido = instagramUserService.GetInstagramUserByUsername(user.Split('*')[0]);
+                if(userObtenido.Username == "magalitajes")
+                {
+                    userObtenido.ProfilePicture = "https://scontent.xx.fbcdn.net/v/t51.2885-15/53501890_859554574393933_7168560404279328768_n.jpg?_nc_cat=1&_nc_ht=scontent.xx&oh=6e8316b50153be6ed047334ee7ee171b&oe=5D4526B4";
+                }
+                else if(userObtenido.Username == "juampicarbonetti")
+                {
+                    userObtenido.ProfilePicture = "https://scontent.xx.fbcdn.net/v/t51.2885-15/54731597_2261630280771643_3129537669806161920_n.jpg?_nc_cat=107&_nc_ht=scontent.xx&oh=5fad2798fde6d96b52d26377fb13f57d&oe=5D2FDFD2";
+                }
+                else if (userObtenido.Username == "martin_pugliese")
+                {
+                    userObtenido.ProfilePicture = "https://scontent.xx.fbcdn.net/v/t51.2885-15/51710904_608522082909374_441027698882510848_n.jpg?_nc_cat=101&_nc_ht=scontent.xx&oh=30f2f321d4a3320689bfa4491bbe7c97&oe=5D3A2B4E";
+                }
+                else if (userObtenido.Username == "molinerd")
+                {
+                    userObtenido.ProfilePicture = "https://scontent.xx.fbcdn.net/v/t51.2885-15/53302429_672339519847499_6226905274356072448_n.jpg?_nc_cat=1&_nc_ht=scontent.xx&oh=44bcd4ef0b732bb7b33a6bf5a6a065fa&oe=5D77ABFD";
+                }
+                else if (userObtenido.Username == "nachitosaralegui")
+                {
+                    userObtenido.ProfilePicture = "https://scontent.xx.fbcdn.net/v/t51.2885-15/52504205_366468690615771_5415001699150462976_n.jpg?_nc_cat=1&_nc_ht=scontent.xx&oh=e7b39c5df3d713f61f7c22c5ee4e6e43&oe=5D292382";
+                }
+                else if (userObtenido.Username == "pipabarbato")
+                {
+                    userObtenido.ProfilePicture = "https://scontent.xx.fbcdn.net/v/t51.2885-15/54208006_756096638107271_6254099473971019776_n.jpg?_nc_cat=109&_nc_ht=scontent.xx&oh=e41e826ad5af323fbf884f4a7d15f31d&oe=5D73E5C0";
+                }
                 var lastDay = userObtenido.Followers.First();
                 var newDays = user.Split('*').ToList()[2].Split(',').ToList();
                 foreach (var day in newDays)
@@ -267,6 +291,8 @@ namespace SUA.Controllers
                 instagramUserService.UpdateInstagramUser(userObtenido);
             }
         }
+
+
 
     }
 }
