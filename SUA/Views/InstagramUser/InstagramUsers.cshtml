@@ -375,19 +375,26 @@ else
     }
 
     function CalcularMediaMensual(standuperos_all, index, a) {
-        var sumaDifrencia = 0;
-        for (var b = 0; b < 30; b++) {
-            sumaDifrencia += standuperos_all[a].Followers[b].Difference;
-        }
-        var media = (sumaDifrencia / 30).toFixed(0);
-        if (media > 0) {
-            $('#media_diaria_mensual').css("color", "forestgreen");
-            $('#media_diaria_mensual')[0].innerHTML = "+" + media;
+        if (standuperos_all[a].Followers.length  < 30) {
+            $('#media_diaria_mensual').css("color", "black");
+            $('#media_diaria_mensual')[0].innerHTML = "-";
         }
         else {
-            $('#media_diaria_mensual').css("color", "red");
-            $('#media_diaria_mensual')[0].innerHTML = media;
+            var sumaDifrencia = 0;
+            for (var b = 0; b < 30; b++) {
+                sumaDifrencia += standuperos_all[a].Followers[b].Difference;
+            }
+            var media = (sumaDifrencia / 30).toFixed(0);
+            if (media > 0) {
+                $('#media_diaria_mensual').css("color", "forestgreen");
+                $('#media_diaria_mensual')[0].innerHTML = "+" + media;
+            }
+            else {
+                $('#media_diaria_mensual').css("color", "red");
+                $('#media_diaria_mensual')[0].innerHTML = media;
+            }
         }
+        
     }
 
 
