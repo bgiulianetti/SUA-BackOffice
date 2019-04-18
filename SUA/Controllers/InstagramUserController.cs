@@ -206,7 +206,7 @@ namespace SUA.Controllers
         {
             var users = new List<string>
             {
-                "agusbattioni",
+                "agusbattioni-397020-397022-397041-397285-397533",
                 "angiesammartino",
                 "chapumartinez",
                 "connieballarini",
@@ -214,6 +214,7 @@ namespace SUA.Controllers
                 "darioorsi",
                 "dieguitomaggio",
                 "ezequielcampa",
+                "elartedenegar",
                 "fedecyrulnik",
                 "fedesimonetti",
                 "fermetilli",
