@@ -202,7 +202,7 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
-        public void FixInstagramUsers()
+        public void Fix()
         {
             var users = new List<string>
             {
@@ -255,16 +255,17 @@ namespace SUA.Controllers
             {
                 var instagramUserService = new InstagramUserService();
                 var userObtenido = instagramUserService.GetInstagramUserByUsername(user.Split('*')[0]);
-                var newDays = user.Split('*').ToList()[2].Split('-').ToList();
+                var lastDay = userObtenido.Followers.First();
+                var newDays = user.Split('*').ToList()[2].Split(',').ToList();
                 foreach (var day in newDays)
                 {
                     var intDay = Int32.Parse(day);
-                    var lastDay = userObtenido.Followers.Last();
-                    userObtenido.Followers.Add(new InstragramUserFollowersHistory { Count = intDay, Date = lastDay.Date.AddDays(1), Difference = lastDay.Count - intDay });
+                    var followersHistoryItem = new InstragramUserFollowersHistory { Count = intDay, Date = lastDay.Date.AddDays(1), Difference = intDay - lastDay.Count };
+                    userObtenido.Followers.Add(followersHistoryItem);
+                    lastDay = followersHistoryItem;
                 }
                 instagramUserService.UpdateInstagramUser(userObtenido);
             }
-
         }
 
     }
