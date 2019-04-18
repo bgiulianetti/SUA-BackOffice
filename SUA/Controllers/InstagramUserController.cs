@@ -201,8 +201,8 @@ namespace SUA.Controllers
             return service.GetSUAInstagramUsers();
         }
 
-
-        private void FixInstagramUsers()
+        [HttpGet]
+        public void FixInstagramUsers()
         {
             var users = new List<string>
             {
@@ -250,6 +250,20 @@ namespace SUA.Controllers
                 "standupargentina*2019-04-12*67324,67363,67372,67382,67466,67551",
                 "virsammartino*2019-04-12*11629,11627,11633,11636,11641,11640"
             };
+
+            foreach (var user in users)
+            {
+                var instagramUserService = new InstagramUserService();
+                var userObtenido = instagramUserService.GetInstagramUserByUsername(user.Split('*')[0]);
+                var newDays = user.Split('*').ToList()[2].Split('-').ToList();
+                foreach (var day in newDays)
+                {
+                    var intDay = Int32.Parse(day);
+                    var lastDay = userObtenido.Followers.Last();
+                    userObtenido.Followers.Add(new InstragramUserFollowersHistory { Count = intDay, Date = lastDay.Date.AddDays(1), Difference = lastDay.Count - intDay });
+                }
+                instagramUserService.UpdateInstagramUser(userObtenido);
+            }
 
         }
 
