@@ -13,5 +13,6 @@ namespace SUA.Models
         public string Categoria { get; set; }
         public Persona Quien { get; set; }
         public string Detalle { get; set; }
+        public Fecha FechaAsociada { get; set; }
     }
 }

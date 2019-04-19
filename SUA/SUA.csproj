@@ -708,6 +708,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Gasto\Gastos.cshtml" />
     <Content Include="Views\Gasto\Gasto.cshtml" />
+    <Content Include="Views\Gasto\GastoDeFecha.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

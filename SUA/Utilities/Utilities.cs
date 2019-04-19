@@ -135,6 +135,7 @@ namespace SUA.Utilities
                 ,"Flete"
                 ,"Contador"
                 ,"Productor"
+                ,"Abogado"
             };
             categorias = categorias.OrderBy(q => q).ToList();
             return ConverListToSelectListItem(categorias);

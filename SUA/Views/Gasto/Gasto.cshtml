@@ -28,6 +28,10 @@
 
                         <table style="border-spacing: 20px">
                             <tr>
+                                <label>Borderaux Asociado</label>
+                                @Html.DropDownListFor(model => model.Categoria, new SelectList(ViewBag.categorias, "Text", "Value"), new { @id = "categoria", @class = "form-control", Style = "width:300px", required = "required" })
+                            </tr>
+                            <tr>
                                 <td>
                                     <label>Fecha</label>
                                     @if (ViewBag.accion == "Post")
@@ -102,7 +106,6 @@
             if ($("#categoria").val() == "Tecnico" || $("#categoria").val() == "Premios" || $("#categoria").val() == "Afip" ||
                 $("#categoria").val() == "Sueldos" || $("#categoria").val() == "Celular" || $("#categoria").val() == "Programacion" ||
                 $("#categoria").val() == "Productor") {
-                alert("vas a editar!");
                 $("#persona").val('@ViewBag.quien');
             }
             else {
