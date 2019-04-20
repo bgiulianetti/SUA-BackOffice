@@ -529,8 +529,8 @@ namespace SUA.Controllers
                 ViewBag.idFecha = id;
                 ViewBag.accion = "Put";
                 ViewBag.titulo = "Editar Gasto";
-                var service = new GastoService();
-                var gasto = service.GetGastoById(idGasto);
+                var service = new FechaService();
+                var gasto = service.GetFechaById(id).Gastos.Where(g=>g.UniqueId == idGasto).ToList().First();
                 if (gasto.Quien != null)
                     ViewBag.quien = gasto.Quien.Dni;
                 return View(gasto);
@@ -581,6 +581,19 @@ namespace SUA.Controllers
                 ViewBag.mensaje = ex.Message;
             }
             return View();
+        }
+
+
+        public ActionResult DeleteGasto(string idFecha, string idGasto)
+        {
+            var service = new FechaService();
+            var fecha = service.GetFechaById(idFecha);
+            var gastos = fecha.Gastos.Where(g => g.UniqueId != idGasto).ToList();
+            fecha.Gastos = gastos;
+            service.UpdateFecha(fecha);
+            new LogService().FormatAndSaveLog("Fecha", "Borrar", JsonConvert.SerializeObject(fecha));
+
+            return RedirectToAction("Gasto", "Fecha", new { id = idFecha });
         }
 
 

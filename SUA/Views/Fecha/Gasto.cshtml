@@ -52,8 +52,8 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.ActionImage("DeleteGasto", "Gasto", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
-                                                @Html.ActionImage("Gasto", "Gasto", new { id = item.UniqueId }, "~/assets/img/edit_icon.png")
+                                                @Html.ActionImage("DeleteGasto", "Fecha", new { idFecha = ViewBag.idFecha, idGasto = item.UniqueId }, "~/assets/img/delete_icon.png")
+                                                @Html.ActionImage("Gasto", "Fecha", new { id = ViewBag.idFecha, idGasto = item.UniqueId }, "~/assets/img/edit_icon.png")
                                             </td>
                                             <td>@item.Fecha.ToString("yyyy-MM-dd")</td>
                                             <td>@item.Importe</td>
