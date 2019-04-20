@@ -24,13 +24,67 @@
         {
             <div class="panel">
                 <div class="panel-body">
+
+                    <!-- -->
+
+                    @if (ViewBag.accion == "POST")
+                    {
+                        <h3>Gastos de la fecha</h3>
+                        <table id="table_gastos" class="display compact hover nowrap">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Fecha</th>
+                                    <th>Importe</th>
+                                    <th>Categoria</th>
+                                    <th>Quien</th>
+                                    <th>Detalle</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th>Fecha</th>
+                                    <th>Importe</th>
+                                    <th>Categoria</th>
+                                    <th>Quien</th>
+                                    <th>Detalle</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @foreach (var item in ViewBag.gastosAnteriores)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.ActionImage("DeleteGasto", "Gasto", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
+                                            @Html.ActionImage("Gasto", "Gasto", new { id = item.UniqueId }, "~/assets/img/edit_icon.png")
+                                        </td>
+                                        <td>@item.Fecha.ToString("yyyy-MM-dd")</td>
+                                        <td>@item.Importe</td>
+                                        <td>@item.Categoria</td>
+                                        @if (item.Quien != null)
+                                        {
+                                            <td>@item.Quien.Apellido,  @item.Quien.Nombre</td>
+                                        }
+                                        else
+                                        {
+                                            <td>-</td>
+                                        }
+
+                                        <td>@item.Detalle</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    <!-- -->
+
+
+
+
                     <form data-id="" id="pdf-create-form" to-action="/pdfs/create">
 
                         <table style="border-spacing: 20px">
-                            <tr>
-                                <label>Borderaux Asociado</label>
-                                @Html.DropDownListFor(model => model.Categoria, new SelectList(ViewBag.categorias, "Text", "Value"), new { @id = "categoria", @class = "form-control", Style = "width:300px", required = "required" })
-                            </tr>
                             <tr>
                                 <td>
                                     <label>Fecha</label>

@@ -286,7 +286,11 @@ namespace SUA
 
             //============================Gastos=======================================
 
-
+            routes.MapRoute(
+                name: "gastofecha",
+                url: "gastofecha",
+                defaults: new { controller = "Fecha", action = "testVista"}
+            );
 
 
 

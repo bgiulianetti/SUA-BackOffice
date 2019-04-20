@@ -384,6 +384,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="assets\img\add_borderaux_icon.png" />
+    <Content Include="assets\img\add_payment.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="assets\img\avatar.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -397,6 +400,9 @@
     <Content Include="assets\img\favicon.ico" />
     <Content Include="assets\img\fecha.png" />
     <Content Include="assets\img\fecha_full_info.png" />
+    <Content Include="assets\img\gastos_icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="assets\img\infoFecha.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -709,6 +715,7 @@
     <Content Include="Views\Gasto\Gastos.cshtml" />
     <Content Include="Views\Gasto\Gasto.cshtml" />
     <Content Include="Views\Fecha\Gasto.cshtml" />
+    <Content Include="Views\Fecha\testVista.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

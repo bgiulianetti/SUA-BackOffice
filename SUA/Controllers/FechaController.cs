@@ -502,27 +502,38 @@ namespace SUA.Controllers
 
 
         [HttpGet]
+        [UserValidationFilter]
+        public ActionResult testVista()
+        {
+            return View();
+        }
+
+
+        [HttpGet]
+        [UserValidationFilter]
         public ActionResult Gasto(string id, string idGasto)
         {
             ViewBag.mensaje = "Get";
             ViewBag.categorias = UtilitiesAndStuff.GetCategoriasDeGastos();
             ViewBag.personas = new GastoController().GetPersonas();
 
-            ///obtiene los gastos de la fecha
-            var gastosAnteriores = new List<Gasto>();
-            var fechaObtenida = new FechaService().GetFechaById(id);
-            if (fechaObtenida.Gastos != null && fechaObtenida.Gastos.Count > 0)
-            {
-                gastosAnteriores = fechaObtenida.Gastos;
-            }
-            else
-            {
-                gastosAnteriores = new List<Gasto>();
-            }
-            //////
 
-            if (string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(idGasto))
             {
+
+                ///obtiene los gastos de la fecha
+                var gastosAnteriores = new List<Gasto>();
+                var fechaObtenida = new FechaService().GetFechaById(id);
+                if (fechaObtenida.Gastos != null && fechaObtenida.Gastos.Count > 0)
+                {
+                    gastosAnteriores = fechaObtenida.Gastos;
+                }
+                else
+                {
+                    gastosAnteriores = new List<Gasto>();
+                }
+                //////
+
                 ViewBag.gastosAnteriores = gastosAnteriores;
                 ViewBag.accion = "Post";
                 ViewBag.titulo = "Crear Gasto";
