@@ -277,6 +277,15 @@ namespace SUA
 
 
 
+            //============================Gastos=======================================
+
+            routes.MapRoute(
+                name: "GastoDeFecha",
+                url: "gasto-fecha",
+                defaults: new { controller = "Fecha", action = "Gasto" }
+            );
+
+
             routes.MapRoute(
                 name: "printBordereaux",
                 url: "{controller}/{action}/{id}",
@@ -284,13 +293,7 @@ namespace SUA
             );
 
 
-            //============================Gastos=======================================
 
-            routes.MapRoute(
-                name: "gastofecha",
-                url: "gastofecha",
-                defaults: new { controller = "Fecha", action = "testVista"}
-            );
 
 
 

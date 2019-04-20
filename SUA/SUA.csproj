@@ -715,7 +715,6 @@
     <Content Include="Views\Gasto\Gastos.cshtml" />
     <Content Include="Views\Gasto\Gasto.cshtml" />
     <Content Include="Views\Fecha\Gasto.cshtml" />
-    <Content Include="Views\Fecha\testVista.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

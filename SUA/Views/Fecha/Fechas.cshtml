@@ -75,11 +75,11 @@
                                 }
                                 @if (item.Gastos != null && item.Gastos.Count > 0)
                                 {
-                                    @Html.ActionImage("Bordereaux", "Fecha", new { id = item.UniqueId }, "~/assets/img/gastos_icon.png")
+                                    @Html.ActionImage("Gasto", "Fecha", new { id = item.UniqueId }, "~/assets/img/gastos_icon.png")
                                 }
                                 else
                                 {
-                                    @Html.ActionImage("testVista", "Fecha", new { id = item.UniqueId, idGasto = "" }, "~/assets/img/add_payment.png")
+                                    @Html.ActionImage("Gasto", "Fecha", new { id = item.UniqueId, idGasto = "" }, "~/assets/img/add_payment.png")
                                 }
 
                             </td>

@@ -503,14 +503,6 @@ namespace SUA.Controllers
 
         [HttpGet]
         [UserValidationFilter]
-        public ActionResult testVista()
-        {
-            return View();
-        }
-
-
-        [HttpGet]
-        [UserValidationFilter]
         public ActionResult Gasto(string id, string idGasto)
         {
             ViewBag.mensaje = "Get";
@@ -521,26 +513,20 @@ namespace SUA.Controllers
             if (string.IsNullOrEmpty(idGasto))
             {
 
-                ///obtiene los gastos de la fecha
-                var gastosAnteriores = new List<Gasto>();
                 var fechaObtenida = new FechaService().GetFechaById(id);
                 if (fechaObtenida.Gastos != null && fechaObtenida.Gastos.Count > 0)
-                {
-                    gastosAnteriores = fechaObtenida.Gastos;
-                }
+                    ViewBag.gastosAnteriores = fechaObtenida.Gastos;
                 else
-                {
-                    gastosAnteriores = new List<Gasto>();
-                }
-                //////
+                    ViewBag.gastosAnteriores = null;
 
-                ViewBag.gastosAnteriores = gastosAnteriores;
+                ViewBag.idFecha = id;
                 ViewBag.accion = "Post";
                 ViewBag.titulo = "Crear Gasto";
                 ViewBag.quien = "";
             }
             else
             {
+                ViewBag.idFecha = id;
                 ViewBag.accion = "Put";
                 ViewBag.titulo = "Editar Gasto";
                 var service = new GastoService();
@@ -548,6 +534,51 @@ namespace SUA.Controllers
                 if (gasto.Quien != null)
                     ViewBag.quien = gasto.Quien.Dni;
                 return View(gasto);
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Gasto(Gasto gasto, string personaDNI, string accion, string idFecha)
+        {
+            ViewBag.titulo = "Crear Gasto";
+            if (gasto.Categoria == "Tecnico" || gasto.Categoria == "Premios" || gasto.Categoria == "Afip" ||
+                gasto.Categoria == "Sueldos" || gasto.Categoria == "Celular" || gasto.Categoria == "Programacion" ||
+                gasto.Categoria == "Productor")
+            {
+                gasto.Quien = new GastoController().ObtenerPersona(personaDNI);
+            }
+            var service = new FechaService();
+
+            try
+            {
+                if (string.Equals(accion, "Post"))
+                {
+                    var fecha = service.GetFechaById(idFecha);
+                    gasto.UniqueId = UtilitiesAndStuff.GenerateUniqueId();
+                    gasto.Fecha = fecha.FechaHorario;
+                    if (fecha.Gastos == null)
+                        fecha.Gastos = new List<Gasto> { gasto };
+                    else
+                        fecha.Gastos.Add(gasto);
+                    service.UpdateFecha(fecha);
+                    ViewBag.mensaje = "creado";
+                    new LogService().FormatAndSaveLog("Gasto de fecha", "Crear", JsonConvert.SerializeObject(gasto));
+                }
+
+                else if (string.Equals(accion, "Put"))
+                {
+                    var fecha = service.GetFechaById(idFecha);
+                    fecha.Gastos = fecha.Gastos.Where(g => g.UniqueId != gasto.UniqueId).ToList();
+                    fecha.Gastos.Add(gasto);
+                    service.UpdateFecha(fecha);
+                    ViewBag.mensaje = "actualizado";
+                    new LogService().FormatAndSaveLog("Gasto de fecha", "Editar", JsonConvert.SerializeObject(gasto));
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.mensaje = ex.Message;
             }
             return View();
         }
@@ -801,5 +832,7 @@ namespace SUA.Controllers
             }
             return description;
         }
+
     }
+
 }

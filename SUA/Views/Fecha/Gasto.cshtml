@@ -10,7 +10,7 @@
 </style>
 
 <div class="main-content">
-    @using (Html.BeginForm("Gasto", "Gasto", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Gasto", "Fecha", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         if (ViewBag.mensaje == "creado")
         {
@@ -27,55 +27,53 @@
 
                     <!-- -->
 
-                    @if (ViewBag.accion == "POST")
+                    @if (ViewBag.accion == "Post")
                     {
-                        <h3>Gastos de la fecha</h3>
-                        <table id="table_gastos" class="display compact hover nowrap">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Fecha</th>
-                                    <th>Importe</th>
-                                    <th>Categoria</th>
-                                    <th>Quien</th>
-                                    <th>Detalle</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th></th>
-                                    <th>Fecha</th>
-                                    <th>Importe</th>
-                                    <th>Categoria</th>
-                                    <th>Quien</th>
-                                    <th>Detalle</th>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                @foreach (var item in ViewBag.gastosAnteriores)
-                                {
+                        if (ViewBag.gastosAnteriores == null)
+                        {
+                            <h4>Esta fecha no tiene gastos cargados</h4>
+                        }
+                        else
+                        {
+                            <h3>Gastos de la fecha</h3>
+                            <table id="table_gastos" class="display compact hover nowrap">
+                                <thead>
                                     <tr>
-                                        <td>
-                                            @Html.ActionImage("DeleteGasto", "Gasto", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
-                                            @Html.ActionImage("Gasto", "Gasto", new { id = item.UniqueId }, "~/assets/img/edit_icon.png")
-                                        </td>
-                                        <td>@item.Fecha.ToString("yyyy-MM-dd")</td>
-                                        <td>@item.Importe</td>
-                                        <td>@item.Categoria</td>
-                                        @if (item.Quien != null)
-                                        {
-                                            <td>@item.Quien.Apellido,  @item.Quien.Nombre</td>
-                                        }
-                                        else
-                                        {
-                                            <td>-</td>
-                                        }
-
-                                        <td>@item.Detalle</td>
+                                        <th></th>
+                                        <th>Fecha</th>
+                                        <th>Importe</th>
+                                        <th>Categoria</th>
+                                        <th>Quien</th>
+                                        <th>Detalle</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in ViewBag.gastosAnteriores)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.ActionImage("DeleteGasto", "Gasto", new { id = item.UniqueId }, "~/assets/img/delete_icon.png")
+                                                @Html.ActionImage("Gasto", "Gasto", new { id = item.UniqueId }, "~/assets/img/edit_icon.png")
+                                            </td>
+                                            <td>@item.Fecha.ToString("yyyy-MM-dd")</td>
+                                            <td>@item.Importe</td>
+                                            <td>@item.Categoria</td>
+                                            @if (item.Quien != null)
+                                            {
+                                                <td>@item.Quien.Apellido,  @item.Quien.Nombre</td>
+                                            }
+                                            else
+                                            {
+                                                <td>-</td>
+                                            }
+
+                                            <td>@item.Detalle</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        <hr style="color: #8dd9f7">
                     }
                     <!-- -->
 
@@ -86,17 +84,6 @@
 
                         <table style="border-spacing: 20px">
                             <tr>
-                                <td>
-                                    <label>Fecha</label>
-                                    @if (ViewBag.accion == "Post")
-                                    {
-                                        @Html.TextBoxFor(model => model.Fecha, new { @class = "form-control", Style = "width:300px", required = "required", @type = "date" })
-                                    }
-                                    else
-                                    {
-                                        @Html.TextBoxFor(model => model.Fecha, new { @class = "form-control", Style = "width:300px", required = "required", @type = "date", @Value = Model.Fecha.ToString("yyyy-MM-dd") })
-                                    }
-                                </td>
                                 <td>
                                     <label>Importe</label>
                                     @Html.TextBoxFor(model => model.Importe, new { @class = "form-control", Style = "width:300px", required = "required" })
@@ -125,6 +112,7 @@
                             <input name="UniqueId" value="@Model.UniqueId" style="visibility:hidden" />
                         }
 
+                        <input name="idFecha" class="hidden" value="@ViewBag.idFecha" data-form="error-box" />
                         <input name="accion" class="hidden" value="@ViewBag.accion" data-form="error-box" />
                         <button id="btn_guardar" type="submit" class="btn btn-primary btn-block btn-submit-to-right">Guardar</button>
                     </form>

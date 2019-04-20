@@ -115,7 +115,6 @@ namespace SUA.Controllers
             return RedirectToAction("Gastos", "Gasto");
         }
 
-
         public List<SelectListItem> GetPersonas()
         {
             var standuperos = new StanduperoService().GetStanduperos();
@@ -128,7 +127,7 @@ namespace SUA.Controllers
             return UtilitiesAndStuff.ConvertPeronasListToSelectItemList(personas.Distinct().OrderBy(a => a.Apellido).ToList());
         }
 
-        private Persona ObtenerPersona(string dni)
+        public Persona ObtenerPersona(string dni)
         {
             Persona persona = null;
             persona = new StanduperoService().GetStanduperoByDni(dni);
