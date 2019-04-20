@@ -500,6 +500,48 @@ namespace SUA.Controllers
             Response.Redirect(fileName);
         }
 
+
+        [HttpGet]
+        public ActionResult Gasto(string id, string idGasto)
+        {
+            ViewBag.mensaje = "Get";
+            ViewBag.categorias = UtilitiesAndStuff.GetCategoriasDeGastos();
+            ViewBag.personas = new GastoController().GetPersonas();
+
+            ///obtiene los gastos de la fecha
+            var gastosAnteriores = new List<Gasto>();
+            var fechaObtenida = new FechaService().GetFechaById(id);
+            if (fechaObtenida.Gastos != null && fechaObtenida.Gastos.Count > 0)
+            {
+                gastosAnteriores = fechaObtenida.Gastos;
+            }
+            else
+            {
+                gastosAnteriores = new List<Gasto>();
+            }
+            //////
+
+            if (string.IsNullOrEmpty(id))
+            {
+                ViewBag.gastosAnteriores = gastosAnteriores;
+                ViewBag.accion = "Post";
+                ViewBag.titulo = "Crear Gasto";
+                ViewBag.quien = "";
+            }
+            else
+            {
+                ViewBag.accion = "Put";
+                ViewBag.titulo = "Editar Gasto";
+                var service = new GastoService();
+                var gasto = service.GetGastoById(idGasto);
+                if (gasto.Quien != null)
+                    ViewBag.quien = gasto.Quien.Dni;
+                return View(gasto);
+            }
+            return View();
+        }
+
+
         private void AgregarCabecera(Document doc, Fecha fecha)
         {
             //Logo

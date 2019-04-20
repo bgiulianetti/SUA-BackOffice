@@ -17,6 +17,7 @@ namespace SUA.Models
         public string GoogleCalendarState { get; set; }
         public string Status { get; set; }
         public string Observaciones { get; set; }
+        public List<Gasto> Gastos { get; set; }
 
         public void SetIdAndFechaAlta()
         {

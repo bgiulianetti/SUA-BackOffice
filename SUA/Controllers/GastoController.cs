@@ -77,23 +77,6 @@ namespace SUA.Controllers
 
         [HttpGet]
         [UserValidationFilter]
-        public ActionResult GastoDeFecha(string id, string idFecha)
-        {
-            ViewBag.mensaje = "Get";
-            ViewBag.categorias = UtilitiesAndStuff.GetCategoriasDeGastos();
-            ViewBag.personas = GetPersonas();
-            if (string.IsNullOrEmpty(id))
-            {
-                ViewBag.accion = "Post";
-                ViewBag.titulo = "Crear Gasto de fecha";
-                ViewBag.quien = "";
-                ViewBag.gastosDeFecha = new GastoService().GetGastos().Where(g => g.FechaAsociada.UniqueId == idFecha).ToList();
-            }
-            return View();
-        }
-
-        [HttpGet]
-        [UserValidationFilter]
         public ActionResult Gastos()
         {
             ViewBag.titulo = "Gastos";
@@ -133,7 +116,7 @@ namespace SUA.Controllers
         }
 
 
-        private List<SelectListItem> GetPersonas()
+        public List<SelectListItem> GetPersonas()
         {
             var standuperos = new StanduperoService().GetStanduperos();
             var productores = new ProductorService().GetProductores();

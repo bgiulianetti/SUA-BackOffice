@@ -28,6 +28,10 @@
 
                         <table style="border-spacing: 20px">
                             <tr>
+                                <label>Borderaux Asociado</label>
+                                @Html.DropDownListFor(model => model.Categoria, new SelectList(ViewBag.categorias, "Text", "Value"), new { @id = "categoria", @class = "form-control", Style = "width:300px", required = "required" })
+                            </tr>
+                            <tr>
                                 <td>
                                     <label>Fecha</label>
                                     @if (ViewBag.accion == "Post")
