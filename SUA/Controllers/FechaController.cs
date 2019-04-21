@@ -548,6 +548,7 @@ namespace SUA.Controllers
             {
                 gasto.Quien = new GastoController().ObtenerPersona(personaDNI);
             }
+            gasto.Fecha = fecha.FechaHorario;
             var service = new FechaService();
 
             try
@@ -555,8 +556,7 @@ namespace SUA.Controllers
                 if (string.Equals(accion, "Post"))
                 {
                     var fecha = service.GetFechaById(idFecha);
-                    gasto.UniqueId = UtilitiesAndStuff.GenerateUniqueId();
-                    gasto.Fecha = fecha.FechaHorario;
+                    gasto.UniqueId = UtilitiesAndStuff.GenerateUniqueId();                    
                     if (fecha.Gastos == null)
                         fecha.Gastos = new List<Gasto> { gasto };
                     else
@@ -580,7 +580,7 @@ namespace SUA.Controllers
             {
                 ViewBag.mensaje = ex.Message;
             }
-            return View();
+            return RedirectToAction("Gasto", "Fecha", new { id = idFecha });
         }
 
 
