@@ -24,30 +24,23 @@ namespace SUA.Servicios
 
         public List<Fecha> GetFechas(string all, bool isIndexRequesting = false)
         {
-            var fechas = Repository.GetFechas();
-            if(all != "true")
-                fechas = fechas.OrderByDescending(f => f.FechaHorario).Take(50).ToList();
+            var fechas = Repository.GetFechas().OrderByDescending(f => f.FechaHorario).ToList();
+            if (all == "")
+                fechas = fechas.Take(50).ToList();
+            else if (all == "bx")
+                fechas = fechas.Where(f => DateTime.Now.AddHours(3) >= f.FechaHorario && f.Borederaux == null).ToList();
+            else if (all == "gasto")
+                fechas = fechas.Where(f => f.Gastos == null || f.Gastos.Count == 0).ToList();
 
             var session = HttpContext.Current.Request.Cookies.Get("session");
             var service = new UserService();
             var user = service.GetUserByNombre(session.Value);
-            
             if (user.UserMaster == "no")
             {
                 if(user.ShowsAsignados.Count > 0)
-                {
-                    var fechasFiltradas = new List<Fecha>();
-                    foreach (var item in fechas)
-                    {
-                        if (user.ShowsAsignados.Contains(item.Show))
-                            fechasFiltradas.Add(item);
-                    }
-                    return fechasFiltradas;
-                }
+                    return fechas.Where(f => user.ShowsAsignados.Contains(f.Show)).ToList();
                 else
-                {
                     return new List<Fecha>();
-                }
             }
             else
             {

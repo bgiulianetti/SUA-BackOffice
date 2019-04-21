@@ -187,32 +187,34 @@ namespace SUA.Controllers
                         new LogService().AddLog(new Log { Accion = "Actualizar instagramUsers", Fecha = DateTime.Now, Informacion = "Falla al querer obtener un user desde instagram.com. (user: " + user.Username + ") - " + ex.ToString(), Pantalla = "inicio", Username = "bot" });
                     }
 
+                    if(userObtenido != null)
+                    {
+                        if (userObtenido.Followers == 0)
+                        {
+                            var lastFollowerItemCount = user.Followers.OrderBy(f => f.Date).Last().Count;
+                            userObtenido.Followers = lastFollowerItemCount + 70;
+                        }
+                        if (userObtenido.Posts == 0)
+                        {
+                            userObtenido.Posts = user.Posts + 1;
+                        }
+                        if (userObtenido.Following == 0)
+                        {
+                            userObtenido.Following = user.Following;
+                        }
+                        user.Following = userObtenido.Following;
+                        user.Posts = userObtenido.Posts;
+                        user.Followers.Add(new InstragramUserFollowersHistory { Count = userObtenido.Followers, Date = DateTime.Now.AddDays(-1), Difference = userObtenido.Followers - lastFollowerItem.Count });
 
-                    if (userObtenido.Followers == 0)
-                    {
-                        var lastFollowerItemCount = user.Followers.OrderBy(f => f.Date).Last().Count;
-                        userObtenido.Followers = lastFollowerItemCount + 70;
-                    }
-                    if (userObtenido.Posts == 0)
-                    {
-                        userObtenido.Posts = user.Posts + 1;
-                    }
-                    if (userObtenido.Following == 0)
-                    {
-                        userObtenido.Following = user.Following;
-                    }
-                    user.Following = userObtenido.Following;
-                    user.Posts = userObtenido.Posts;
-                    user.Followers.Add(new InstragramUserFollowersHistory { Count = userObtenido.Followers, Date = DateTime.Now.AddDays(-1), Difference = userObtenido.Followers - lastFollowerItem.Count });
+                        try
+                        {
+                            instagramUserService.UpdateInstagramUser(user);
+                        }
 
-                    try
-                    {
-                        instagramUserService.UpdateInstagramUser(user);
-                    }
-                    
-                    catch (Exception ex)
-                    {
-                        new LogService().AddLog(new Log { Accion = "Actualizar instagramUsers", Fecha = DateTime.Now, Informacion = "falla al actualizar el user en elasticsearch. usuario serializado: " + JsonConvert.SerializeObject(user) + " - " + ex.ToString(), Pantalla = "inicio", Username = "bot" });
+                        catch (Exception ex)
+                        {
+                            new LogService().AddLog(new Log { Accion = "Actualizar instagramUsers", Fecha = DateTime.Now, Informacion = "falla al actualizar el user en elasticsearch. usuario serializado: " + JsonConvert.SerializeObject(user) + " - " + ex.ToString(), Pantalla = "inicio", Username = "bot" });
+                        }
                     }
                 }
             }

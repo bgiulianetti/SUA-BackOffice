@@ -15,6 +15,16 @@
                         <input type="button" value="Todas las fechas" class="form-control" style="width:120px" />
                     </a>
                 </td>
+                <td style="width:200px;">
+                    <a href="@Url.RouteUrl("Fechas", new { all = "bx"})">
+                        <input type="button" value="Fechas sin bx" class="form-control" style="width:120px" />
+                    </a>
+                </td>
+                <td style="width:200px;">
+                    <a href="@Url.RouteUrl("Fechas", new { all = "gasto"})">
+                        <input type="button" value="Fechas sin gastos" class="form-control" style="width:120px" />
+                    </a>
+                </td>
                 <td>
                     <div id="entries" style="width:200px"></div>
                 </td>
