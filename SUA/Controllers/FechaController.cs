@@ -548,14 +548,15 @@ namespace SUA.Controllers
             {
                 gasto.Quien = new GastoController().ObtenerPersona(personaDNI);
             }
-            gasto.Fecha = fecha.FechaHorario;
+
             var service = new FechaService();
+            var fecha = service.GetFechaById(idFecha);
+            gasto.Fecha = fecha.FechaHorario;
 
             try
             {
                 if (string.Equals(accion, "Post"))
                 {
-                    var fecha = service.GetFechaById(idFecha);
                     gasto.UniqueId = UtilitiesAndStuff.GenerateUniqueId();                    
                     if (fecha.Gastos == null)
                         fecha.Gastos = new List<Gasto> { gasto };
@@ -568,7 +569,6 @@ namespace SUA.Controllers
 
                 else if (string.Equals(accion, "Put"))
                 {
-                    var fecha = service.GetFechaById(idFecha);
                     fecha.Gastos = fecha.Gastos.Where(g => g.UniqueId != gasto.UniqueId).ToList();
                     fecha.Gastos.Add(gasto);
                     service.UpdateFecha(fecha);
