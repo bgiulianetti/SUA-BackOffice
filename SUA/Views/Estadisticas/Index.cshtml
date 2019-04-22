@@ -108,8 +108,8 @@
                     gananciasBrutasPorMesDataPoints = [];
 
                 gananciasBrutasPorMesDataPoints.push({
-                    x: new Date(data[i].date),
-                    y: parseFloat(data[i].units)
+                    label: data[i].label,
+                    y: parseFloat(data[i].y)
                 });
             }
             gananciasBrutasPorMes = createGananciasBrutasPorMes();
