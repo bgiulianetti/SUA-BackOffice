@@ -155,5 +155,13 @@
             }
         }
 
+
+
+        var tableStanduperos = $('#table_gastos').DataTable({
+            responsive: true,
+            dom: 'l<B>ftip',
+            'columnDefs': [{ "targets": 0, "className": "text-center" }]
+        });
+
     });
 </script>
