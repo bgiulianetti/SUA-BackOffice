@@ -122,21 +122,33 @@ namespace SUA.Controllers
             var fechasInYear = service.GetFechas("true").Where(f => f.FechaHorario >= new DateTime(year, 01, 01) && f.FechaHorario <= new DateTime(year, 12, 31) && f.Borederaux != null).ToList();
             var showService = new ShowService();
             var shows = showService.GetShows();
+            float sumatoria = 0;
             foreach (var show in shows)
             {
                 var montoByShow = fechasInYear.Where(f => f.Show.UniqueId == show.UniqueId).Sum(f => f.Borederaux.SUAMontoFinal);
-                float gasto = 0;
-                foreach (var fecha in fechasInYear)
+                if(montoByShow > 0)
                 {
-                    if(fecha.Show.UniqueId == show.UniqueId && fecha.Gastos != null)
+                    float gasto = 0;
+                    foreach (var fecha in fechasInYear)
                     {
-                        gasto += (float)fecha.Gastos.Sum(g => g.Importe);
+                        if (fecha.Show.UniqueId == show.UniqueId && fecha.Gastos != null)
+                        {
+                            gasto += (float)fecha.Gastos.Sum(g => g.Importe);
+                        }
                     }
+                    montoByShow = montoByShow - gasto;
+                    info.Add(new PieChartContract { label = show._Show, y = montoByShow });
+                    sumatoria += montoByShow;
                 }
-                montoByShow = montoByShow - gasto;
-                info.Add(new PieChartContract { label = show._Show, y = montoByShow });
             }
 
+            var contador = 0;
+            foreach (var showInfo in info)
+            {
+                var porcentaje = showInfo.y * 100 / sumatoria;
+                info[contador].label = info[contador].label + " - " + Math.Round(porcentaje, 2) + "%";
+                contador++;
+            }
             return JsonConvert.SerializeObject(info);
         }
 
