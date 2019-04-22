@@ -17,6 +17,26 @@
             </div>
         </div>
 
+        <div class="panel-body" style="width:90%; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
+            <div class="well well-sm text-center">
+                <h4>Ganancias brutas por mes</h4>
+                <input type="number" id="gananciasBrutasPorMes_year" min="2017" max="2029" value="2019" />
+                <input type="button" id="gananciasBrutasPorMes" value="Ok" />
+                <br /><br />
+                <div id="gananciasBrutasPorMesChart" style="height: 300px; width: 100%;"></div>
+            </div>
+        </div>
+
+        <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
+            <div class="well well-sm text-center" style="width:90%">
+                <h4>Gastos fuera de bordereaux por mes</h4>
+                <input type="number" id="gastosFueraBxPorMes_year" min="2017" max="2029" value="2018" />
+                <input type="button" id="gastosFueraBxPorMes" value="Ok" />
+                <br /><br />
+                <div id="gastosFueraBxPorMesChart" style="height: 300px; width: 100%;"></div>
+            </div>
+        </div>
+
         <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
             <div class="well well-sm text-center" style="width:90%">
                 <h4>Ganancias netas por mes</h4>
@@ -27,15 +47,6 @@
             </div>
         </div>
 
-        <div class="panel-body" style="width:90%; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
-            <div class="well well-sm text-center">
-                <h4>Ganancias brutas por mes</h4>
-                <input type="number" id="gananciasBrutasPorMes_year" min="2017" max="2029" value="2019" />
-                <input type="button" id="gananciasBrutasPorMes" value="Ok" />
-                <br /><br />
-                <div id="gananciasBrutasPorMesChart" style="height: 300px; width: 100%;"></div>
-            </div>
-        </div>
 
         <div class="panel-body" style="width:90%; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
             <div class="well well-sm text-center">
@@ -94,6 +105,54 @@
                 }]
             });
         }
+
+
+
+        ////////////////////
+
+
+        //Ganstos fuera bx
+        var gastosFueraBxPorMesDataPoints = [];
+        var gastosFueraBxPorMes = createGastosFueraBxPorMes();
+        updategastosFueraBxPorMes();
+        $("#gastosFueraBxPorMes").click(updategastosFueraBxPorMes);
+        function addGastosFueraBxPorMesData(data) {
+            gastosFueraBxPorMes.destroy();
+            for (var i = 0; i < data.length; i++) {
+                if (gastosFueraBxPorMesDataPoints.length >= 12)
+                    gastosFueraBxPorMesDataPoints = [];
+
+                gastosFueraBxPorMesDataPoints.push({
+                    label: data[i].label,
+                    y: parseFloat(data[i].y)
+                });
+            }
+            gastosFueraBxPorMes = createGastosFueraBxPorMes();
+            gastosFueraBxPorMes.render();
+        }
+        function updategastosFueraBxPorMes() {
+            $.getJSON("estadisticas/GetGastosFueraBxPorMes?year=" + $("#gastosFueraBxPorMes_year").val(), addGastosFueraBxPorMesData);
+        }
+        function createGastosFueraBxPorMes() {
+            return new CanvasJS.Chart("gastosFueraBxPorMesChart", {
+                animationEnabled: true,
+                theme: "light2",
+                exportEnabled: true,
+                axisY: {
+                    title: " $",
+                    titleFontSize: 24
+                },
+                data: [{
+                    type: "spline",
+                    yValueFormatString: "#,### $",
+                    dataPoints: gastosFueraBxPorMesDataPoints
+                }]
+            });
+        }
+
+
+        ///////////////////////
+
 
 
         //Ganancias Brutas por mes

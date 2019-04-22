@@ -140,6 +140,28 @@ namespace SUA.Controllers
             return JsonConvert.SerializeObject(info);
         }
 
+        [HttpGet]
+        public string GetGastosFueraBxPorMes(int year)
+        {
+            var gastos = new GastoService().GetGastos();
+            var gastosFormateados = new List<LabelAndInfo>
+            {
+                new LabelAndInfo { label = "Jan", y = gastos.Where(g => g.Fecha >= new DateTime(year, 01, 01) && g.Fecha <= new DateTime(year, 01, 31)).Sum(g=>g.Importe).ToString("0.0").Replace(",", ".") },
+                new LabelAndInfo { label = "Feb", y = gastos.Where(g => g.Fecha >= new DateTime(year, 02, 01) && g.Fecha <= new DateTime(year, 02, 28)).Sum(g=>g.Importe).ToString("0.0").Replace(",", ".") },
+                new LabelAndInfo { label = "Mar", y = gastos.Where(g => g.Fecha >= new DateTime(year, 03, 01) && g.Fecha <= new DateTime(year, 03, 31)).Sum(g=>g.Importe).ToString("0.0").Replace(",", ".") },
+                new LabelAndInfo { label = "Apr", y = gastos.Where(g => g.Fecha >= new DateTime(year, 04, 01) && g.Fecha <= new DateTime(year, 04, 30)).Sum(g=>g.Importe).ToString("0.0").Replace(",", ".") },
+                new LabelAndInfo { label = "May", y = gastos.Where(g => g.Fecha >= new DateTime(year, 05, 01) && g.Fecha <= new DateTime(year, 05, 31)).Sum(g=>g.Importe).ToString("0.0").Replace(",", ".") },
+                new LabelAndInfo { label = "Jun", y = gastos.Where(g => g.Fecha >= new DateTime(year, 06, 01) && g.Fecha <= new DateTime(year, 06, 30)).Sum(g=>g.Importe).ToString("0.0").Replace(",", ".") },
+                new LabelAndInfo { label = "Jul", y = gastos.Where(g => g.Fecha >= new DateTime(year, 07, 01) && g.Fecha <= new DateTime(year, 07, 31)).Sum(g=>g.Importe).ToString("0.0").Replace(",", ".") },
+                new LabelAndInfo { label = "Aug", y = gastos.Where(g => g.Fecha >= new DateTime(year, 08, 01) && g.Fecha <= new DateTime(year, 08, 31)).Sum(g=>g.Importe).ToString("0.0").Replace(",", ".") },
+                new LabelAndInfo { label = "Sep", y = gastos.Where(g => g.Fecha >= new DateTime(year, 09, 01) && g.Fecha <= new DateTime(year, 09, 30)).Sum(g=>g.Importe).ToString("0.0").Replace(",", ".") },
+                new LabelAndInfo { label = "Oct", y = gastos.Where(g => g.Fecha >= new DateTime(year, 10, 01) && g.Fecha <= new DateTime(year, 10, 31)).Sum(g=>g.Importe).ToString("0.0").Replace(",", ".") },
+                new LabelAndInfo { label = "Nov", y = gastos.Where(g => g.Fecha >= new DateTime(year, 11, 01) && g.Fecha <= new DateTime(year, 11, 30)).Sum(g=>g.Importe).ToString("0.0").Replace(",", ".") },
+                new LabelAndInfo { label = "Dec", y = gastos.Where(g => g.Fecha >= new DateTime(year, 12, 01) && g.Fecha <= new DateTime(year, 12, 31)).Sum(g=>g.Importe).ToString("0.0").Replace(",", ".") }
+            };
+            return JsonConvert.SerializeObject(gastosFormateados);
+        }
+
         private string GetMonthNetoSum(List<Fecha> fechas)
         {
             float sum = fechas.Sum(f => f.Borederaux.SUAMontoFinal);
