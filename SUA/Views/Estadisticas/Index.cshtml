@@ -10,8 +10,11 @@
         <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
             <div class="well well-sm text-center" style="width:90%;">
                 <h4>Ganancias netas por show</h4>
-                <input type="number" id="gananciasNetasPorShow_year" min="2017" max="2029" value="2018" />
+                <input type="date" id="gananciasNetasPorShow_from" value="2018-01-01" />
+                <input type="date" id="gananciasNetasPorShow_to" value="2018-12-31" />
                 <input type="button" id="gananciasNetasPorShow" value="Ok" />
+                <br /><br />
+                <h4 id="sumatoria">Ganancia Total: $123456</h4>
                 <br /><br />
                 <div id="gananciasNetasPorShowChart" style="height: 300px; width: 100%;"></div>
             </div>
@@ -274,15 +277,16 @@
         $("#gananciasNetasPorShow").click(updateGananciasNetasPorShow);
         function addGananciasNetasPorShowData(data) {
             gananciasNetasPorShow.destroy();
-
-            //gananciasNetasPorShowDataPoints = [];
+            $("#sumatoria").html("Ganancia Total: $" + data[data.length - 1].y)
+            data.pop();
             gananciasNetasPorShowDataPoints = data;
 
             gananciasNetasPorShow = createGananciasNetasPorShow();
             gananciasNetasPorShow.render();
+            
         }
         function updateGananciasNetasPorShow() {
-            $.getJSON("estadisticas/GetGananciasNetasPorShow?year=" + $("#gananciasNetasPorShow_year").val(), addGananciasNetasPorShowData);
+            $.getJSON("estadisticas/GetGananciasNetasPorShow?from=" + $("#gananciasNetasPorShow_from").val() + "&to=" + $("#gananciasNetasPorShow_to").val(), addGananciasNetasPorShowData);
         }
         function createGananciasNetasPorShow() {
             return new CanvasJS.Chart("gananciasNetasPorShowChart", {
@@ -302,7 +306,6 @@
                 }]
             });
         }
-
 
     });
 

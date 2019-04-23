@@ -115,11 +115,13 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
-        public string GetGananciasNetasPorShow(int year)
+        public string GetGananciasNetasPorShow(string from, string to)
         {
+            var fromDate = new DateTime(Int32.Parse(from.Split('-')[0]), Int32.Parse(from.Split('-')[1]), Int32.Parse(from.Split('-')[2]));
+            var toDate = new DateTime(Int32.Parse(to.Split('-')[0]), Int32.Parse(to.Split('-')[1]), Int32.Parse(to.Split('-')[2]));
             var info = new List<PieChartContract>();
             var service = new FechaService();
-            var fechasInYear = service.GetFechas("true").Where(f => f.FechaHorario >= new DateTime(year, 01, 01) && f.FechaHorario <= new DateTime(year, 12, 31) && f.Borederaux != null).ToList();
+            var fechasInYear = service.GetFechas("true").Where(f => f.FechaHorario >= fromDate && f.FechaHorario <= toDate && f.Borederaux != null).ToList();
             var showService = new ShowService();
             var shows = showService.GetShows();
             float sumatoria = 0;
@@ -141,15 +143,53 @@ namespace SUA.Controllers
                     sumatoria += montoByShow;
                 }
             }
-
             var contador = 0;
             foreach (var showInfo in info)
             {
                 var porcentaje = showInfo.y * 100 / sumatoria;
-                info[contador].label = info[contador].label + " - " + Math.Round(porcentaje, 2) + "%";
+                info[contador].label = info[contador].label + "-" + Math.Round(porcentaje, 2).ToString() + "%";
                 contador++;
             }
+            info.Add(new PieChartContract { label = "sumatoria", y = sumatoria});
             return JsonConvert.SerializeObject(info);
+        }
+
+        [HttpGet]
+        public string GetGananciasNetasPorShowConPorcentaje(string from, string to)
+        {
+            var fromDate = new DateTime(Int32.Parse(from.Split('-')[2]), Int32.Parse(from.Split('-')[1]), Int32.Parse(from.Split('-')[0]));
+            var toDate = new DateTime(Int32.Parse(to.Split('-')[2]), Int32.Parse(to.Split('-')[1]), Int32.Parse(to.Split('-')[0]));
+            var info = new List<PieChartContract>();
+            var service = new FechaService();
+            var fechasInYear = service.GetFechas("true").Where(f => f.FechaHorario >= fromDate && f.FechaHorario <= toDate && f.Borederaux != null).ToList();
+            var showService = new ShowService();
+            var shows = showService.GetShows();
+            float sumatoria = 0;
+            foreach (var show in shows)
+            {
+                var montoByShow = fechasInYear.Where(f => f.Show.UniqueId == show.UniqueId).Sum(f => f.Borederaux.SUAMontoFinal);
+                if (montoByShow > 0)
+                {
+                    float gasto = 0;
+                    foreach (var fecha in fechasInYear)
+                    {
+                        if (fecha.Show.UniqueId == show.UniqueId && fecha.Gastos != null)
+                        {
+                            gasto += (float)fecha.Gastos.Sum(g => g.Importe);
+                        }
+                    }
+                    montoByShow = montoByShow - gasto;
+                    info.Add(new PieChartContract { label = show._Show, y = montoByShow });
+                    sumatoria += montoByShow;
+                }
+            }
+            var listShows = new List<ShowListInfo>();
+            foreach (var showInfo in info)
+            {
+                var porcentaje = showInfo.y * 100 / sumatoria;
+                listShows.Add(new ShowListInfo { Show = showInfo.label, Porcentaje = porcentaje, Monto = showInfo.y });
+            }
+            return JsonConvert.SerializeObject(listShows);
         }
 
         [HttpGet]
@@ -193,6 +233,13 @@ namespace SUA.Controllers
             float sum = fechas.Sum(f => f.Borederaux.EntradasBruto);
             var sum_string = sum.ToString("0.0").Replace(",", ".");
             return sum_string;
+        }
+
+        private class ShowListInfo
+        {
+            public string Show { get; set; }
+            public double Porcentaje { get; set; }
+            public double Monto { get; set; }
         }
     }
 }
