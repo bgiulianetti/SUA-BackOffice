@@ -18,6 +18,7 @@ namespace SUA.Controllers
         public ActionResult Index()
         {
             ViewBag.title = "Estadisticas";
+            ViewBag.shows = new ShowService().GetShows();
             return View();
         }
 
@@ -115,20 +116,26 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
-        public string GetGananciasNetasPorShow(string from, string to)
+        public string GetGananciasNetasPorShow(string from, string to, string showsArray)
         {
+            var showsId = showsArray.Split('-').ToList();
             var fromDate = new DateTime(Int32.Parse(from.Split('-')[0]), Int32.Parse(from.Split('-')[1]), Int32.Parse(from.Split('-')[2]));
             var toDate = new DateTime(Int32.Parse(to.Split('-')[0]), Int32.Parse(to.Split('-')[1]), Int32.Parse(to.Split('-')[2]));
             var info = new List<PieChartContract>();
             var service = new FechaService();
-            var fechasInYear = service.GetFechas("true").Where(f => f.FechaHorario >= fromDate && f.FechaHorario <= toDate && f.Borederaux != null).ToList();
+            var fechasInYear = service.GetFechas("true").Where(f => 
+                                                                f.FechaHorario >= fromDate &&
+                                                                f.FechaHorario <= toDate &&                                                        
+                                                                f.Borederaux != null &&
+                                                                showsId.Contains(f.Show.UniqueId)
+                                                                ).ToList();
             var showService = new ShowService();
             var shows = showService.GetShows();
             float sumatoria = 0;
             foreach (var show in shows)
             {
                 var montoByShow = fechasInYear.Where(f => f.Show.UniqueId == show.UniqueId).Sum(f => f.Borederaux.SUAMontoFinal);
-                if(montoByShow > 0)
+                if (montoByShow > 0)
                 {
                     float gasto = 0;
                     foreach (var fecha in fechasInYear)
@@ -147,10 +154,10 @@ namespace SUA.Controllers
             foreach (var showInfo in info)
             {
                 var porcentaje = showInfo.y * 100 / sumatoria;
-                info[contador].label = info[contador].label + "-" + Math.Round(porcentaje, 2).ToString() + "%";
+                info[contador].label = info[contador].label + " - " + Math.Round(porcentaje, 2).ToString() + "%";
                 contador++;
             }
-            info.Add(new PieChartContract { label = "sumatoria", y = sumatoria});
+            info.Add(new PieChartContract { label = "sumatoria", y = sumatoria });
             return JsonConvert.SerializeObject(info);
         }
 
