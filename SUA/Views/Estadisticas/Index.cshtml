@@ -1,8 +1,17 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.title = "Estadisticas";
 }
 
+<style>
+    .btn span.glyphicon {
+        opacity: 0;
+    }
+
+    .btn.active span.glyphicon {
+        opacity: 1;
+    }
+</style>
 <div class="main-content">
 
     <div class="panel">
@@ -10,6 +19,19 @@
         <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
             <div class="well well-sm text-center" style="width:90%;">
                 <h4>Ganancias netas por show</h4>
+                <br />
+                <div class="btn-group" data-toggle="buttons">
+                    @foreach (var show in ViewBag.shows)
+                    {
+                        var id = "check" + show.UniqueId;
+                        <label id="@show.UniqueId" title="@show.Nombre" class="btn btn-success active">
+                            @show.Nombre
+                            <input id="@id" type="checkbox" autocomplete="off" checked>
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </label>
+                    }
+                </div>
+                <br /><br />
                 <input type="date" id="gananciasNetasPorShow_from" value="2018-01-01" />
                 <input type="date" id="gananciasNetasPorShow_to" value="2018-12-31" />
                 <input type="button" id="gananciasNetasPorShow" value="Ok" />
@@ -69,6 +91,18 @@
 
 
     $(document).ready(function () {
+
+        var showIds = "";
+        var calendars = @Html.Raw(Json.Encode(@ViewBag.shows));
+        for (var i = 0; i < calendars.length; i++)
+        {
+            $("#" + calendars[i].UniqueId).css("background-color", calendars[i].BackgroundColorCalendar);
+            $("#" + calendars[i].UniqueId).css("border-color", calendars[i].BackgroundColorCalendar);
+            $("#" + calendars[i].UniqueId).css("color", calendars[i].TextColorCalendar);
+        }
+
+
+
 
         //Ganancias Netas por mes
         var gananciasNetasPorMesDataPoints = [];
