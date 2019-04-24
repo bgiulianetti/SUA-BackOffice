@@ -116,9 +116,9 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
-        public string GetGananciasNetasPorShow(string from, string to, string showsArray)
+        public string GetGananciasNetasPorShow(string from, string to, string showIds)
         {
-            var showsId = showsArray.Split('-').ToList();
+            var showsId = showIds.Split('-').ToList();
             var fromDate = new DateTime(Int32.Parse(from.Split('-')[0]), Int32.Parse(from.Split('-')[1]), Int32.Parse(from.Split('-')[2]));
             var toDate = new DateTime(Int32.Parse(to.Split('-')[0]), Int32.Parse(to.Split('-')[1]), Int32.Parse(to.Split('-')[2]));
             var info = new List<PieChartContract>();

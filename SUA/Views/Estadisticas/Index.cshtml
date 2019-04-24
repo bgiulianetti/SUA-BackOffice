@@ -36,8 +36,6 @@
                 <input type="date" id="gananciasNetasPorShow_to" value="2018-12-31" />
                 <input type="button" id="gananciasNetasPorShow" value="Ok" />
                 <br /><br />
-                <h4 id="sumatoria">Ganancia Total: $123456</h4>
-                <br /><br />
                 <div id="gananciasNetasPorShowChart" style="height: 300px; width: 100%;"></div>
             </div>
         </div>
@@ -92,7 +90,6 @@
 
     $(document).ready(function () {
 
-        var showIds = "";
         var calendars = @Html.Raw(Json.Encode(@ViewBag.shows));
         for (var i = 0; i < calendars.length; i++)
         {
@@ -305,13 +302,15 @@
 
 
         //Ganancias Netas por show
+        var _sumatoria = "Ganancia Total:";
         var gananciasNetasPorShowDataPoints = [];
         var gananciasNetasPorShow = createGananciasNetasPorShow();
         updateGananciasNetasPorShow();
         $("#gananciasNetasPorShow").click(updateGananciasNetasPorShow);
         function addGananciasNetasPorShowData(data) {
             gananciasNetasPorShow.destroy();
-            $("#sumatoria").html("Ganancia Total: $" + data[data.length - 1].y)
+            _sumatoria = "Ganancia Total: $" + data[data.length - 1].y;
+            //$("#sumatoria").html()
             data.pop();
             gananciasNetasPorShowDataPoints = data;
 
@@ -319,14 +318,31 @@
             gananciasNetasPorShow.render();
             
         }
-        function updateGananciasNetasPorShow() {
-            $.getJSON("estadisticas/GetGananciasNetasPorShow?from=" + $("#gananciasNetasPorShow_from").val() + "&to=" + $("#gananciasNetasPorShow_to").val(), addGananciasNetasPorShowData);
+        function updateGananciasNetasPorShow()
+        {
+            var showIds = "";
+            var calendars = @Html.Raw(Json.Encode(@ViewBag.shows));
+            for (var i = 0; i < calendars.length; i++)
+            {
+                if ($("#check" + calendars[i].UniqueId).prop('checked')) {
+                    if (showIds == "")
+                        showIds = calendars[i].UniqueId;
+                    else
+                        showIds += "-" + calendars[i].UniqueId;
+                }
+            }
+
+            $.getJSON("estadisticas/GetGananciasNetasPorShow?from=" + $("#gananciasNetasPorShow_from").val() + "&to=" + $("#gananciasNetasPorShow_to").val() + "&showIds=" + showIds, addGananciasNetasPorShowData);
         }
         function createGananciasNetasPorShow() {
             return new CanvasJS.Chart("gananciasNetasPorShowChart", {
                 animationEnabled: true,
                 theme: "light2",
                 exportEnabled: true,
+                subtitles: [{
+                    text: _sumatoria,
+                    fontSize: 16
+                }],
                 data: [{
                     type: "pie",
                     yValueFormatString: "#,###",
