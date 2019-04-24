@@ -30,11 +30,11 @@
                             <tr>
                                 <td>
                                     <label>Nombre de usuario </label>
-                                    @Html.TextBoxFor(model => model.Username, new {@id="id_username", @class = "form-control", Style = "width:300px", required = "required" })
+                                    @Html.TextBoxFor(model => model.Username, new { @id = "id_username", @class = "form-control", Style = "width:300px", required = "required" })
                                 </td>
                                 <td>
                                     <label>Contraseña </label>
-                                    @Html.TextBoxFor(model => model.Password, new { @class = "form-control", Style = "width:300px", required = "required", @type= "password", minlength = 7 })
+                                    @Html.TextBoxFor(model => model.Password, new { @class = "form-control", Style = "width:300px", required = "required", @type = "password", minlength = 7 })
                                 </td>
                             </tr>
                             <tr>
@@ -44,12 +44,16 @@
                                 </td>
                                 <td>
                                     <label>Usuario Maestro</label>
-                                    @Html.DropDownListFor(model => model.UserMaster, new SelectList(ViewBag.estados, "Text", "Value"), new { @id="userMaster", @class = "form-control", Style = "width:300px" })
+                                    @Html.DropDownListFor(model => model.UserMaster, new SelectList(ViewBag.estados, "Text", "Value"), new { @id = "userMaster", @class = "form-control", Style = "width:300px" })
                                 </td>
                             </tr>
-                         </table>
+                        </table>
+                        <hr style="color: #8dd9f7">
                         <table id="tableProperties">
-                            <tr>    
+                            <tr>
+                                <h4>Permisos</h4>
+                                <label style="color:red"><i>(*) Si el usuario es usuario maestro desestimar los permisos a continuación</i></label>
+                                <br />
                                 <td>
                                     <label>Standuperos</label>
                                     @Html.DropDownListFor(model => model.Standuperos, new SelectList(ViewBag.permisos, "Text", "Value"), new { @id = "standuperos", @class = "form-control", Style = "width:130px" })
@@ -62,7 +66,7 @@
                                     <label>Shows</label>
                                     @Html.DropDownListFor(model => model.Shows, new SelectList(ViewBag.permisos, "Text", "Value"), new { @id = "_idShows", @class = "form-control", Style = "width:130px" })
                                 </td>
-                             </tr>
+                            </tr>
                             <tr>
                                 <td>
                                     <label>Fechas</label>
@@ -99,6 +103,10 @@
                                 <td>
                                     <label>Prensa</label>
                                     @Html.DropDownListFor(model => model.Prensa, new SelectList(ViewBag.permisos, "Text", "Value"), new { @id = "prensa", @class = "form-control", Style = "width:130px" })
+                                </td>
+                                <td>
+                                    <label>Gasto</label>
+                                    @Html.DropDownListFor(model => model.Gasto, new SelectList(ViewBag.permisos, "Text", "Value"), new { @id = "prensa", @class = "form-control", Style = "width:130px" })
                                 </td>
                             </tr>
                         </table>

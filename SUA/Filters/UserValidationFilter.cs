@@ -439,10 +439,41 @@ namespace SUA.Filters
 
 
 
-                        //////////////////Estadisticas facturación
+                        //////////////////GASTO////////////////////////////////////
+
+
+                        //CREAR - EDITAR
+                        else if (controller == "Gasto" && action == "Gasto")
+                        {
+                            if (user.Gasto == "Prohibido")
+                            {
+                                filterContext.Result = new RedirectResult("/inicio");
+                            }
+                            else if (user.Gasto == "Lectura")
+                            {
+                                filterContext.Result = new RedirectResult("/inicio");
+                            }
+                        }
+
+                        //LISTAR
                         else if (controller == "Gasto" && action == "Gastos")
                         {
-                            filterContext.Result = new RedirectResult("/inicio");
+                            if (user.Gasto == "Prohibido")
+                            {
+                                filterContext.Result = new RedirectResult("/inicio");
+                            }
+                        }
+                        //BORRAR
+                        else if (controller == "Gasto" && action == "DeleteGasto")
+                        {
+                            if (user.Gasto == "Prohibido")
+                            {
+                                filterContext.Result = new RedirectResult("/inicio");
+                            }
+                            if (user.Gasto == "Lectura")
+                            {
+                                filterContext.Result = new RedirectResult("/gastos");
+                            }
                         }
                     }
                 }

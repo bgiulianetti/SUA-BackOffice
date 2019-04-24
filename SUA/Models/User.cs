@@ -28,6 +28,8 @@ namespace SUA.Models
         public string Proveedores { get; set; }
         public string Prensa { get; set; }
 
+        public string Gasto { get; set; }
+
 
         public List<Show> ShowsAsignados { get; set; }
         public string UserMaster { get; set; }
