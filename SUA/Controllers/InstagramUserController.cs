@@ -206,78 +206,72 @@ namespace SUA.Controllers
         {
             var users = new List<string>
             {
-                "agusbattioni*2019-04-12*397020,397022,397041,397285,397533,397629",
-                "angiesammartino*2019-04-12*142878,142947,143016,143097,143123,143132",
-                "chapumartinez*2019-04-12*1129200,1129155,1128819,1129020,1128763,1128168",
-                "connieballarini*2019-04-12*139277,141211,141447,141945,142360,142726",
-                "crococro*2019-04-12*69953,69994,69989,69985,69999,70007",
-                "darioorsi*2019-04-12*740175,739969,739665,739403,739299,739298",
-                "dieguitomaggio*2019-04-12*41691,41750,41760,41743,41726,41707",
-                "ezequielcampa*2019-04-12*86089,86086,86070,86046,86025,86043",
-                "fedecyrulnik*2019-04-12*365378,365173,364983,364817,364708,364575",
-                "fedesimonetti*2019-04-12*19203,19215,19216,19212,19212,19207",
-                "fermetilli*2019-04-12*363947,365017,365232,365417,365651,365799",
-                "fersanjiao*2019-04-12*42393,42446,42543,42625,42677,42716",
-                "ffrangomez*2019-04-12*422617,422835,423011,423358,423866,424182",
-                "gonzovizan*2019-04-12*144749,144690,144622,144532,144443,144371",
-                "gregorossello*2019-04-12*1010218,1009750,1009198,1008745,1008244,1007971",
-                "javichosoria*2019-04-12*17536,17530,17534,17550,17570,17581",
-                "joaquin__castellano*2019-04-12*174992,175109,175134,175364,175374,175351",
-                "juampicarbonetti*2019-04-12*26469,26476,26464,26480,26480,26504",
-                "juampigon*2019-04-12*412961,413321,413283,413223,413054,413023",
-                "julibellese*2019-04-12*115218,115335,115375,115394,115360,115314",
-                "lailaroth*2019-04-12*79759,79746,79678,79593,79576,79606",
-                "lendrogh*2019-04-12*9353,9348,9428,9417,9414,9396",
-                "lucaslauriente*2019-04-12*108954,108974,108959,108955,108928,108932",
-                "lucaslezin*2019-04-12*1034701,1035664,1036328,1036544,1037143,1037637",
-                "luchomellera*2019-04-12*118849,118885,118885,118877,118875,118887",
-                "magalitajes*2019-04-12*1244386,1244502,1244644,1245670,1248087,1248580",
-                "malepichot*2019-04-12*463432,463517,463521,463524,463514,463585",
-                "martarresok_*2019-04-12*372697,372885,373005,373084,373287,373426",
-                "martin_pugliese*2019-04-12*60124,60170,60164,60169,60169,60174",
-                "martincirio*2019-04-12*736942,739290,740917,742407,743946,745796",
-                "mikechouhy*2019-04-12*737809,737952,738090,738340,739340,739948",
-                "molinerd*2019-04-12*538802,538949,539051,539080,539172,539408",
-                "nachitosaralegui*2019-04-12*383263,383486,383919,384182,385700,386286",
-                "nicolasdetracy*2019-04-12*416907,416833,416790,416935,417301,417400",
-                "nicombraun*2019-04-12*64193,64369,64727,64969,65150,65359",
-                "pablitofabregas*2019-04-12*76737,76835,76878,76992,77050,77074",
-                "pablopicotto*2019-04-12*137931,138844,139172,139373,139589,139807",
-                "pichipiccirillo*2019-04-12*12786,12782,12783,12786,12784,12778",
-                "pipabarbato*2019-04-12*83239,83229,83237,83283,83312,83321",
-                "rodriguezgalati*2019-04-12*644341,644785,645097,645771,646216,646724",
-                "soyrada*2019-04-12*1238652,1238936,1239069,1239121,1239353,1239853",
-                "standupargentina*2019-04-12*67324,67363,67372,67382,67466,67551",
-                "virsammartino*2019-04-12*11629,11627,11633,11636,11641,11640"
+                "agusbattioni*2019-04-26*399950,400250,400433,401136,401585,401902,402213,402400,402500",
+                "angiesammartino*2019-04-26*142997,143103,143219,143289,143489,143835,144178,144570,144591",
+                "chapumartinez*2019-04-26*1127400,1127890,1128293,1128002,1128222,1128321,1128467,1128500",
+                "connieballarini*2019-04-26*147900,148231,149132,149884,151311,152678,153222,154320,155103",
+                "crococro*2019-04-26*70020,70031,70040,70004,70010,69920,69941,69972,69960",
+                "darioorsi*2019-04-26*740410,740521,740200,739923,740121,740243,740343,740554,740668",
+                "dieguitomaggio*2019-04-26*41500,41492,41479,41468,41460,41456,41449,41438,41422",
+                "elartedenegar*2019-04-26*60410,60730,60885,61283,61329,61730,62421,62909,63050",
+                "ezequielcampa*2019-04-26*86200,86243,86218,86234,86301,86279,86543,86322,86260",
+                "fedecyrulnik*2019-04-26*363897,363637,363235,363235,363009,362869,362723,362605,362400",
+                "fedesimonetti*2019-04-26*19272,19292,19285,19299,19315,19269,19285,19273,19300",
+                "fermetilli*2019-04-26*367380,367932,368645,368795,369234,369411,369819,370236,370596",
+                "fersanjiao*2019-04-26*43015,43121,43007,43019,43163,43087,43015,43101,43150",
+                "ffrangomez*2019-04-26*431601,434954,436102,438953,440452,441765,442361,443242,443900",
+                "gonzovizan*2019-04-26*,,,,,,,,",
+                "gregorossello*2019-04-26*,,,,,,,,",
+                "javichosoria*2019-04-26*,,,,,,,,",
+                "joaquin__castellano*,,,,,,,,",
+                "juampicarbonetti*,,,,,,,,",
+                "juampigon*2019-04-26*,,,,,,,,",
+                "julibellese*2019-04-26*,,,,,,,,",
+                "lailaroth*2019-04-26*,,,,,,,,",
+                "lendrogh*2019-04-26*,,,,,,,,",
+                "lucaslauriente*2019-04-26*,,,,,,,,",
+                "lucaslezin*2019-04-26*,,,,,,,,",
+                "luchomellera*2019-04-26*,,,,,,,,",
+                "magalitajes*2019-04-26*,,,,,,,,",
+                "malepichot*2019-04-26*,,,,,,,,",
+                "martarresok_*2019-04-26*,,,,,,,,",
+                "martin_pugliese*2019-04-26*,,,,,,,,",
+                "martincirio*2019-04-26*,,,,,,,,",
+                "mikechouhy*2019-04-26*,,,,,,,,",
+                "molinerd*2019-04-26*,,,,,,,,",
+                "nachitosaralegui*2019-04-26*,,,,,,,,",
+                "nicolasdetracy*2019-04-26*,,,,,,,,",
+                "nicombraun*2019-04-26*,,,,,,,,",
+                "pablitofabregas*2019-04-26*,,,,,,,,",
+                "pablopicotto*2019-04-26*,,,,,,,,",
+                "pichipiccirillo*2019-04-26*,,,,,,,,",
+                "pipabarbato*2019-04-26*,,,,,,,,",
+                "rodriguezgalati*2019-04-26*,,,,,,,,",
+                "soyrada*2019-04-26*,,,,,,,,",
+                "standupargentina*2019-04-26*,,,,,,,,",
+                "virsammartino*2019-04-26*,,,,,,,,"
             };
 
             foreach (var user in users)
             {
                 var instagramUserService = new InstagramUserService();
                 var userObtenido = instagramUserService.GetInstagramUserByUsername(user.Split('*')[0]);
-                if(userObtenido.Username == "magalitajes")
+
+                if (userObtenido.Username == "chapumartinez")
                 {
-                    userObtenido.ProfilePicture = "https://scontent.xx.fbcdn.net/v/t51.2885-15/53501890_859554574393933_7168560404279328768_n.jpg?_nc_cat=1&_nc_ht=scontent.xx&oh=6e8316b50153be6ed047334ee7ee171b&oe=5D4526B4";
+                    userObtenido.ProfilePicture = "https://instagram.faep3-1.fna.fbcdn.net/vp/eff1b96f1644ee8d099d9bd041911a97/5D7144AA/t51.2885-19/s320x320/57111693_1236063976568847_6500151145267200000_n.jpg?_nc_ht=instagram.faep3-1.fna.fbcdn.net";
                 }
-                else if(userObtenido.Username == "juampicarbonetti")
+                else if (userObtenido.Username == "connieballarini")
                 {
-                    userObtenido.ProfilePicture = "https://scontent.xx.fbcdn.net/v/t51.2885-15/54731597_2261630280771643_3129537669806161920_n.jpg?_nc_cat=107&_nc_ht=scontent.xx&oh=5fad2798fde6d96b52d26377fb13f57d&oe=5D2FDFD2";
+                    userObtenido.ProfilePicture = "https://instagram.faep3-1.fna.fbcdn.net/vp/e57b29d8c6a284d7bd253428c38c4dad/5D759F3B/t51.2885-19/s320x320/54425512_2370290399876042_2705795174180585472_n.jpg?_nc_ht=instagram.faep3-1.fna.fbcdn.net";
                 }
-                else if (userObtenido.Username == "martin_pugliese")
+                else if(userObtenido.Username == "ezequielcampa")
                 {
-                    userObtenido.ProfilePicture = "https://scontent.xx.fbcdn.net/v/t51.2885-15/51710904_608522082909374_441027698882510848_n.jpg?_nc_cat=101&_nc_ht=scontent.xx&oh=30f2f321d4a3320689bfa4491bbe7c97&oe=5D3A2B4E";
+                    userObtenido.ProfilePicture = "https://instagram.faep3-1.fna.fbcdn.net/vp/ee142471be7ded1c93b630dc55e8e409/5D77CD74/t51.2885-19/s320x320/55798327_466205993918758_3553304998932643840_n.jpg?_nc_ht=instagram.faep3-1.fna.fbcdn.net";
                 }
-                else if (userObtenido.Username == "molinerd")
+                else if (userObtenido.Username == "fermetilli")
                 {
-                    userObtenido.ProfilePicture = "https://scontent.xx.fbcdn.net/v/t51.2885-15/53302429_672339519847499_6226905274356072448_n.jpg?_nc_cat=1&_nc_ht=scontent.xx&oh=44bcd4ef0b732bb7b33a6bf5a6a065fa&oe=5D77ABFD";
-                }
-                else if (userObtenido.Username == "nachitosaralegui")
-                {
-                    userObtenido.ProfilePicture = "https://scontent.xx.fbcdn.net/v/t51.2885-15/52504205_366468690615771_5415001699150462976_n.jpg?_nc_cat=1&_nc_ht=scontent.xx&oh=e7b39c5df3d713f61f7c22c5ee4e6e43&oe=5D292382";
-                }
-                else if (userObtenido.Username == "pipabarbato")
-                {
-                    userObtenido.ProfilePicture = "https://scontent.xx.fbcdn.net/v/t51.2885-15/54208006_756096638107271_6254099473971019776_n.jpg?_nc_cat=109&_nc_ht=scontent.xx&oh=e41e826ad5af323fbf884f4a7d15f31d&oe=5D73E5C0";
+                    userObtenido.ProfilePicture = "https://instagram.faep3-1.fna.fbcdn.net/vp/418c9e438da68bc296ffcfbdea642397/5D56CD34/t51.2885-19/s320x320/53320136_630636060717891_7949599210624516096_n.jpg?_nc_ht=instagram.faep3-1.fna.fbcdn.net";
                 }
                 var lastDay = userObtenido.Followers.First();
                 var newDays = user.Split('*').ToList()[2].Split(',').ToList();
