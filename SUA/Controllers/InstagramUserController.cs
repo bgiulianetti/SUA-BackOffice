@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SUA.Filters;
 using SUA.Models;
 using SUA.Servicios;
 using SUA.Utilities;
@@ -12,6 +13,7 @@ namespace SUA.Controllers
 {
     public class InstagramUserController : Controller
     {
+        [UserValidationFilter]
         public ActionResult InstagramUsers()
         {
             try
