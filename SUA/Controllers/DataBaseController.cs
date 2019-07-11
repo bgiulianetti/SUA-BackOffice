@@ -37,6 +37,9 @@ namespace SUA.Controllers
                 entidades.Add("logs", JsonConvert.SerializeObject(new LogService().GetLogs("all")));
                 entidades.Add("hoteles", JsonConvert.SerializeObject(new HotelService().GetHoteles()));
                 entidades.Add("votaciones", JsonConvert.SerializeObject(new VotacionService().GetVotaciones("true")));
+                entidades.Add("gastos", JsonConvert.SerializeObject(new GastoService().GetGastos()));
+
+                //Prensa
                 try
                 {
                     entidades.Add("prensa", JsonConvert.SerializeObject(new PrensaService().GetPrensa()));
@@ -45,6 +48,8 @@ namespace SUA.Controllers
                 {
                     entidades.Add("prensa", "[]");
                 }
+
+                //Proveedores
                 try
                 {
                     entidades.Add("proveedores", JsonConvert.SerializeObject(new ProveedorService().GetProveedores()));
@@ -53,6 +58,8 @@ namespace SUA.Controllers
                 {
                     entidades.Add("proveedores", "[]");
                 }
+
+                //Instagran users
                 try
                 {
                     entidades.Add("instagramusers", JsonConvert.SerializeObject(new InstagramUserService().GetInstagramUsers()));
@@ -152,7 +159,7 @@ namespace SUA.Controllers
         public ActionResult Restore(string id)
         {
             var date = id;
-            var entidades = new List<string> { "standuperos", "productores", "shows", "fechas", "usuarios", "salas", "restaurantes", "logs", "hoteles", "votaciones", "prensa", "proveedores", "instagramusers" };
+            var entidades = new List<string> { "standuperos", "productores", "shows", "fechas", "usuarios", "salas", "restaurantes", "logs", "hoteles", "votaciones", "prensa", "proveedores", "instagramusers", "gastos" };
             try
             {
                 foreach (var entidad in entidades)
@@ -235,6 +242,12 @@ namespace SUA.Controllers
                         var instagramusers = JsonConvert.DeserializeObject<InstagramUser[]>(json);
                         if (instagramusers.Length > 0)
                             new InstagramUserService().AddBulkInstagramUser(instagramusers.ToList());
+                    }
+                    else if (entidad == "gastos")
+                    {
+                        var gastos = JsonConvert.DeserializeObject<Gasto[]>(json);
+                        if (gastos.Length > 0)
+                            new GastoService().AddBulkGasto(gastos.ToList());
                     }
                 }
                 ViewBag.mensaje = "Restore Generado con éxito";
