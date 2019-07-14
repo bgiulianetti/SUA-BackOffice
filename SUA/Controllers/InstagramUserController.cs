@@ -292,7 +292,15 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
-        public void FixDates()
+        public void fixig()
+        {
+            FixDates();
+            //
+            Random rnd = new Random();
+            int month = rnd.Next(1, 13); // creates a number between 1 and 12
+        }
+
+        private void FixDates()
         {
             var service = new InstagramUserService();
             var users = service.GetInstagramUsers();
