@@ -291,7 +291,27 @@ namespace SUA.Controllers
             }
         }
 
-
+        [HttpGet]
+        public void FixDates()
+        {
+            var service = new InstagramUserService();
+            var users = service.GetInstagramUsers();
+            foreach (var user in users)
+            {
+                var followersHistory = user.Followers.OrderByDescending(f=>f.Date).ToList();
+                var originalDate = new DateTime(2019,05,05);
+                var lastCorrectDate = new DateTime(2019, 04, 11);
+                var i = 0;
+                while(originalDate >= lastCorrectDate)
+                {
+                    followersHistory[i].Date = originalDate;
+                    originalDate = originalDate.AddDays(-1);
+                    i++;
+                }
+                user.Followers = followersHistory;
+                service.UpdateInstagramUser(user);
+            }
+        }
 
     }
 }

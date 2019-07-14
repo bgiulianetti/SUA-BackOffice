@@ -16,7 +16,6 @@ namespace SUA.Controllers
         [UserValidationFilter]
         public ActionResult Backup(string id)
         {
-
             var entidades = new Dictionary<string, string>();
             try
             {
@@ -27,6 +26,11 @@ namespace SUA.Controllers
                 entidades.Add("fechas", JsonConvert.SerializeObject(new FechaService().GetFechasForBackUp()));
                 entidades.Add("usuarios", JsonConvert.SerializeObject(new UserService().GetUsers()));
                 entidades.Add("salas", JsonConvert.SerializeObject(new SalaService().GetSalas()));
+                entidades.Add("logs", JsonConvert.SerializeObject(new LogService().GetLogs("all")));
+                entidades.Add("hoteles", JsonConvert.SerializeObject(new HotelService().GetHoteles()));
+                entidades.Add("votaciones", JsonConvert.SerializeObject(new VotacionService().GetVotaciones("true")));
+
+                //Restaurantes
                 try
                 {
                     entidades.Add("restaurantes", JsonConvert.SerializeObject(new RestauranteService().GetRestaurantes()));
@@ -34,10 +38,16 @@ namespace SUA.Controllers
                 {
                     entidades.Add("restaurantes", "[]");
                 }
-                entidades.Add("logs", JsonConvert.SerializeObject(new LogService().GetLogs("all")));
-                entidades.Add("hoteles", JsonConvert.SerializeObject(new HotelService().GetHoteles()));
-                entidades.Add("votaciones", JsonConvert.SerializeObject(new VotacionService().GetVotaciones("true")));
-                entidades.Add("gastos", JsonConvert.SerializeObject(new GastoService().GetGastos()));
+                
+                //Gastos
+                try
+                {
+                    entidades.Add("gastos", JsonConvert.SerializeObject(new GastoService().GetGastos()));
+                }
+                catch
+                {
+                    entidades.Add("gastos", "[]");
+                }            
 
                 //Prensa
                 try
@@ -259,7 +269,6 @@ namespace SUA.Controllers
 
             return View();
         }
-
 
         [HttpGet]
         public ActionResult RestoreInstagramUsers(string id)
