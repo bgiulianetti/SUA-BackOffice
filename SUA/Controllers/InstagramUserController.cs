@@ -208,53 +208,53 @@ namespace SUA.Controllers
         {
             var users = new List<string>
             {
-                "agusbattioni*2019-04-26*399950,400250,400433,401136,401585,401902,402213,402400,402500",
-                "angiesammartino*2019-04-26*142997,143103,143219,143289,143489,143835,144178,144570,144591",
-                "chapumartinez*2019-04-26*1127400,1127890,1128293,1128002,1128222,1128321,1128467,1128500,1128102",
-                "connieballarini*2019-04-26*147900,148231,149132,149884,151311,152678,153222,154320,155103",
-                "crococro*2019-04-26*70020,70031,70040,70004,70010,69920,69941,69972,69960",
-                "darioorsi*2019-04-26*740410,740521,740200,739923,740121,740243,740343,740554,740668",
-                "dieguitomaggio*2019-04-26*41500,41492,41479,41468,41460,41456,41449,41438,41422",
-                "elartedenegar*2019-04-26*60410,60730,60885,61283,61329,61730,62421,62909,63050",
-                "ezequielcampa*2019-04-26*86200,86243,86218,86234,86301,86279,86543,86322,86260",
-                "fedecyrulnik*2019-04-26*363897,363637,363235,363235,363009,362869,362723,362605,362400",
-                "fedesimonetti*2019-04-26*19272,19292,19285,19299,19315,19269,19285,19273,19300",
-                "fermetilli*2019-04-26*367380,367932,368645,368795,369234,369411,369819,370236,370596",
-                "fersanjiao*2019-04-26*43015,43121,43007,43019,43163,43087,43015,43101,43150",
-                "ffrangomez*2019-04-26*431601,434954,436102,438953,440452,441765,442361,443242,443900",
-                "gonzovizan*2019-04-26*143165,143142,143007,142988,142870,142710,142615,142382,142305",
-                "gregorossello*2019-04-26*1005400,1005465,1005499,1005520,1005802,1005793,1005701,1005721,1005762",
-                "javichosoria*2019-04-26*17730,17756,17763,17777,17785,17824,17839,17909,17927",
-                "joaquin__castellano*2019-04-26*175300,175295,175291,175302,175289,175280,175288,175300,175295",
-                "juampicarbonetti*2019-04-26*26650,26661,26673,26685,26689,26693,26688,26695,26700",
-                "juampigon*2019-04-26*413160,413261,413293,414315,414725,414799,415010,415015,415022",
-                "julibellese*2019-04-26*115070,115097,115108,115123,115161,115183,115202,115232,115250",
-                "lailaroth*2019-04-26*79400,79424,79489,79503,79524,79577,79615,79679,79700",
-                "leaigounet*2019-04-26*129715,129803,129850,129920,130101,130459,130901,131523,131899",
-                "lendrogh*2019-04-26*9370,9389,9399,9410,9419,9428,9433,9447,9449",
-                "lucaslauriente*2019-04-26*109003,109040,109053,109069,109088,109092,109103,109153,109165",
-                "lucaslezin*2019-04-26*1037005,1036815,1036112,1035700,1034333,1034002,1033832,1033502,1033270",
-                "luchomellera*2019-04-26*119006,119043,119168,119222,119265,119296,119301,119320,119332",
-                "magalitajes*2019-04-26*1254300,1254932,1255236,1255500,1255906,1256443,1257221,1257971,1258801",
-                "malepichot*2019-04-26*463670,463721,463815,463922,464010,464036,464002,464042,464009",
-                "manuelasaiz*2019-04-26*24670,24679,24688,24655,24632,24601,24622,24657,24660",
-                "martarresok_*2019-04-26*375210,375222,375345,375410,375721,375999,376110,376387,376570",
-                "martin_pugliese*2019-04-26*60222,60228,60215,60290,60284,60255,60278,60309,60315",
-                "martincirio*2019-04-26*752020,753120,754944,756031,757446,758701,759002,759991,760510",
-                "mikechouhy*2019-04-26*742350,742410,742602,743733,743997,744001,744202,744287,744399",
-                "molinerd*2019-04-26*541602,541637,541732,541808,541879,541896,541920,542008,542387",
-                "nachitosaralegui*2019-04-26*397002,398334,399111,401922,402331,404771,405891,405920,406000",
-                "nicolasdetracy*2019-04-26*423033,423456,425999,428859,429234,430115,430594,430996,431020",
-                "nicombraun*2019-04-26*69992,70109,70652,70992,71555,71845,72601,72977,73543",
-                "pablitofabregas*2019-04-26*77520,77545,77598,77610,77699,77831,77992,78032,78002",
-                "pablopicotto*2019-04-26*144702,144923,145231,146880,147833,148100,149343,150456,150801",
-                "pichipiccirillo*2019-04-26*12802,12815,12826,12822,12816,12801,12834,12810,12800",
-                "pipabarbato*2019-04-26*85010,85234,85345,85599,86111,86374,86596,86891,87101",
-                "quierostandup*2019-04-26*26189,26197,26201,26216,26257,26287,26295,26301,26305",
-                "rodriguezgalati*2019-04-26*651222,651831,652345,652876,653444,654782,655115,655189,656213",
-                "soyrada*2019-04-26*1240300,1240330,1240349,1240366,1240372,1240389,1240402,1240429,1240398",
-                "standupargentina*2019-04-26*68200,68233,68289,68315,68389,68410,68434,68497,68514",
-                "virsammartino*2019-04-26*11655,11663,11674,11680,11683,11685,11692,11698,11690"
+                "agusbattioni*2019-07-16*427719*",
+                "angiesammartino*2019-07-16*159007*",
+                "chapumartinez*2019-07-16*1159171*",
+                "connieballarini*2019-07-16*192538*",
+                "crococro*2019-07-16*70707*",
+                "darioorsi*2019-07-16*746436*",
+                "dieguitomaggio*2019-07-16*40380*",
+                "elartedenegar*2019-07-16*62672*",
+                "ezequielcampa*2019-07-16*92098*",
+                "fedecyrulnik*2019-07-16*360,010*",
+                "fedesimonetti*2019-07-16*20557*",
+                "fermetilli*2019-07-16*421155*",
+                "fersanjiao*2019-07-16*44739",
+                "ffrangomez*2019-07-16*512751",
+                "gonzovizan*2019-07-16*137690",
+                "gregorossello*2019-07-16*1000242",
+                "javichosoria*2019-07-16*18505",
+                "joaquin__castellano*2019-07-16*181571",
+                "juampicarbonetti*2019-07-16*27931",
+                "juampigon*2019-07-16*417485",
+                "julibellese*2019-07-16*131507",
+                "lailaroth*2019-07-16*77863",
+                "leaigounet*2019-07-16*138545",
+                "lendrogh*2019-07-16*9572",
+                "lucaslauriente*2019-07-16*110141",
+                "lucaslezin*2019-07-16*1013330",
+                "luchomellera*2019-07-16*121667",
+                "magalitajes*2019-07-16*1299573",
+                "malepichot*2019-07-16*470430",
+                "manuelasaiz*2019-07-16*25118",
+                "martarresok_*2019-07-16*386754",
+                "martin_pugliese*2019-07-16*61446",
+                "martincirio*2019-07-16*811335",
+                "mikechouhy*2019-07-16*766109",
+                "molinerd*2019-07-16*548,596",
+                "nachitosaralegui*2019-07-16*429362",
+                "nicolasdetracy*2019-07-16*450179",
+                "nicombraun*2019-07-16*82281",
+                "pablitofabregas*2019-07-16*80653",
+                "pablopicotto*2019-07-16*191135",
+                "pichipiccirillo*2019-07-16*15832",
+                "pipabarbato*2019-07-16*102390",
+                "quierostandup*2019-07-16*26794",
+                "rodriguezgalati*2019-07-16*712374",
+                "soyrada*2019-07-16*1270113",
+                "standupargentina*2019-07-16*70648",
+                "virsammartino*2019-07-16*12147"
             };
 
             foreach (var user in users)
@@ -262,22 +262,6 @@ namespace SUA.Controllers
                 var instagramUserService = new InstagramUserService();
                 var userObtenido = instagramUserService.GetInstagramUserByUsername(user.Split('*')[0]);
 
-                if (userObtenido.Username == "chapumartinez")
-                {
-                    userObtenido.ProfilePicture = "https://instagram.faep3-1.fna.fbcdn.net/vp/eff1b96f1644ee8d099d9bd041911a97/5D7144AA/t51.2885-19/s320x320/57111693_1236063976568847_6500151145267200000_n.jpg?_nc_ht=instagram.faep3-1.fna.fbcdn.net";
-                }
-                else if (userObtenido.Username == "connieballarini")
-                {
-                    userObtenido.ProfilePicture = "https://instagram.faep3-1.fna.fbcdn.net/vp/e57b29d8c6a284d7bd253428c38c4dad/5D759F3B/t51.2885-19/s320x320/54425512_2370290399876042_2705795174180585472_n.jpg?_nc_ht=instagram.faep3-1.fna.fbcdn.net";
-                }
-                else if(userObtenido.Username == "ezequielcampa")
-                {
-                    userObtenido.ProfilePicture = "https://instagram.faep3-1.fna.fbcdn.net/vp/ee142471be7ded1c93b630dc55e8e409/5D77CD74/t51.2885-19/s320x320/55798327_466205993918758_3553304998932643840_n.jpg?_nc_ht=instagram.faep3-1.fna.fbcdn.net";
-                }
-                else if (userObtenido.Username == "fermetilli")
-                {
-                    userObtenido.ProfilePicture = "https://instagram.faep3-1.fna.fbcdn.net/vp/418c9e438da68bc296ffcfbdea642397/5D56CD34/t51.2885-19/s320x320/53320136_630636060717891_7949599210624516096_n.jpg?_nc_ht=instagram.faep3-1.fna.fbcdn.net";
-                }
                 var lastDay = userObtenido.Followers.First();
                 var newDays = user.Split('*').ToList()[2].Split(',').ToList();
                 foreach (var day in newDays)
@@ -295,7 +279,7 @@ namespace SUA.Controllers
         public void fixig()
         {
             FixDates();
-            //
+
             Random rnd = new Random();
             int month = rnd.Next(1, 13); // creates a number between 1 and 12
         }
@@ -306,20 +290,34 @@ namespace SUA.Controllers
             var users = service.GetInstagramUsers();
             foreach (var user in users)
             {
-                var followersHistory = user.Followers.OrderByDescending(f=>f.Date).ToList();
-                var originalDate = new DateTime(2019,05,05);
-                var lastCorrectDate = new DateTime(2019, 04, 11);
+                var followersHistory = user.Followers.OrderByDescending(f => f.Date).ToList();
+                var elevenNotFound = true;
+                var twentyFiveNotFound = true;
                 var i = 0;
-                while(originalDate >= lastCorrectDate)
+                while (elevenNotFound || twentyFiveNotFound && i < followersHistory.Count)
                 {
-                    followersHistory[i].Date = originalDate;
-                    originalDate = originalDate.AddDays(-1);
+                    if (followersHistory[i].Date.Day == 11 && followersHistory[i].Date.Month == 04 && followersHistory[i].Date.Year == 2019 && elevenNotFound)
+                    {
+                        if (user.Username != "elartedenegar" && user.Username != "leaigounet" && user.Username != "manuelasaiz" && user.Username != "quierostandup")
+                        {
+                            var itemToDelete = followersHistory[i];
+                            followersHistory.Remove(itemToDelete);
+                            elevenNotFound = false;
+                        }
+                    }
+                    if(followersHistory[i].Date.Day == 25 && followersHistory[i].Date.Month == 04 && followersHistory[i].Date.Year == 2019 && twentyFiveNotFound)
+                    {
+                        var itemToDelete = followersHistory[i];
+                        followersHistory.Remove(itemToDelete);
+                        twentyFiveNotFound = false;
+                        if (user.Username == "elartedenegar" || user.Username == "leaigounet" || user.Username == "manuelasaiz" || user.Username == "quierostandup")
+                            elevenNotFound = false;
+                    }
                     i++;
                 }
                 user.Followers = followersHistory;
                 service.UpdateInstagramUser(user);
             }
         }
-
     }
 }
