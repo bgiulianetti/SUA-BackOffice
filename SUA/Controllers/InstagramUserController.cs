@@ -6,6 +6,7 @@ using SUA.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -204,7 +205,7 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
-        public void Fix()
+        public void CreateFollowers()
         {
             var users = new List<string>
             {
@@ -217,7 +218,7 @@ namespace SUA.Controllers
                 "dieguitomaggio*2019-07-16*40380*",
                 "elartedenegar*2019-07-16*62672*",
                 "ezequielcampa*2019-07-16*92098*",
-                "fedecyrulnik*2019-07-16*360,010*",
+                "fedecyrulnik*2019-07-16*360010*",
                 "fedesimonetti*2019-07-16*20557*",
                 "fermetilli*2019-07-16*421155*",
                 "fersanjiao*2019-07-16*44739",
@@ -242,7 +243,7 @@ namespace SUA.Controllers
                 "martin_pugliese*2019-07-16*61446",
                 "martincirio*2019-07-16*811335",
                 "mikechouhy*2019-07-16*766109",
-                "molinerd*2019-07-16*548,596",
+                "molinerd*2019-07-16*548596",
                 "nachitosaralegui*2019-07-16*429362",
                 "nicolasdetracy*2019-07-16*450179",
                 "nicombraun*2019-07-16*82281",
@@ -262,14 +263,31 @@ namespace SUA.Controllers
                 var instagramUserService = new InstagramUserService();
                 var userObtenido = instagramUserService.GetInstagramUserByUsername(user.Split('*')[0]);
 
-                var lastDay = userObtenido.Followers.First();
-                var newDays = user.Split('*').ToList()[2].Split(',').ToList();
-                foreach (var day in newDays)
+                var folowersCountTop = Int32.Parse(user.Split('*').ToList()[2]);
+                var lastDate = new DateTime(Int32.Parse(user.Split('*').ToList()[1].Split('-')[0]), 
+                                            Int32.Parse(user.Split('*').ToList()[1].Split('-')[1]), 
+                                            Int32.Parse(user.Split('*').ToList()[1].Split('-')[2]));
+                var followers = userObtenido.Followers.OrderBy(i => i.Date).ToList();
+                var currentDate = followers.Last().Date;
+                var rnd = new Random();
+                int count;
+                while (currentDate < lastDate)
                 {
-                    var intDay = Int32.Parse(day);
-                    var followersHistoryItem = new InstragramUserFollowersHistory { Count = intDay, Date = lastDay.Date.AddDays(1), Difference = intDay - lastDay.Count };
-                    userObtenido.Followers.Add(followersHistoryItem);
-                    lastDay = followersHistoryItem;
+                    Thread.Sleep(500);
+                    if (followers.Last().Count < folowersCountTop)
+                        count = rnd.Next(followers.Last().Count, folowersCountTop);
+                    else
+                        count = rnd.Next(folowersCountTop, followers.Last().Count);
+
+                    var followerItem = new InstragramUserFollowersHistory
+                    {
+                        Count = count,
+                        Date = followers.Last().Date.AddDays(1),
+                        Difference = count - followers.Last().Count
+                    };
+                    userObtenido.Followers.Add(followerItem);
+                    followers = userObtenido.Followers.OrderBy(i => i.Date).ToList();
+                    currentDate = followers.Last().Date;
                 }
                 instagramUserService.UpdateInstagramUser(userObtenido);
             }
@@ -279,9 +297,8 @@ namespace SUA.Controllers
         public void fixig()
         {
             FixDates();
-
-            Random rnd = new Random();
-            int month = rnd.Next(1, 13); // creates a number between 1 and 12
+            CreateFollowers();
+            
         }
 
         private void FixDates()
