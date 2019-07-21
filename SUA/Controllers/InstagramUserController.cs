@@ -270,24 +270,42 @@ namespace SUA.Controllers
                 var followers = userObtenido.Followers.OrderBy(i => i.Date).ToList();
                 var currentDate = followers.Last().Date;
                 var rnd = new Random();
-                int count;
+                int count = 0;
                 while (currentDate < lastDate)
                 {
-                    Thread.Sleep(500);
-                    if (followers.Last().Count < folowersCountTop)
-                        count = rnd.Next(followers.Last().Count, folowersCountTop);
-                    else
-                        count = rnd.Next(folowersCountTop, followers.Last().Count);
-
-                    var followerItem = new InstragramUserFollowersHistory
+                    if (followers.Last().Count == count)
                     {
-                        Count = count,
-                        Date = followers.Last().Date.AddDays(1),
-                        Difference = count - followers.Last().Count
-                    };
-                    userObtenido.Followers.Add(followerItem);
-                    followers = userObtenido.Followers.OrderBy(i => i.Date).ToList();
-                    currentDate = followers.Last().Date;
+                        rnd = new Random();
+                        count = 0;
+                    }
+                    else
+                    {
+                        if (followers.Last().Count < folowersCountTop)
+                        {
+                            count = rnd.Next(followers.Last().Count, folowersCountTop);
+                            while (count - followers.Last().Count > 1000)
+                            {
+                                count = rnd.Next(followers.Last().Count, folowersCountTop);
+                            }
+                        }
+                        else if (followers.Last().Count > folowersCountTop)
+                        {
+                            count = rnd.Next(folowersCountTop, followers.Last().Count);
+                            while (count - followers.Last().Count > 1000)
+                            {
+                                count = rnd.Next(folowersCountTop, followers.Last().Count);
+                            }
+                        }
+                        var followerItem = new InstragramUserFollowersHistory
+                        {
+                            Count = count,
+                            Date = followers.Last().Date.AddDays(1),
+                            Difference = count - followers.Last().Count
+                        };
+                        userObtenido.Followers.Add(followerItem);
+                        followers = userObtenido.Followers.OrderBy(i => i.Date).ToList();
+                        currentDate = followers.Last().Date;
+                    }
                 }
                 instagramUserService.UpdateInstagramUser(userObtenido);
             }
