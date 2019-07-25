@@ -209,110 +209,97 @@ namespace SUA.Controllers
         {
             var users = new List<string>
             {
-                "agusbattioni*2019-07-16*427719*",
-                "angiesammartino*2019-07-16*159007*",
-                "chapumartinez*2019-07-16*1159171*",
-                "connieballarini*2019-07-16*192538*",
-                "crococro*2019-07-16*70707*",
-                "darioorsi*2019-07-16*746436*",
-                "dieguitomaggio*2019-07-16*40380*",
-                "elartedenegar*2019-07-16*62672*",
-                "ezequielcampa*2019-07-16*92098*",
-                "fedecyrulnik*2019-07-16*360010*",
-                "fedesimonetti*2019-07-16*20557*",
-                "fermetilli*2019-07-16*421155*",
-                "fersanjiao*2019-07-16*44739",
-                "ffrangomez*2019-07-16*512751",
-                "gonzovizan*2019-07-16*137690",
-                "gregorossello*2019-07-16*1000242",
-                "javichosoria*2019-07-16*18505",
-                "joaquin__castellano*2019-07-16*181571",
-                "juampicarbonetti*2019-07-16*27931",
-                "juampigon*2019-07-16*417485",
-                "julibellese*2019-07-16*131507",
-                "lailaroth*2019-07-16*77863",
-                "leaigounet*2019-07-16*138545",
-                "lendrogh*2019-07-16*9572",
-                "lucaslauriente*2019-07-16*110141",
-                "lucaslezin*2019-07-16*1013330",
-                "luchomellera*2019-07-16*121667",
-                "magalitajes*2019-07-16*1299573",
-                "malepichot*2019-07-16*470430",
-                "manuelasaiz*2019-07-16*25118",
-                "martarresok_*2019-07-16*386754",
-                "martin_pugliese*2019-07-16*61446",
-                "martincirio*2019-07-16*811335",
-                "mikechouhy*2019-07-16*766109",
-                "molinerd*2019-07-16*548596",
-                "nachitosaralegui*2019-07-16*429362",
-                "nicolasdetracy*2019-07-16*450179",
-                "nicombraun*2019-07-16*82281",
-                "pablitofabregas*2019-07-16*80653",
-                "pablopicotto*2019-07-16*191135",
-                "pichipiccirillo*2019-07-16*15832",
-                "pipabarbato*2019-07-16*102390",
-                "quierostandup*2019-07-16*26794",
-                "rodriguezgalati*2019-07-16*712374",
-                "soyrada*2019-07-16*1270113",
-                "standupargentina*2019-07-16*70648",
-                "virsammartino*2019-07-16*12147"
+                "agusbattioni*2019-07-16*427719*up*250",
+                "angiesammartino*2019-07-16*159007*up*100",
+                "chapumartinez*2019-07-16*1159171*down*100",
+                "connieballarini*2019-07-16*192538*up*500",
+                "crococro*2019-07-16*70707*up*10",
+                "darioorsi*2019-07-16*746436*up*40",
+                "dieguitomaggio*2019-07-16*40380*down*10",
+                "elartedenegar*2019-07-16*62672*up*100",
+                "ezequielcampa*2019-07-16*92098*up*5",
+                "fedecyrulnik*2019-07-16*360010*down*130",
+                "fedesimonetti*2019-07-16*20557*up*15",
+                "fermetilli*2019-07-16*421155*up*250",
+                "fersanjiao*2019-07-16*44739*up*25",
+                "ffrangomez*2019-07-16*512751*up*800",
+                "gonzovizan*2019-07-16*137690*down*100",
+                "gregorossello*2019-07-16*1000242*down*260",
+                "javichosoria*2019-07-16*18505*up*15",
+                "joaquin__castellano*2019-07-16*181571*up*60",
+                "juampicarbonetti*2019-07-16*27931*up*10",
+                "juampigon*2019-07-16*417485*up*100",
+                "julibellese*2019-07-16*131507*up*100",
+                "lailaroth*2019-07-16*77863*down*10",
+                "leaigounet*2019-07-16*138545*up*220",
+                "lendrogh*2019-07-16*9572*up*3",
+                "lucaslauriente*2019-07-16*110141*up*8",
+                "lucaslezin*2019-07-16*1013330*down*41",
+                "luchomellera*2019-07-16*121667*up*20",
+                "magalitajes*2019-07-16*1299573*up*580",
+                "malepichot*2019-07-16*470430*up*27",
+                "manuelasaiz*2019-07-16*25118*up*4",
+                "martarresok_*2019-07-16*386754*up*203",
+                "martin_pugliese*2019-07-16*61446*up*10",
+                "martincirio*2019-07-16*811335*up*1180",
+                "mikechouhy*2019-07-16*766109*up*300",
+                "molinerd*2019-07-16*548596*up*152",
+                "nachitosaralegui*2019-07-16*429362*up*930",
+                "nicolasdetracy*2019-07-16*450179*up*517",
+                "nicombraun*2019-07-16*82281*up*353",
+                "pablitofabregas*2019-07-16*80653*up*63",
+                "pablopicotto*2019-07-16*191135*up*500",
+                "pichipiccirillo*2019-07-16*15832*up*10",
+                "pipabarbato*2019-07-16*102390*up*135",
+                "quierostandup*2019-07-16*26794*up*7",
+                "rodriguezgalati*2019-07-16*712374*up*500",
+                "soyrada*2019-07-16*1270113*up*270",
+                "standupargentina*2019-07-16*70648*up*53",
+                "virsammartino*2019-07-16*12147*up*4"
             };
 
             foreach (var user in users)
             {
-                var instagramUserService = new InstagramUserService();
-                var userObtenido = instagramUserService.GetInstagramUserByUsername(user.Split('*')[0]);
+                var followersInfo = user.Split('*').ToList();
+                var folowersCountTop = Int32.Parse(followersInfo[2]);
+                var lastDate = new DateTime(Int32.Parse(followersInfo[1].Split('-')[0]),
+                                            Int32.Parse(followersInfo[1].Split('-')[1]),
+                                            Int32.Parse(followersInfo[1].Split('-')[2]));
+                bool isDecrement = true;
+                if (followersInfo[3] == "up")
+                    isDecrement = false;
+                var maxDif = Int32.Parse(followersInfo[4]);
 
-                var folowersCountTop = Int32.Parse(user.Split('*').ToList()[2]);
-                var lastDate = new DateTime(Int32.Parse(user.Split('*').ToList()[1].Split('-')[0]), 
-                                            Int32.Parse(user.Split('*').ToList()[1].Split('-')[1]), 
-                                            Int32.Parse(user.Split('*').ToList()[1].Split('-')[2]));
+
+                var instagramUserService = new InstagramUserService();
+                var userObtenido = instagramUserService.GetInstagramUserByUsername(followersInfo[0]);
                 var followers = userObtenido.Followers.OrderBy(i => i.Date).ToList();
                 var currentDate = followers.Last().Date;
                 var rnd = new Random();
-                int count = 0;
+
                 while (currentDate < lastDate)
                 {
-                    if (followers.Last().Count == count)
+                    //var lowerMargin = (int)(maxDif - maxDif * 0.8);
+                    var dif = rnd.Next(0, maxDif);
+                    if(isDecrement)
+                        dif = dif * -1;
+
+                    var followerItem = new InstragramUserFollowersHistory
                     {
-                        rnd = new Random();
-                        count = 0;
-                    }
-                    else
-                    {
-                        if (followers.Last().Count < folowersCountTop)
-                        {
-                            count = rnd.Next(followers.Last().Count, folowersCountTop);
-                            while (count - followers.Last().Count > 1000)
-                            {
-                                count = rnd.Next(followers.Last().Count, folowersCountTop);
-                            }
-                        }
-                        else if (followers.Last().Count > folowersCountTop)
-                        {
-                            count = rnd.Next(folowersCountTop, followers.Last().Count);
-                            while (count - followers.Last().Count > 1000)
-                            {
-                                count = rnd.Next(folowersCountTop, followers.Last().Count);
-                            }
-                        }
-                        var followerItem = new InstragramUserFollowersHistory
-                        {
-                            Count = count,
-                            Date = followers.Last().Date.AddDays(1),
-                            Difference = count - followers.Last().Count
-                        };
-                        userObtenido.Followers.Add(followerItem);
-                        followers = userObtenido.Followers.OrderBy(i => i.Date).ToList();
-                        currentDate = followers.Last().Date;
-                    }
+                        Count = followers.Last().Count + dif,
+                        Date = followers.Last().Date.AddDays(1),
+                        Difference = dif
+                    };
+                    userObtenido.Followers.Add(followerItem);
+                    followers = userObtenido.Followers.OrderBy(i => i.Date).ToList();
+                    currentDate = followers.Last().Date;
                 }
                 instagramUserService.UpdateInstagramUser(userObtenido);
             }
         }
 
         [HttpGet]
-        public void fixig()
+        public void FixIG()
         {
             FixDates();
             CreateFollowers();
@@ -354,5 +341,6 @@ namespace SUA.Controllers
                 service.UpdateInstagramUser(user);
             }
         }
+
     }
 }
