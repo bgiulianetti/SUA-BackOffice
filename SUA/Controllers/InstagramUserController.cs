@@ -268,32 +268,42 @@ namespace SUA.Controllers
                 bool isDecrement = true;
                 if (followersInfo[3] == "up")
                     isDecrement = false;
-                var maxDif = Int32.Parse(followersInfo[4]);
+                var maxDif = Int32.Parse(followersInfo[4]) * 2;
 
 
                 var instagramUserService = new InstagramUserService();
                 var userObtenido = instagramUserService.GetInstagramUserByUsername(followersInfo[0]);
                 var followers = userObtenido.Followers.OrderBy(i => i.Date).ToList();
-                var currentDate = followers.Last().Date;
-                var rnd = new Random();
+                var currentDate = followers.Last().Date.AddDays(1);
+                
 
                 while (currentDate < lastDate)
                 {
-                    //var lowerMargin = (int)(maxDif - maxDif * 0.8);
+                    Thread.Sleep(2);
+                    var seed = DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second +  DateTime.Now.Millisecond.ToString();
+                    var rnd = new Random(Int32.Parse(seed));
                     var dif = rnd.Next(0, maxDif);
-                    if(isDecrement)
+                    if (isDecrement)
                         dif = dif * -1;
 
                     var followerItem = new InstragramUserFollowersHistory
                     {
                         Count = followers.Last().Count + dif,
-                        Date = followers.Last().Date.AddDays(1),
+                        Date = currentDate,
                         Difference = dif
                     };
                     userObtenido.Followers.Add(followerItem);
                     followers = userObtenido.Followers.OrderBy(i => i.Date).ToList();
-                    currentDate = followers.Last().Date;
+                    currentDate = currentDate.AddDays(1);
                 }
+
+                var lastFollowerItem = new InstragramUserFollowersHistory
+                {
+                    Count = Int32.Parse(followersInfo[2]),
+                    Date = lastDate,
+                    Difference = Int32.Parse(followersInfo[2]) - followers.Last().Count
+                };
+                userObtenido.Followers.Add(lastFollowerItem);
                 instagramUserService.UpdateInstagramUser(userObtenido);
             }
         }
