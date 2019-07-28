@@ -209,53 +209,53 @@ namespace SUA.Controllers
         {
             var users = new List<string>
             {
-                "agusbattioni*2019-07-16*427719*up*250",
-                "angiesammartino*2019-07-16*159007*up*100",
-                "chapumartinez*2019-07-16*1159171*down*100",
-                "connieballarini*2019-07-16*192538*up*500",
-                "crococro*2019-07-16*70707*up*10",
-                "darioorsi*2019-07-16*746436*up*40",
-                "dieguitomaggio*2019-07-16*40380*down*10",
-                "elartedenegar*2019-07-16*62672*up*100",
-                "ezequielcampa*2019-07-16*92098*up*5",
-                "fedecyrulnik*2019-07-16*360010*down*130",
-                "fedesimonetti*2019-07-16*20557*up*15",
-                "fermetilli*2019-07-16*421155*up*250",
-                "fersanjiao*2019-07-16*44739*up*25",
-                "ffrangomez*2019-07-16*512751*up*800",
-                "gonzovizan*2019-07-16*137690*down*100",
-                "gregorossello*2019-07-16*1000242*down*260",
-                "javichosoria*2019-07-16*18505*up*15",
-                "joaquin__castellano*2019-07-16*181571*up*60",
-                "juampicarbonetti*2019-07-16*27931*up*10",
-                "juampigon*2019-07-16*417485*up*100",
-                "julibellese*2019-07-16*131507*up*100",
-                "lailaroth*2019-07-16*77863*down*10",
-                "leaigounet*2019-07-16*138545*up*220",
-                "lendrogh*2019-07-16*9572*up*3",
-                "lucaslauriente*2019-07-16*110141*up*8",
-                "lucaslezin*2019-07-16*1013330*down*41",
-                "luchomellera*2019-07-16*121667*up*20",
-                "magalitajes*2019-07-16*1299573*up*580",
-                "malepichot*2019-07-16*470430*up*27",
-                "manuelasaiz*2019-07-16*25118*up*4",
-                "martarresok_*2019-07-16*386754*up*203",
-                "martin_pugliese*2019-07-16*61446*up*10",
-                "martincirio*2019-07-16*811335*up*1180",
-                "mikechouhy*2019-07-16*766109*up*300",
-                "molinerd*2019-07-16*548596*up*152",
-                "nachitosaralegui*2019-07-16*429362*up*930",
-                "nicolasdetracy*2019-07-16*450179*up*517",
-                "nicombraun*2019-07-16*82281*up*353",
-                "pablitofabregas*2019-07-16*80653*up*63",
-                "pablopicotto*2019-07-16*191135*up*500",
+                "agusbattioni*2019-07-16*427719*up*65",
+                "angiesammartino*2019-07-16*159007*up*40",
+                "chapumartinez*2019-07-16*1159171*up*90",
+                "connieballarini*2019-07-16*192538*up*95",
+                "crococro*2019-07-16*70707*up*2",
+                "darioorsi*2019-07-16*746436*up*16",
+                "dieguitomaggio*2019-07-16*40380*down*3",
+                "elartedenegar*2019-07-16*62672*down*2",
+                "ezequielcampa*2019-07-16*92098*up*16",
+                "fedecyrulnik*2019-07-16*360010*down*8",
+                "fedesimonetti*2019-07-16*20557*up*4",
+                "fermetilli*2019-07-16*421155*up*145",
+                "fersanjiao*2019-07-16*44739*up*5",
+                "ffrangomez*2019-07-16*512751*up*200",
+                "gonzovizan*2019-07-16*137690*down*15",
+                "gregorossello*2019-07-16*1000242*down*20",
+                "javichosoria*2019-07-16*18505*up*2",
+                "joaquin__castellano*2019-07-16*181571*up*19",
+                "juampicarbonetti*2019-07-16*27931*up*4",
+                "juampigon*2019-07-16*417485*up*10",
+                "julibellese*2019-07-16*131507*up*40",
+                "lailaroth*2019-07-16*77863*down*6",
+                "leaigounet*2019-07-16*138545*up*20",
+                "lendrogh*2019-07-16*9572*up*1",
+                "lucaslauriente*2019-07-16*110141*up*3",
+                "lucaslezin*2019-07-16*1013330*down*51",
+                "luchomellera*2019-07-16*121667*up*8",
+                "magalitajes*2019-07-16*1299573*up*110",
+                "malepichot*2019-07-16*470430*up*18",
+                "manuelasaiz*2019-07-16*25118*up*2",
+                "martarresok_*2019-07-16*386754*up*33",
+                "martin_pugliese*2019-07-16*61446*up*3",
+                "martincirio*2019-07-16*811335*up*175",
+                "mikechouhy*2019-07-16*766109*up*60",
+                "molinerd*2019-07-16*548596*up*19",
+                "nachitosaralegui*2019-07-16*429362*up*90",
+                "nicolasdetracy*2019-07-16*450179*up*52",
+                "nicombraun*2019-07-16*82281*up*28",
+                "pablitofabregas*2019-07-16*80653*up*10",
+                "pablopicotto*2019-07-16*191135*up*130",
                 "pichipiccirillo*2019-07-16*15832*up*10",
-                "pipabarbato*2019-07-16*102390*up*135",
-                "quierostandup*2019-07-16*26794*up*7",
-                "rodriguezgalati*2019-07-16*712374*up*500",
-                "soyrada*2019-07-16*1270113*up*270",
-                "standupargentina*2019-07-16*70648*up*53",
-                "virsammartino*2019-07-16*12147*up*4"
+                "pipabarbato*2019-07-16*102390*up*45",
+                "quierostandup*2019-07-16*26794*up*2",
+                "rodriguezgalati*2019-07-16*712374*up*155",
+                "soyrada*2019-07-16*1270113*up*75",
+                "standupargentina*2019-07-16*70648*up*6",
+                "virsammartino*2019-07-16*12147*up*2"
             };
 
             foreach (var user in users)
@@ -275,16 +275,27 @@ namespace SUA.Controllers
                 var userObtenido = instagramUserService.GetInstagramUserByUsername(followersInfo[0]);
                 var followers = userObtenido.Followers.OrderBy(i => i.Date).ToList();
                 var currentDate = followers.Last().Date.AddDays(1);
-                
 
+                var pico = 0;
                 while (currentDate < lastDate)
                 {
                     Thread.Sleep(2);
                     var seed = DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second +  DateTime.Now.Millisecond.ToString();
                     var rnd = new Random(Int32.Parse(seed));
+                    
                     var dif = rnd.Next(0, maxDif);
                     if (isDecrement)
                         dif = dif * -1;
+
+                    if(pico == 6)
+                    {
+                        dif = dif * 20;
+                        pico = 0;
+                    }
+                    else if(pico == 3)
+                    {
+                        dif = dif * 5;
+                    }
 
                     var followerItem = new InstragramUserFollowersHistory
                     {
@@ -295,6 +306,7 @@ namespace SUA.Controllers
                     userObtenido.Followers.Add(followerItem);
                     followers = userObtenido.Followers.OrderBy(i => i.Date).ToList();
                     currentDate = currentDate.AddDays(1);
+                    pico++;
                 }
 
                 var lastFollowerItem = new InstragramUserFollowersHistory
@@ -309,11 +321,11 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
-        public void FixIG()
+        public ActionResult FixIG()
         {
             FixDates();
             CreateFollowers();
-            
+            return RedirectToAction("InstagramUsers");
         }
 
         private void FixDates()
