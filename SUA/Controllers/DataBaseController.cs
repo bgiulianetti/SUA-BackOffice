@@ -132,6 +132,46 @@ namespace SUA.Controllers
             return View();
         }
 
+
+        [HttpGet]
+        [UserValidationFilter]
+        public ActionResult BackupGastos(string id)
+        {
+            var entidades = new Dictionary<string, string>();
+            try
+            {
+                var fileNameList = new List<string>();
+                try
+                {
+                    entidades.Add("gastos", JsonConvert.SerializeObject(new GastoService().GetGastos()));
+                }
+                catch
+                {
+                    entidades.Add("gastos", "[]");
+                }
+
+
+                var directory = "";
+                directory = "~/BackUp/gastos-" + DateTime.Now.ToString("yyyy-MM-dd");
+                System.IO.Directory.CreateDirectory(Server.MapPath(directory));
+                foreach (var entidad in entidades)
+                {
+                    var fileNameFullPath = Server.MapPath(directory + "/" + DateTime.Now.ToString("yyyy-MM-dd") + "_" + entidad.Key + ".txt");
+                    System.IO.File.WriteAllText(fileNameFullPath, entidad.Value);
+                    fileNameList.Add(fileNameFullPath);
+                }
+                SendBackupFiles(fileNameList, Server.MapPath(directory), id);
+                ViewBag.mensaje = "Backup Gastos Generado con éxito";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.mensaje = ex.Message;
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
         [HttpGet]
         public ActionResult BackupVotacion(string id)
         {

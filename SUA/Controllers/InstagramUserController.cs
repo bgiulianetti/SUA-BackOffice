@@ -334,9 +334,9 @@ namespace SUA.Controllers
                 "ezequielcampa*2019-07-28*92767*up*16",
                 "fedecyrulnik*2019-07-28*362581*up*88",
                 "fedesimonetti*2019-07-28*20733*up*4",
-                "fermetilli*2019-07-28*425720*up*145",
+                "fermetilli*2019-07-28*425720*up*125",
                 "fersanjiao*2019-07-28*44737*down*2",
-                "ffrangomez*2019-07-28*516984*up*200",
+                "ffrangomez*2019-07-28*516984*up*170",
                 "gonzovizan*2019-07-28*136821*down*15",
                 "gregorossello*2019-07-28*1015801*up*210",
                 "javichosoria*2019-07-28*18760*up*2",
@@ -352,14 +352,14 @@ namespace SUA.Controllers
                 "luchomellera*2019-07-28*122178*up*3",
                 "magalitajes*2019-07-28*1308350*up*30",
                 "malepichot*2019-07-28*470881*up*4",
-                "manuelasaiz*2019-07-28*25745*up*2",
+                "manuelasaiz*2019-07-28*25745*up*3",
                 "martarresok_*2019-07-28*389616*up*33",
                 "martin_pugliese*2019-07-28*61598*up*2",
                 "martincirio*2019-07-28*814715*up*65",
                 "mikechouhy*2019-07-28*773179*up*60",
                 "molinerd*2019-07-28*550745*up*19",
                 "nachitosaralegui*2019-07-28*431655*up*20",
-                "nicolasdetracy*2019-07-28*459536*up*52",
+                "nicolasdetracy*2019-07-28*459536*up*62",
                 "nicombraun*2019-07-28*82637*up*28",
                 "pablitofabregas*2019-07-28*81072*up*10",
                 "pablopicotto*2019-07-28*197096*up*120",
@@ -369,7 +369,7 @@ namespace SUA.Controllers
                 "rodriguezgalati*2019-07-28*717634*up*55",
                 "soyrada*2019-07-28*1275028*up*25",
                 "standupargentina*2019-07-28*70868*up*6",
-                "virsammartino*2019-07-28*12578*up*2"
+                "virsammartino*2019-07-28*12578*up*3"
             };
 
             foreach (var user in users)

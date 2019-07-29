@@ -1,4 +1,5 @@
-﻿using SUA.Utilities;
+﻿using SUA.Filters;
+using SUA.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace SUA.Controllers
 {
     public class CiudadController : Controller
     {
+        [UserValidationFilter]
         public ActionResult Ciudades()
         {
             ViewBag.titulo = "Ciudades";
