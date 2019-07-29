@@ -73,6 +73,7 @@ namespace SUA.Models
             salaString += string.IsNullOrEmpty(Proyector) ? "" : "Proyector: " + this.Proyector + "\n";
             salaString += string.IsNullOrEmpty(Pantalla) ? "" : "Pantalla: " + this.Pantalla + "\n";
             salaString += string.IsNullOrEmpty(ArregloEconomico) ? "" : "Arreglo: " + this.Arreglo + "\n";
+            salaString += string.IsNullOrEmpty(Arreglo) ? "" : "Arreglo: " + this.Arreglo + "\n";
             salaString += string.IsNullOrEmpty(WhatsAppPersonal) ? "" : "WhatsAppPersonal: " + this.WhatsAppPersonal + "\n";
             salaString += string.IsNullOrEmpty(Acomodadores) ? "" : "Acomodadores: " + this.Acomodadores + "\n";
             salaString += string.IsNullOrEmpty(Boletero) ? "" : "Boletero: " + this.Boletero + "\n\n";
