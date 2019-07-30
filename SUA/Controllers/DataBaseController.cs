@@ -345,5 +345,108 @@ namespace SUA.Controllers
             var emailBody = "BackUp completo de la base de datos al " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             emailService.SendEmail(email, subject, emailBody, backUpFiles, false, locationBackUp);
         }
+
+
+        [HttpGet]
+        public ActionResult RestoreByEntity(string id, string entidad)
+        {
+            var date = id;
+            try
+            {
+                var json = System.IO.File.ReadAllText(Server.MapPath("~/BackUp/" + date + "/" + date + "_" + entidad + ".txt"));
+                if (entidad == "standuperos")
+                {
+                    var standuperos = JsonConvert.DeserializeObject<Standupero[]>(json);
+                    if (standuperos.Length > 0)
+                        new StanduperoService().AddBulkStandupero(standuperos.ToList());
+                }
+                else if (entidad == "productores")
+                {
+                    var productores = JsonConvert.DeserializeObject<Productor[]>(json);
+                    if (productores.Length > 0)
+                        new ProductorService().AddBulkProductor(productores.ToList());
+                }
+                else if (entidad == "shows")
+                {
+                    var shows = JsonConvert.DeserializeObject<Show[]>(json);
+                    if (shows.Length > 0)
+                        new ShowService().AddBulkShow(shows.ToList());
+                }
+                else if (entidad == "fechas")
+                {
+                    var fechas = JsonConvert.DeserializeObject<Fecha[]>(json);
+                    if (fechas.Length > 0)
+                        new FechaService().AddBulkFecha(fechas.ToList());
+                }
+                else if (entidad == "usuarios")
+                {
+                    var usuarios = JsonConvert.DeserializeObject<UserModel[]>(json);
+                    if (usuarios.Length > 0)
+                        new UserService().AddBulkUser(usuarios.ToList());
+                }
+                else if (entidad == "salas")
+                {
+                    var salas = JsonConvert.DeserializeObject<Sala[]>(json);
+                    if (salas.Length > 0)
+                        new SalaService().AddBulkSala(salas.ToList());
+                }
+                else if (entidad == "restaurantes")
+                {
+                    var restaurantes = JsonConvert.DeserializeObject<Restaurante[]>(json);
+                    if (restaurantes.Length > 0)
+                        new RestauranteService().AddBulkRestaurante(restaurantes.ToList());
+                }
+                else if (entidad == "logs")
+                {
+                    var logs = JsonConvert.DeserializeObject<Log[]>(json);
+                    if (logs.Length > 0)
+                        new LogService().AddBulkLog(logs.ToList());
+                }
+                else if (entidad == "hoteles")
+                {
+                    var hoteles = JsonConvert.DeserializeObject<Hotel[]>(json);
+                    if (hoteles.Length > 0)
+                        new HotelService().AddBulkHotel(hoteles.ToList());
+                }
+                else if (entidad == "votaciones")
+                {
+                    var votaciones = JsonConvert.DeserializeObject<Votacion[]>(json);
+                    if (votaciones.Length > 0)
+                        new VotacionService().AddBulkVotacion(votaciones.ToList());
+                }
+                else if (entidad == "prensa")
+                {
+                    var prensas = JsonConvert.DeserializeObject<Prensa[]>(json);
+                    if (prensas.Length > 0)
+                        new PrensaService().AddBulkPrensa(prensas.ToList());
+                }
+                else if (entidad == "proveedores")
+                {
+                    var proveedores = JsonConvert.DeserializeObject<Proveedor[]>(json);
+                    if (proveedores.Length > 0)
+                        new ProveedorService().AddBulkProveedor(proveedores.ToList());
+                }
+                else if (entidad == "instagramusers")
+                {
+                    var instagramusers = JsonConvert.DeserializeObject<InstagramUser[]>(json);
+                    if (instagramusers.Length > 0)
+                        new InstagramUserService().AddBulkInstagramUser(instagramusers.ToList());
+                }
+                else if (entidad == "gastos")
+                {
+                    var gastos = JsonConvert.DeserializeObject<Gasto[]>(json);
+                    if (gastos.Length > 0)
+                        new GastoService().AddBulkGasto(gastos.ToList());
+                }
+                ViewBag.mensaje = "Restore Generado con éxito";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.mensaje = ex.Message;
+            }
+
+            return View();
+        }
+
     }
 }
