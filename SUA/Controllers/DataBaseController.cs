@@ -348,7 +348,7 @@ namespace SUA.Controllers
 
 
         [HttpGet]
-        public ActionResult RestoreByEntity(string id, string entidad)
+        public void RestoreByEntity(string id, string entidad)
         {
             var date = id;
             try
@@ -444,8 +444,6 @@ namespace SUA.Controllers
             {
                 ViewBag.mensaje = ex.Message;
             }
-
-            return View();
         }
 
     }
