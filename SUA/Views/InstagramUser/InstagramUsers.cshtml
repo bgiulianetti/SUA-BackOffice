@@ -292,8 +292,20 @@ else
 
 
                     CalcularMedia(standuperos_all, i, a);
-                    CalcularMediaSemanal(standuperos_all, i, a);
-                    CalcularMediaMensual(standuperos_all, i, a);
+                    if (standuperos_all[a].Followers.length >= 7) {
+                        CalcularMediaSemanal(standuperos_all, i, a);
+                        CalcularMediaMensual(standuperos_all, i, a);
+                    }
+                    else
+                    {
+                        $('#media_diaria_semanal').css("color", "forestgreen");
+                        $('#media_diaria_semanal')[0].innerHTML = "0";
+
+                        $('#media_diaria_mensual').css("color", "forestgreen");
+                        $('#media_diaria_mensual')[0].innerHTML = "0";
+
+                    }
+
                 }
             }
             standuperosHistorialSeguidores.render();

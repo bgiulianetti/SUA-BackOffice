@@ -162,6 +162,83 @@ namespace SUA.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult UpdateInstagramUsers()
+        {
+            var instagramService = new InstagramService();
+            try
+            {
+                var users = new List<string>
+                {
+                    "agusbattioni",
+                    "angiesammartino",
+                    "chapumartinez",
+                    "connieballarini",
+                    "crococro",
+                    "danilachepi",
+                    "darioorsi",
+                    "dieguitomaggio",
+                    "elartedenegar",
+                    "ezequielcampa",
+                    "fedecyrulnik",
+                    "fedesimonetti",
+                    "fermetilli",
+                    "fersanjiao",
+                    "ffrangomez",
+                    "gonzovizan",
+                    "gregorossello",
+                    "javichosoria",
+                    "joaquin__castellano",
+                    "juampicarbonetti",
+                    "juampigon",
+                    "julibellese",
+                    "lailaroth",
+                    "leaigounet",
+                    "lendrogh",
+                    "lucaslauriente",
+                    "lucaslezin",
+                    "luchomellera",
+                    "magalitajes",
+                    "malepichot",
+                    "manuelasaiz",
+                    "martarresok_",
+                    "martin_pugliese",
+                    "martincirio",
+                    "mikechouhy",
+                    "molinerd",
+                    "nachitosaralegui",
+                    "nicolasdetracy",
+                    "nicombraun",
+                    "pablitofabregas",
+                    "pablopicotto",
+                    "pichipiccirillo",
+                    "pipabarbato",
+                    "quierostandup",
+                    "rodriguezgalati",
+                    "soyrada",
+                    "standupargentina",
+                    "vicuvillanueva",
+                    "virsammartino"
+                };
+                foreach (var user in users)
+                {
+                    var username = user.Split('*')[0];
+                    var userObtenido = instagramService.GetUserBy(username);
+
+                    var instagramUserService = new InstagramUserService();
+                    var userFromDB = instagramUserService.GetInstagramUserByUsername(username);
+                    userFromDB.ProfilePicture = userObtenido.Picture.AbsoluteUri;
+                    instagramUserService.UpdateInstagramUser(userFromDB);
+                }
+                ViewBag.message = "";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.message = ex.Message;
+            }
+            return View();
+        }
+
         private List<InstragramUserFollowersHistory> CreateUserFollowersHistory(InstagramUserDataContract user, string type)
         {
             var history = new List<InstragramUserFollowersHistory>();
@@ -434,12 +511,129 @@ namespace SUA.Controllers
             }
         }
 
+        /*
+        public void CreateFollowersStepThree()
+        {
+            var users = new List<string>
+            {
+                "agusbattioni*2019-07-31*433323*up*85",
+                "angiesammartino*2019-07-31*160217*up*40",
+                "chapumartinez*2019-07-31*1162945*down*90",
+                "connieballarini*2019-07-31*194027*up*95",
+                "crococro*2019-07-31*70759*down*1",
+                "darioorsi*2019-07-31*746082*down*18",
+                "dieguitomaggio*2019-07-31*40025*down*3",
+                "elartedenegar*2019-07-31*62932*up*2",
+                "ezequielcampa*2019-07-31*92890*up*13",
+                "fedecyrulnik*2019-07-31*363084*up*88",
+                "fedesimonetti*2019-07-31*20788*up*4",
+                "fermetilli*2019-07-31*428500*up*125",
+                "fersanjiao*2019-07-31*44760*up*2",
+                "ffrangomez*2019-07-31*517573*up*50",
+                "gonzovizan*2019-07-31*136261*down*15",
+                "gregorossello*2019-07-31*1017336*up*210",
+                "javichosoria*2019-07-31*18825*up*2",
+                "joaquin__castellano*2019-07-31*182083*up*19",
+                "juampicarbonetti*2019-07-31*27996*up*2",
+                "juampigon*2019-07-31*422425*up*53",
+                "julibellese*2019-07-31*131522*down*3",
+                "lailaroth*2019-07-31*77443*down*2",
+                "leaigounet*2019-07-31*140159*up*20",
+                "lendrogh*2019-07-31*9554*down*1",
+                "lucaslauriente*2019-07-31*110110*down*3",
+                "lucaslezin*2019-07-31*1011453*down*20",
+                "luchomellera*2019-07-31*122314*up*3",
+                "magalitajes*2019-07-31*1310355*up*110",
+                "malepichot*2019-07-31*471292*up*4",
+                "manuelasaiz*2019-07-31*25708*down*13",
+                "martarresok_*2019-07-31*392028*up*33",
+                "martin_pugliese*2019-07-31*61641*up*2",
+                "martincirio*2019-07-31*816503*up*65",
+                "mikechouhy*2019-07-31*774120*up*60",
+                "molinerd*2019-07-31*550971*up*19",
+                "nachitosaralegui*2019-07-31*431503*down*20",
+                "nicolasdetracy*2019-07-31*460370*up*42",
+                "nicombraun*2019-07-31*82555*down*28",
+                "pablitofabregas*2019-07-31*81275*up*10",
+                "pablopicotto*2019-07-31*197752*up*120",
+                "pichipiccirillo*2019-07-31*16391*up*10",
+                "pipabarbato*2019-07-31*106457*up*45",
+                "quierostandup*2019-07-31*26728*down*2",
+                "rodriguezgalati*2019-07-31*719690*up*55",
+                "soyrada*2019-07-31*1276306*up*25",
+                "standupargentina*2019-07-31*71067*up*6",
+                "virsammartino*2019-07-31*12674*up*3"
+            };
+
+            foreach (var user in users)
+            {
+                var followersInfo = user.Split('*').ToList();
+                var folowersCountTop = Int32.Parse(followersInfo[2]);
+                var lastDate = new DateTime(Int32.Parse(followersInfo[1].Split('-')[0]),
+                                            Int32.Parse(followersInfo[1].Split('-')[1]),
+                                            Int32.Parse(followersInfo[1].Split('-')[2]));
+                bool isDecrement = true;
+                if (followersInfo[3] == "up")
+                    isDecrement = false;
+                var maxDif = Int32.Parse(followersInfo[4]) * 2;
+
+
+                var instagramUserService = new InstagramUserService();
+                var userObtenido = instagramUserService.GetInstagramUserByUsername(followersInfo[0]);
+                var followers = userObtenido.Followers.OrderBy(i => i.Date).ToList();
+                var currentDate = followers.Last().Date.AddDays(1);
+
+                var pico = 0;
+                while (currentDate < lastDate)
+                {
+                    Thread.Sleep(2);
+                    var seed = DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second + DateTime.Now.Millisecond.ToString();
+                    var rnd = new Random(Int32.Parse(seed));
+
+                    var dif = rnd.Next(0, maxDif);
+                    if (isDecrement)
+                        dif = dif * -1;
+
+                    if (pico == 6)
+                    {
+                        dif = dif * 20;
+                        pico = 0;
+                    }
+                    else if (pico == 3)
+                    {
+                        dif = dif * 5;
+                    }
+
+                    var followerItem = new InstragramUserFollowersHistory
+                    {
+                        Count = followers.Last().Count + dif,
+                        Date = currentDate,
+                        Difference = dif
+                    };
+                    userObtenido.Followers.Add(followerItem);
+                    followers = userObtenido.Followers.OrderBy(i => i.Date).ToList();
+                    currentDate = currentDate.AddDays(1);
+                    pico++;
+                }
+
+                var lastFollowerItem = new InstragramUserFollowersHistory
+                {
+                    Count = Int32.Parse(followersInfo[2]),
+                    Date = lastDate,
+                    Difference = Int32.Parse(followersInfo[2]) - followers.Last().Count
+                };
+                userObtenido.Followers.Add(lastFollowerItem);
+                instagramUserService.UpdateInstagramUser(userObtenido);
+            }
+        }
+        */
+
         [HttpGet]
         public ActionResult FixIG()
         {
-            FixDates();
-            CreateFollowersStepOne();
-            CreateFollowersStepTwo();
+            //FixDates();
+            //CreateFollowersStepOne();
+            //CreateFollowersStepTwo();
 
             return RedirectToAction("InstagramUsers");
         }
