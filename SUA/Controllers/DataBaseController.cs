@@ -132,7 +132,6 @@ namespace SUA.Controllers
             return View();
         }
 
-
         [HttpGet]
         [UserValidationFilter]
         public ActionResult BackupGastos(string id)
@@ -170,7 +169,6 @@ namespace SUA.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
 
         [HttpGet]
         public ActionResult BackupVotacion(string id)
@@ -338,14 +336,13 @@ namespace SUA.Controllers
             if (destinatario == "yo")
                 email = "bruno.giulianetti@gmail.com";
             else
-                email = userService.GetUserByNombre("sua-user").MailRecover;
+                email = "diego@standupargentina.com.ar";
             var emailService = new EmailService();
 
             var subject = "SUA BackOffice - BackUp " + DateTime.Now.ToString("yyyy-MM-dd");
             var emailBody = "BackUp completo de la base de datos al " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             emailService.SendEmail(email, subject, emailBody, backUpFiles, false, locationBackUp);
         }
-
 
         [HttpGet]
         public void RestoreByEntity(string id, string entidad)

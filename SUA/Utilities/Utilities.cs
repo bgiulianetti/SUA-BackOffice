@@ -112,8 +112,7 @@ namespace SUA.Utilities
             bancos = bancos.OrderBy(q => q).ToList();
             return ConverListToSelectListItem(bancos);
         }
-
-
+   
         public static List<SelectListItem> GetCategoriasDeGastos()
         {
             var categorias = new List<string> {
@@ -168,18 +167,23 @@ namespace SUA.Utilities
         {
             var impuestos = new List<string>
             {
+                "Acomodadores",
                 "AADET",
                 "AADICAPIF",
                 "Agadu",
                 "Alquiler Teatro",
                 "Argentores",
+                "Boleteria",
                 "COFONTE",
                 "Comision por Tarjeta​",
                 "IMM",
                 "Impuesto Municipal",
                 "Luces y Sonido",
                 "Otro",
+                "Punto de venta",
                 "SADAIC",
+                "Sonido",
+                "Tecnico",
                 "Ticketing"
             };
             return ConverListToSelectListItem(impuestos);
@@ -227,17 +231,24 @@ namespace SUA.Utilities
                 "Cartel Puerta",
                 "Carteles Calle",
                 "Combustible",
+                "Comida",
                 "Direccion",
                 "Estacionamiento",
                 "Hospedaje",
+                "Operador",
                 "Otro",
                 "Pasajes avion",
+                "Pasajes Colectivo",
                 "Peajes",
+                "Prensa",
                 "Propina",
                 "Propina Sonido",
                 "Publicidad",
+                "Seguro",
                 "Sonido",
-                "Taxis"
+                "Taxis",
+                "Tecnica",
+                "Video",
             };
             return ConverListToSelectListItem(gastos);
         }
