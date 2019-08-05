@@ -47,7 +47,11 @@ namespace SUA.Servicios
             }
             catch
             {
-                followers = "0";
+                followers = responseJson.Split(new string[] { "edge_followed_by\":{\"count\":" }, StringSplitOptions.None)[1].Split('}')[0];
+                if (!int.TryParse(followers, out int aux))
+                {
+                    followers = "0";
+                }
             }
 
             var foto = "";
