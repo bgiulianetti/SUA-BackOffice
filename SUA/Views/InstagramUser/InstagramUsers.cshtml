@@ -22,9 +22,9 @@
 
 @if (ViewBag.message == "")
 {
-    <div class="main-content">
+    <div class="main-content"  style="background-color: lightslategrey;">
 
-        <div class="panel">
+        <div class="panel" style="background-color: lightslategrey;">
 
             <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:30px">
                 <div class="well well-sm text-center">
@@ -105,7 +105,7 @@
                                     var count = 0;
                                     foreach (var item in standupero.Followers)
                                     {
-                                        if (count == 15)
+                                        if (count == 10)
                                         {
                                             break;
                                         }
