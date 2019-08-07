@@ -53,7 +53,7 @@
             <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
                 <div class="well well-sm text-center">
                     <h3>Standuperos - Historial Seguidores</h3>
-                    <div style="width: 100%; overflow-x: auto;  white-space: nowrap;">
+                    <div id="standupero_history_graphic" style="width: 100%; overflow-x: auto;  white-space: nowrap; background-repeat: no-repeat; background-size: cover; ">
 
                         <img src="#" id="standuperoProfilePicture" style="width:96px; height:100px;"><br /><br />
                         <select style="text-align-last:center;" id="filter_table_standuperosFollowersTable">
@@ -102,8 +102,14 @@
                             <tbody>
                                 @foreach (var standupero in ViewBag.standuperosFollowersTable)
                                 {
+                                    var count = 0;
                                     foreach (var item in standupero.Followers)
                                     {
+                                        if (count == 15)
+                                        {
+                                            break;
+                                        }
+
                                         <tr>
                                             <td>@standupero.Username</td>
                                             <td>@item.Date.ToString("yyyy-MM-dd")</td>
@@ -118,6 +124,7 @@
                                                 <td>@item.Difference</td>
                                             }
                                         </tr>
+                                        count++;
                                     }
                                 }
                             </tbody>
@@ -289,6 +296,8 @@ else
                     while (standuperos_all[a].Username != standuperos_followers_actual[i].name)
                     { a++; }
                     $("#standuperoProfilePicture").attr("src", standuperos_all[a].ProfilePicture);
+                    $("#standupero_history_graphic").css("background-image", 'linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url(' + standuperos_all[a].ProfilePicture + ')');
+                    //$("#standupero_history_graphic").css("background-image", );
 
 
                     CalcularMedia(standuperos_all, i, a);
