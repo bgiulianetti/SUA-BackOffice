@@ -56,36 +56,46 @@
                     <div id="standupero_history_graphic" style="width: 100%; overflow-x: auto;  white-space: nowrap; background-repeat: no-repeat; background-size: cover; ">
                         <br />
                         <br />
-                        <img src="#" id="standuperoProfilePicture" style="width:96px; height:100px;"><br /><br />
-                        <select style="text-align-last:center;" id="filter_table_standuperosFollowersTable">
-                            @foreach (var standupero in ViewBag.standuperosUsernames)
-                            {
-                                <option style="text-align:center">@standupero</option>
-                            }
-                        </select>
+                        
 
                         <br />
                         <br />
-                        <table style="margin: auto; " class="display compact hover nowrap">
-                            <tr>
-                                <td class="well well-sm text-center" colspan="3">Promedio diario</td>
-                            </tr>
+                        <table style="margin: 0 auto;">
                             <tr>
                                 <td>
-                                    <label class="well well-sm text-center">Total</label><br />
-                                    <label title="Média diaria" id="media_diaria"></label>
+                                    <img src="#" id="standuperoProfilePicture" style="width:96px; height:100px;"><br /><br />
+                                    <select style="text-align-last:center;" id="filter_table_standuperosFollowersTable">
+                                        @foreach (var standupero in ViewBag.standuperosUsernames)
+                                        {
+                                            <option style="text-align:center">@standupero</option>
+                                        }
+                                    </select>
                                 </td>
                                 <td>
-                                    <label class="well well-sm text-center">Últimos 30 días</label><br />
-                                    <label title="Média diaria" id="media_diaria_mensual"></label>
-                                </td>
-                                <td>
-                                    <label class="well well-sm text-center">Últimos 7 días</label><br />
-                                    <label title="Média diaria" id="media_diaria_semanal"></label>
-                                </td>
+                                    <table style="margin: auto; " class="display compact hover nowrap">
+                                        <tr>
+                                            <td class="well well-sm text-center" colspan="3">Promedio diario</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label class="well well-sm text-center">Total</label><br />
+                                                <label title="Média diaria" id="media_diaria"></label>
+                                            </td>
+                                            <td>
+                                                <label class="well well-sm text-center">Últimos 30 días</label><br />
+                                                <label title="Média diaria" id="media_diaria_mensual"></label>
+                                            </td>
+                                            <td>
+                                                <label class="well well-sm text-center">Últimos 7 días</label><br />
+                                                <label title="Média diaria" id="media_diaria_semanal"></label>
+                                            </td>
 
+                                        </tr>
+                                    </table>
+                                </td>
                             </tr>
                         </table>
+                        
 
 
 
