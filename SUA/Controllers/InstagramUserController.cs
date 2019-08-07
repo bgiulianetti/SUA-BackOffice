@@ -15,8 +15,12 @@ namespace SUA.Controllers
     public class InstagramUserController : Controller
     {
         [UserValidationFilter]
-        public ActionResult InstagramUsers()
+        public ActionResult InstagramUsers(string status)
         {
+            if (status == "full")
+                ViewBag.followersCount = 1000;
+            else
+                ViewBag.followersCount = 10;
             try
             {
                 //var service = new InstagramUserService();
@@ -39,6 +43,7 @@ namespace SUA.Controllers
                 ViewBag.standuperosUsernames = GetStanduperosUsernameOrderByUsername();
                 ViewBag.standuperosFollowersActual = FormatInstagramUsersFollowersForSplineChart(users, true);
                 ViewBag.message = "";
+                ViewBag.titulo = "Instagram - Estadísticas";
             }
             catch (Exception ex)
             {
