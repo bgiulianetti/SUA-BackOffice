@@ -54,7 +54,8 @@
                 <div class="well well-sm text-center">
                     <h3>Standuperos - Historial Seguidores</h3>
                     <div id="standupero_history_graphic" style="width: 100%; overflow-x: auto;  white-space: nowrap; background-repeat: no-repeat; background-size: cover; ">
-
+                        <br />
+                        <br />
                         <img src="#" id="standuperoProfilePicture" style="width:96px; height:100px;"><br /><br />
                         <select style="text-align-last:center;" id="filter_table_standuperosFollowersTable">
                             @foreach (var standupero in ViewBag.standuperosUsernames)
@@ -129,6 +130,8 @@
                                 }
                             </tbody>
                         </table>
+                        <br />
+                        <br />
 
                     </div>
                     <div id="standuperosHistorialSeguidores" style="height: 600px; width: 100%;"></div>
@@ -255,6 +258,7 @@ else
                 { "width": "10%" },
                 { "width": "10%" }
             ],
+            paging: false,
             responsive: true,
             dom: 'l<B>ftip',
             buttons: [ ],
@@ -297,7 +301,6 @@ else
                     { a++; }
                     $("#standuperoProfilePicture").attr("src", standuperos_all[a].ProfilePicture);
                     $("#standupero_history_graphic").css("background-image", 'linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url(' + standuperos_all[a].ProfilePicture + ')');
-                    //$("#standupero_history_graphic").css("background-image", );
 
 
                     CalcularMedia(standuperos_all, i, a);
@@ -419,6 +422,7 @@ else
     }
 
 
+    //mepa que este metodo no se usa, chequearlo
     function AcomodaTableSUADOM() {
         $('#table_sua_historial_seguidores_filter').hide();
         $('#table_sua_historial_seguidores_info').hide();
