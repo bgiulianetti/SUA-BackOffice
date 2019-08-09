@@ -28,14 +28,9 @@
 
             <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:30px">
                 <div class="well well-sm text-center">
-                    <h3>Standuperos SUA - Seguidores</h3>
+                    <h4>Standuperos SUA</h4>
                     <div id="standuperosSUA" style="height: 300px; width: 100%;"></div>
-                </div>
-            </div>
-
-            <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
-                <div class="well well-sm text-center">
-                    <h3>Standuperos SUA - Historial Seguidores Legacy</h3>
+                    <h4>Seguidores Legacy</h4>
                     <div id="standuperosSUAHistorialSeguidoresLegacy" style="height: 600px; width: 100%;"></div>
                 </div>
             </div>
@@ -43,7 +38,7 @@
 
             <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
                 <div class="well well-sm text-center">
-                    <h3>Standuperos - Ranking Seguidores</h3>
+                    <h4>Ranking Seguidores</h4>
                     <div id="chartContainer" style="height: 1000px; width: 100%;"></div>
                 </div>
             </div>
@@ -52,14 +47,14 @@
 
             <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
                 <div class="well well-sm text-center">
-                    <h3>Standuperos - Historial Seguidores</h3>
                     <div id="standupero_history_graphic" style="width: 100%; overflow-x: auto;  white-space: nowrap; background-repeat: no-repeat; background-size: cover; ">
                         <br />
                         <br />
                         <table style="margin: 0 auto;">
                             <tr>
                                 <td>
-                                    <img src="#" id="standuperoProfilePicture" style="width:96px; height:100px;"><br /><br />
+                                    <img src="#" id="standuperoProfilePicture" style="width:96px; height:100px;">
+                                    <br /><br />
                                     <select style="text-align-last:center;" id="filter_table_standuperosFollowersTable">
                                         @foreach (var standupero in ViewBag.standuperosUsernames)
                                         {
@@ -163,8 +158,10 @@ else
         var standuperosSUA = new CanvasJS.Chart("standuperosSUA", {
             animationEnabled: true,
             theme: "light2", // "light1", "light2", "dark1", "dark2"
-            axisX: { title: "Standuperos" },
-            axisY: { title: "Seguidores",  suffix: " seguidores", includeZero: false },
+            axisY: {
+                includeZero: false,
+                labelFontSize: 13
+            },
             data: [{
                 type: "column",
                 yValueFormatString: "#",
@@ -172,12 +169,6 @@ else
             }]
         });
         standuperosSUA.render();
-
-
-
-
-
-
 
 
         ///////////////////////////////////////Standuperos SUA - Followers legacy
@@ -188,12 +179,15 @@ else
 
         var standuperosSUAHistorialSeguidoresLegacy = new CanvasJS.Chart("standuperosSUAHistorialSeguidoresLegacy", {
             animationEnabled: true,
-            axisX: { valueFormatString: "MMM,YY", labelFontSize: 15},
+            axisX: {
+                valueFormatString: "MMM,YY",
+                labelFontSize: 8
+            },
             axisY: {
-                title: "Seguidores",
+                title: "",
                 includeZero: false,
                 suffix: "",
-                labelFontSize: 15
+                labelFontSize: 13
             },
             legend: {
                 cursor: "pointer",
@@ -214,12 +208,6 @@ else
 
 
 
-
-
-
-
-
-
         /////////////////////////////////Ranking todos los standuperos
         var chart = new CanvasJS.Chart("chartContainer", {
             animationEnabled: true,
@@ -232,20 +220,6 @@ else
             }]
         });
         chart.render();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
