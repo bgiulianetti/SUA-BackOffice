@@ -219,6 +219,7 @@
     <Compile Include="Models\InstagramUserData.cs" />
     <Compile Include="Models\InstagramUserDataContract.cs" />
     <Compile Include="Models\InstagramUserInfoResponse.cs" />
+    <Compile Include="Models\InstagramUserRankingPeriod.cs" />
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\Persona.cs" />
     <Compile Include="Models\PieChartContract.cs" />

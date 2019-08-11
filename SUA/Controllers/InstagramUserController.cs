@@ -44,6 +44,12 @@ namespace SUA.Controllers
                 ViewBag.standuperosFollowersActual = FormatInstagramUsersFollowersForSplineChart(users, true);
                 ViewBag.message = "";
                 ViewBag.titulo = "Instagram - Estadísticas";
+
+                //Rankings
+                var ranking = GetUsersForDifferenceRanking();
+                ViewBag.rankingWeekly = ranking.OrderByDescending(f=>f.Weekly).ToList();
+                ViewBag.rankingMonthly = ranking.OrderByDescending(f => f.Monthly).ToList();
+                ViewBag.rankingSemiannually = ranking.OrderByDescending(f => f.SemiAnnually).ToList();
             }
             catch (Exception ex)
             {
@@ -677,6 +683,38 @@ namespace SUA.Controllers
                 user.Followers = followersHistory;
                 service.UpdateInstagramUser(user);
             }
+        }
+
+        private List<InstagramUserRankingPeriod> GetUsersForDifferenceRanking()
+        {
+            var rankingUsers = new List<InstagramUserRankingPeriod>();
+            var service = new InstagramUserService();
+            var users = service.GetInstagramUsers();
+            users = users.Where(f => f.Username != "sofimorandi" && f.Username != "belulucius").ToList();
+            foreach (var user in users)
+            {
+                var rankingUser = new InstagramUserRankingPeriod
+                {
+                    Username = user.Username,
+                    ProfilePicture = user.ProfilePicture,
+                    Weekly = GenerateAverageDailyFollowers(user.Followers.OrderByDescending(f=>f.Date).ToList(), 7),
+                    Monthly = GenerateAverageDailyFollowers(user.Followers.OrderByDescending(f => f.Date).ToList(), 30),
+                    SemiAnnually = GenerateAverageDailyFollowers(user.Followers.OrderByDescending(f => f.Date).ToList(), 182)
+                };
+                rankingUsers.Add(rankingUser);
+            }
+            return rankingUsers;
+        }
+
+        private int GenerateAverageDailyFollowers(List<InstragramUserFollowersHistory> followers, int days)
+        {
+            if (followers.Count < days)
+                return 0;
+
+            int sum = 0;
+            for(var i = 0; i < days; i++)
+                sum += followers[i].Difference;
+            return sum / days;
         }
 
     }

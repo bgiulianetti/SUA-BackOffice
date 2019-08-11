@@ -43,19 +43,19 @@
                 </div>
             </div>
 
-
-
             <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
                 <div class="well well-sm text-center">
                     <div id="standupero_history_graphic" style="width: 100%; overflow-x: auto;  white-space: nowrap; background-repeat: no-repeat; background-size: cover; ">
                         <br />
                         <br />
-                        <table style="margin: 0 auto;">
+                        <table style="margin: 0 auto;text-align-last: center;">
+                            <!--style="margin: auto; " class="display compact hover nowrap"-->
                             <tr>
-                                <td>
-                                    <img src="#" id="standuperoProfilePicture" style="width:96px; height:100px;">
-                                    <br /><br />
-                                    <select style="text-align-last:center;" id="filter_table_standuperosFollowersTable">
+                                <td rowspan="2" style="vertical-align: middle;">
+                                    <img src="#" id="standuperoProfilePicture" style="width:70%; height:75%;">
+                                    <br />
+                                    <br />
+                                    <select style="text-align-last:center; width:100%" id="filter_table_standuperosFollowersTable">
                                         @foreach (var standupero in ViewBag.standuperosUsernames)
                                         {
                                             <option style="text-align:center">@standupero</option>
@@ -68,16 +68,16 @@
                                             <td class="well well-sm text-center" colspan="3">Promedio diario</td>
                                         </tr>
                                         <tr>
-                                            <td>
-                                                <label class="well well-sm text-center">Total</label><br />
+                                            <td style="vertical-align: middle;">
+                                                <label class="well well-sm text-center">Total</label>
                                                 <label title="Média diaria" id="media_diaria"></label>
                                             </td>
-                                            <td>
-                                                <label class="well well-sm text-center">Últimos 30 días</label><br />
+                                            <td style="vertical-align: middle;">
+                                                <label class="well well-sm text-center">Últimos 30 días</label>
                                                 <label title="Média diaria" id="media_diaria_mensual"></label>
                                             </td>
-                                            <td>
-                                                <label class="well well-sm text-center">Últimos 7 días</label><br />
+                                            <td style="vertical-align: middle;">
+                                                <label class="well well-sm text-center">Últimos 7 días</label>
                                                 <label title="Média diaria" id="media_diaria_semanal"></label>
                                             </td>
 
@@ -86,12 +86,12 @@
                                 </td>
                             </tr>
                         </table>
-                        
+
                         <br /><br />
-                        <table id="table_historial_seguidores" style="width:40%" class="display compact hover nowrap">
+                        <table id="table_historial_seguidores" style="width:40%;text-align-last: center;" class="display compact hover nowrap">
                             <thead>
                                 <tr>
-                                    <th>User</th>
+                                    <th>Usuario</th>
                                     <th>Fecha</th>
                                     <th>Día</th>
                                     <th>Seguidores</th>
@@ -136,6 +136,72 @@
                 </div>
             </div>
 
+
+            <!--Rankings-->
+            <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px;">
+                <div class="well well-sm text-center">
+                    <div id="standupero_history_graphic_" style="width: 100%; overflow-x: auto;  white-space: nowrap;
+                        background-repeat: no-repeat;
+                        background-size: cover;
+                        background-image: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('https://thefrisky.com/wp-content/uploads/2019/01/3D-Instagram-logo.jpg')">
+                        <h4>Ranking  |  Promédio Diario</h4>
+                        <select style="text-align-last:center; width:150px" id="filter_table_standuperosFollowersTable">
+                            <option style="text-align:center">Semanal</option>
+                            <option style="text-align:center">Mensual</option>
+                            <option style="text-align:center">Semestral</option>
+                        </select>
+                        <br />
+                        <table id="ranking_period_table" style="width:40%;text-align-last: center;" class="display compact hover nowrap">
+                            <thead>
+                                <tr>
+                                    <th>Posición</th>
+                                    <th>Usuario</th>
+                                    <th>Media díaria</th>
+                                    <th>Período</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    var posicion = 1;
+                                    foreach (var item in ViewBag.rankingWeekly)
+                                    {
+                                        <tr>
+                                            <td>@posicion</td>
+                                            <td>@item.Username</td>
+                                            <td>@item.Weekly</td>
+                                            <td>semanal</td>
+                                        </tr>
+                                        posicion++;
+                                    }
+                                    posicion = 1;
+                                    foreach (var item in ViewBag.rankingMonthly)
+                                    {
+                                        <tr>
+                                            <td>@posicion</td>
+                                            <td>@item.Username</td>
+                                            <td>@item.Monthly</td>
+                                            <td>mensual</td>
+                                        </tr>
+                                        posicion++;
+                                    }
+                                    posicion = 1;
+                                    foreach (var item in ViewBag.rankingSemiannually)
+                                    {
+                                        <tr>
+                                            <td>@posicion</td>
+                                            <td>@item.Username</td>
+                                            <td>@item.SemiAnnually</td>
+                                            <td>semestral</td>
+                                        </tr>
+                                        posicion++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 }
@@ -294,7 +360,6 @@ else
                         $('#media_diaria_mensual')[0].innerHTML = "0";
 
                     }
-
                 }
             }
             standuperosHistorialSeguidores.render();
@@ -310,7 +375,6 @@ else
             animationEnabled: true,
             axisX: { valueFormatString: "DD/MM/YY", labelFontSize: 15},
             axisY: {
-                title: "Seguidores",
                 includeZero: false,
                 suffix: "",
                 labelFontSize: 15
@@ -335,6 +399,27 @@ else
             standuperosHistorialSeguidores.render();
         }
 
+        //////////////////////////////RANKINGS
+        var ranking_period_table = $('#ranking_period_table').DataTable({
+            "bSort": false,
+            "pageLength": 25,
+            "columns": [
+                { "width": "10%" },
+                { "width": "70%" },
+                { "width": "10%" },
+                { "width": "10%" }
+            ],
+            responsive: true,
+            paging: true,
+        });
+        $('#ranking_period_table_filter').hide();
+        $('#ranking_period_table_info').hide();
+        $('#ranking_period_table_length').hide();
+        ranking_period_table.search("semanal").draw();
+
+        //ocultar primera columna
+        //var column = ranking_period_table.column(2);
+        //column.visible(false);
     });
 
 
@@ -416,6 +501,5 @@ else
             return true;
         return false;
     }
-
 
 </script>	
