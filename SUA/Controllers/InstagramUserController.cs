@@ -709,7 +709,7 @@ namespace SUA.Controllers
         private int GenerateAverageDailyFollowers(List<InstragramUserFollowersHistory> followers, int days)
         {
             if (followers.Count < days)
-                return 0;
+                return -9999999;
 
             int sum = 0;
             for(var i = 0; i < days; i++)

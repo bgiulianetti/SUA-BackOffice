@@ -169,7 +169,11 @@
                                     <td>@posicion</td>
                                     <td><img src='@item.ProfilePicture' style='height:35px; width:35px'></td>
                                     <td>@item.Username</td>
-                                    @if (item.Weekly > 0)
+                                    @if (item.Weekly == -9999999)
+                                    {
+                                        <td>-</td>
+                                    }
+                                    else if (item.Weekly > 0)
                                     {
                                         <td>+@item.Weekly</td>
                                     }
@@ -188,7 +192,11 @@
                                     <td>@posicion</td>
                                     <td><img src='@item.ProfilePicture' style='height:35px; width:35px'></td>
                                     <td>@item.Username</td>
-                                    @if (item.Monthly > 0)
+                                    @if (item.Monthly == -9999999)
+                                    {
+                                        <td>-</td>
+                                    }
+                                    else if (item.Monthly > 0)
                                     {
                                         <td>+@item.Monthly</td>
                                     }
@@ -207,7 +215,11 @@
                                     <td>@posicion</td>
                                     <td><img src='@item.ProfilePicture' style='height:35px; width:35px'></td>
                                     <td>@item.Username</td>
-                                    @if (item.SemiAnnually > 0)
+                                    @if (item.SemiAnnually == -9999999)
+                                    {
+                                        <td>-</td>
+                                    }
+                                    else if (item.SemiAnnually > 0)
                                     {
                                         <td>+@item.SemiAnnually</td>
                                     }
