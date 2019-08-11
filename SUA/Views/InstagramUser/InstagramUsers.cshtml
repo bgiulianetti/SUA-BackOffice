@@ -155,6 +155,7 @@
                                 <tr>
                                     <th>Posición</th>
                                     <th>Usuario</th>
+                                    <th> </th>
                                     <th>Media díaria</th>
                                     <th>Período</th>
                                 </tr>
@@ -166,15 +167,16 @@
                                     {
                                 <tr>
                                     <td>@posicion</td>
+                                    <td><img src='@item.ProfilePicture' style='height:35px; width:35px'></td>
                                     <td>@item.Username</td>
                                     @if (item.Weekly > 0)
                                     {
-                                    <td>+@item.Weekly</td>
+                                        <td>+@item.Weekly</td>
                                     }
                                     else
                                     {
-                                    <td>@item.Weekly</td>
-                                    }                                   
+                                        <td>@item.Weekly</td>
+                                    }
                                     <td>semanal</td>
                                 </tr>
                                         posicion++;
@@ -184,6 +186,7 @@
                                     {
                                 <tr>
                                     <td>@posicion</td>
+                                    <td><img src='@item.ProfilePicture' style='height:35px; width:35px'></td>
                                     <td>@item.Username</td>
                                     @if (item.Monthly > 0)
                                     {
@@ -202,6 +205,7 @@
                                     {
                                 <tr>
                                     <td>@posicion</td>
+                                    <td><img src='@item.ProfilePicture' style='height:35px; width:35px'></td>
                                     <td>@item.Username</td>
                                     @if (item.SemiAnnually > 0)
                                     {
@@ -424,18 +428,19 @@ else
             "bSort": false,
             "pageLength": 25,
             "columns": [
+                { "width": "5%" },
                 { "width": "10%" },
-                { "width": "70%" },
                 { "width": "10%" },
-                { "width": "10%" }
+                { "width": "5%" },
+                { "width": "70%" }
             ],
             responsive: true,
             paging: true,
             "createdRow": function (row, data, index) {
-                if (data[2].indexOf('-') > -1)
-                    $('td', row).eq(2).addClass('negative');
+                if (data[3].indexOf('-') > -1)
+                    $('td', row).eq(3).addClass('negative');
                 else
-                    $('td', row).eq(2).addClass('positive');
+                    $('td', row).eq(3).addClass('positive');
             }
         });
         $('#ranking_period_table_filter').hide();
@@ -444,7 +449,7 @@ else
         ranking_period_table.search("semanal").draw();
 
         //ocultar primera columna
-        var column = ranking_period_table.column(3);
+        var column = ranking_period_table.column(4);
         column.visible(false);
 
 
