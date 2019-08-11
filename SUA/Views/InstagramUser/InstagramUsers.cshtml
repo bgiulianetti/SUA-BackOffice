@@ -49,7 +49,6 @@
                         <br />
                         <br />
                         <table style="margin: 0 auto;text-align-last: center;">
-                            <!--style="margin: auto; " class="display compact hover nowrap"-->
                             <tr>
                                 <td rowspan="2" style="vertical-align: middle;">
                                     <img src="#" id="standuperoProfilePicture" style="width:70%; height:75%;">
@@ -145,7 +144,7 @@
                         background-size: cover;
                         background-image: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('https://thefrisky.com/wp-content/uploads/2019/01/3D-Instagram-logo.jpg')">
                         <h4>Ranking  |  Promédio Diario</h4>
-                        <select style="text-align-last:center; width:150px" id="filter_table_standuperosFollowersTable">
+                        <select style="text-align-last:center; width:150px" id="filter_table_ranking_period">
                             <option style="text-align:center">Semanal</option>
                             <option style="text-align:center">Mensual</option>
                             <option style="text-align:center">Semestral</option>
@@ -165,34 +164,55 @@
                                     var posicion = 1;
                                     foreach (var item in ViewBag.rankingWeekly)
                                     {
-                                        <tr>
-                                            <td>@posicion</td>
-                                            <td>@item.Username</td>
-                                            <td>@item.Weekly</td>
-                                            <td>semanal</td>
-                                        </tr>
+                                <tr>
+                                    <td>@posicion</td>
+                                    <td>@item.Username</td>
+                                    @if (item.Weekly > 0)
+                                    {
+                                    <td>+@item.Weekly</td>
+                                    }
+                                    else
+                                    {
+                                    <td>@item.Weekly</td>
+                                    }                                   
+                                    <td>semanal</td>
+                                </tr>
                                         posicion++;
                                     }
                                     posicion = 1;
                                     foreach (var item in ViewBag.rankingMonthly)
                                     {
-                                        <tr>
-                                            <td>@posicion</td>
-                                            <td>@item.Username</td>
-                                            <td>@item.Monthly</td>
-                                            <td>mensual</td>
-                                        </tr>
+                                <tr>
+                                    <td>@posicion</td>
+                                    <td>@item.Username</td>
+                                    @if (item.Monthly > 0)
+                                    {
+                                        <td>+@item.Monthly</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@item.Monthly</td>
+                                    }
+                                    <td>mensual</td>
+                                </tr>
                                         posicion++;
                                     }
                                     posicion = 1;
                                     foreach (var item in ViewBag.rankingSemiannually)
                                     {
-                                        <tr>
-                                            <td>@posicion</td>
-                                            <td>@item.Username</td>
-                                            <td>@item.SemiAnnually</td>
-                                            <td>semestral</td>
-                                        </tr>
+                                <tr>
+                                    <td>@posicion</td>
+                                    <td>@item.Username</td>
+                                    @if (item.SemiAnnually > 0)
+                                    {
+                                        <td>+@item.SemiAnnually</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@item.SemiAnnually</td>
+                                    }
+                                    <td>semestral</td>
+                                </tr>
                                         posicion++;
                                     }
                                 }
@@ -411,6 +431,12 @@ else
             ],
             responsive: true,
             paging: true,
+            "createdRow": function (row, data, index) {
+                if (data[2].indexOf('-') > -1)
+                    $('td', row).eq(2).addClass('negative');
+                else
+                    $('td', row).eq(2).addClass('positive');
+            }
         });
         $('#ranking_period_table_filter').hide();
         $('#ranking_period_table_info').hide();
@@ -418,8 +444,15 @@ else
         ranking_period_table.search("semanal").draw();
 
         //ocultar primera columna
-        //var column = ranking_period_table.column(2);
-        //column.visible(false);
+        var column = ranking_period_table.column(3);
+        column.visible(false);
+
+
+        $('#filter_table_ranking_period').on('change', function ()
+        {
+            ranking_period_table.search(this.value).draw();
+            standuperosHistorialSeguidores.render();
+        });
     });
 
 
