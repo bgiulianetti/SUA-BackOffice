@@ -693,13 +693,17 @@ namespace SUA.Controllers
             users = users.Where(f => f.Username != "sofimorandi" && f.Username != "belulucius").ToList();
             foreach (var user in users)
             {
+                var weekly = GenerateAverageDailyFollowers(user.Followers.OrderByDescending(f => f.Date).ToList(), 7);
+                var monthly = GenerateAverageDailyFollowers(user.Followers.OrderByDescending(f => f.Date).ToList(), 30);
+                var semiannually = GenerateAverageDailyFollowers(user.Followers.OrderByDescending(f => f.Date).ToList(), 182);
+
                 var rankingUser = new InstagramUserRankingPeriod
                 {
                     Username = user.Username,
                     ProfilePicture = user.ProfilePicture,
-                    Weekly = GenerateAverageDailyFollowers(user.Followers.OrderByDescending(f=>f.Date).ToList(), 7),
-                    Monthly = GenerateAverageDailyFollowers(user.Followers.OrderByDescending(f => f.Date).ToList(), 30),
-                    SemiAnnually = GenerateAverageDailyFollowers(user.Followers.OrderByDescending(f => f.Date).ToList(), 182)
+                    Weekly = weekly,
+                    Monthly = monthly,
+                    SemiAnnually = semiannually
                 };
                 rankingUsers.Add(rankingUser);
             }
@@ -716,6 +720,5 @@ namespace SUA.Controllers
                 sum += followers[i].Difference;
             return sum / days;
         }
-
     }
 }
