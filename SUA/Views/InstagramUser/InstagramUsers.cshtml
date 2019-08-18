@@ -19,6 +19,47 @@
     }
 </style>
 
+<style>
+    .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted black;
+    }
+
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -60px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .tooltip .tooltiptext::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #555 transparent transparent transparent;
+    }
+
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+    }
+</style>
+
 
 @if (ViewBag.message == "")
 {
@@ -43,15 +84,17 @@
                 </div>
             </div>
 
+            <a name="HistorialSeguidores"></a>
             <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px">
                 <div class="well well-sm text-center">
+                    <h4>Historial Seguidores</h4>
                     <div id="standupero_history_graphic" style="width: 100%; overflow-x: auto;  white-space: nowrap; background-repeat: no-repeat; background-size: cover; ">
                         <br />
                         <br />
                         <table style="margin: 0 auto;text-align-last: center;">
                             <tr>
                                 <td rowspan="2" style="vertical-align: middle;">
-                                    <img src="#" id="standuperoProfilePicture" style="width:70%; height:75%;">
+                                    <img data-toggle="tooltip" title="Click para ver el historial completo" src="#" id="standuperoProfilePicture" onclick="window.location='http://c721.cloud.wiroos.net/instagram-users?status=full#HistorialSeguidores';" style="width:70%; height:75%;cursor: pointer;">
                                     <br />
                                     <br />
                                     <select style="text-align-last:center; width:100%" id="filter_table_standuperosFollowersTable">
@@ -165,70 +208,70 @@
                                     var posicion = 1;
                                     foreach (var item in ViewBag.rankingWeekly)
                                     {
-                                <tr>
-                                    <td>@posicion</td>
-                                    <td><img src='@item.ProfilePicture' style='height:35px; width:35px'></td>
-                                    <td>@item.Username</td>
-                                    @if (item.Weekly == -9999999)
-                                    {
-                                        <td>-</td>
-                                    }
-                                    else if (item.Weekly > 0)
-                                    {
-                                        <td>+@item.Weekly</td>
-                                    }
-                                    else
-                                    {
-                                        <td>@item.Weekly</td>
-                                    }
-                                    <td>semanal</td>
-                                </tr>
+                                        <tr>
+                                            <td>@posicion</td>
+                                            <td><img src='@item.ProfilePicture' style='height:35px; width:35px'></td>
+                                            <td>@item.Username</td>
+                                            @if (item.Weekly == -9999999)
+                                            {
+                                                <td>-</td>
+                                            }
+                                            else if (item.Weekly > 0)
+                                            {
+                                                <td>+@item.Weekly</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@item.Weekly</td>
+                                            }
+                                            <td>semanal</td>
+                                        </tr>
                                         posicion++;
                                     }
                                     posicion = 1;
                                     foreach (var item in ViewBag.rankingMonthly)
                                     {
-                                <tr>
-                                    <td>@posicion</td>
-                                    <td><img src='@item.ProfilePicture' style='height:35px; width:35px'></td>
-                                    <td>@item.Username</td>
-                                    @if (item.Monthly == -9999999)
-                                    {
-                                        <td>-</td>
-                                    }
-                                    else if (item.Monthly > 0)
-                                    {
-                                        <td>+@item.Monthly</td>
-                                    }
-                                    else
-                                    {
-                                        <td>@item.Monthly</td>
-                                    }
-                                    <td>mensual</td>
-                                </tr>
+                                        <tr>
+                                            <td>@posicion</td>
+                                            <td><img src='@item.ProfilePicture' style='height:35px; width:35px'></td>
+                                            <td>@item.Username</td>
+                                            @if (item.Monthly == -9999999)
+                                            {
+                                                <td>-</td>
+                                            }
+                                            else if (item.Monthly > 0)
+                                            {
+                                                <td>+@item.Monthly</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@item.Monthly</td>
+                                            }
+                                            <td>mensual</td>
+                                        </tr>
                                         posicion++;
                                     }
                                     posicion = 1;
                                     foreach (var item in ViewBag.rankingSemiannually)
                                     {
-                                <tr>
-                                    <td>@posicion</td>
-                                    <td><img src='@item.ProfilePicture' style='height:35px; width:35px'></td>
-                                    <td>@item.Username</td>
-                                    @if (item.SemiAnnually == -9999999)
-                                    {
-                                        <td>-</td>
-                                    }
-                                    else if (item.SemiAnnually > 0)
-                                    {
-                                        <td>+@item.SemiAnnually</td>
-                                    }
-                                    else
-                                    {
-                                        <td>@item.SemiAnnually</td>
-                                    }
-                                    <td>semestral</td>
-                                </tr>
+                                        <tr>
+                                            <td>@posicion</td>
+                                            <td><img src='@item.ProfilePicture' style='height:35px; width:35px'></td>
+                                            <td>@item.Username</td>
+                                            @if (item.SemiAnnually == -9999999)
+                                            {
+                                                <td>-</td>
+                                            }
+                                            else if (item.SemiAnnually > 0)
+                                            {
+                                                <td>+@item.SemiAnnually</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@item.SemiAnnually</td>
+                                            }
+                                            <td>semestral</td>
+                                        </tr>
                                         posicion++;
                                     }
                                 }
