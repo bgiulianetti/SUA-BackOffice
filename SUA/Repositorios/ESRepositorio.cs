@@ -2891,7 +2891,7 @@ namespace SUA.Repositorios
             if (user == null)
                 throw new Exception(USER_UPDATE_INVALID_PARAMETER_EXCEPTION);
 
-            var innerId = GetInstagramUserInnerIdByUsername("martin_pugliese");
+            var innerId = GetInstagramUserInnerIdByUsername(user.Username);
             if (innerId == null)
                 throw new Exception(USER_UPDATE_NOT_EXISTS_EXCEPTION);
 
