@@ -953,6 +953,8 @@ namespace SUA.Repositorios
             var response = Client.Search<Sala>(s => s
                 .Index(Index)
                 .Type(Index)
+                .From(0)
+                .Size(GetCount(Index))
                 .Query(q => q
                     .Match(m => m.Field(f => f.Direccion.Ciudad).Query(ciudad)))
                     );
