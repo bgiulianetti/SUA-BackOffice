@@ -182,10 +182,7 @@
             <!--Rankings-->
             <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px;">
                 <div class="well well-sm text-center">
-                    <div id="standupero_history_graphic_" style="width: 100%; overflow-x: auto;  white-space: nowrap;
-                        background-repeat: no-repeat;
-                        background-size: cover;
-                        background-image: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('https://thefrisky.com/wp-content/uploads/2019/01/3D-Instagram-logo.jpg')">
+                    <div id="standupero_history_graphic_" style="width: 100%; overflow-x: auto;  white-space: nowrap; background-color:lightgray">
                         <h4>Ranking  |  Promédio Diario</h4>
                         <select style="text-align-last:center; width:150px" id="filter_table_ranking_period">
                             <option style="text-align:center">Semanal</option>
@@ -280,6 +277,128 @@
 
                     </div>
                 </div>
+            </div>
+
+
+
+
+            <!-- ranking delta seguidores-->
+            <!--Rankings-->
+            <div class="panel-body" style="text-align:center; padding-left:130px; padding-right:130px; padding-top:10px; padding-bottom:60px;">
+                <div class="well well-sm text-center">
+                    <div id="standupero_history_graphic_" style="width: 100%; overflow-x: auto;  white-space: nowrap;
+                        background-repeat: no-repeat;
+                        background-size: cover;
+                        background-image: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('https://thefrisky.com/wp-content/uploads/2019/01/3D-Instagram-logo.jpg')">
+                        <h4>Ranking  |  Delta Seguidores</h4>
+
+                        <div style="text-align-last:center; width: 100%; overflow-x: auto;  white-space: nowrap; background-repeat: no-repeat; background-size: cover; ">
+                            <table>
+                                <tr>
+                                    <td>Desde</td>
+                                    <td>
+                                        <select style="text-align-last:center; width:150px" id="filter_ranking_delta_year_from">
+                                            <option style="text-align:center">2019</option>
+                                            <option style="text-align:center">2020</option>
+                                            <option style="text-align:center">2021</option>
+                                            <option style="text-align:center">2022</option>
+                                        </select>
+                                        <select style="text-align-last:center; width:150px" id="filter_ranking_delta_month_from">
+                                            <option style="text-align:center" value="01">Enero</option>
+                                            <option style="text-align:center" value="02">Febrero</option>
+                                            <option style="text-align:center" value="03">Marzo</option>
+                                            <option style="text-align:center" value="04">Abril</option>
+                                            <option style="text-align:center" value="05">Mayo</option>
+                                            <option style="text-align:center" value="06">Junio</option>
+                                            <option style="text-align:center" value="07">Julio</option>
+                                            <option style="text-align:center" value="08">Agosto</option>
+                                            <option style="text-align:center" value="09">Septiembre</option>
+                                            <option style="text-align:center" value="10">Octubre</option>
+                                            <option style="text-align:center" value="11">Noviambre</option>
+                                            <option style="text-align:center" value="12">Diciembre</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Hasta</td>
+                                    <td>
+                                        <select style="text-align-last:center; width:150px" id="filter_ranking_delta_year_to">
+                                            <option style="text-align:center">2019</option>
+                                            <option style="text-align:center">2020</option>
+                                            <option style="text-align:center">2021</option>
+                                            <option style="text-align:center">2022</option>
+                                        </select>
+                                        <select style="text-align-last:center; width:150px" id="filter_ranking_delta_month_to">
+                                            <option style="text-align:center" value="01">Enero</option>
+                                            <option style="text-align:center" value="02">Febrero</option>
+                                            <option style="text-align:center" value="03">Marzo</option>
+                                            <option style="text-align:center" value="04">Abril</option>
+                                            <option style="text-align:center" value="05">Mayo</option>
+                                            <option style="text-align:center" value="06">Junio</option>
+                                            <option style="text-align:center" value="07">Julio</option>
+                                            <option style="text-align:center" value="08">Agosto</option>
+                                            <option style="text-align:center" value="09">Septiembre</option>
+                                            <option style="text-align:center" value="10">Octubre</option>
+                                            <option style="text-align:center" value="11">Noviambre</option>
+                                            <option style="text-align:center" value="12">Diciembre</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                     
+
+
+
+                            <select style="text-align-last:center; width:150px" id="filter_table_ranking_delta">
+                                <option style="text-align:center">Cantidad</option>
+                                <option style="text-align:center">Porcentaje</option>
+                            </select>
+                            <br />
+                            <table id="ranking_delta_table" style="width:40%;text-align-last: center;" class="display compact hover nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>Posición</th>
+                                        <th>Usuario</th>
+                                        <th> </th>
+                                        <th>Delta</th>
+                                        <th>Tipo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        posicion = 1;
+                                        foreach (var item in ViewBag.rankingDeltaUsersQuantity)
+                                        {
+                                            <tr>
+                                                <td>@posicion</td>
+                                                <td><img src='@item.ProfilePicture' style='height:35px; width:35px'></td>
+                                                <td>@item.Username</td>
+                                                <td>@item.Quantity</td>
+                                                <td>Cantidad</td>
+                                            </tr>
+                                            posicion++;
+                                        }
+                                        posicion = 1;
+                                        foreach (var item in ViewBag.rankingDeltaUsersPercentage)
+                                        {
+                                            <tr>
+                                                <td>@posicion</td>
+                                                <td><img src='@item.ProfilePicture' style='height:35px; width:35px'></td>
+                                                <td>@item.Username</td>
+                                                <td>@Math.Round(item.Percentage, 4)%</td>
+                                                <td>Porcentaje</td>
+                                            </tr>
+                                            posicion++;
+                                        }
+
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
             </div>
         </div>
     </div>
@@ -513,7 +632,59 @@ else
             ranking_period_table.search(this.value).draw();
             standuperosHistorialSeguidores.render();
         });
+  
+
+
+
+
+
+
+
+
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+
+          //////////////////////////////RANKINGS
+        var ranking_delta_table = $('#ranking_delta_table').DataTable({
+            "bSort": false,
+            "pageLength": 25,
+            "columns": [
+                { "width": "5%" },
+                { "width": "10%" },
+                { "width": "10%" },
+                { "width": "5%" },
+                { "width": "70%" }
+            ],
+            responsive: true,
+            paging: true,
+            "createdRow": function (row, data, index) {
+                if (data[3].indexOf('-') > -1)
+                    $('td', row).eq(3).addClass('negative');
+                else
+                    $('td', row).eq(3).addClass('positive');
+            }
+        });
+        $('#ranking_delta_table_filter').hide();
+        $('#ranking_delta_table_info').hide();
+        $('#ranking_delta_table_length').hide();
+        ranking_delta_table.search("cantidad").draw();
+
+
+        var column = ranking_delta_table.column(4);
+        column.visible(false);
+
+
+        $('#filter_table_ranking_delta').on('change', function ()
+        {
+            ranking_delta_table.search(this.value).draw();
+            //standuperosHistorialSeguidores.render();
+        });
     });
+
+
+    //////////////////////////////////////////////////////////////////////////////////////
 
 
     function CalcularMedia(standuperos_all, index, a)

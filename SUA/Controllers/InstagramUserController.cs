@@ -20,7 +20,7 @@ namespace SUA.Controllers
             if (status == "full")
                 ViewBag.followersCount = 1000;
             else
-                ViewBag.followersCount = 10;
+                ViewBag.followersCount = 7;
             try
             {
                 //var service = new InstagramUserService();
@@ -50,6 +50,15 @@ namespace SUA.Controllers
                 ViewBag.rankingWeekly = ranking.OrderByDescending(f=>f.Weekly).ToList();
                 ViewBag.rankingMonthly = ranking.OrderByDescending(f => f.Monthly).ToList();
                 ViewBag.rankingSemiannually = ranking.OrderByDescending(f => f.SemiAnnually).ToList();
+
+
+                //Followers Delta
+                var from = DateTime.Now.Month;
+                var deltaFollowers = GetInstagramUserFollowersDeltaQuantity(from: DateTime.Now.Year.ToString() + "-" + DateTime.Now.Month.ToString() + "-1" ,
+                                                                            to: DateTime.Now.ToString("yyyy-MM-dd"));
+
+                ViewBag.rankingDeltaUsersQuantity = deltaFollowers.OrderByDescending(f=>f.Quantity).ToList();
+                ViewBag.rankingDeltaUsersPercentage = deltaFollowers.OrderByDescending(f => f.Percentage).ToList();
             }
             catch (Exception ex)
             {
@@ -135,6 +144,33 @@ namespace SUA.Controllers
                 ranking--;
             }
             return lista;
+        }
+
+        [HttpGet]
+        public List<FollowersDeltaQuantity> GetInstagramUserFollowersDeltaQuantity(string from, string to)
+        {
+            var usersList = new List<FollowersDeltaQuantity>();
+
+            var fromDate = new DateTime(Int32.Parse(from.Split('-')[0]), Int32.Parse(from.Split('-')[1]), Int32.Parse(from.Split('-')[2]));
+            var toDate = new DateTime(Int32.Parse(to.Split('-')[0]), Int32.Parse(to.Split('-')[1]), Int32.Parse(to.Split('-')[2])).AddDays(-6);
+
+            var users = GetInstagramUsers();
+            foreach (var user in users)
+            {
+                //followers from
+                var countFrom = user.Followers.Where(f => f.Date.Date == fromDate.Date).FirstOrDefault().Count;
+                //followers to
+                var countTo = user.Followers.Where(f => f.Date.Date == toDate.Date).FirstOrDefault().Count;
+
+                //difference percentage
+                double percentage = (double)((countTo - countFrom) * 100) / countFrom;
+
+                //follower difference quantity
+                var followersDeltaQuantity = user.Followers.Where(f => f.Date >= fromDate && f.Date <= toDate).Sum(f => f.Difference);
+
+                usersList.Add(new FollowersDeltaQuantity { Username = user.Username, ProfilePicture = user.ProfilePicture, Percentage = percentage, Quantity = followersDeltaQuantity });
+            }
+            return usersList;
         }
 
         [HttpGet]
@@ -383,7 +419,7 @@ namespace SUA.Controllers
         [HttpGet]
         public ActionResult FixIG()
         {
-            updateUsers();
+            //updateUsers();
             return RedirectToAction("InstagramUsers");
         }
 

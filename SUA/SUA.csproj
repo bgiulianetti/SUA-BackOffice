@@ -208,6 +208,7 @@
     <Compile Include="Models\DatosBancarios.cs" />
     <Compile Include="Models\Fecha.cs" />
     <Compile Include="Models\FechasPorTiempo.cs" />
+    <Compile Include="Models\FollowersDeltaQuantity.cs" />
     <Compile Include="Models\Gasto.cs" />
     <Compile Include="Models\GastosBordereaux.cs" />
     <Compile Include="Models\GoogleCalendarProperties.cs" />
@@ -782,7 +783,6 @@
   </Target>
   <Target Name="AfterBuild">
   </Target> -->
-
   <Target Name="CopyRoslynFiles" AfterTargets="AfterBuild" Condition="!$(Disable_CopyWebApplication) And '$(OutDir)' != '$(OutputPath)'">
     <ItemGroup>
       <RoslynFiles Include="$(CscToolPath)\*" />
