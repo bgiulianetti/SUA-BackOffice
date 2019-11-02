@@ -346,7 +346,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <input type="button" id="gananciasNetasPorShow" value="cargar" />
+                                        <input type="button" id="followersDelta" value="cargar" />
                                     </td>
                                 </tr>
                             </table>
@@ -688,6 +688,19 @@ else
             ranking_delta_table.search(this.value).draw();
             //standuperosHistorialSeguidores.render();
         });
+
+
+
+        //Followers Delta
+        $("#followersDelta").click(getDeltaFollowers);
+
+        function getDeltaFollowers() {
+            var dateFrom = $("#filter_ranking_delta_year_from").val() + "-" + $("#filter_ranking_delta_month_from").val() + "01";
+            var dateTo = $("#filter_ranking_delta_year_to").val() + "-" + $("#filter_ranking_delta_month_to").val() + "01";
+            window.location.replace("http://localhost:7003/instagram-users" + "?deltaFollowersDateFrom=" + dateFrom + "&deltaFollowersDateTo=" + dateTo);
+        }
+
+
     });
 
 

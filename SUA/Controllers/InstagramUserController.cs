@@ -15,7 +15,7 @@ namespace SUA.Controllers
     public class InstagramUserController : Controller
     {
         [UserValidationFilter]
-        public ActionResult InstagramUsers(string status)
+        public ActionResult InstagramUsers(string status, string deltaFollowersDateFrom, string deltaFollowersDateTo)
         {
             if (status == "full")
                 ViewBag.followersCount = 1000;
@@ -53,9 +53,14 @@ namespace SUA.Controllers
 
 
                 //Followers Delta
-                var from = DateTime.Now.Month;
-                var deltaFollowers = GetInstagramUserFollowersDeltaQuantity(from: DateTime.Now.Year.ToString() + "-" + DateTime.Now.Month.ToString() + "-1" ,
-                                                                            to: DateTime.Now.ToString("yyyy-MM-dd"));
+                DateTime from = DateTime.Now;
+                DateTime to = DateTime.Now;
+                if(deltaFollowersDateFrom != null && deltaFollowersDateFrom != string.Empty)
+                {
+                    from = new DateTime(Int32.Parse(deltaFollowersDateFrom.Split('-')[0]), Int32.Parse(deltaFollowersDateFrom.Split('-')[1]), 1);
+                    to = new DateTime(Int32.Parse(deltaFollowersDateTo.Split('-')[0]), Int32.Parse(deltaFollowersDateTo.Split('-')[1]), DateTime.DaysInMonth(Int32.Parse(deltaFollowersDateTo.Split('-')[0]), Int32.Parse(deltaFollowersDateTo.Split('-')[1])));
+                }         
+                var deltaFollowers = GetInstagramUserFollowersDeltaQuantity(from, to);
 
                 ViewBag.rankingDeltaUsersQuantity = deltaFollowers.OrderByDescending(f=>f.Quantity).ToList();
                 ViewBag.rankingDeltaUsersPercentage = deltaFollowers.OrderByDescending(f => f.Percentage).ToList();
@@ -147,29 +152,35 @@ namespace SUA.Controllers
         }
 
         [HttpGet]
-        public List<FollowersDeltaQuantity> GetInstagramUserFollowersDeltaQuantity(string from, string to)
+        public List<FollowersDeltaQuantity> GetInstagramUserFollowersDeltaQuantity(DateTime dateFrom, DateTime dateTo)
         {
             var usersList = new List<FollowersDeltaQuantity>();
 
-            var fromDate = new DateTime(Int32.Parse(from.Split('-')[0]), Int32.Parse(from.Split('-')[1]), Int32.Parse(from.Split('-')[2]));
-            var toDate = new DateTime(Int32.Parse(to.Split('-')[0]), Int32.Parse(to.Split('-')[1]), Int32.Parse(to.Split('-')[2])).AddDays(-6);
+            if (dateFrom == dateTo && dateTo.Date == DateTime.Now.Date)
+            {
+                dateFrom = DateTime.Now.AddDays(-1);
+                dateTo = DateTime.Now.AddDays(-1);
+            }
+            else if (dateTo >= DateTime.Now)
+                dateTo = DateTime.Now.AddDays(-1);
 
             var users = GetInstagramUsers();
             foreach (var user in users)
             {
                 //followers from
-                var countFrom = user.Followers.Where(f => f.Date.Date == fromDate.Date).FirstOrDefault().Count;
+                var countFrom = user.Followers.Where(f => f.Date.Date == dateFrom.Date).FirstOrDefault().Count;
                 //followers to
-                var countTo = user.Followers.Where(f => f.Date.Date == toDate.Date).FirstOrDefault().Count;
+                var countTo = user.Followers.Where(f => f.Date.Date == dateTo.Date).FirstOrDefault().Count;
 
                 //difference percentage
                 double percentage = (double)((countTo - countFrom) * 100) / countFrom;
 
                 //follower difference quantity
-                var followersDeltaQuantity = user.Followers.Where(f => f.Date >= fromDate && f.Date <= toDate).Sum(f => f.Difference);
+                var followersDeltaQuantity = user.Followers.Where(f => f.Date >= dateFrom && f.Date <= dateTo).Sum(f => f.Difference);
 
                 usersList.Add(new FollowersDeltaQuantity { Username = user.Username, ProfilePicture = user.ProfilePicture, Percentage = percentage, Quantity = followersDeltaQuantity });
             }
+
             return usersList;
         }
 
