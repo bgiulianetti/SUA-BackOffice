@@ -53,13 +53,24 @@ namespace SUA.Controllers
 
 
                 //Followers Delta
-                DateTime from = DateTime.Now;
-                DateTime to = DateTime.Now;
-                if(deltaFollowersDateFrom != null && deltaFollowersDateFrom != string.Empty)
+                DateTime from = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                DateTime to = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
+                if (deltaFollowersDateFrom != null && deltaFollowersDateFrom != string.Empty)
                 {
                     from = new DateTime(Int32.Parse(deltaFollowersDateFrom.Split('-')[0]), Int32.Parse(deltaFollowersDateFrom.Split('-')[1]), 1);
                     to = new DateTime(Int32.Parse(deltaFollowersDateTo.Split('-')[0]), Int32.Parse(deltaFollowersDateTo.Split('-')[1]), DateTime.DaysInMonth(Int32.Parse(deltaFollowersDateTo.Split('-')[0]), Int32.Parse(deltaFollowersDateTo.Split('-')[1])));
-                }         
+                    ViewBag.yearFrom = from.Year;
+                    ViewBag.monthFrom = from.Month;
+                    ViewBag.yearTo = to.Year;
+                    ViewBag.monthTo = to.Month;
+                }
+                else
+                {
+                    ViewBag.yearFrom = DateTime.Now.Year;
+                    ViewBag.monthFrom = DateTime.Now.Month;
+                    ViewBag.yearTo = DateTime.Now.Year;
+                    ViewBag.monthTo = DateTime.Now.Month;
+                }
                 var deltaFollowers = GetInstagramUserFollowersDeltaQuantity(from, to);
 
                 ViewBag.rankingDeltaUsersQuantity = deltaFollowers.OrderByDescending(f=>f.Quantity).ToList();
@@ -156,29 +167,39 @@ namespace SUA.Controllers
         {
             var usersList = new List<FollowersDeltaQuantity>();
 
-            if (dateFrom == dateTo && dateTo.Date == DateTime.Now.Date)
+            if ((dateTo - dateFrom).TotalDays <=1)
             {
-                dateFrom = DateTime.Now.AddDays(-1);
-                dateTo = DateTime.Now.AddDays(-1);
+                return usersList;
             }
-            else if (dateTo >= DateTime.Now)
+            if (dateTo >= DateTime.Now)
                 dateTo = DateTime.Now.AddDays(-1);
 
             var users = GetInstagramUsers();
             foreach (var user in users)
             {
-                //followers from
-                var countFrom = user.Followers.Where(f => f.Date.Date == dateFrom.Date).FirstOrDefault().Count;
-                //followers to
-                var countTo = user.Followers.Where(f => f.Date.Date == dateTo.Date).FirstOrDefault().Count;
+                try
+                {
+                    var firstFollowerDate = user.Followers.OrderBy(f => f.Date).First().Date.Date;
+                    if (firstFollowerDate > dateFrom)
+                        dateFrom = firstFollowerDate;
 
-                //difference percentage
-                double percentage = (double)((countTo - countFrom) * 100) / countFrom;
+                    //followers from
+                    var countFrom = user.Followers.Where(f => f.Date.Date == dateFrom.Date).FirstOrDefault().Count;
+                    //followers to
+                    var countTo = user.Followers.Where(f => f.Date.Date == dateTo.Date).FirstOrDefault().Count;
 
-                //follower difference quantity
-                var followersDeltaQuantity = user.Followers.Where(f => f.Date >= dateFrom && f.Date <= dateTo).Sum(f => f.Difference);
+                    //difference percentage
+                    double percentage = (double)((countTo - countFrom) * 100) / countFrom;
 
-                usersList.Add(new FollowersDeltaQuantity { Username = user.Username, ProfilePicture = user.ProfilePicture, Percentage = percentage, Quantity = followersDeltaQuantity });
+                    //follower difference quantity
+                    var followersDeltaQuantity = user.Followers.Where(f => f.Date >= dateFrom && f.Date <= dateTo).Sum(f => f.Difference);
+
+                    usersList.Add(new FollowersDeltaQuantity { Username = user.Username, ProfilePicture = user.ProfilePicture, Percentage = percentage, Quantity = followersDeltaQuantity });
+                }
+                catch(Exception ex)
+                {
+                    throw new Exception("Falla al querer obtener delta de usuario: " + user.Username + ". Exception: " + ex.Message);
+                }
             }
 
             return usersList;

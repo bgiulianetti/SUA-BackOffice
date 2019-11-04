@@ -296,6 +296,8 @@
                             <table  style="margin: 0 auto;text-align-last: center;">
                                 <tr>
                                     <td>Desde</td>
+                                </tr>
+                                <tr>
                                     <td>
                                         <select style="text-align-last:center; width:150px" id="filter_ranking_delta_year_from">
                                             <option style="text-align:center">2019</option>
@@ -314,13 +316,15 @@
                                             <option style="text-align:center" value="08">Agosto</option>
                                             <option style="text-align:center" value="09">Septiembre</option>
                                             <option style="text-align:center" value="10">Octubre</option>
-                                            <option style="text-align:center" value="11">Noviambre</option>
+                                            <option style="text-align:center" value="11">Noviembre</option>
                                             <option style="text-align:center" value="12">Diciembre</option>
                                         </select>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Hasta</td>
+                                </tr>
+                                <tr>
                                     <td>
                                         <select style="text-align-last:center; width:150px" id="filter_ranking_delta_year_to">
                                             <option style="text-align:center">2019</option>
@@ -339,7 +343,7 @@
                                             <option style="text-align:center" value="08">Agosto</option>
                                             <option style="text-align:center" value="09">Septiembre</option>
                                             <option style="text-align:center" value="10">Octubre</option>
-                                            <option style="text-align:center" value="11">Noviambre</option>
+                                            <option style="text-align:center" value="11">Noviembre</option>
                                             <option style="text-align:center" value="12">Diciembre</option>
                                         </select>
                                     </td>
@@ -424,6 +428,9 @@ else
 <script>
 
     $(document).ready(function () {
+
+
+
 
         ///////////////////////////////////////////standuperosSUA
         var standuperosSUA = new CanvasJS.Chart("standuperosSUA", {
@@ -695,10 +702,17 @@ else
         $("#followersDelta").click(getDeltaFollowers);
 
         function getDeltaFollowers() {
-            var dateFrom = $("#filter_ranking_delta_year_from").val() + "-" + $("#filter_ranking_delta_month_from").val() + "01";
-            var dateTo = $("#filter_ranking_delta_year_to").val() + "-" + $("#filter_ranking_delta_month_to").val() + "01";
+            var dateFrom = $("#filter_ranking_delta_year_from").val() + "-" + $("#filter_ranking_delta_month_from").val();
+            var dateTo = $("#filter_ranking_delta_year_to").val() + "-" + $("#filter_ranking_delta_month_to").val();
             window.location.replace("http://localhost:7003/instagram-users" + "?deltaFollowersDateFrom=" + dateFrom + "&deltaFollowersDateTo=" + dateTo);
         }
+
+
+
+        $('#filter_ranking_delta_year_from option[value="' + @ViewBag.yearFrom + '"]').attr("selected", "selected");
+        $('#filter_ranking_delta_month_from option[value="' + @ViewBag.monthFrom + '"]').attr("selected", "selected");
+        $('#filter_ranking_delta_year_to option[value="' + @ViewBag.yearTo + '"]').attr("selected", "selected");
+        $('#filter_ranking_delta_month_to option[value="' + @ViewBag.monthTo + '"]').attr("selected", "selected");
 
 
     });
