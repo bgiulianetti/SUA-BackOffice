@@ -177,6 +177,7 @@ namespace SUA.Controllers
             var users = GetInstagramUsers();
             foreach (var user in users)
             {
+                var dateFromSaved = dateFrom;
                 try
                 {
                     var firstFollowerDate = user.Followers.OrderBy(f => f.Date).First().Date.Date;
@@ -200,6 +201,7 @@ namespace SUA.Controllers
                 {
                     throw new Exception("Falla al querer obtener delta de usuario: " + user.Username + ". Exception: " + ex.Message);
                 }
+                dateFrom = dateFromSaved;
             }
 
             return usersList;
