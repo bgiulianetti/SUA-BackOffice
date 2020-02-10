@@ -24,6 +24,7 @@ namespace SUA.Servicios
 
         public GoogleCalendarService()
         {
+            //LOS CALENDARIOS DEBEN ESTAR CREADOS CON LA CUENTA: standupargentina@gmail.com 
             ApiUrl = new Uri(System.Configuration.ConfigurationManager.AppSettings.Get("Calendar.BaseUrl"));
             Client = new HttpClient();
             Client.BaseAddress = ApiUrl;
