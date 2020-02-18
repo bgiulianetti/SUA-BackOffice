@@ -288,7 +288,7 @@ namespace SUA
 
             routes.MapRoute(
                 name: "printBordereaux",
-                url: "{controller}/{action}/{id}",
+                url: "fecha/printbordereaux/{id}",
                 defaults: new { controller = "Fecha", action = "PrintBordereaux", id = UrlParameter.Optional }
             );
 
